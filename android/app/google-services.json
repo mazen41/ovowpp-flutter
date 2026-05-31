@@ -1,0 +1,29 @@
+﻿{
+  "project_info": {
+    "project_number": "161838628370",
+    "project_id": "whatsapp-project-13a81",
+    "storage_bucket": "whatsapp-project-13a81.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161838628370:android:c31f84da09aabb125d62cb",
+        "android_client_info": {
+          "package_name": "com.ovosolution.ovowpp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrJcb_0ww4HjdCwR0w8ZlNbOWUYpbukVE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
