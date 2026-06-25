@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ovowpp/core/utils/util_exporter.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/model/kyc/kyc_response_model.dart' as kyc;
 import 'package:ovowpp/app/components/text-field/custom_text_field.dart';
 import 'package:get/get.dart';

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ovowpp/app/components/circle_image_button.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/route/route.dart';
 import '../../../../../data/controller/account/profile_controller.dart';
 import '../../../../core/utils/text_style.dart';

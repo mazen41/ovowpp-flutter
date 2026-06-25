@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/buttons/custom_elevated_button.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/app/components/card/custom_app_card.dart';
 import 'package:ovowpp/app/components/card/my_custom_scaffold.dart';
 import 'package:ovowpp/app/components/divider/custom_divider.dart';

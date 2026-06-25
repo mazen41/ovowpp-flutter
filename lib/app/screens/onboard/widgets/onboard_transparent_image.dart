@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ovowpp/app/components/buttons/my_text_button.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/util_exporter.dart';
 
 class OnboardTransparentImageAndSkip extends StatelessWidget {

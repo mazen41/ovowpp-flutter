@@ -9,7 +9,7 @@ export 'method.dart';
 export 'my_color.dart';
 export 'my_icons.dart';
 export 'my_images.dart';
-export 'my_strings.dart';
+export '../translations/strings_enum.dart';
 export 'ticket_helper.dart';
 export 'url_container.dart';
 export 'util.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/screens/dashboard/widget/dashboard_master_card_item.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/route/route.dart';
 import 'package:ovowpp/core/utils/util_exporter.dart';
 

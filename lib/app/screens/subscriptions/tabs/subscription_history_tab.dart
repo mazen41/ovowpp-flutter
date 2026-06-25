@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/custom_loader/custom_loader.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/app/components/no_data.dart';
 import 'package:ovowpp/app/screens/subscriptions/widgets/subscription_widgets.dart';
 import 'package:ovowpp/core/helper/string_format_helper.dart';

@@ -4,6 +4,7 @@ import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:ovowpp/core/utils/util_exporter.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 
 class ContactPickerBottomSheet extends StatefulWidget {
   final Function(Contact) onContactSelected;

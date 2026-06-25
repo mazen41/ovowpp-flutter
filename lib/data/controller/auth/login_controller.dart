@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:ovowpp/core/utils/util_exporter.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/model/user/user.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/core/route/route.dart';

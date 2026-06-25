@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/alert-dialog/custom_alert_dialog.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/app/components/alert-dialog/delete_dialogue.dart';
 import 'package:ovowpp/app/components/avatar/alphabet_avatar.dart';
 import 'package:ovowpp/app/components/card/my_custom_scaffold.dart';

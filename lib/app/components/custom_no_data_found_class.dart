@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
-import 'package:ovowpp/core/rransnationslons/str_enumings_enum.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/app/components/buttons/custom_round_border_shape.dart';
 import '../../core/utils/dimensions.dart';
 import 'image/custom_svg_picture.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/screens/subscriptions/tabs/subscription_history_tab.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/app/screens/subscriptions/tabs/subscription_info_tab.dart';
 import 'package:ovowpp/app/screens/subscriptions/tabs/subscription_plans_tab.dart';
 import 'package:ovowpp/app/screens/subscriptions/widgets/subscription_widgets.dart';

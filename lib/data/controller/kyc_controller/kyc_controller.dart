@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:ovowpp/core/helper/date_converter.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/core/utils/util_exporter.dart';
 import 'package:ovowpp/data/model/authorization/authorization_response_model.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:ovowpp/app/screens/dashboard/widget/plan_status_create_new/plan_status_and_create_new_item.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import '../../../../../core/utils/app_permission.dart';
 import '../../../../../core/utils/util_exporter.dart';
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/data/controller/contact/contact_screen_controller.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import '../../../core/utils/util_exporter.dart';
 import '../../components/annotated_region/annotated_region_widget.dart';
 import '../../components/app-bar/custom_app_bar.dart';

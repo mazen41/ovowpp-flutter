@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/core/utils/app_permission.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import '../../../../core/route/route.dart';
 import '../../../../core/utils/text_style.dart';
 import '../../../../core/utils/util_exporter.dart';

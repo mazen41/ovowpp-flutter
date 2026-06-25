@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ovowpp/app/components/buttons/custom_elevated_button.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/text-field/label_text_field.dart';
 import 'package:ovowpp/core/utils/util_exporter.dart';

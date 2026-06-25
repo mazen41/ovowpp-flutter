@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ovowpp/app/screens/dashboard/widget/round_icon_with_bg_color.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import '../../../../core/utils/text_style.dart';
 import '../../../../core/utils/util_exporter.dart';
 import '../../../components/image/my_asset_widget.dart';

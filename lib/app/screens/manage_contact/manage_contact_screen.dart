@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/annotated_region/annotated_region_widget.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/app/components/card/my_custom_scaffold.dart';
 import 'package:ovowpp/app/screens/manage_contact/widgets/manage_contact_card.dart';
 import 'package:ovowpp/core/route/route.dart';

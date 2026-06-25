@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/image/my_network_image_widget.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/route/route.dart';
 import 'package:ovowpp/data/controller/all_contacts/all_contact_controller.dart';
 import '../../../../core/utils/app_permission.dart';

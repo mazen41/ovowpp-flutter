@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:ovowpp/app/screens/campaigns/widgets/send_now_switch.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/campaigns/campaigns_controller.dart';
 import '../../../../core/utils/text_style.dart' show MyTextStyle;
 import '../../../../core/utils/util_exporter.dart';

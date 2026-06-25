@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/shimmer/my_shimmer_widget.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/app/screens/campaigns/widgets/search_single_item.dart';
 import '../../../../core/utils/text_style.dart';
 import '../../../../core/utils/util_exporter.dart';

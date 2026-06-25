@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/annotated_region/annotated_region_widget.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/app/components/app-bar/custom_app_bar.dart';
 import 'package:ovowpp/app/components/text/default_text.dart';
 import 'package:ovowpp/app/screens/contact/widgets/contact_details_item.dart';

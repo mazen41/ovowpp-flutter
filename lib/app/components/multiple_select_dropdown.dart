@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multi_dropdown/multi_dropdown.dart';
 import 'package:ovowpp/data/controller/my_account/my_account_controller.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/model/customer_details/customer_details_response_model.dart';
 
 import '../../core/utils/text_style.dart';

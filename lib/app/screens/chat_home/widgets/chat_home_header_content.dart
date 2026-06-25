@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/shimmer/my_shimmer_widget.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/app/components/text/default_text.dart';
 import 'package:ovowpp/core/utils/app_permission.dart';
 import '../../../../core/route/route.dart';
