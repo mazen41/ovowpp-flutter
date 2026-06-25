@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import '../../core/utils/dimensions.dart';
 import 'image/custom_svg_picture.dart';
 
@@ -16,11 +16,11 @@ class NoTransectionScreen extends StatefulWidget {
 
   const NoTransectionScreen({
     super.key,
-    this.message = MyStrings.noTransection,
+    this.message = Strings.noTransection,
     this.paddingTop = 6,
     this.imageHeight = .5,
     this.imageColor = MyColor.white,
-    this.message2 = MyStrings.noTransectionsToShow,
+    this.message2 = Strings.noTransectionsToShow,
     this.image = MyImages.noTransectionFound,
   });
 

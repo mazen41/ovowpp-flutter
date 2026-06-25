@@ -9,7 +9,7 @@ import 'package:ovowpp/app/screens/edit_profile/widget/profile_image.dart';
 import 'package:ovowpp/core/utils/app_style.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/account/profile_controller.dart';
 
 class ProfileEditForm extends StatefulWidget {
@@ -26,7 +26,7 @@ class _ProfileEditFormState extends State<ProfileEditForm> {
       builder: (controller) => AnnotatedRegionWidget(
         child: Scaffold(
           backgroundColor: MyColor.white,
-          appBar: CustomAppBar(title: MyStrings.editProfile.tr),
+          appBar: CustomAppBar(title: Strings.editProfile.tr),
           body: Form(
             child: SingleChildScrollView(
               child: Padding(
@@ -39,15 +39,15 @@ class _ProfileEditFormState extends State<ProfileEditForm> {
 
                     LabelTextField(
                       controller: controller.firstNameController,
-                      labelText: MyStrings.firstName.tr,
-                      hintText: MyStrings.enterYourFirstName.tr,
+                      labelText: Strings.firstName.tr,
+                      hintText: Strings.enterYourFirstName.tr,
                       onChanged: (value) {},
                       textInputType: TextInputType.text,
                       inputAction: TextInputAction.next,
                       radius: Dimensions.largeRadius,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return MyStrings.fieldErrorMsg.tr;
+                          return Strings.fieldErrorMsg.tr;
                         } else {
                           return null;
                         }
@@ -57,8 +57,8 @@ class _ProfileEditFormState extends State<ProfileEditForm> {
 
                     LabelTextField(
                       controller: controller.lastNameController,
-                      labelText: MyStrings.lastName.tr,
-                      hintText: MyStrings.enterYourLastName.tr,
+                      labelText: Strings.lastName.tr,
+                      hintText: Strings.enterYourLastName.tr,
                       onChanged: (value) {},
 
                       textInputType: TextInputType.text,
@@ -66,7 +66,7 @@ class _ProfileEditFormState extends State<ProfileEditForm> {
                       radius: Dimensions.largeRadius,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return MyStrings.fieldErrorMsg.tr;
+                          return Strings.fieldErrorMsg.tr;
                         } else {
                           return null;
                         }
@@ -75,8 +75,8 @@ class _ProfileEditFormState extends State<ProfileEditForm> {
                     spaceDown(Dimensions.space15.h),
                     LabelTextField(
                       controller: controller.stateController,
-                      labelText: MyStrings.state.tr,
-                      hintText: MyStrings.enterYourState.tr,
+                      labelText: Strings.state.tr,
+                      hintText: Strings.enterYourState.tr,
                       onChanged: (value) {},
 
                       textInputType: TextInputType.text,
@@ -84,7 +84,7 @@ class _ProfileEditFormState extends State<ProfileEditForm> {
                       radius: Dimensions.largeRadius,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return MyStrings.fieldErrorMsg.tr;
+                          return Strings.fieldErrorMsg.tr;
                         } else {
                           return null;
                         }
@@ -93,8 +93,8 @@ class _ProfileEditFormState extends State<ProfileEditForm> {
                     spaceDown(Dimensions.space15.h),
                     LabelTextField(
                       controller: controller.zipCodeController,
-                      labelText: MyStrings.zipCode.tr,
-                      hintText: MyStrings.enterYourZipCode.tr,
+                      labelText: Strings.zipCode.tr,
+                      hintText: Strings.enterYourZipCode.tr,
                       onChanged: (value) {},
 
                       textInputType: TextInputType.text,
@@ -102,7 +102,7 @@ class _ProfileEditFormState extends State<ProfileEditForm> {
                       radius: Dimensions.largeRadius,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return MyStrings.fieldErrorMsg.tr;
+                          return Strings.fieldErrorMsg.tr;
                         } else {
                           return null;
                         }
@@ -111,8 +111,8 @@ class _ProfileEditFormState extends State<ProfileEditForm> {
                     spaceDown(Dimensions.space15.h),
                     LabelTextField(
                       controller: controller.cityController,
-                      labelText: MyStrings.city.tr,
-                      hintText: MyStrings.enterYourCity.tr,
+                      labelText: Strings.city.tr,
+                      hintText: Strings.enterYourCity.tr,
                       onChanged: (value) {},
 
                       textInputType: TextInputType.text,
@@ -120,7 +120,7 @@ class _ProfileEditFormState extends State<ProfileEditForm> {
                       radius: Dimensions.largeRadius,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return MyStrings.fieldErrorMsg.tr;
+                          return Strings.fieldErrorMsg.tr;
                         } else {
                           return null;
                         }
@@ -130,15 +130,15 @@ class _ProfileEditFormState extends State<ProfileEditForm> {
                     spaceDown(Dimensions.space15.h),
                     LabelTextField(
                       controller: controller.addressController,
-                      labelText: MyStrings.address.tr,
-                      hintText: MyStrings.address.tr,
+                      labelText: Strings.address.tr,
+                      hintText: Strings.address.tr,
                       onChanged: (value) {},
                       textInputType: TextInputType.text,
                       inputAction: TextInputAction.next,
                       radius: Dimensions.largeRadius,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return MyStrings.fieldErrorMsg.tr;
+                          return Strings.fieldErrorMsg.tr;
                         } else {
                           return null;
                         }
@@ -149,8 +149,8 @@ class _ProfileEditFormState extends State<ProfileEditForm> {
                     LabelTextField(
                       readOnly: true,
                       controller: controller.countryController,
-                      labelText: MyStrings.country.tr,
-                      hintText: MyStrings.country.tr,
+                      labelText: Strings.country.tr,
+                      hintText: Strings.country.tr,
                       onChanged: (value) {},
 
                       textInputType: TextInputType.text,
@@ -158,7 +158,7 @@ class _ProfileEditFormState extends State<ProfileEditForm> {
                       radius: Dimensions.largeRadius,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return MyStrings.fieldErrorMsg.tr;
+                          return Strings.fieldErrorMsg.tr;
                         } else {
                           return null;
                         }
@@ -171,7 +171,7 @@ class _ProfileEditFormState extends State<ProfileEditForm> {
                       onTap: () {
                         controller.updateProfile();
                       },
-                      text: MyStrings.update.tr,
+                      text: Strings.update.tr,
                     ),
                     const SizedBox(height: Dimensions.space30),
                   ],

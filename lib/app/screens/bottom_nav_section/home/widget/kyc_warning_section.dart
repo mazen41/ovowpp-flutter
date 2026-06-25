@@ -5,7 +5,7 @@ import 'package:ovowpp/data/controller/dashboard/dashboard_controller.dart';
 import '../../../../../../core/route/route.dart';
 import '../../../../../../core/utils/dimensions.dart';
 import '../../../../../../core/utils/my_color.dart';
-import '../../../../../../core/utils/my_strings.dart';
+import '../../../../../../core/translations/strings_enum.dart';
 
 class KYCWarningSection extends StatelessWidget {
   final DashboardController controller;
@@ -37,12 +37,12 @@ class KYCWarningSection extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            MyStrings.kycVerificationPending.tr,
+                            Strings.kycVerificationPending.tr,
                             style: theme.textTheme.headlineSmall?.copyWith(color: MyColor.pendingColor, fontSize: 17),
                           ),
                           const SizedBox(height: Dimensions.space15),
                           Text(
-                            MyStrings.kycVerificationPendingMSg.tr,
+                            Strings.kycVerificationPendingMSg.tr,
                             style: theme.textTheme.bodyMedium?.copyWith(color: MyColor.getBodyTextColor()),
                           ),
                         ],
@@ -52,7 +52,7 @@ class KYCWarningSection extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            MyStrings.kycVerificationRequired.tr,
+                            Strings.kycVerificationRequired.tr,
                             style: theme.textTheme.headlineSmall?.copyWith(
                               color: MyColor.getErrorColor(),
                               fontSize: 17,
@@ -60,7 +60,7 @@ class KYCWarningSection extends StatelessWidget {
                           ),
                           const SizedBox(height: Dimensions.space15),
                           Text(
-                            MyStrings.kycVerificationMsg.tr,
+                            Strings.kycVerificationMsg.tr,
                             style: theme.textTheme.bodyMedium?.copyWith(color: MyColor.getBodyTextColor()),
                           ),
                         ],

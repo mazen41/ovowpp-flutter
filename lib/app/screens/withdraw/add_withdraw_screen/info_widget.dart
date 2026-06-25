@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../../core/utils/dimensions.dart';
 import '../../../../core/utils/my_color.dart';
-import '../../../../core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import '../../../../data/controller/withdraw/add_new_withdraw_controller.dart';
 import '../../../components/row_widget/custom_row.dart';
 
@@ -28,23 +28,23 @@ class InfoWidget extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 15),
-                  CustomRow(firstText: MyStrings.withdrawLimit.tr, lastText: controller.withdrawLimit),
-                  CustomRow(firstText: MyStrings.charge.tr, lastText: controller.charge),
+                  CustomRow(firstText: Strings.withdrawLimit.tr, lastText: controller.withdrawLimit),
+                  CustomRow(firstText: Strings.charge.tr, lastText: controller.charge),
                   CustomRow(
-                    firstText: MyStrings.receivable.tr,
+                    firstText: Strings.receivable.tr,
                     lastText: controller.payableText,
                     showDivider: showRate,
                   ),
                   showRate
                       ? CustomRow(
-                          firstText: MyStrings.conversionRate.tr,
+                          firstText: Strings.conversionRate.tr,
                           lastText: controller.conversionRate,
                           showDivider: showRate,
                         )
                       : const SizedBox.shrink(),
                   showRate
                       ? CustomRow(
-                          firstText: '${MyStrings.in_.tr} ${controller.withdrawMethod?.currency}',
+                          firstText: '${Strings.in_.tr} ${controller.withdrawMethod?.currency}',
                           lastText: controller.inLocal,
                           showDivider: false,
                         )

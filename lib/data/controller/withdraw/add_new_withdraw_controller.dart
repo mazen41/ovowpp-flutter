@@ -3,7 +3,7 @@ import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
 import 'package:ovowpp/core/helper/string_format_helper.dart';
 import 'package:get/get.dart';
 import '../../../core/route/route.dart';
-import '../../../core/utils/my_strings.dart';
+import '../../../core/translations/strings_enum.dart';
 import '../../model/global/response_model/response_model.dart';
 import '../../model/withdraw/withdraw_method_response_model.dart';
 import '../../model/withdraw/withdraw_request_response_model.dart';
@@ -44,9 +44,9 @@ class AddNewWithdrawController extends GetxController {
   void setWithdrawMethod(WithdrawMethod? method) {
     withdrawMethod = method;
     withdrawLimit =
-        '${MyStrings.depositLimit.tr}: ${AppConverter.formatNumber(method?.minLimit ?? '-1')} - ${AppConverter.formatNumber(method?.maxLimit?.toString() ?? '-1')} ${method?.currency}';
+        '${Strings.depositLimit.tr}: ${AppConverter.formatNumber(method?.minLimit ?? '-1')} - ${AppConverter.formatNumber(method?.maxLimit?.toString() ?? '-1')} ${method?.currency}';
     charge =
-        '${MyStrings.charge.tr}: ${AppConverter.formatNumber(method?.fixedCharge?.toString() ?? '0')} + ${AppConverter.formatNumber(method?.percentCharge?.toString() ?? '0')} %';
+        '${Strings.charge.tr}: ${AppConverter.formatNumber(method?.fixedCharge?.toString() ?? '0')} + ${AppConverter.formatNumber(method?.percentCharge?.toString() ?? '0')} %';
     update();
 
     String amt = amountController.text.toString();
@@ -82,7 +82,7 @@ class AddNewWithdrawController extends GetxController {
     clearPreviousValue();
     WithdrawMethod method1 = WithdrawMethod(
       id: -1,
-      name: MyStrings.selectOne,
+      name: Strings.selectOne,
       currency: "",
       minLimit: "0",
       maxLimit: "0",
@@ -107,7 +107,7 @@ class AddNewWithdrawController extends GetxController {
           withdrawMethodList.addAll(tempMethodList);
         }
       } else {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.somethingWentWrong]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.somethingWentWrong]);
       }
     } else {
       CustomSnackBar.error(errorList: [responseModel.message]);
@@ -122,17 +122,17 @@ class AddNewWithdrawController extends GetxController {
     String id = withdrawMethod?.id.toString() ?? '-1';
 
     if (amount.isEmpty) {
-      CustomSnackBar.error(errorList: ['${MyStrings.please} ${MyStrings.enterAmount.toLowerCase()}']);
+      CustomSnackBar.error(errorList: ['${Strings.please} ${Strings.enterAmount.toLowerCase()}']);
       return;
     }
 
     if (id == '-1') {
-      CustomSnackBar.error(errorList: ['${MyStrings.please} ${MyStrings.selectPaymentMethod.toLowerCase()}']);
+      CustomSnackBar.error(errorList: ['${Strings.please} ${Strings.selectPaymentMethod.toLowerCase()}']);
       return;
     }
 
-    if (authorizationList.length > 1 && selectedAuthorizationMode?.toLowerCase() == MyStrings.selectOne) {
-      CustomSnackBar.error(errorList: [MyStrings.selectAuthModeMsg]);
+    if (authorizationList.length > 1 && selectedAuthorizationMode?.toLowerCase() == Strings.selectOne) {
+      CustomSnackBar.error(errorList: [Strings.selectAuthModeMsg]);
       return;
     }
 
@@ -147,7 +147,7 @@ class AddNewWithdrawController extends GetxController {
     }
 
     if (maxAmount == 0 || amount1 == 0) {
-      List<String> errorList = [MyStrings.invalidAmount];
+      List<String> errorList = [Strings.invalidAmount];
       CustomSnackBar.error(errorList: errorList);
       return;
     }
@@ -163,10 +163,10 @@ class AddNewWithdrawController extends GetxController {
 
     if (response.statusCode == 200) {
       WithdrawRequestResponseModel model = WithdrawRequestResponseModel.fromJson(response.responseJson);
-      if (model.status == MyStrings.success) {
+      if (model.status == Strings.success) {
         Get.offAndToNamed(RouteHelper.withdrawConfirmScreenScreen, arguments: [model, withdrawMethod?.name]);
       } else {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.requestFail]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.requestFail]);
       }
     } else {
       CustomSnackBar.error(errorList: [response.message]);

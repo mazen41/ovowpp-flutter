@@ -9,7 +9,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../../../../../core/utils/dimensions.dart';
 import '../../../../../../core/utils/my_color.dart';
-import '../../../../../../core/utils/my_strings.dart';
+import '../../../../../../core/translations/strings_enum.dart';
 
 class TwoFactorEnableSection extends StatelessWidget {
   const TwoFactorEnableSection({super.key});
@@ -39,14 +39,14 @@ class TwoFactorEnableSection extends StatelessWidget {
                     children: [
                       Center(
                         child: Text(
-                          MyStrings.addYourAccount.tr,
+                          Strings.addYourAccount.tr,
                           style: theme.textTheme.titleMedium?.copyWith(color: MyColor.getHeadingTextColor()),
                         ),
                       ),
                       const CustomDivider(),
                       Center(
                         child: Text(
-                          MyStrings.useQRCODETips.tr,
+                          Strings.useQRCODETips.tr,
                           style: theme.textTheme.titleMedium?.copyWith(color: MyColor.getHeadingTextColor()),
                         ),
                       ),
@@ -77,7 +77,7 @@ class TwoFactorEnableSection extends StatelessWidget {
                     children: [
                       Center(
                         child: Text(
-                          MyStrings.enable2Fa.tr,
+                          Strings.enable2Fa.tr,
                           style: theme.textTheme.titleMedium?.copyWith(color: MyColor.getHeadingTextColor()),
                         ),
                       ),
@@ -85,7 +85,7 @@ class TwoFactorEnableSection extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * .07),
                         child: SmallText(
-                          text: MyStrings.twoFactorMsg.tr,
+                          text: Strings.twoFactorMsg.tr,
                           maxLine: 3,
                           textAlign: TextAlign.center,
                           textStyle: theme.textTheme.labelMedium!.copyWith(color: MyColor.getHeadingTextColor()),
@@ -138,7 +138,7 @@ class TwoFactorEnableSection extends StatelessWidget {
                             twoFactorController.currentText,
                           );
                         },
-                        text: MyStrings.submit.tr,
+                        text: Strings.submit.tr,
                       ),
                       const SizedBox(height: Dimensions.space30),
                     ],

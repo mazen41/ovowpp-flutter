@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
 import 'package:ovowpp/core/utils/util.dart';
 
-import '../../../core/utils/my_strings.dart';
+import '../../../core/translations/strings_enum.dart';
 
 class OnboardController extends GetxController {
   PageController? pageController = PageController();
@@ -17,18 +17,18 @@ class OnboardController extends GetxController {
   List<OnBoardItemModel> onBoardDataList = [
     OnBoardItemModel(
       image: MyImages.onBoardImageOne,
-      title: MyStrings.onboardTitle1,
-      description: MyStrings.onboardDescription1,
+      title: Strings.onboardTitle1,
+      description: Strings.onboardDescription1,
     ),
     OnBoardItemModel(
       image: MyImages.onBoardImageTwo,
-      title: MyStrings.onboardTitle2,
-      description: MyStrings.onboardDescription2,
+      title: Strings.onboardTitle2,
+      description: Strings.onboardDescription2,
     ),
     OnBoardItemModel(
       image: MyImages.onBoardImageThree,
-      title: MyStrings.onboardTitle3,
-      description: MyStrings.onboardDescription3,
+      title: Strings.onboardTitle3,
+      description: Strings.onboardDescription3,
     ),
   ];
 }

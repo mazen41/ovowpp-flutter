@@ -19,7 +19,7 @@ class ProfileEditAndCancelBtn extends StatelessWidget {
         Stack(
           children: [
             MyAssetImageWidget(assetPath: MyImages.profile, boxFit: BoxFit.scaleDown),
-            text == MyStrings.cancel
+            text == Strings.cancel
                 ? Positioned(
                     bottom: -10,
                     right: 0,
@@ -35,7 +35,7 @@ class ProfileEditAndCancelBtn extends StatelessWidget {
           ],
         ),
         Material(
-          color: text == MyStrings.edit ? MyColor.getPrimaryColor() : MyColor.campaignFieldFillColor,
+          color: text == Strings.edit ? MyColor.getPrimaryColor() : MyColor.campaignFieldFillColor,
           borderRadius: BorderRadius.circular(Dimensions.space12.r),
           child: InkWell(
             borderRadius: BorderRadius.circular(Dimensions.space12.r),
@@ -44,16 +44,16 @@ class ProfileEditAndCancelBtn extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: Dimensions.space20.w, vertical: Dimensions.space6.h),
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: text == MyStrings.edit ? MyColor.getPrimaryColor() : MyColor.dashboardCardBorder,
+                  color: text == Strings.edit ? MyColor.getPrimaryColor() : MyColor.dashboardCardBorder,
                 ),
 
                 borderRadius: BorderRadius.circular(Dimensions.space12.r),
               ),
               child: DefaultText(
-                text: text == MyStrings.edit ? text : MyStrings.cancel,
+                text: text == Strings.edit ? text : Strings.cancel,
                 textStyle: MyTextStyle.subHeading16W400(
                   fontFamily: 'Albert Sans',
-                ).copyWith(color: text == MyStrings.edit ? MyColor.white : MyColor.dark, fontWeight: FontWeight.w500),
+                ).copyWith(color: text == Strings.edit ? MyColor.white : MyColor.dark, fontWeight: FontWeight.w500),
               ),
             ),
           ),

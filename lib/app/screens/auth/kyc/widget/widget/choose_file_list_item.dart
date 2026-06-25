@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 
 class ChooseFileItem extends StatelessWidget {
   final String fileName;
@@ -32,7 +32,7 @@ class ChooseFileItem extends StatelessWidget {
             ),
             alignment: Alignment.center,
             child: Text(
-              MyStrings.chooseFile,
+              Strings.chooseFile,
               textAlign: TextAlign.center,
               style: theme.textTheme.labelMedium?.copyWith(color: MyColor.getPrimaryColor()),
             ),

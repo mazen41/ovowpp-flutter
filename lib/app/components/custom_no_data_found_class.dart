@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/rransnationslons/str_enumings_enum.dart';
 import 'package:ovowpp/app/components/buttons/custom_round_border_shape.dart';
 import '../../core/utils/dimensions.dart';
 import 'image/custom_svg_picture.dart';
@@ -22,13 +22,13 @@ class NoDataOrInternetScreen extends StatefulWidget {
 
   const NoDataOrInternetScreen({
     super.key,
-    this.message = MyStrings.noData,
+    this.message = Strings.noData,
     this.paddingTop = 6,
     this.imageHeight = .5,
     this.fromReview = false,
     this.isNoInternet = false,
     this.onChanged,
-    this.message2 = MyStrings.noDataToShow,
+    this.message2 = Strings.noDataToShow,
     this.image = MyImages.noDataImage,
   });
 
@@ -77,7 +77,7 @@ class _NoDataOrInternetScreenState extends State<NoDataOrInternetScreen> {
                 child: Column(
                   children: [
                     Text(
-                      widget.isNoInternet ? MyStrings.noInternet.tr : widget.message.tr,
+                      widget.isNoInternet ? Strings.noInternet.tr : widget.message.tr,
                       textAlign: TextAlign.center,
                       style: theme.textTheme.titleSmall?.copyWith(
                         color: widget.isNoInternet ? MyColor.getErrorColor() : MyColor.getBodyTextColor(),
@@ -104,7 +104,7 @@ class _NoDataOrInternetScreenState extends State<NoDataOrInternetScreen> {
                           }
                         },
                         child: RoundedBorderContainer(
-                          text: MyStrings.retry.tr,
+                          text: Strings.retry.tr,
                           bgColor: MyColor.getErrorColor(),
                           borderColor: MyColor.getErrorColor(),
                           textColor: MyColor.white,

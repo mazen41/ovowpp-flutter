@@ -79,7 +79,7 @@ class CampaignTabDelegate extends SliverPersistentHeaderDelegate {
                       child: Container(height: Dimensions.space24.h, width: Dimensions.space110.w, color: Colors.grey),
                     )
                   : DefaultText(
-                      text: "${MyStrings.results.tr} (${controller.campaignData.length})",
+                      text: "${Strings.results.tr} (${controller.campaignData.length})",
                       textStyle: MyTextStyle.heading16W600UseTextColor(fontFamily: 'Nunito'),
                     ),
             ],

@@ -15,7 +15,7 @@ import 'package:ovowpp/core/utils/app_style.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/text_style.dart';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/controller/menu/my_menu_controller.dart';
@@ -59,7 +59,7 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
               isShowBackBtn: false,
               elevation: 0,
               bgColor: Colors.white,
-              title: MyStrings.accountSetting.tr,
+              title: Strings.accountSetting.tr,
             ),
 
             body: SingleChildScrollView(
@@ -127,12 +127,12 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
                     spaceDown(Dimensions.space12.h),
 
                     DefaultText(
-                      text: MyStrings.accountAndAppSetting.tr,
+                      text: Strings.accountAndAppSetting.tr,
                       textStyle: MyTextStyle.subHeading12W400().copyWith(fontSize: 16.sp, color: MyColor.ovoTextColor),
                     ),
                     spaceDown(Dimensions.space6.h),
                     DefaultText(
-                      text: MyStrings.personalizeYourExperience.tr,
+                      text: Strings.personalizeYourExperience.tr,
                       textStyle: MyTextStyle.subHeading12W400().copyWith(fontSize: 14.sp),
                     ),
                     spaceDown(Dimensions.space10.h),
@@ -148,8 +148,8 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
                         child: Column(
                           children: [
                             AccountAndAppSettingItem(
-                              title: MyStrings.profileSetting.tr,
-                              subTitle: MyStrings.editYourProfileInfo.tr,
+                              title: Strings.profileSetting.tr,
+                              subTitle: Strings.editYourProfileInfo.tr,
                               iconPath: MyImages.profileIcon,
                               onTap: () {
                                 Get.toNamed(RouteHelper.profileScreen);
@@ -157,8 +157,8 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
                             ),
 
                             AccountAndAppSettingItem(
-                              title: MyStrings.twoFactorAuth.tr,
-                              subTitle: MyStrings.twoFactorAuth.tr,
+                              title: Strings.twoFactorAuth.tr,
+                              subTitle: Strings.twoFactorAuth.tr,
                               iconPath: MyImages.twoFactorAuth,
                               onTap: () {
                                 Get.toNamed(RouteHelper.twoFactorSetupScreen);
@@ -166,8 +166,8 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
                             ),
 
                             AccountAndAppSettingItem(
-                              title: MyStrings.changePassword.tr,
-                              subTitle: MyStrings.changePassword.tr,
+                              title: Strings.changePassword.tr,
+                              subTitle: Strings.changePassword.tr,
                               iconPath: MyImages.changePassword,
                               onTap: () {
                                 Get.toNamed(RouteHelper.changePasswordScreen);
@@ -175,7 +175,7 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
                             ),
 
                             AccountAndAppSettingItem(
-                              title: MyStrings.language.tr,
+                              title: Strings.language.tr,
                               subTitle: controller.selectedLanguage?.tr,
                               iconPath: MyImages.languageIcon,
                               onTap: () {
@@ -188,12 +188,12 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
                     ),
                     spaceDown(Dimensions.space20.h),
                     DefaultText(
-                      text: MyStrings.management.tr,
+                      text: Strings.management.tr,
                       textStyle: MyTextStyle.subHeading12W400().copyWith(fontSize: 16.sp, color: MyColor.ovoTextColor),
                     ),
                     spaceDown(Dimensions.space6.h),
                     DefaultText(
-                      text: MyStrings.managementAccount.tr,
+                      text: Strings.managementAccount.tr,
                       textStyle: MyTextStyle.subHeading12W400().copyWith(fontSize: 14.sp),
                     ),
                     spaceDown(Dimensions.space8.h),
@@ -212,14 +212,14 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
 
                             spaceDown(Dimensions.space8.h),
                             AccountAndAppSettingItem(
-                              title: MyStrings.manageAgent.tr,
-                              subTitle: MyStrings.manageAgent.tr,
+                              title: Strings.manageAgent.tr,
+                              subTitle: Strings.manageAgent.tr,
                               iconPath: MyImages.group,
                               onTap: () {
                                 if (MyUtils.checkPermission(AppPermission.viewContactList)) {
                                   Get.toNamed(RouteHelper.manageAgentScreen);
                                 } else {
-                                  CustomSnackBar.error(errorList: [MyStrings.permissionDenyMessage]);
+                                  CustomSnackBar.error(errorList: [Strings.permissionDenyMessage.tr]);
                                 }
                               },
                             ),
@@ -227,8 +227,8 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
                             spaceDown(Dimensions.space8.h),
 
                             AccountAndAppSettingItem(
-                              title: MyStrings.manageContact.tr,
-                              subTitle: MyStrings.manageContact.tr,
+                              title: Strings.manageContact.tr,
+                              subTitle: Strings.manageContact.tr,
                               iconPath: MyImages.contactBook,
                               onTap: () {
                                 Get.toNamed(RouteHelper.manageContactScreen);
@@ -242,7 +242,7 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
                     if (!controller.isAgent) ...[
                       spaceDown(Dimensions.space24.h),
                       DefaultText(
-                        text: MyStrings.finance.tr,
+                        text: Strings.finance.tr,
                         textStyle: MyTextStyle.subHeading12W400().copyWith(
                           fontSize: 16.sp,
                           color: MyColor.ovoTextColor,
@@ -250,7 +250,7 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
                       ),
                       spaceDown(Dimensions.space6.h),
                       DefaultText(
-                        text: MyStrings.personalizeYourExperience.tr,
+                        text: Strings.personalizeYourExperience.tr,
                         textStyle: MyTextStyle.subHeading12W400().copyWith(fontSize: 14.sp),
                       ),
                       spaceDown(Dimensions.space10.h),
@@ -266,8 +266,8 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
                           child: Column(
                             children: [
                               AccountAndAppSettingItem(
-                                title: MyStrings.deposit.tr,
-                                subTitle: MyStrings.deposit.tr,
+                                title: Strings.deposit.tr,
+                                subTitle: Strings.deposit.tr,
                                 iconPath: MyImages.deposit,
                                 onTap: () {
                                   Get.toNamed(RouteHelper.depositsHistoryScreen);
@@ -275,8 +275,8 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
                               ),
 
                               AccountAndAppSettingItem(
-                                title: MyStrings.withdraw.tr,
-                                subTitle: MyStrings.withdraw.tr,
+                                title: Strings.withdraw.tr,
+                                subTitle: Strings.withdraw.tr,
                                 iconPath: MyImages.upload,
                                 onTap: () {
                                   Get.toNamed(RouteHelper.withdrawScreen);
@@ -290,12 +290,12 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
 
                     spaceDown(Dimensions.space24.h),
                     DefaultText(
-                      text: MyStrings.supportAndHelp.tr,
+                      text: Strings.supportAndHelp.tr,
                       textStyle: MyTextStyle.subHeading12W400().copyWith(fontSize: 16.sp, color: MyColor.ovoTextColor),
                     ),
                     spaceDown(Dimensions.space6.h),
                     DefaultText(
-                      text: MyStrings.findHelpOrReadAppPolicy.tr,
+                      text: Strings.findHelpOrReadAppPolicy.tr,
                       textStyle: MyTextStyle.subHeading12W400().copyWith(fontSize: 14.sp),
                     ),
                     spaceDown(Dimensions.space10.h),
@@ -311,8 +311,8 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
                         child: Column(
                           children: [
                             AccountAndAppSettingItem(
-                              title: MyStrings.helpCenter.tr,
-                              subTitle: MyStrings.browseFAQAndGuides.tr,
+                              title: Strings.helpCenter.tr,
+                              subTitle: Strings.browseFAQAndGuides.tr,
                               iconPath: MyImages.messageIcon,
                               onTap: () {
                                 Get.toNamed(RouteHelper.faqScreen);
@@ -321,8 +321,8 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
 
                             spaceDown(Dimensions.space8.h),
                             AccountAndAppSettingItem(
-                              title: MyStrings.supportTicket.tr,
-                              subTitle: MyStrings.supportTicket.tr,
+                              title: Strings.supportTicket.tr,
+                              subTitle: Strings.supportTicket.tr,
                               iconPath: MyImages.help,
                               onTap: () {
                                 Get.toNamed(RouteHelper.allTicketScreen);
@@ -332,8 +332,8 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
                             spaceDown(Dimensions.space8.h),
 
                             AccountAndAppSettingItem(
-                              title: MyStrings.privacyPolicy.tr,
-                              subTitle: MyStrings.howWeProtectYourData.tr,
+                              title: Strings.privacyPolicy.tr,
+                              subTitle: Strings.howWeProtectYourData.tr,
                               iconPath: MyImages.protected,
                               onTap: () {
                                 Get.toNamed(RouteHelper.privacyScreen);
@@ -353,7 +353,7 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
                                 child: GetBuilder<MyMenuController>(
                                   builder: (controller) {
                                     return DeleteDialogue(
-                                      warningText: MyStrings.areYouSureYouWantToSignOut.tr,
+                                      warningText: Strings.areYouSureYouWantToSignOut.tr,
                                       isLoading: controller.logoutLoading,
                                       onTap: () {
                                         controller.logout();
@@ -365,7 +365,7 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
                             },
                             prefixIcon: MyImages.signOut,
                             isSignOut: true,
-                            title: MyStrings.signOut.tr,
+                            title: Strings.signOut.tr,
                           ),
                   ],
                 ),

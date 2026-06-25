@@ -5,7 +5,7 @@ import 'package:ovowpp/app/screens/global/widgets/country_bottom_sheet.dart';
 import 'package:ovowpp/core/utils/app_style.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/account/profile_complete_controller.dart';
 import 'package:ovowpp/data/model/country_model/country_model.dart';
 import 'package:ovowpp/data/repo/account/profile_repo.dart';
@@ -53,7 +53,7 @@ class _ProfileCompleteScreenState extends State<ProfileCompleteScreen> {
         customAppBar: CustomAppBar(
           fromAuth: true,
           isShowBackBtn: true,
-          title: MyStrings.profileComplete.tr,
+          title: Strings.profileComplete.tr,
           bgColor: Colors.transparent,
         ),
         screen: GetBuilder<ProfileCompleteController>(
@@ -70,8 +70,8 @@ class _ProfileCompleteScreenState extends State<ProfileCompleteScreen> {
                     const SizedBox(height: Dimensions.space15),
                     LabelTextField(
                       isRequired: true,
-                      labelText: MyStrings.username.tr,
-                      hintText: MyStrings.enterYourUsername.tr,
+                      labelText: Strings.username.tr,
+                      hintText: Strings.enterYourUsername.tr,
                       textInputType: TextInputType.text,
                       inputAction: TextInputAction.next,
                       focusNode: controller.usernameFocusNode,
@@ -79,9 +79,9 @@ class _ProfileCompleteScreenState extends State<ProfileCompleteScreen> {
                       nextFocus: controller.mobileNoFocusNode,
                       validator: (value) {
                         if ((value as String).trim().isEmpty) {
-                          return MyStrings.kUsernameIsRequired.tr;
+                          return Strings.kUsernameIsRequired.tr;
                         } else if (value.length < 6) {
-                          return MyStrings.kShortUserNameError.tr;
+                          return Strings.kShortUserNameError.tr;
                         } else {
                           return null;
                         }
@@ -91,8 +91,8 @@ class _ProfileCompleteScreenState extends State<ProfileCompleteScreen> {
                     const SizedBox(height: Dimensions.space25),
                     LabelTextField(
                       onChanged: (v) {},
-                      labelText: (MyStrings.phoneNo).replaceAll('.', '').tr,
-                      hintText: MyStrings.enterYourPhoneNumber,
+                      labelText: (Strings.phoneNo).replaceAll('.', '').tr,
+                      hintText: Strings.enterYourPhoneNumber,
                       controller: controller.mobileNoController,
                       focusNode: controller.mobileNoFocusNode,
                       nextFocus: controller.addressFocusNode,
@@ -150,7 +150,7 @@ class _ProfileCompleteScreenState extends State<ProfileCompleteScreen> {
                       ),
                       validator: (value) {
                         if ((value as String).trim().isEmpty) {
-                          return MyStrings.kPhoneNumberIsRequired.tr;
+                          return Strings.kPhoneNumberIsRequired.tr;
                         } else {
                           return null;
                         }
@@ -158,8 +158,8 @@ class _ProfileCompleteScreenState extends State<ProfileCompleteScreen> {
                     ),
                     const SizedBox(height: Dimensions.space25),
                     LabelTextField(
-                      labelText: MyStrings.address,
-                      hintText: MyStrings.enterYourAddress,
+                      labelText: Strings.address,
+                      hintText: Strings.enterYourAddress,
                       textInputType: TextInputType.text,
                       inputAction: TextInputAction.next,
                       focusNode: controller.addressFocusNode,
@@ -171,8 +171,8 @@ class _ProfileCompleteScreenState extends State<ProfileCompleteScreen> {
                     ),
                     const SizedBox(height: Dimensions.space25),
                     LabelTextField(
-                      labelText: MyStrings.state,
-                      hintText: MyStrings.enterState,
+                      labelText: Strings.state,
+                      hintText: Strings.enterState,
                       textInputType: TextInputType.text,
                       inputAction: TextInputAction.next,
                       focusNode: controller.stateFocusNode,
@@ -184,8 +184,8 @@ class _ProfileCompleteScreenState extends State<ProfileCompleteScreen> {
                     ),
                     const SizedBox(height: Dimensions.space25),
                     LabelTextField(
-                      labelText: MyStrings.city.tr,
-                      hintText: MyStrings.enterCity.tr,
+                      labelText: Strings.city.tr,
+                      hintText: Strings.enterCity.tr,
                       textInputType: TextInputType.text,
                       inputAction: TextInputAction.next,
                       focusNode: controller.cityFocusNode,
@@ -197,8 +197,8 @@ class _ProfileCompleteScreenState extends State<ProfileCompleteScreen> {
                     ),
                     const SizedBox(height: Dimensions.space25),
                     LabelTextField(
-                      labelText: MyStrings.zipCode.tr,
-                      hintText: MyStrings.enterZipCode,
+                      labelText: Strings.zipCode.tr,
+                      hintText: Strings.enterZipCode,
                       textInputType: TextInputType.text,
                       inputAction: TextInputAction.done,
                       focusNode: controller.zipCodeFocusNode,
@@ -210,7 +210,7 @@ class _ProfileCompleteScreenState extends State<ProfileCompleteScreen> {
                     const SizedBox(height: Dimensions.space35),
                     CustomElevatedBtn(
                       isLoading: controller.submitLoading,
-                      text: MyStrings.updateProfile.tr,
+                      text: Strings.updateProfile.tr,
                       onTap: () {
                         if (formKey.currentState!.validate()) {
                           controller.profileCompleteSubmit();

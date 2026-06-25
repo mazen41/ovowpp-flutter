@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/core/helper/string_format_helper.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:toastification/toastification.dart';
 
 class CustomSnackBar {
   static void error({required List<String> errorList, int duration = 5}) {
     String message = '';
     if (errorList.isEmpty) {
-      message = MyStrings.somethingWentWrong.tr;
+      message = Strings.somethingWentWrong.tr;
     } else {
       for (var element in errorList) {
         String tempMessage = element.tr;
@@ -37,7 +37,7 @@ class CustomSnackBar {
   static void success({required List<String> successList, int duration = 5}) {
     String message = '';
     if (successList.isEmpty) {
-      message = MyStrings.somethingWentWrong.tr;
+      message = Strings.somethingWentWrong.tr;
     } else {
       for (var element in successList) {
         String tempMessage = element.tr;

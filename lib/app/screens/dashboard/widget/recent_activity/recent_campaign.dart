@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/image/my_asset_widget.dart';
 import 'package:ovowpp/app/components/shimmer/my_shimmer_widget.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/campaigns/campaigns_controller.dart';
 import '../../../../../core/utils/text_style.dart';
 import '../../../../../core/utils/util_exporter.dart';
@@ -45,7 +46,7 @@ class _RecentCampaignState extends State<RecentCampaign> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 DefaultText(
-                  text: MyStrings.recentCampaign.tr,
+                  text: Strings.recentCampaign.tr,
                   textStyle: MyTextStyle.heading16W600().copyWith(color: MyColor.splashTextColor),
                 ),
                 InkWell(
@@ -53,7 +54,7 @@ class _RecentCampaignState extends State<RecentCampaign> {
                   child: Row(
                     children: [
                       DefaultText(
-                        text: MyStrings.viewAll.tr,
+                        text: Strings.viewAll.tr,
                         textStyle: MyTextStyle.subHeading16W400(
                           fontFamily: 'Nunito',
                         ).copyWith(color: MyColor.getPrimaryColor(), fontSize: 14.sp),
@@ -98,11 +99,11 @@ class _RecentCampaignState extends State<RecentCampaign> {
             //             crossAxisAlignment: CrossAxisAlignment.start,
             //             children: [
             //               DefaultText(
-            //                 text: MyStrings.campaignEidPromo,
+            //                 text: Strings.campaignEidPromo.tr,
             //                 textStyle: MyTextStyle.regularW400Style().copyWith(color: MyColor.regularHederColor),
             //               ),
             //               DefaultText(
-            //                 text: "230 ${MyStrings.messagesSent}",
+            //                 text: "230 ${Strings.messagesSent.tr}",
             //                 textStyle: MyTextStyle.regularW400Style().copyWith(color: MyColor.recentActivityCardValue),
             //               ),
             //             ],

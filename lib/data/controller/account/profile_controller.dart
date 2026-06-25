@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ovowpp/core/helper/string_format_helper.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:get/get.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/core/utils/url_container.dart';
 import 'package:ovowpp/data/repo/account/profile_repo.dart';
 import 'package:ovowpp/data/services/shared_pref_service.dart';
@@ -51,7 +51,7 @@ class ProfileController extends GetxController {
     ResponseModel responseModel = await profileRepo.loadProfileInfo();
     if (responseModel.statusCode == 200) {
       profileModel = ProfileResponseModel.fromJson(responseModel.responseJson);
-      if (profileModel.data != null && profileModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+      if (profileModel.data != null && profileModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
         loadData(profileModel);
       } else {
         isLoading = false;
@@ -110,10 +110,10 @@ class ProfileController extends GetxController {
       Get.back();
     } else {
       if (firstName.isEmpty) {
-        CustomSnackBar.error(errorList: [MyStrings.kFirstNameNullError.tr]);
+        CustomSnackBar.error(errorList: [Strings.kFirstNameNullError.tr]);
       }
       if (lastName.isEmpty) {
-        CustomSnackBar.error(errorList: [MyStrings.kLastNameNullError.tr]);
+        CustomSnackBar.error(errorList: [Strings.kLastNameNullError.tr]);
       }
     }
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
 import 'package:ovowpp/core/translations/localization_controller.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/model/customer_details/change_status_response_model.dart';
 import 'package:ovowpp/data/model/customer_details/customer_details_response_model.dart';
@@ -22,7 +22,7 @@ class CustomerDetailsController extends GetxController {
   final TextEditingController noteController = TextEditingController();
   final TextEditingController noteSearchController = TextEditingController();
   List<String> status = ["None", "Pending", "Important", "Done"];
-  List<String> status2 = [MyStrings.selectTemplate, "avvv", "asdsad"];
+  List<String> status2 = [Strings.selectTemplate, "avvv", "asdsad"];
 
   void changeSelectedIndex(int index) {
     selectedIndex = index;
@@ -42,7 +42,7 @@ class CustomerDetailsController extends GetxController {
       ResponseModel model = await repo.getCustomerDetailsRepo(id);
       if (model.statusCode == 200) {
         CustomerDetailsResponseModel responseModel = CustomerDetailsResponseModel.fromJson(model.responseJson);
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           tags = responseModel.data?.conversation?.contact?.tags ?? [];
           notes = responseModel.data?.conversation?.notes ?? [];
           filteredNotes = responseModel.data?.conversation?.notes ?? [];
@@ -79,7 +79,7 @@ class CustomerDetailsController extends GetxController {
       ResponseModel model = await repo.changeStatusRepo(id, status);
       if (model.statusCode == 200) {
         ChangeStatusResponseModel responseModel = ChangeStatusResponseModel.fromJson(model.responseJson);
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           CustomSnackBar.success(successList: [responseModel.message?.first ?? ""]);
         } else {
           CustomSnackBar.error(errorList: [responseModel.message?.first ?? ""]);
@@ -100,7 +100,7 @@ class CustomerDetailsController extends GetxController {
       ResponseModel model = await repo.addNotesRepo(id, noteController.text);
       if (model.statusCode == 200) {
         ChangeStatusResponseModel responseModel = ChangeStatusResponseModel.fromJson(model.responseJson);
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           notes.insert(0, responseModel.data?.note ?? Note());
           noteController.clear();
           customerDetailsData(forceLoad: false);
@@ -130,7 +130,7 @@ class CustomerDetailsController extends GetxController {
       ResponseModel model = await repo.deleteNoteRepo(noteId);
       if (model.statusCode == 200) {
         ChangeStatusResponseModel responseModel = ChangeStatusResponseModel.fromJson(model.responseJson);
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           filteredNotes.removeAt(index);
           notes.removeAt(index);
           Get.back();

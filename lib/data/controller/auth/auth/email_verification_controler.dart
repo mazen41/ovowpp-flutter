@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:get/get.dart';
 import 'package:ovowpp/core/route/route.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/data/model/authorization/authorization_response_model.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:ovowpp/data/repo/auth/sms_email_verification_repo.dart';
@@ -26,7 +26,7 @@ class EmailVerificationController extends GetxController {
     if (responseModel.statusCode == 200) {
       AuthorizationResponseModel model = AuthorizationResponseModel.fromJson(responseModel.responseJson);
       if (model.status == 'error') {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.somethingWentWrong]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.somethingWentWrong]);
       }
     } else {
       CustomSnackBar.error(errorList: [responseModel.message]);
@@ -38,7 +38,7 @@ class EmailVerificationController extends GetxController {
 
   Future<void> verifyEmail(String text) async {
     if (text.isEmpty) {
-      CustomSnackBar.error(errorList: [MyStrings.otpFieldEmptyMsg]);
+      CustomSnackBar.error(errorList: [Strings.otpFieldEmptyMsg]);
       return;
     }
 
@@ -53,8 +53,8 @@ class EmailVerificationController extends GetxController {
       bool isSMSVerificationEnable = model.data?.user?.sv == "0" ? true : false;
       bool is2FAEnable = model.data?.user?.tv == "0" ? true : false;
 
-      if (model.status == MyStrings.success) {
-        CustomSnackBar.success(successList: model.message ?? [(MyStrings.emailVerificationSuccess)]);
+      if (model.status == Strings.success) {
+        CustomSnackBar.success(successList: model.message ?? [(Strings.emailVerificationSuccess)]);
         if (isSMSVerificationEnable) {
           Get.offAndToNamed(RouteHelper.smsVerificationScreen);
         } else if (is2FAEnable) {
@@ -63,7 +63,7 @@ class EmailVerificationController extends GetxController {
           Get.offAndToNamed(RouteHelper.bottomNavScreen);
         }
       } else {
-        CustomSnackBar.error(errorList: model.message ?? [(MyStrings.emailVerificationFailed)]);
+        CustomSnackBar.error(errorList: model.message ?? [(Strings.emailVerificationFailed)]);
       }
     } else {
       CustomSnackBar.error(errorList: [responseModel.message]);

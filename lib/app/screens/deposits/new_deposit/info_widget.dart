@@ -5,7 +5,7 @@ import 'package:ovowpp/app/components/row_widget/custom_row.dart';
 import 'package:ovowpp/core/utils/app_style.dart';
 import '../../../../core/utils/dimensions.dart';
 import '../../../../core/utils/my_color.dart';
-import '../../../../core/utils/my_strings.dart';
+import '../../../../core/translations/strings_enum.dart';
 import '../../../../data/controller/deposit/add_new_deposit_controller.dart';
 
 class InfoWidget extends StatelessWidget {
@@ -30,12 +30,12 @@ class InfoWidget extends StatelessWidget {
                 children: [
                   spaceDown(Dimensions.space15.h),
                   if (!controller.isSubscriptionDeposit)
-                    CustomRow(firstText: MyStrings.depositLimit.tr, lastText: controller.depositLimit),
-                  CustomRow(firstText: MyStrings.depositCharge.tr, lastText: controller.charge),
-                  CustomRow(firstText: MyStrings.payable.tr, lastText: controller.payableText, showDivider: showRate),
+                    CustomRow(firstText: Strings.depositLimit.tr, lastText: controller.depositLimit),
+                  CustomRow(firstText: Strings.depositCharge.tr, lastText: controller.charge),
+                  CustomRow(firstText: Strings.payable.tr, lastText: controller.payableText, showDivider: showRate),
                   showRate
                       ? CustomRow(
-                          firstText: MyStrings.conversionRate.tr,
+                          firstText: Strings.conversionRate.tr,
                           lastText: controller.conversionRate,
                           showDivider: showRate,
                         )

@@ -6,7 +6,7 @@ import 'package:ovowpp/data/services/push_notification_service.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/core/route/route.dart';
 import 'package:ovowpp/core/utils/messages.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/model/general_setting/general_setting_response_model.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:ovowpp/data/repo/auth/general_setting_repo.dart';
@@ -42,7 +42,7 @@ class SplashController extends GetxController {
       if (model.status?.toLowerCase() == 'success') {
         await SharedPreferenceService.setGeneralSettingData(model);
       } else {
-        List<String> message = [MyStrings.somethingWentWrong];
+        List<String> message = [Strings.somethingWentWrong];
         CustomSnackBar.error(errorList: model.message ?? message);
       }
     } else {

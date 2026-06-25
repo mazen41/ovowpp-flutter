@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/screens/dashboard/widget/quick_action/quick_action_item.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/all_contacts/all_contact_controller.dart';
 import 'package:ovowpp/data/repo/all_contact/all_contact_repo.dart';
 import '../../../../../core/route/route.dart';
@@ -32,7 +33,7 @@ class _QuickActionState extends State<QuickAction> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             DefaultText(
-              text: MyStrings.quickActions.tr,
+              text: Strings.quickActions.tr,
               textStyle: MyTextStyle.heading16W600().copyWith(color: MyColor.splashTextColor),
             ),
             spaceDown(Dimensions.space12.h),
@@ -44,7 +45,7 @@ class _QuickActionState extends State<QuickAction> {
                     visible: MyUtils.checkPermission(AppPermission.addContact),
                     child: QuickActionItem(
                       icon: MyImages.addContact,
-                      title: MyStrings.addContact.tr,
+                      title: Strings.addContact.tr,
 
                       onTap: () {
                         Get.toNamed(
@@ -67,7 +68,7 @@ class _QuickActionState extends State<QuickAction> {
                     visible: MyUtils.checkPermission(AppPermission.addCampaign),
                     child: QuickActionItem(
                       icon: MyImages.newCampaign,
-                      title: MyStrings.newCampaign.tr,
+                      title: Strings.newCampaign.tr,
                       onTap: () {
                         Get.toNamed(RouteHelper.createCampaignScreen);
                       },
@@ -78,7 +79,7 @@ class _QuickActionState extends State<QuickAction> {
                     // visible: MyUtils.checkPermission(AppPermission.contact),
                     child: QuickActionItem(
                       icon: MyImages.link,
-                      title: MyStrings.manageContact.tr,
+                      title: Strings.manageContact.tr,
                       onTap: () {
                         Get.toNamed(RouteHelper.manageContactScreen);
                       },
@@ -89,7 +90,7 @@ class _QuickActionState extends State<QuickAction> {
                     visible: MyUtils.checkPermission(AppPermission.viewAgent),
                     child: QuickActionItem(
                       icon: MyImages.link,
-                      title: MyStrings.manageAgent.tr,
+                      title: Strings.manageAgent.tr,
                       onTap: () {
                         Get.toNamed(RouteHelper.manageAgentScreen);
                       },

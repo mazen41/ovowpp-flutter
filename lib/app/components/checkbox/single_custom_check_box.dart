@@ -14,7 +14,7 @@ class SingleCustomCheckbox extends StatelessWidget {
     required this.value,
     required this.onChanged,
     this.isRememberMeTextShow = false,
-    this.checkText = MyStrings.rememberMe,
+    this.checkText = Strings.rememberMe,
     this.textStyle,
   });
 

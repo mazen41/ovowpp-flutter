@@ -33,7 +33,7 @@ class KycDateTimeSection extends StatelessWidget {
           validator: (value) {
             printX(model.isRequired);
             if (model.isRequired != 'optional' && value.toString().isEmpty) {
-              return '${model.name.toString().capitalizeFirst} ${MyStrings.isRequired}';
+              return '${model.name.toString().capitalizeFirst} ${Strings.isRequired}';
             } else {
               return null;
             }

@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 
 import '../../../../core/utils/dimensions.dart';
 import '../../../../core/utils/my_color.dart';
-import '../../../../core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import '../../../../data/model/withdraw/withdraw_history_response_model.dart';
 
 class WithdrawBottomSheet {
@@ -22,14 +22,14 @@ class WithdrawBottomSheet {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const BottomSheetTopRow(header: MyStrings.withdrawInformation),
+              const BottomSheetTopRow(header: Strings.withdrawInformation),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                     flex: 6,
                     child: LabelColumn(
-                      header: MyStrings.amount,
+                      header: Strings.amount,
                       body:
                           '${controller.curSymbol}${AppConverter.formatNumber(controller.withdrawList[index].amount ?? '0')}',
                     ),
@@ -38,7 +38,7 @@ class WithdrawBottomSheet {
                     flex: 2,
                     child: LabelColumn(
                       alignmentEnd: true,
-                      header: MyStrings.charge,
+                      header: Strings.charge,
                       body:
                           '${controller.curSymbol}${AppConverter.formatNumber(controller.withdrawList[index].charge ?? '')}',
                     ),
@@ -52,7 +52,7 @@ class WithdrawBottomSheet {
                   Expanded(
                     flex: 3,
                     child: LabelColumn(
-                      header: MyStrings.payableAmount,
+                      header: Strings.payableAmount,
                       body:
                           '${controller.curSymbol}${AppConverter.formatNumber(controller.withdrawList[index].afterCharge ?? '')}',
                     ),
@@ -61,7 +61,7 @@ class WithdrawBottomSheet {
                     flex: 4,
                     child: LabelColumn(
                       alignmentEnd: true,
-                      header: MyStrings.conversionRate,
+                      header: Strings.conversionRate,
                       body:
                           '1 ${controller.currency} = ${AppConverter.formatNumber(controller.withdrawList[index].rate ?? '')} ${controller.withdrawList[index].currency}',
                     ),
@@ -75,7 +75,7 @@ class WithdrawBottomSheet {
                   Expanded(
                     flex: 4,
                     child: LabelColumn(
-                      header: MyStrings.finalAmount,
+                      header: Strings.finalAmount,
                       body:
                           '${controller.curSymbol}${AppConverter.formatNumber(controller.withdrawList[index].finalAmount ?? '0')}',
                     ),
@@ -84,7 +84,7 @@ class WithdrawBottomSheet {
                     flex: 3,
                     child: LabelColumn(
                       alignmentEnd: true,
-                      header: MyStrings.paymentMethod,
+                      header: Strings.paymentMethod,
                       body: AppConverter.formatNumber(controller.withdrawList[index].method?.name ?? ''),
                     ),
                   ),
@@ -98,7 +98,7 @@ class WithdrawBottomSheet {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const CustomDivider(space: Dimensions.space15),
-                    BottomSheetLabelText(text: MyStrings.details.tr),
+                    BottomSheetLabelText(text: Strings.details.tr),
                     const SizedBox(height: Dimensions.space15),
                     SizedBox(
                       child: ListView.builder(
@@ -131,7 +131,7 @@ class WithdrawBottomSheet {
                                             Icon(Icons.file_download, size: 17, color: MyColor.getPrimaryColor()),
                                             const SizedBox(width: 12),
                                             Text(
-                                              MyStrings.attachment.tr,
+                                              Strings.attachment.tr,
                                               style: theme.textTheme.labelMedium?.copyWith(
                                                 color: MyColor.getPrimaryColor(),
                                               ),

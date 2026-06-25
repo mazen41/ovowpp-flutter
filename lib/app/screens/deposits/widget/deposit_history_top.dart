@@ -6,7 +6,7 @@ import 'package:ovowpp/core/utils/app_style.dart';
 
 import '../../../../core/utils/dimensions.dart';
 import '../../../../core/utils/my_color.dart';
-import '../../../../core/utils/my_strings.dart';
+import '../../../../core/translations/strings_enum.dart';
 import '../../../../core/utils/text_style.dart';
 import '../../../../core/utils/util.dart';
 import '../../../../data/controller/deposit/deposit_history_controller.dart';
@@ -34,7 +34,7 @@ class _DepositHistoryTopState extends State<DepositHistoryTop> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             LabelText(
-              text: MyStrings.trxNo.tr,
+              text: Strings.trxNo.tr,
               textStyle: MyTextStyle.subHeading15W500FieldTitleColor.copyWith(fontSize: 14.sp),
             ),
             spaceDown(Dimensions.space8.h),

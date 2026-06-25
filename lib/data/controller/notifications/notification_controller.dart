@@ -1,4 +1,4 @@
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:ovowpp/data/model/notification/notification_response_model.dart';
 import 'package:ovowpp/data/services/shared_pref_service.dart';
@@ -56,13 +56,13 @@ class NotificationsController extends GetxController {
       NotificationResponseModel model = NotificationResponseModel.fromJson(response.responseJson);
 
       nextPageUrl = model.data?.notifications?.nextPageUrl;
-      if (model.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+      if (model.status?.toLowerCase() == Strings.success.toLowerCase()) {
         List<Data>? tempList = model.data?.notifications?.data;
         if (tempList != null && tempList.isNotEmpty) {
           notificationList.addAll(tempList);
         }
       } else {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.somethingWentWrong]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.somethingWentWrong]);
       }
     } else {
       CustomSnackBar.error(errorList: [response.message]);
@@ -85,10 +85,10 @@ class NotificationsController extends GetxController {
       auth_model.AuthorizationResponseModel model = auth_model.AuthorizationResponseModel.fromJson(
         response.responseJson,
       );
-      if (model.status!.toLowerCase() == MyStrings.success.toLowerCase()) {
+      if (model.status!.toLowerCase() == Strings.success.toLowerCase()) {
         //checkAndRedirect(remark, clickValue);
       } else {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.somethingWentWrong]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.somethingWentWrong]);
       }
     } else {
       CustomSnackBar.error(errorList: [response.message]);

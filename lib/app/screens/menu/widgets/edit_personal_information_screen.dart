@@ -14,13 +14,13 @@ class EditPersonalInformationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColor.white,
-      appBar: CustomAppBar(elevation: 0, bgColor: MyColor.white, title: MyStrings.personalInformation.tr),
+      appBar: CustomAppBar(elevation: 0, bgColor: MyColor.white, title: Strings.personalInformation.tr),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: Dimensions.space16.w),
         child: Column(
           children: [
             ProfileEditAndCancelBtn(
-              text: MyStrings.cancel,
+              text: Strings.cancel,
               onTap: () {
                 Get.back();
               },
@@ -29,21 +29,21 @@ class EditPersonalInformationScreen extends StatelessWidget {
             LabelTextField(
               isShadow: true,
               isRequired: true,
-              labelText: MyStrings.fullName.tr,
+              labelText: Strings.fullName.tr,
               onChanged: () {},
               fillColor: MyColor.searchFieldColor,
             ),
             spaceDown(Dimensions.space12.h),
             LabelTextField(
               isShadow: true,
-              labelText: MyStrings.number.tr,
+              labelText: Strings.number.tr,
               onChanged: () {},
               fillColor: MyColor.searchFieldColor,
             ),
             spaceDown(Dimensions.space12.h),
             LabelTextField(
               isShadow: true,
-              labelText: MyStrings.email.tr,
+              labelText: Strings.email.tr,
               onChanged: () {},
               fillColor: MyColor.searchFieldColor,
             ),
@@ -58,12 +58,12 @@ class EditPersonalInformationScreen extends StatelessWidget {
                 isSvg: true,
                 assetPath: MyImages.arrowDown,
               ),
-              labelText: MyStrings.country.tr,
+              labelText: Strings.country.tr,
               onChanged: () {},
               fillColor: MyColor.searchFieldColor,
             ),
             spaceDown(Dimensions.space28.h),
-            CustomElevatedBtn(text: MyStrings.save, onTap: () {}),
+            CustomElevatedBtn(text: Strings.save, onTap: () {}),
           ],
         ),
       ),

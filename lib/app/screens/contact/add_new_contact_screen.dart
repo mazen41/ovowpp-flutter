@@ -30,7 +30,7 @@ class _AddNewContactState extends State<AddNewContact> {
           statusBarColor: Colors.transparent,
           child: Scaffold(
             backgroundColor: MyColor.white,
-            appBar: CustomAppBar(elevation: 0, bgColor: Colors.white, title: MyStrings.addNewContact.tr),
+            appBar: CustomAppBar(elevation: 0, bgColor: Colors.white, title: Strings.addNewContact.tr),
             body: SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimensions.space16.w),
@@ -40,8 +40,8 @@ class _AddNewContactState extends State<AddNewContact> {
                     LabelTextField(
                       isRequired: true,
                       controller: controller.fullNameController,
-                      labelText: MyStrings.fullName.tr,
-                      hintText: MyStrings.enterFullName.tr,
+                      labelText: Strings.fullName.tr,
+                      hintText: Strings.enterFullName.tr,
                       onChanged: () {},
                       fillColor: MyColor.campaignFieldFillColor,
                       isShadow: true,
@@ -51,16 +51,16 @@ class _AddNewContactState extends State<AddNewContact> {
                       isRequired: true,
                       //   readOnly: true,
                       controller: controller.phoneNumberController,
-                      labelText: MyStrings.phoneNumber.tr,
-                      hintText: MyStrings.phoneNumber.tr,
+                      labelText: Strings.phoneNumber.tr,
+                      hintText: Strings.phoneNumber.tr,
                       onChanged: () {},
                       fillColor: MyColor.campaignFieldFillColor,
                     ),
                     spaceDown(Dimensions.space16.h),
                     LabelTextField(
                       controller: controller.emailController,
-                      labelText: MyStrings.emailOptional.tr,
-                      hintText: MyStrings.emailExample.tr,
+                      labelText: Strings.emailOptional.tr,
+                      hintText: Strings.emailExample.tr,
                       onChanged: () {},
                       fillColor: MyColor.campaignFieldFillColor,
                       suffixIcon: MyAssetImageWidget(
@@ -74,8 +74,8 @@ class _AddNewContactState extends State<AddNewContact> {
                     spaceDown(Dimensions.space16.h),
                     LabelTextField(
                       controller: controller.tagController,
-                      labelText: MyStrings.tag.tr,
-                      hintText: MyStrings.lead.tr,
+                      labelText: Strings.tag.tr,
+                      hintText: Strings.lead.tr,
                       onChanged: () {},
                       fillColor: MyColor.campaignFieldFillColor,
                       suffixIcon: MyAssetImageWidget(
@@ -90,18 +90,18 @@ class _AddNewContactState extends State<AddNewContact> {
                     LabelTextField(
                       maxLines: 6,
                       controller: controller.notesController,
-                      labelText: MyStrings.notesOptional.tr,
-                      hintText: MyStrings.addNoteAboutThisContact.tr,
+                      labelText: Strings.notesOptional.tr,
+                      hintText: Strings.addNoteAboutThisContact.tr,
                       onChanged: () {},
                       fillColor: MyColor.campaignFieldFillColor,
                     ),
                     spaceDown(Dimensions.space16.h),
 
                     spaceDown(Dimensions.space16.h),
-                    CustomElevatedBtn(text: MyStrings.saveContact.tr, onTap: () {}),
+                    CustomElevatedBtn(text: Strings.saveContact.tr, onTap: () {}),
                     spaceDown(Dimensions.space12.h),
                     CustomElevatedBtn(
-                      text: MyStrings.cancel.tr,
+                      text: Strings.cancel.tr,
                       onTap: () {},
                       bgColor: MyColor.cancelElevatedBtnBgColor,
                     ),

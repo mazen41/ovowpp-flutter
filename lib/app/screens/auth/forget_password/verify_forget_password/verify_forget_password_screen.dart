@@ -6,7 +6,7 @@ import 'package:ovowpp/core/utils/app_style.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/auth/forget_password/verify_password_controller.dart';
 import 'package:ovowpp/data/repo/auth/login_repo.dart';
 import 'package:ovowpp/app/components/app-bar/custom_app_bar.dart';
@@ -38,7 +38,7 @@ class _VerifyForgetPassScreenState extends State<VerifyForgetPassScreen> {
     ThemeData theme = Theme.of(context);
     return ImageBgWidget(
       isAppBar: true,
-      customAppBar: CustomAppBar(isShowBackBtn: true, title: MyStrings.forgetPassword.tr, bgColor: Colors.transparent),
+      customAppBar: CustomAppBar(isShowBackBtn: true, title: Strings.forgetPassword.tr, bgColor: Colors.transparent),
       screen: GetBuilder<VerifyPasswordController>(
         builder: (controller) => controller.isLoading
             ? Center(child: CircularProgressIndicator(color: MyColor.getPrimaryColor()))
@@ -69,7 +69,7 @@ class _VerifyForgetPassScreenState extends State<VerifyForgetPassScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 25),
                         child: DefaultText(
-                          text: '${MyStrings.verifyPasswordSubText.tr} : ${controller.getFormatedMail().tr}',
+                          text: '${Strings.verifyPasswordSubText.tr} : ${controller.getFormatedMail().tr}',
                           textAlign: TextAlign.center,
                           textColor: MyColor.getBodyTextColor(),
                         ),
@@ -123,13 +123,13 @@ class _VerifyForgetPassScreenState extends State<VerifyForgetPassScreen> {
                             controller.verifyForgetPasswordCode(controller.currentText);
                           }
                         },
-                        text: MyStrings.submit.tr,
+                        text: Strings.submit.tr,
                       ),
                       const SizedBox(height: Dimensions.space25),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          DefaultText(text: MyStrings.didNotReceiveCode.tr, textColor: MyColor.getBodyTextColor()),
+                          DefaultText(text: Strings.didNotReceiveCode.tr, textColor: MyColor.getBodyTextColor()),
                           spaceSide(Dimensions.space5),
                           controller.isResendLoading
                               ? SizedBox(
@@ -141,7 +141,7 @@ class _VerifyForgetPassScreenState extends State<VerifyForgetPassScreen> {
                                   onPressed: () {
                                     controller.resendForgetPassCode();
                                   },
-                                  child: DefaultText(text: MyStrings.resend.tr, textColor: MyColor.getPrimaryColor()),
+                                  child: DefaultText(text: Strings.resend.tr, textColor: MyColor.getPrimaryColor()),
                                 ),
                         ],
                       ),

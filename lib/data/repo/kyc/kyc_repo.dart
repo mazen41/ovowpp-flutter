@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/url_container.dart';
 import 'package:ovowpp/data/model/authorization/authorization_response_model.dart';
 import 'package:ovowpp/data/model/global/formdata/dynamic_file_value_keeper_model.dart';
@@ -21,7 +21,7 @@ class KycRepo extends ApiService {
         return model;
       } else {
         if (model.remark?.toLowerCase() != 'already_verified' && model.remark?.toLowerCase() != 'under_review') {
-          CustomSnackBar.error(errorList: model.message ?? [MyStrings.somethingWentWrong]);
+          CustomSnackBar.error(errorList: model.message ?? [Strings.somethingWentWrong]);
         }
 
         return model;
@@ -68,7 +68,7 @@ class KycRepo extends ApiService {
           filesDataList.add(DynamicFileValueKeeperModel(e.label!, e.imageFile!));
         }
       } else if (e.type == 'select') {
-        if (e.selectedValue != null && e.selectedValue.toString() != MyStrings.selectOne) {
+        if (e.selectedValue != null && e.selectedValue.toString() != Strings.selectOne) {
           fieldValueList.add({e.label ?? '': e.selectedValue});
         }
       } else {

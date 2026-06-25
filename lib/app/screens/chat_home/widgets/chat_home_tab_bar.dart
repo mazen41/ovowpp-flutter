@@ -65,13 +65,13 @@ class MySliverTabBarView extends StatelessWidget {
                     final msgType = lastMsg.messageType?.toString() ?? '';
 
                     if (mediaType == 'image') {
-                      previewText = MyStrings.sentAnImage.tr;
+                      previewText = Strings.sentAnImage.tr;
                     } else if (mediaType == 'audio' || msgType == '5') {
-                      previewText = MyStrings.sentAnAudio.tr;
+                      previewText = Strings.sentAnAudio.tr;
                     } else if (mediaType == 'video') {
-                      previewText = MyStrings.sentAVideo.tr;
+                      previewText = Strings.sentAVideo.tr;
                     } else if (mediaType == 'document' || msgType == '3' || msgType == '4') {
-                      previewText = MyStrings.sentADocument.tr;
+                      previewText = Strings.sentADocument.tr;
                     }
                   }
 
@@ -79,13 +79,13 @@ class MySliverTabBarView extends StatelessWidget {
                     onTap: () {
                       // 1️⃣ Permission check
                       if (!MyUtils.checkPermission(AppPermission.sendMessage)) {
-                        CustomSnackBar.error(errorList: [MyStrings.permissionDenyMessage]);
+                        CustomSnackBar.error(errorList: [Strings.permissionDenyMessage]);
                         return;
                       }
 
                       // 2️⃣ Data validation
                       if (item.id == null) {
-                        CustomSnackBar.error(errorList: [MyStrings.somethingWentWrong]);
+                        CustomSnackBar.error(errorList: [Strings.somethingWentWrong]);
                         return;
                       }
 
@@ -211,10 +211,10 @@ class MySliverTabBarView extends StatelessWidget {
                                         ),
                                         child: DefaultText(
                                           text: (int.tryParse(item.status.toString()) == 1)
-                                              ? MyStrings.pending.tr
+                                              ? Strings.pending.tr
                                               : (int.tryParse(item.status.toString()) == 2)
-                                              ? MyStrings.open.tr
-                                              : MyStrings.solved.tr,
+                                              ? Strings.open.tr
+                                              : Strings.solved.tr,
                                           textStyle: MyTextStyle.subHeading14W600().copyWith(
                                             color: (int.tryParse(item.status.toString()) == 1)
                                                 ? MyColor.errorColor

@@ -7,7 +7,7 @@ import 'package:ovowpp/core/helper/string_format_helper.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/utils/dimensions.dart';
-import '../../../../core/utils/my_strings.dart';
+import '../../../../core/translations/strings_enum.dart';
 import '../../../../data/controller/deposit/deposit_history_controller.dart';
 
 class DepositBottomSheet {
@@ -17,7 +17,7 @@ class DepositBottomSheet {
         builder: (controller) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const BottomSheetTopRow(header: MyStrings.depositInfo),
+            const BottomSheetTopRow(header: Strings.depositInfo),
             BottomSheetContainer(
               child: Column(
                 children: [
@@ -26,14 +26,14 @@ class DepositBottomSheet {
                     children: [
                       Expanded(
                         child: BottomSheetColumn(
-                          header: MyStrings.paymentMethod,
+                          header: Strings.paymentMethod,
                           body: controller.depositList[index].gateway?.name ?? '',
                         ),
                       ),
                       Expanded(
                         child: BottomSheetColumn(
                           alignmentEnd: true,
-                          header: MyStrings.amount,
+                          header: Strings.amount,
                           body:
                               '${controller.curSymbol}${AppConverter.formatNumber(controller.depositList[index].amount ?? '')}',
                         ),
@@ -46,7 +46,7 @@ class DepositBottomSheet {
                     children: [
                       Expanded(
                         child: BottomSheetColumn(
-                          header: MyStrings.depositCharge,
+                          header: Strings.depositCharge,
                           body:
                               '${controller.curSymbol}${AppConverter.formatNumber(controller.depositList[index].charge ?? '0')}',
                         ),
@@ -54,7 +54,7 @@ class DepositBottomSheet {
                       Expanded(
                         child: BottomSheetColumn(
                           alignmentEnd: true,
-                          header: MyStrings.payableAmount,
+                          header: Strings.payableAmount,
                           body:
                               '${controller.curSymbol}${AppConverter.sum(controller.depositList[index].amount ?? '0', controller.depositList[index].charge ?? '0')}',
                         ),
@@ -67,7 +67,7 @@ class DepositBottomSheet {
                     children: [
                       Expanded(
                         child: BottomSheetColumn(
-                          header: MyStrings.conversionRate,
+                          header: Strings.conversionRate,
                           body:
                               "1 ${controller.currency}"
                               " = ${AppConverter.formatNumber(controller.depositList[index].rate ?? "")} ${controller.depositList[index].methodCurrency}",
@@ -76,7 +76,7 @@ class DepositBottomSheet {
                       Expanded(
                         child: BottomSheetColumn(
                           alignmentEnd: true,
-                          header: MyStrings.finalAmount,
+                          header: Strings.finalAmount,
                           body:
                               '${controller.curSymbol}${AppConverter.formatNumber(controller.depositList[index].finalAmount ?? '')}',
                         ),

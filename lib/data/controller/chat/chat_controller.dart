@@ -10,7 +10,7 @@ import 'package:record/record.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
 import 'package:ovowpp/core/translations/localization_controller.dart';
 import 'package:ovowpp/core/utils/app_status.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/model/chat/chat_data_response_model.dart';
 import 'package:ovowpp/data/model/chat/message_model.dart';
@@ -118,7 +118,7 @@ class ChatController extends GetxController {
       final responseModal = await repo.getChatsDataRepo(conversationId, page.toString(), searchQuery);
       if (responseModal.statusCode == 200) {
         ChatDataResponseModel model = ChatDataResponseModel.fromJson(responseModal.responseJson);
-        if (model.status?.toLowerCase() == MyStrings.success) {
+        if (model.status?.toLowerCase() == Strings.success) {
           messages.addAll(model.data?.messages?.data ?? []);
           contact = model.data?.contact;
           imagePath = model.data?.profilePath ?? "";
@@ -126,7 +126,7 @@ class ChatController extends GetxController {
           nextPageUrl = model.data?.messages?.nextPageUrl ?? "";
           whatsappAccountId = model.data?.whatsappAccountId ?? "";
         } else {
-          CustomSnackBar.error(errorList: model.message ?? [MyStrings.somethingWentWrong]);
+          CustomSnackBar.error(errorList: model.message ?? [Strings.somethingWentWrong]);
         }
       } else {
         CustomSnackBar.error(errorList: [responseModal.message]);
@@ -156,10 +156,10 @@ class ChatController extends GetxController {
       final responseModal = await repo.seenMessageRepo(conversationId);
       if (responseModal.statusCode == 200) {
         SeenMessageResponseModel model = SeenMessageResponseModel.fromJson(responseModal.responseJson);
-        if (model.status?.toLowerCase() == MyStrings.success) {
+        if (model.status?.toLowerCase() == Strings.success) {
           unseenMessageCount = model.data?.unseenMessageCount ?? "";
         } else {
-          CustomSnackBar.error(errorList: model.message ?? [MyStrings.somethingWentWrong]);
+          CustomSnackBar.error(errorList: model.message ?? [Strings.somethingWentWrong]);
         }
       } else {
         CustomSnackBar.error(errorList: [responseModal.message]);
@@ -214,7 +214,7 @@ class ChatController extends GetxController {
           isPreviewing = false;
           update(['chat_screen_main', 'recording_area']);
         } else {
-          CustomSnackBar.error(errorList: responseModel.message ?? [MyStrings.requestFail.tr]);
+          CustomSnackBar.error(errorList: responseModel.message ?? [Strings.requestFail.tr]);
         }
         sendingMessage = false;
         update(['chat_screen_main', 'recording_area']);
@@ -292,7 +292,7 @@ class ChatController extends GetxController {
       // Check and request storage permission
       bool isPermissionGranted = await MyUtils.checkAndRequestStoragePermission();
       if (!isPermissionGranted) {
-        CustomSnackBar.error(errorList: [MyStrings.permissionDenied]);
+        CustomSnackBar.error(errorList: [Strings.permissionDenied]);
         return;
       }
       // Get directory path based on platform
@@ -328,7 +328,7 @@ class ChatController extends GetxController {
     if (Platform.isAndroid) {
       var status = await Permission.storage.request();
       if (!status.isGranted) {
-        CustomSnackBar.error(errorList: [MyStrings.permissionDenied]);
+        CustomSnackBar.error(errorList: [Strings.permissionDenied]);
         return;
       }
       downloadsDirectory = Directory('/storage/emulated/0/Download');
@@ -343,7 +343,7 @@ class ChatController extends GetxController {
       CustomSnackBar.success(successList: ['File saved at: $downloadPath']);
       await MyUtils().openFile(downloadPath, extension);
     } else {
-      CustomSnackBar.error(errorList: [MyStrings.downloadDirNotFound]);
+      CustomSnackBar.error(errorList: [Strings.downloadDirNotFound]);
     }
   }
 
@@ -353,7 +353,7 @@ class ChatController extends GetxController {
     update(['chat_screen_main', 'recording_area']);
   }
 
-  List<String> status = [MyStrings.selectTemplate, "avvv", "asdsad"];
+  List<String> status = [Strings.selectTemplate, "avvv", "asdsad"];
   int selectedIndex = 0;
   void changeSelectedIndex(int index) {
     selectedIndex = index;
@@ -391,7 +391,7 @@ class ChatController extends GetxController {
         isRecording = false;
         _recordingTimer?.cancel();
         update(['chat_screen_main', 'recording_area']);
-        CustomSnackBar.error(errorList: [MyStrings.permissionDenied]);
+        CustomSnackBar.error(errorList: [Strings.permissionDenied]);
         return;
       }
 

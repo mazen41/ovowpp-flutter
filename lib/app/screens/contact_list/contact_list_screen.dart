@@ -17,7 +17,7 @@ import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_icons.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/controller/contact_list/contact_list_controller.dart';
 import 'package:ovowpp/data/repo/contact_list/contact_list_repo.dart';
@@ -52,7 +52,7 @@ class _ContactListScreenState extends State<ContactListScreen> {
         return MyCustomScaffold(
           transformValue: -8,
           appBarBgColor: MyColor.white,
-          pageTitle: MyStrings.contactList.tr,
+          pageTitle: Strings.contactList.tr,
           body: controller.isLoading
               ? const CustomLoader()
               : controller.getCurrentChatData().isEmpty
@@ -105,7 +105,7 @@ class _ContactListScreenState extends State<ContactListScreen> {
                                       InkWell(
                                         onDoubleTap: () {
                                           Clipboard.setData(ClipboardData(text: item.message.toString()));
-                                          CustomSnackBar.success(successList: [MyStrings.messageCopiedToClipBoard.tr]);
+                                          CustomSnackBar.success(successList: [Strings.messageCopiedToClipBoard.tr]);
                                         },
                                         child: buildRichText(
                                           item.message.toString(),
@@ -217,7 +217,7 @@ class _ContactListScreenState extends State<ContactListScreen> {
                                       ),
                                       spaceSide(Dimensions.space5),
                                       Text(
-                                        MyStrings.document.tr,
+                                        Strings.document.tr,
                                         style: theme.textTheme.titleMedium?.copyWith(
                                           color: MyColor.getBodyTextColor(),
                                           fontWeight: FontWeight.w400,
@@ -236,7 +236,7 @@ class _ContactListScreenState extends State<ContactListScreen> {
                                       Icon(Icons.videocam, size: Dimensions.space25.h, color: MyColor.lightBodyText),
                                       spaceSide(Dimensions.space5),
                                       Text(
-                                        MyStrings.video.tr,
+                                        Strings.video.tr,
                                         style: theme.textTheme.titleMedium?.copyWith(
                                           color: MyColor.getBodyTextColor(),
                                           fontWeight: FontWeight.w400,

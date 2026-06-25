@@ -45,7 +45,7 @@ class _WithdrawConfirmScreenState extends State<WithdrawConfirmScreen> {
       builder: (controller) {
         return Scaffold(
           backgroundColor: MyColor.white,
-          appBar: CustomAppBar(bgColor: MyColor.white, elevation: 0, title: MyStrings.withdrawConfirm.tr),
+          appBar: CustomAppBar(bgColor: MyColor.white, elevation: 0, title: Strings.withdrawConfirm.tr),
           body: controller.isLoading
               ? const CustomLoader()
               : SingleChildScrollView(
@@ -88,7 +88,7 @@ class _WithdrawConfirmScreenState extends State<WithdrawConfirmScreen> {
                                                 : TextInputType.text,
                                             validator: (value) {
                                               if (model.isRequired != 'optional' && value.toString().isEmpty) {
-                                                return '${model.name.toString().capitalizeFirst} ${MyStrings.isRequired}';
+                                                return '${model.name.toString().capitalizeFirst} ${Strings.isRequired}';
                                               } else {
                                                 return null;
                                               }
@@ -115,7 +115,7 @@ class _WithdrawConfirmScreenState extends State<WithdrawConfirmScreen> {
                                             textInputType: TextInputType.multiline,
                                             validator: (value) {
                                               if (model.isRequired != 'optional' && value.toString().isEmpty) {
-                                                return '${model.name.toString().capitalizeFirst} ${MyStrings.isRequired}';
+                                                return '${model.name.toString().capitalizeFirst} ${Strings.isRequired}';
                                               } else {
                                                 return null;
                                               }
@@ -222,7 +222,7 @@ class _WithdrawConfirmScreenState extends State<WithdrawConfirmScreen> {
                                               validator: (value) {
                                                 printX(model.isRequired);
                                                 if (model.isRequired != 'optional' && value.toString().isEmpty) {
-                                                  return '${model.name.toString().capitalizeFirst} ${MyStrings.isRequired}';
+                                                  return '${model.name.toString().capitalizeFirst} ${Strings.isRequired}';
                                                 } else {
                                                   return null;
                                                 }
@@ -257,7 +257,7 @@ class _WithdrawConfirmScreenState extends State<WithdrawConfirmScreen> {
                                               validator: (value) {
                                                 printX(model.isRequired);
                                                 if (model.isRequired != 'optional' && value.toString().isEmpty) {
-                                                  return '${model.name.toString().capitalizeFirst} ${MyStrings.isRequired}';
+                                                  return '${model.name.toString().capitalizeFirst} ${Strings.isRequired}';
                                                 } else {
                                                   return null;
                                                 }
@@ -292,7 +292,7 @@ class _WithdrawConfirmScreenState extends State<WithdrawConfirmScreen> {
                                               validator: (value) {
                                                 printX(model.isRequired);
                                                 if (model.isRequired != 'optional' && value.toString().isEmpty) {
-                                                  return '${model.name.toString().capitalizeFirst} ${MyStrings.isRequired}';
+                                                  return '${model.name.toString().capitalizeFirst} ${Strings.isRequired}';
                                                 } else {
                                                   return null;
                                                 }
@@ -319,7 +319,7 @@ class _WithdrawConfirmScreenState extends State<WithdrawConfirmScreen> {
                           onTap: () {
                             controller.submitConfirmWithdrawRequest();
                           },
-                          text: MyStrings.submit.tr,
+                          text: Strings.submit.tr,
                         ),
                       ],
                     ),

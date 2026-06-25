@@ -74,7 +74,7 @@ class _ContactTagListScreenState extends State<ContactTagListScreen> {
             children: [
               Expanded(
                 child: Text(
-                  MyStrings.manageContactTag.tr,
+                  Strings.manageContactTag.tr,
                   style: theme.textTheme.headlineMedium?.copyWith(color: MyColor.getHeadingTextColor()),
                 ),
               ),
@@ -101,7 +101,7 @@ class _ContactTagListScreenState extends State<ContactTagListScreen> {
           ),
         ),
         transformValue: 1,
-        pageTitle: MyStrings.allContacts.tr,
+        pageTitle: Strings.allContacts.tr,
         body: GetBuilder<ContactTagListController>(
           builder: (controller) => RefreshIndicator(
             color: MyColor.getPrimaryColor(),
@@ -117,9 +117,9 @@ class _ContactTagListScreenState extends State<ContactTagListScreen> {
                 : Column(
                     children: [
                       LabelTextField(
-                        labelText: MyStrings.search.tr,
+                        labelText: Strings.search.tr,
                         hideLabel: true,
-                        hintText: MyStrings.search.tr,
+                        hintText: Strings.search.tr,
                         controller: controller.searchController,
                         onChanged: (value) {
                           if (_debounceTimer?.isActive ?? false) {
@@ -144,7 +144,7 @@ class _ContactTagListScreenState extends State<ContactTagListScreen> {
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return MyStrings.fieldErrorMsg.tr;
+                            return Strings.fieldErrorMsg.tr;
                           } else {
                             return null;
                           }
@@ -188,7 +188,7 @@ class _ContactTagListScreenState extends State<ContactTagListScreen> {
                                               itemBuilder: (context) {
                                                 if (!MyUtils.checkPermission(AppPermission.editContactTag) &&
                                                     (!MyUtils.checkPermission(AppPermission.deleteContactTag))) {
-                                                  CustomSnackBar.error(errorList: [MyStrings.permissionDenyMessage]);
+                                                  CustomSnackBar.error(errorList: [Strings.permissionDenyMessage]);
                                                 }
 
                                                 return [
@@ -205,7 +205,7 @@ class _ContactTagListScreenState extends State<ContactTagListScreen> {
                                                           ),
                                                         ).customAlertDialog(context);
                                                       },
-                                                      child: Text(MyStrings.edit.tr),
+                                                      child: Text(Strings.edit.tr),
                                                     ),
                                                   if (MyUtils.checkPermission(AppPermission.deleteContactTag))
                                                     PopupMenuItem(
@@ -218,7 +218,7 @@ class _ContactTagListScreenState extends State<ContactTagListScreen> {
                                                             child: GetBuilder<ContactTagListController>(
                                                               builder: (context) {
                                                                 return DeleteDialogue(
-                                                                  warningText: MyStrings
+                                                                  warningText: Strings
                                                                       .areYouSureYouWantToDeleteThisContactTagList
                                                                       .tr,
                                                                   isLoading: controller.isDeleting,
@@ -232,7 +232,7 @@ class _ContactTagListScreenState extends State<ContactTagListScreen> {
                                                         });
                                                       },
 
-                                                      child: Text(MyStrings.delete.tr),
+                                                      child: Text(Strings.delete.tr),
                                                     ),
                                                 ];
                                               },

@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
 import 'package:ovowpp/core/utils/app_status.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/model/all_contact/delete_contact_response_model.dart';
 import 'package:ovowpp/data/model/all_contact/update_contact_response_model.dart';
@@ -46,7 +46,7 @@ class ContactTagListController extends GetxController {
 
       final extension = file.extension?.toLowerCase();
       if (extension != 'csv' && extension != 'xlsx') {
-        CustomSnackBar.error(errorList: [MyStrings.invalidFile.tr]);
+        CustomSnackBar.error(errorList: [Strings.invalidFile.tr]);
         return;
       }
 
@@ -78,7 +78,7 @@ class ContactTagListController extends GetxController {
 
       if (response.statusCode == 200) {
         ContactTagListResponseModel responseModel = ContactTagListResponseModel.fromJson(response.responseJson);
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           List<AllContactTagsList>? tempList = responseModel.data?.contactTags?.data ?? [];
           if (tempList.isNotEmpty) {
             nextPageUrl = responseModel.data?.contactTags?.nextPageUrl ?? "";

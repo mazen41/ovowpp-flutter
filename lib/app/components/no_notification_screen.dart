@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:ovowpp/app/components/card/my_custom_scaffold.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import '../../core/utils/dimensions.dart';
 import 'image/custom_svg_picture.dart';
 
@@ -16,10 +16,10 @@ class NoNotificationScreen extends StatefulWidget {
 
   const NoNotificationScreen({
     super.key,
-    this.message = MyStrings.noNotification,
+    this.message = Strings.noNotification,
     this.paddingTop = 6,
     this.imageHeight = .5,
-    this.message2 = MyStrings.noNotificationToShow,
+    this.message2 = Strings.noNotificationToShow,
     this.image = MyImages.noNotificationFound,
   });
 

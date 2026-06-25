@@ -39,10 +39,10 @@ class CampaignsItem extends StatelessWidget {
                     ),
                     child: DefaultText(
                       text: indexItem.status == "3"
-                          ? MyStrings.statusSchedule.tr
+                          ? Strings.statusSchedule.tr
                           : indexItem.status == "2"
-                          ? MyStrings.running.tr
-                          : MyStrings.completed.tr,
+                          ? Strings.running.tr
+                          : Strings.completed.tr,
                       textStyle: MyTextStyle.subHeading12W600().copyWith(
                         color: indexItem.status == "3"
                             ? MyColor.campaignsRunning
@@ -68,9 +68,9 @@ class CampaignsItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                itemKeyValue(key: MyStrings.sent.tr, value: indexItem.totalSend ?? 0.toString()),
-                itemKeyValue(key: MyStrings.successSpace.tr, value: indexItem.totalSuccess ?? 0.toString()),
-                itemKeyValue(key: MyStrings.failed.tr, value: indexItem.totalFailed ?? 0.toString()),
+                itemKeyValue(key: Strings.sent.tr, value: indexItem.totalSend ?? 0.toString()),
+                itemKeyValue(key: Strings.successSpace.tr, value: indexItem.totalSuccess ?? 0.toString()),
+                itemKeyValue(key: Strings.failed.tr, value: indexItem.totalFailed ?? 0.toString()),
                 SizedBox(),
                 SizedBox(),
                 SizedBox(),
@@ -81,7 +81,7 @@ class CampaignsItem extends StatelessWidget {
                 ? Row(
                     children: [
                       DefaultText(
-                        text: MyStrings.schedule.tr,
+                        text: Strings.schedule.tr,
                         textStyle: MyTextStyle.subHeading14W600FieldTitleColor(),
                       ),
                       DefaultText(
@@ -93,7 +93,7 @@ class CampaignsItem extends StatelessWidget {
                 : SizedBox.shrink(),
             spaceDown(Dimensions.space6.h),
             DefaultText(
-              text: "${MyStrings.updated.tr} ${DateConverter.convertIsoToString(indexItem.updatedAt ?? '')}",
+              text: "${Strings.updated.tr} ${DateConverter.convertIsoToString(indexItem.updatedAt ?? '')}",
               textStyle: MyTextStyle.subHeading12W400().copyWith(color: MyColor.updatedTextColor),
             ),
             spaceDown(Dimensions.space12.h),

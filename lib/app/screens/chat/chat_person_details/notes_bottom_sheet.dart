@@ -6,7 +6,7 @@ import 'package:ovowpp/app/components/text-field/label_text_field.dart';
 import 'package:ovowpp/app/components/text/default_text.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/text_style.dart';
 import '../../../../core/helper/date_converter.dart';
 import '../../../../core/utils/app_style.dart';
@@ -60,7 +60,7 @@ class NotesBottomSheet {
                       children: [
                         SizedBox(),
                         DefaultText(
-                          text: MyStrings.notes.tr,
+                          text: Strings.notes.tr,
                           textStyle: MyTextStyle.heading20W700().copyWith(fontWeight: FontWeight.w600),
                         ),
                         BottomSheetCloseButton(
@@ -74,7 +74,7 @@ class NotesBottomSheet {
                 spaceDown(Dimensions.space12.h),
 
                 LabelTextField(
-                  hintText: MyStrings.search.tr,
+                  hintText: Strings.search.tr,
                   hideLabel: true,
                   onChanged: (value) {
                     controller.searchNotes(value);
@@ -188,7 +188,7 @@ class NotesBottomSheet {
                         children: [
                           SizedBox(),
                           DefaultText(
-                            text: MyStrings.addNote.tr,
+                            text: Strings.addNote.tr,
                             textStyle: MyTextStyle.heading20W700().copyWith(fontWeight: FontWeight.w600),
                           ),
                           BottomSheetCloseButton(
@@ -201,10 +201,10 @@ class NotesBottomSheet {
                   ),
                   spaceDown(Dimensions.space40.h),
                   CustomTextField(
-                    labelText: MyStrings.addNote.tr,
+                    labelText: Strings.addNote.tr,
                     needOutlineBorder: true,
                     fillColor: MyColor.getCardBackgroundColor(),
-                    hintText: MyStrings.writeDescription.tr,
+                    hintText: Strings.writeDescription.tr,
                     isPassword: false,
                     controller: controller.noteController,
                     maxLines: 4,
@@ -215,7 +215,7 @@ class NotesBottomSheet {
                   spaceDown(Dimensions.space25.h),
                   CustomElevatedBtn(
                     isLoading: controller.noteLoading,
-                    text: MyStrings.add.tr,
+                    text: Strings.add.tr,
                     onTap: () {
                       controller.addNote();
                     },

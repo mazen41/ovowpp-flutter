@@ -17,7 +17,7 @@ class PrivacyPolicyTermsOfServices extends StatelessWidget {
         children: [
           TextSpan(text: ' '),
           TextSpan(
-            text: MyStrings.privacyAndPolicy.tr,
+            text: Strings.privacyAndPolicy.tr,
             style: MyTextStyle.subHeading16W400(
               fontFamily: 'Nunito',
               isUnderline: true,
@@ -29,7 +29,7 @@ class PrivacyPolicyTermsOfServices extends StatelessWidget {
             style: TextStyle(color: MyColor.regularHederColor, fontSize: 14.sp),
           ),
           TextSpan(
-            text: MyStrings.termsOfService.tr,
+            text: Strings.termsOfService.tr,
             style: MyTextStyle.subHeading16W400(
               fontFamily: 'Nunito',
               isUnderline: true,

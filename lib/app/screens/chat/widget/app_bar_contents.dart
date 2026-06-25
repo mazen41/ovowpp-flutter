@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/home/home_controller.dart';
 import 'package:show_up_animation/show_up_animation.dart';
 import 'package:ovowpp/app/components/avatar/alphabet_avatar.dart';
@@ -39,7 +40,7 @@ class _AppBarContentsState extends State<AppBarContents> {
                           Get.toNamed(RouteHelper.chatPersonDetailsScreen, arguments: [controller.conversationId]),
                         ];
                       } else {
-                        CustomSnackBar.error(errorList: [MyStrings.permissionDenyMessage]);
+                        CustomSnackBar.error(errorList: [Strings.permissionDenyMessage]);
                       }
                     },
                     child: CircleAvatar(
@@ -52,7 +53,7 @@ class _AppBarContentsState extends State<AppBarContents> {
                       if (MyUtils.checkPermission(AppPermission.viewContactProfile)) {
                         Get.toNamed(RouteHelper.chatPersonDetailsScreen, arguments: [controller.conversationId]);
                       } else {
-                        CustomSnackBar.error(errorList: [MyStrings.permissionDenyMessage]);
+                        CustomSnackBar.error(errorList: [Strings.permissionDenyMessage]);
                       }
                     },
 
@@ -71,7 +72,7 @@ class _AppBarContentsState extends State<AppBarContents> {
                         if (MyUtils.checkPermission(AppPermission.viewContactProfile)) {
                           Get.toNamed(RouteHelper.chatPersonDetailsScreen, arguments: [controller.conversationId]);
                         } else {
-                          CustomSnackBar.error(errorList: [MyStrings.permissionDenyMessage]);
+                          CustomSnackBar.error(errorList: [Strings.permissionDenyMessage]);
                         }
                       },
                       child: GetBuilder<AllContactController>(
@@ -109,7 +110,7 @@ class _AppBarContentsState extends State<AppBarContents> {
                         if (MyUtils.checkPermission(AppPermission.viewContactProfile)) {
                           Get.toNamed(RouteHelper.chatPersonDetailsScreen, arguments: [controller.conversationId]);
                         } else {
-                          CustomSnackBar.error(errorList: [MyStrings.permissionDenyMessage]);
+                          CustomSnackBar.error(errorList: [Strings.permissionDenyMessage]);
                         }
                       },
                       child: GetBuilder<HomeController>(
@@ -145,8 +146,8 @@ class _AppBarContentsState extends State<AppBarContents> {
               offset: Offset(0, 50),
               menuPadding: EdgeInsets.zero,
               itemBuilder: (context) {
-                if (!MyUtils.checkPermission(AppPermission.viewContactProfile)) {
-                  CustomSnackBar.error(errorList: [MyStrings.permissionDenyMessage]);
+                if (!MyUtils.checkPermission(AppPerssion.viewContactProfile)) {
+                  CustomSnackBar.error(errorList: [Strings.permissionDenyMessage]);
                 }
 
                 return [
@@ -161,7 +162,7 @@ class _AppBarContentsState extends State<AppBarContents> {
                           Icon(Icons.info, color: MyColor.getBodyTextColor()),
                           spaceSide(Dimensions.space10.w),
                           Text(
-                            MyStrings.details.tr,
+                            Strings.details.tr,
                             style: MyTextStyle.subHeading14W600FieldTitleColor().copyWith(
                               color: MyColor.getBodyTextColor(),
                               fontWeight: FontWeight.w400,

@@ -69,7 +69,7 @@ class _ManageAgentScreenState extends State<ManageAgentScreen> {
         return Scaffold(
           backgroundColor: MyColor.white,
           appBar: CustomAppBar(
-            title: MyStrings.agentList.tr,
+            title: Strings.agentList.tr,
 
             elevation: 0,
             bgColor: MyColor.white,
@@ -105,9 +105,9 @@ class _ManageAgentScreenState extends State<ManageAgentScreen> {
               child: Column(
                 children: [
                   LabelTextField(
-                    labelText: MyStrings.search.tr,
+                    labelText: Strings.search.tr,
                     hideLabel: true,
-                    hintText: MyStrings.search.tr,
+                    hintText: Strings.search.tr,
                     controller: controller.searchController,
                     onChanged: (value) {
                       if (_debounceTimer?.isActive ?? false) {
@@ -132,7 +132,7 @@ class _ManageAgentScreenState extends State<ManageAgentScreen> {
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return MyStrings.fieldErrorMsg.tr;
+                        return Strings.fieldErrorMsg.tr;
                       } else {
                         return null;
                       }
@@ -145,7 +145,7 @@ class _ManageAgentScreenState extends State<ManageAgentScreen> {
                       ? Column(
                           children: [
                             spaceDown(context.height * .2),
-                            NoDataWidget(text: MyStrings.noAgentFound.tr),
+                            NoDataWidget(text: Strings.noAgentFound.tr),
                           ],
                         )
                       : Expanded(
@@ -235,7 +235,7 @@ class _ManageAgentScreenState extends State<ManageAgentScreen> {
                             !MyUtils.checkPermission(AppPermission.deleteAgent) &&
                             !MyUtils.checkPermission(AppPermission.viewPermission)) {
                           [
-                            CustomSnackBar.error(errorList: [MyStrings.permissionDenyMessage]),
+                            CustomSnackBar.error(errorList: [Strings.permissionDenyMessage]),
                           ];
                         }
 
@@ -250,7 +250,7 @@ class _ManageAgentScreenState extends State<ManageAgentScreen> {
                                   controller.initData(initPage: true);
                                 });
                               },
-                              child: Text(MyStrings.edit.tr),
+                              child: Text(Strings.edit.tr),
                             ),
 
                           /// DELETE AGENT PERMISSION
@@ -275,7 +275,7 @@ class _ManageAgentScreenState extends State<ManageAgentScreen> {
                                 });
                               },
 
-                              child: Text(MyStrings.delete.tr),
+                              child: Text(Strings.delete.tr),
                             ),
 
                           /// PERMISSION
@@ -284,7 +284,7 @@ class _ManageAgentScreenState extends State<ManageAgentScreen> {
                               onTap: () {
                                 Get.toNamed(RouteHelper.agentPermissionScreen, arguments: controller.agentList[index]);
                               },
-                              child: Text(MyStrings.permission.tr),
+                              child: Text(Strings.permission.tr),
                             ),
                         ];
                       },

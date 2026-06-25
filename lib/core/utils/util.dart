@@ -14,7 +14,7 @@ import 'package:ovowpp/data/controller/dashboard/dashboard_controller.dart';
 import 'package:ovowpp/data/model/global/formdata/global_keyc_form_data.dart';
 import 'package:ovowpp/environment.dart';
 
-import 'my_strings.dart';
+import '../translations/strings_enum.dart';
 
 class MyUtils {
   static void splashScreen() {
@@ -125,11 +125,11 @@ class MyUtils {
       }
       if (result.type != ResultType.done) {
         if (result.type == ResultType.noAppToOpen) {
-          CustomSnackBar.error(errorList: [MyStrings.noDocOpenerApp, 'File saved at: $path']);
+          CustomSnackBar.error(errorList: [Strings.noDocOpenerApp, 'File saved at: $path']);
         }
       }
     } else {
-      CustomSnackBar.error(errorList: [MyStrings.fileNotFound]);
+      CustomSnackBar.error(errorList: [Strings.fileNotFound]);
     }
   }
 
@@ -151,7 +151,7 @@ class MyUtils {
     if (match != null) {
       String? num = match.group(1) ?? '';
       String? unit = match.group(2) ?? '';
-      String title = '${MyStrings.last.tr} $num ${unit.capitalizeFirst}';
+      String title = '${Strings.last.tr} $num ${unit.capitalizeFirst}';
       return title.tr;
     } else {
       return value.tr;
@@ -182,8 +182,8 @@ class MyUtils {
           bool? isEmpty = element.options?.isEmpty;
           bool empty = isEmpty ?? true;
           if (element.options != null && empty != true) {
-            if (!element.options!.contains(MyStrings.selectOne)) {
-              element.options?.insert(0, MyStrings.selectOne);
+            if (!element.options!.contains(Strings.selectOne)) {
+              element.options?.insert(0, Strings.selectOne);
             }
 
             element.selectedValue = element.options?.first;

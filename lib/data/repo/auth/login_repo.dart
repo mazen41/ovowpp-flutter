@@ -1,5 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/url_container.dart';
 import 'package:ovowpp/data/model/auth/verification/email_verification_model.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
@@ -45,11 +45,11 @@ class LoginRepo {
     if (model.status.toLowerCase() == "success") {
       SharedPreferenceService.setUserEmail(model.data?.email ?? '');
       CustomSnackBar.success(
-        successList: ['${MyStrings.passwordResetEmailSentTo} ${model.data?.email ?? MyStrings.yourEmail}'],
+        successList: ['${Strings.passwordResetEmailSentTo} ${model.data?.email ?? Strings.yourEmail}'],
       );
       return model.data?.email ?? '';
     } else {
-      CustomSnackBar.error(errorList: model.message ?? [MyStrings.requestFail]);
+      CustomSnackBar.error(errorList: model.message ?? [Strings.requestFail]);
       return '';
     }
   }

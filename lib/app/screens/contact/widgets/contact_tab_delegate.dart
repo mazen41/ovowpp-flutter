@@ -56,7 +56,7 @@ class ContactTabDelegate extends SliverPersistentHeaderDelegate {
                     )
                   : controller.newAllContactsData.isNotEmpty
                   ? DefaultText(
-                      text: "${MyStrings.results.tr} (${controller.newAllContactsData.length})",
+                      text: "${Strings.results.tr} (${controller.newAllContactsData.length})",
                       textStyle: MyTextStyle.heading16W600(),
                     )
                   : SizedBox.shrink(),

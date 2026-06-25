@@ -9,7 +9,7 @@ import 'package:ovowpp/app/components/text-field/label_text_field.dart';
 import 'package:ovowpp/core/utils/app_style.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/help_center/help_center_controller.dart';
 import 'package:ovowpp/data/repo/help_center/help_center_repo.dart';
 
@@ -42,7 +42,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with SingleTickerPr
           transformValue: -8,
           centerTitle: true,
           appBarHeight: 130,
-          pageTitle: MyStrings.helpCenter.tr,
+          pageTitle: Strings.helpCenter.tr,
           appBarBgColor: MyColor.getTransparentColor(),
           body: controller.isLoading
               ? const CustomLoader()
@@ -55,8 +55,8 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with SingleTickerPr
                       LabelTextField(
                         isRequired: true,
                         // controller: controller.emailController,
-                        labelText: MyStrings.yourName.tr,
-                        hintText: MyStrings.enteYourName.tr,
+                        labelText: Strings.yourName.tr,
+                        hintText: Strings.enteYourName.tr,
                         onChanged: (value) {},
                         // focusNode: controller.emailFocusNode,
                         // nextFocus: controller.passwordFocusNode,
@@ -65,7 +65,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with SingleTickerPr
                         radius: Dimensions.largeRadius,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return MyStrings.fieldErrorMsg.tr;
+                            return Strings.fieldErrorMsg.tr;
                           } else {
                             return null;
                           }
@@ -75,8 +75,8 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with SingleTickerPr
                       LabelTextField(
                         isRequired: true,
                         // controller: controller.emailController,
-                        labelText: MyStrings.yourEmail.tr,
-                        hintText: MyStrings.enterYourEmail.tr,
+                        labelText: Strings.yourEmail.tr,
+                        hintText: Strings.enterYourEmail.tr,
                         onChanged: (value) {},
                         // focusNode: controller.emailFocusNode,
                         // nextFocus: controller.passwordFocusNode,
@@ -85,7 +85,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with SingleTickerPr
                         radius: Dimensions.largeRadius,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return MyStrings.fieldErrorMsg.tr;
+                            return Strings.fieldErrorMsg.tr;
                           } else {
                             return null;
                           }
@@ -95,8 +95,8 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with SingleTickerPr
                       LabelTextField(
                         isRequired: true,
                         // controller: controller.emailController,
-                        labelText: MyStrings.subject.tr,
-                        hintText: MyStrings.enterYourEmail.tr,
+                        labelText: Strings.subject.tr,
+                        hintText: Strings.enterYourEmail.tr,
                         onChanged: (value) {},
                         // focusNode: controller.emailFocusNode,
                         // nextFocus: controller.passwordFocusNode,
@@ -105,7 +105,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with SingleTickerPr
                         radius: Dimensions.largeRadius,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return MyStrings.fieldErrorMsg.tr;
+                            return Strings.fieldErrorMsg.tr;
                           } else {
                             return null;
                           }
@@ -115,8 +115,8 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with SingleTickerPr
                       LabelTextField(
                         isRequired: true,
                         // controller: controller.emailController,
-                        labelText: MyStrings.subject.tr,
-                        hintText: MyStrings.enterYourEmail.tr,
+                        labelText: Strings.subject.tr,
+                        hintText: Strings.enterYourEmail.tr,
                         onChanged: (value) {},
                         maxLines: 5,
                         fillColor: MyColor.white,
@@ -127,7 +127,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with SingleTickerPr
                         radius: Dimensions.largeRadius,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return MyStrings.fieldErrorMsg.tr;
+                            return Strings.fieldErrorMsg.tr;
                           } else {
                             return null;
                           }
@@ -135,7 +135,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with SingleTickerPr
                       ),
                       spaceDown(Dimensions.space15.h),
                       spaceDown(Dimensions.space16.h),
-                      CustomElevatedBtn(text: MyStrings.update.tr, onTap: () {}),
+                      CustomElevatedBtn(text: Strings.update.tr, onTap: () {}),
                     ],
                   ),
                 ),

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/core/utils/url_container.dart';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/model/dashboard/dashboard_response_model.dart';
@@ -49,7 +49,7 @@ class DashboardController extends GetxController {
 
       if (response.statusCode == 200) {
         DashboardResponseModel responseModel = DashboardResponseModel.fromJson(response.responseJson);
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           permissionList = responseModel.data?.widget?.permissions ?? [];
           // printX("=== permission List ${permissionList}");
           user = responseModel.data?.user;

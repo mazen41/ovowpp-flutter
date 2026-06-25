@@ -4,7 +4,7 @@ import 'package:ovowpp/core/route/route.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/account/profile_controller.dart';
 import 'package:ovowpp/app/components/circle_button_with_icon.dart';
 import 'package:ovowpp/app/components/column_widget/card_column.dart';
@@ -59,7 +59,7 @@ class _ProfileTopSectionState extends State<ProfileTopSection> {
                         Icon(Icons.edit, color: MyColor.white, size: 20),
                         const SizedBox(width: Dimensions.space10),
                         Text(
-                          MyStrings.editProfile.tr,
+                          Strings.editProfile.tr,
                           style: theme.textTheme.bodySmall?.copyWith(color: MyColor.white),
                         ),
                       ],
@@ -77,7 +77,7 @@ class _ProfileTopSectionState extends State<ProfileTopSection> {
                   backgroundColor: MyColor.getPrimaryColor(),
                 ),
                 const SizedBox(width: Dimensions.space15),
-                CardColumn(header: MyStrings.name.tr, body: controller.profileModel.data?.user?.username ?? ""),
+                CardColumn(header: Strings.name.tr, body: controller.profileModel.data?.user?.username ?? ""),
               ],
             ),
             const CustomDivider(space: Dimensions.space15),
@@ -89,7 +89,7 @@ class _ProfileTopSectionState extends State<ProfileTopSection> {
                   backgroundColor: MyColor.getPrimaryColor(),
                 ),
                 const SizedBox(width: Dimensions.space15),
-                CardColumn(header: MyStrings.email.tr, body: controller.profileModel.data?.user?.email ?? ""),
+                CardColumn(header: Strings.email.tr, body: controller.profileModel.data?.user?.email ?? ""),
               ],
             ),
             const CustomDivider(space: Dimensions.space15),
@@ -97,7 +97,7 @@ class _ProfileTopSectionState extends State<ProfileTopSection> {
               children: [
                 CircleShapeImage(imageColor: MyColor.getPrimaryColor(), image: MyImages.phone),
                 const SizedBox(width: Dimensions.space15),
-                CardColumn(header: MyStrings.phone.tr, body: controller.profileModel.data?.user?.mobile ?? ""),
+                CardColumn(header: Strings.phone.tr, body: controller.profileModel.data?.user?.mobile ?? ""),
               ],
             ),
             const CustomDivider(space: Dimensions.space15),
@@ -105,7 +105,7 @@ class _ProfileTopSectionState extends State<ProfileTopSection> {
               children: [
                 CircleShapeImage(imageColor: MyColor.getPrimaryColor(), image: MyImages.address),
                 const SizedBox(width: Dimensions.space15),
-                CardColumn(header: MyStrings.address.tr, body: controller.profileModel.data?.user?.address ?? ""),
+                CardColumn(header: Strings.address.tr, body: controller.profileModel.data?.user?.address ?? ""),
               ],
             ),
             const CustomDivider(space: Dimensions.space15),
@@ -113,7 +113,7 @@ class _ProfileTopSectionState extends State<ProfileTopSection> {
               children: [
                 CircleShapeImage(imageColor: MyColor.getPrimaryColor(), image: MyImages.state),
                 const SizedBox(width: Dimensions.space15),
-                CardColumn(header: MyStrings.state.tr, body: controller.profileModel.data?.user?.state ?? ""),
+                CardColumn(header: Strings.state.tr, body: controller.profileModel.data?.user?.state ?? ""),
               ],
             ),
             const CustomDivider(space: Dimensions.space15),
@@ -121,7 +121,7 @@ class _ProfileTopSectionState extends State<ProfileTopSection> {
               children: [
                 CircleShapeImage(imageColor: MyColor.getPrimaryColor(), image: MyImages.zipCode),
                 const SizedBox(width: Dimensions.space15),
-                CardColumn(header: MyStrings.zipCode.tr, body: controller.profileModel.data?.user?.zip ?? ""),
+                CardColumn(header: Strings.zipCode.tr, body: controller.profileModel.data?.user?.zip ?? ""),
               ],
             ),
             const CustomDivider(space: Dimensions.space15),
@@ -129,7 +129,7 @@ class _ProfileTopSectionState extends State<ProfileTopSection> {
               children: [
                 CircleShapeImage(imageColor: MyColor.getPrimaryColor(), image: MyImages.city),
                 const SizedBox(width: Dimensions.space15),
-                CardColumn(header: MyStrings.city.tr, body: controller.profileModel.data?.user?.city ?? ""),
+                CardColumn(header: Strings.city.tr, body: controller.profileModel.data?.user?.city ?? ""),
               ],
             ),
             const CustomDivider(space: Dimensions.space15),
@@ -137,7 +137,7 @@ class _ProfileTopSectionState extends State<ProfileTopSection> {
               children: [
                 CircleShapeImage(imageColor: MyColor.getPrimaryColor(), image: MyImages.country),
                 const SizedBox(width: Dimensions.space15),
-                CardColumn(header: MyStrings.country.tr, body: controller.profileModel.data?.user?.countryName ?? ""),
+                CardColumn(header: Strings.country.tr, body: controller.profileModel.data?.user?.countryName ?? ""),
               ],
             ),
           ],

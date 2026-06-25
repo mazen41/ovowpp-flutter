@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:ovowpp/data/model/global/formdata/dynamic_file_value_keeper_model.dart';
 
-import '../../../core/utils/my_strings.dart';
+import '../../../core/translations/strings_enum.dart';
 import '../../../core/utils/url_container.dart';
 import '../../model/withdraw/withdraw_request_response_model.dart';
 import '../../services/api_service.dart';
@@ -25,7 +25,7 @@ class WithdrawRepo {
     String url = '${UrlContainer.baseUrl}${UrlContainer.addWithdrawRequestUrl}';
     Map<String, dynamic> params = {'method_code': methodCode.toString(), 'amount': amount.toString()};
 
-    if (authMode != null && authMode.isNotEmpty && authMode.toLowerCase() != MyStrings.selectOne.toLowerCase()) {
+    if (authMode != null && authMode.isNotEmpty && authMode.toLowerCase() != Strings.selectOne.toLowerCase()) {
       params['auth_mode'] = authMode.toLowerCase();
     }
     ResponseModel responseModel = await ApiService.postRequest(url, params);
@@ -76,7 +76,7 @@ class WithdrawRepo {
           filesDataList.add(DynamicFileValueKeeperModel(e.label!, e.file!));
         }
       } else if (e.type == 'select') {
-        if (e.selectedValue != null && e.selectedValue.toString() != MyStrings.selectOne) {
+        if (e.selectedValue != null && e.selectedValue.toString() != Strings.selectOne) {
           fieldValueList.add({e.label ?? '': e.selectedValue});
         }
       } else {

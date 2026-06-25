@@ -9,6 +9,7 @@ import 'package:ovowpp/app/components/text/default_text.dart';
 import 'package:ovowpp/app/screens/auth/login/widget/or_line.dart';
 import 'package:ovowpp/app/screens/auth/login/widget/social_login_section.dart';
 import 'package:ovowpp/core/route/route.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/text_style.dart';
 import 'package:ovowpp/core/utils/util_exporter.dart';
 import 'package:ovowpp/data/controller/auth/login_controller.dart';
@@ -60,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 SplashBgImage(),
                 DefaultText(
-                  text: MyStrings.welcomeBack.tr,
+                  text: Strings.welcomeBack.tr,
                   textStyle: MyTextStyle.heading20W700().copyWith(fontSize: 24.sp),
                 ),
 
@@ -81,8 +82,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         spaceDown(Dimensions.space25.h),
 
                         LabelTextField(
-                          labelText: MyStrings.usernameOrEmail.tr,
-                          hintText: MyStrings.enterYourEmailOrUserName,
+                          labelText: Strings.usernameOrEmail.tr,
+                          hintText: Strings.enterYourEmailOrUserName.tr,
                           controller: controller.emailController,
                           focusNode: controller.emailFocusNode,
                           prefixIcon: TextFieldPrefixIcon(imagePath: MyImages.emailFieldPrefixSVG),
@@ -92,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           radius: Dimensions.largeRadius,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return MyStrings.fieldErrorMsg.tr;
+                              return Strings.fieldErrorMsg.tr;
                             } else {
                               return null;
                             }
@@ -101,8 +102,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         spaceDown(Dimensions.space12),
 
                         LabelTextField(
-                          labelText: MyStrings.password.tr,
-                          hintText: MyStrings.enterYourPassword_,
+                          labelText: Strings.password.tr,
+                          hintText: Strings.enterYourPassword_.tr,
                           controller: controller.passwordController,
                           focusNode: controller.passwordFocusNode,
                           onChanged: (value) {},
@@ -113,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           prefixIcon: TextFieldPrefixIcon(imagePath: MyImages.passwordFieldPrefixSVG),
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return MyStrings.fieldErrorMsg.tr;
+                              return Strings.fieldErrorMsg.tr;
                             } else {
                               return null;
                             }
@@ -141,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               onTap: () {
                                 Get.toNamed(RouteHelper.forgotPasswordScreen);
                               },
-                              text: MyStrings.forgetPassword.tr,
+                              text: Strings.forgetPassword.tr,
                               textStyle: MyTextStyle.subHeading16W400().copyWith(
                                 fontSize: 14.sp,
                                 color: MyColor.forgotPasswordColor,
@@ -153,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         spaceDown(Dimensions.space26.h),
                         CustomElevatedBtn(
                           isLoading: controller.isSubmitLoading,
-                          text: MyStrings.signIn.tr,
+                          text: Strings.signIn.tr,
                           onTap: () {
                             if (formKey.currentState!.validate()) {
                               controller.loginUser();
@@ -169,13 +170,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            DefaultText(text: MyStrings.doNotHaveAccount.tr, textStyle: MyTextStyle.heading16W400()),
+                            DefaultText(text: Strings.doNotHaveAccount.tr, textStyle: MyTextStyle.heading16W400()),
                             const SizedBox(width: Dimensions.space5),
                             CustomTextButton(
                               onTap: () {
                                 Get.toNamed(RouteHelper.registrationScreen);
                               },
-                              text: MyStrings.registerHere.tr,
+                              text: Strings.registerHere.tr,
                               style: MyTextStyle.heading16W400().copyWith(
                                 decorationColor: MyColor.getPrimaryColor(),
                                 decoration: TextDecoration.underline,

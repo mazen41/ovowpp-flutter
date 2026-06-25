@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:ovowpp/core/route/route.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/data/model/auth/verification/email_verification_model.dart';
 import 'package:ovowpp/data/repo/auth/login_repo.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
@@ -46,7 +46,7 @@ class VerifyPasswordController extends GetxController {
       } else {
         verifyLoading = false;
         update();
-        List<String> errorList = [MyStrings.verificationFailed];
+        List<String> errorList = [Strings.verificationFailed];
         CustomSnackBar.error(errorList: model.message ?? errorList);
       }
     }

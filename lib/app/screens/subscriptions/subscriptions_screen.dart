@@ -13,7 +13,7 @@ import 'package:ovowpp/data/repo/subscription/subscription_repo.dart';
 class SubscriptionsScreen extends StatefulWidget {
   const SubscriptionsScreen({super.key});
 
-  static const List<String> _tabs = [MyStrings.pricingPlans, MyStrings.subscriptionInfo, MyStrings.purchaseHistory];
+  static const List<String> _tabs = [Strings.pricingPlans, Strings.subscriptionInfo, Strings.purchaseHistory];
 
   @override
   State<SubscriptionsScreen> createState() => _SubscriptionsScreenState();
@@ -77,7 +77,7 @@ class _SubscriptionHeader extends StatelessWidget {
         SizedBox(width: Dimensions.space12.w),
         Expanded(
           child: Text(
-            MyStrings.subscriptions.tr,
+            Strings.subscriptions.tr,
             style: MyTextStyle.heading20W700().copyWith(color: MyColor.appBarTitleColor, fontWeight: FontWeight.w700),
           ),
         ),

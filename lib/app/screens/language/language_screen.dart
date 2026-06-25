@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ovowpp/app/components/shimmer/language_shimmer.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/my_language_controller/my_language_controller.dart';
 import 'package:ovowpp/data/repo/auth/general_setting_repo.dart';
 import 'package:ovowpp/app/components/app-bar/custom_app_bar.dart';
@@ -43,7 +43,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
       child: GetBuilder<MyLanguageController>(
         builder: (controller) => Scaffold(
           backgroundColor: MyColor.white,
-          appBar: CustomAppBar(bgColor: MyColor.white, isShowBackBtn: true, elevation: 0, title: MyStrings.language.tr),
+          appBar: CustomAppBar(bgColor: MyColor.white, isShowBackBtn: true, elevation: 0, title: Strings.language.tr),
           body: controller.isLoading
               ? const LanguageShimmer()
               : controller.langList.isEmpty
@@ -77,7 +77,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
               horizontal: Dimensions.space15,
             ),
             child: CustomElevatedBtn(
-              text: MyStrings.confirm.tr,
+              text: Strings.confirm.tr,
               isLoading: controller.isChangeLangLoading,
               onTap: () {
                 controller.changeLanguage(controller.selectedIndex);

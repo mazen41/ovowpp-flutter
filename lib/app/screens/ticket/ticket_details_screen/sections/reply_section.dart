@@ -4,7 +4,7 @@ import 'package:ovowpp/app/components/image/custom_svg_picture.dart';
 import 'package:ovowpp/app/components/text-field/label_text_field.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/controller/support/ticket_details_controller.dart';
 import 'package:ovowpp/app/components/buttons/custom_elevated_button.dart';
@@ -26,7 +26,7 @@ class ReplySection extends StatelessWidget {
             maxLines: 5,
             contentPadding: const EdgeInsets.all(Dimensions.space10),
             isAttachment: true,
-            labelText: MyStrings.message,
+            labelText: Strings.message,
             hintText: "",
             inputAction: TextInputAction.done,
             onChanged: (value) {
@@ -43,8 +43,8 @@ class ReplySection extends StatelessWidget {
               readOnly: true,
               contentPadding: const EdgeInsets.all(Dimensions.space10),
               isAttachment: true,
-              labelText: MyStrings.attachment.tr,
-              hintText: MyStrings.chooseAFile.tr,
+              labelText: Strings.attachment.tr,
+              hintText: Strings.chooseAFile.tr,
               inputAction: TextInputAction.done,
               onChanged: (value) {
                 return;
@@ -57,14 +57,14 @@ class ReplySection extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: Dimensions.space15, vertical: Dimensions.space10),
                   margin: const EdgeInsets.all(Dimensions.space5),
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), color: MyColor.getPrimaryColor()),
-                  child: Text(MyStrings.upload, style: theme.textTheme.labelMedium?.copyWith(color: MyColor.white)),
+                  child: Text(Strings.upload, style: theme.textTheme.labelMedium?.copyWith(color: MyColor.white)),
                 ),
               ),
             ),
           ),
           const SizedBox(height: Dimensions.space2),
           Text(
-            "${MyStrings.supportedFileType.tr} ${MyStrings.ext}",
+            "${Strings.supportedFileType.tr} ${Strings.ext}",
             style: theme.textTheme.bodySmall?.copyWith(color: MyColor.getBodyTextColor()),
           ),
           const SizedBox(height: Dimensions.space20),
@@ -146,7 +146,7 @@ class ReplySection extends StatelessWidget {
             // verticalPadding: Dimensions.space15,
             // cornerRadius: Dimensions.space8,
             // color: MyColor.black,
-            text: MyStrings.reply.tr,
+            text: Strings.reply.tr,
             onTap: () {
               controller.submitReply();
             },

@@ -50,7 +50,7 @@ class DownloadingDialogState extends State<DownloadingDialog> {
           final file = File('${(await getApplicationDocumentsDirectory()).path}/qr_code.png');
           File savedFile = await file.writeAsBytes(_bytes);
           Get.back();
-          CustomSnackBar.success(successList: ['${MyStrings.fileDownloadedSuccess}: ${savedFile.path.toString()}']);
+          CustomSnackBar.success(successList: ['${Strings.fileDownloadedSuccess}: ${savedFile.path.toString()}']);
           setState(() {
             image = file;
           });
@@ -69,7 +69,7 @@ class DownloadingDialogState extends State<DownloadingDialog> {
       dynamic value = result['isSuccess'];
       if (value.toString() == 'true') {
         Get.back();
-        CustomSnackBar.success(successList: [(MyStrings.fileDownloadedSuccess)]);
+        CustomSnackBar.success(successList: [(Strings.fileDownloadedSuccess)]);
       } else {
         Get.back();
         dynamic errorMessage = result['errorMessage'];
@@ -80,7 +80,7 @@ class DownloadingDialogState extends State<DownloadingDialog> {
         printX(e.toString());
       }
       Get.back();
-      CustomSnackBar.error(errorList: [MyStrings.requestFail]);
+      CustomSnackBar.error(errorList: [Strings.requestFail]);
     }
   }
 
@@ -114,7 +114,7 @@ class DownloadingDialogState extends State<DownloadingDialog> {
               children: [
                 const SizedBox(height: 20),
                 Text(
-                  '${MyStrings.downloading.tr} ${_received ~/ 1024}/${_total ~/ 1024} ${'KB'.tr}',
+                  '${Strings.downloading.tr} ${_received ~/ 1024}/${_total ~/ 1024} ${'KB'.tr}',
                   style: theme.textTheme.labelMedium,
                 ),
               ],

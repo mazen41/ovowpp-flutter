@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/data/model/authorization/authorization_response_model.dart';
 import 'package:ovowpp/data/model/campaign/campaign_model.dart';
 import 'package:ovowpp/data/model/campaign/create_campaign_model.dart';
@@ -129,7 +129,7 @@ class CampaignsController extends GetxController {
       if (responseModel.statusCode == 200) {
         final campaignModel = CampaignModel.fromJson(responseModel.responseJson);
 
-        if (campaignModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (campaignModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           final tempList = campaignModel.data?.campaigns?.data;
           nextPageUrl = campaignModel.data?.campaigns?.nextPageUrl;
           if (tempList != null && tempList.isNotEmpty) {
@@ -186,7 +186,7 @@ class CampaignsController extends GetxController {
 
       if (responseModel.statusCode == 200) {
         CreateCampaignModel createCampaignModel = CreateCampaignModel.fromJson(responseModel.responseJson);
-        if (createCampaignModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (createCampaignModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           templatesList = createCampaignModel.data?.templates ?? [];
           whatsappAccountList = createCampaignModel.data?.whatsappAccounts ?? [];
           contactList = createCampaignModel.data?.contactLists ?? [];
@@ -277,7 +277,7 @@ class CampaignsController extends GetxController {
 
       if (responseModel.statusCode == 200) {
         AuthorizationResponseModel response = AuthorizationResponseModel.fromJson(responseModel.responseJson);
-        if (response.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (response.status?.toLowerCase() == Strings.success.toLowerCase()) {
           campaignNameController.clear();
           selectContactList.clear();
           selectContactTag.clear();
@@ -292,9 +292,9 @@ class CampaignsController extends GetxController {
           timeController.clear();
           initDateTime();
 
-          CustomSnackBar.success(successList: response.message ?? [MyStrings.campaignCreateSuccessfully.tr]);
+          CustomSnackBar.success(successList: response.message ?? [Strings.campaignCreateSuccessfully.tr]);
         } else {
-          CustomSnackBar.error(errorList: response.message ?? [MyStrings.somethingWentWrong.tr]);
+          CustomSnackBar.error(errorList: response.message ?? [Strings.somethingWentWrong.tr]);
         }
       } else {
         CustomSnackBar.error(errorList: [responseModel.message]);

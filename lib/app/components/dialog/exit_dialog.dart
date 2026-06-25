@@ -7,7 +7,7 @@ import 'package:ovowpp/core/utils/app_style.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 
 Future<void> showExitDialog() async {
   await Get.dialog(
@@ -21,13 +21,13 @@ Future<void> showExitDialog() async {
             MyAssetImageWidget(assetPath: MyImages.danger, width: 40, height: 40, color: MyColor.lightError),
             spaceDown(Dimensions.space14),
             Text(
-              MyStrings.pleaseConfirm.tr,
+              Strings.pleaseConfirm.tr,
               style: Get.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600, fontSize: 22, color: MyColor.black),
               textAlign: TextAlign.center,
             ),
             spaceDown(Dimensions.space10),
             Text(
-              MyStrings.areYouSureYouwanttoExitTheApp.tr,
+              Strings.areYouSureYouwanttoExitTheApp.tr,
               style: Get.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w400, fontSize: 14, color: MyColor.black),
               textAlign: TextAlign.center,
             ),
@@ -39,7 +39,7 @@ Future<void> showExitDialog() async {
                     isLoading: false,
                     bgColor: MyColor.white,
                     borderColor: MyColor.getBorderColor(),
-                    text: MyStrings.no.tr,
+                    text: Strings.no.tr,
                     onTap: () => Get.back(),
                   ),
                 ),
@@ -47,7 +47,7 @@ Future<void> showExitDialog() async {
                 Expanded(
                   child: CustomElevatedBtn(
                     isLoading: false,
-                    text: MyStrings.yes.tr,
+                    text: Strings.yes.tr,
                     loaderColor: MyColor.lightPrimary,
                     bgColor: MyColor.white,
                     textColor: MyColor.getErrorColor(),

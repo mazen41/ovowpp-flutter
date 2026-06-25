@@ -52,7 +52,7 @@ class _AgentPermissionScreenState extends State<AgentPermissionScreen> {
         top: true,
         child: MyCustomScaffold(
           screenBgColor: MyColor.white,
-          pageTitle: MyStrings.agentPermission.tr,
+          pageTitle: Strings.agentPermission.tr,
           appBarBgColor: MyColor.white,
           actionButton: [
             Visibility(
@@ -151,7 +151,7 @@ class _AgentPermissionScreenState extends State<AgentPermissionScreen> {
               padding: EdgeInsetsDirectional.symmetric(horizontal: Dimensions.space15.w, vertical: 15),
               child: CustomElevatedBtn(
                 isLoading: controller.submitLoading,
-                text: MyStrings.savePermission.tr,
+                text: Strings.savePermission.tr,
                 onTap: () {
                   controller.updatePermission();
                 },

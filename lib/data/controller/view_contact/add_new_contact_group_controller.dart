@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
 import 'package:ovowpp/core/utils/app_status.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/model/all_contact/save_contact_response_model.dart';
 import 'package:ovowpp/data/model/all_contact/search_contact_list_response_model.dart';
@@ -43,7 +43,7 @@ class AddNewContactGroupController extends GetxController {
 
       if (response.statusCode == 200) {
         SearchContactListResponseModel responseModel = SearchContactListResponseModel.fromJson(response.responseJson);
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           List<AllContactDataList>? tempList = responseModel.data?.contacts?.data ?? [];
           if (tempList.isNotEmpty) {
             nextPageUrl = responseModel.data?.contacts?.nextPageUrl ?? "";

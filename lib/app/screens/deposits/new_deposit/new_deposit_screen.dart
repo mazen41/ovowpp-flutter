@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:ovowpp/core/helper/string_format_helper.dart';
 import '../../../../core/utils/dimensions.dart';
 import '../../../../core/utils/my_color.dart';
-import '../../../../core/utils/my_strings.dart';
+import '../../../../core/translations/strings_enum.dart';
 import '../../../../data/controller/deposit/add_new_deposit_controller.dart';
 import '../../../../data/repo/deposit/deposit_repo.dart';
 import 'info_widget.dart';
@@ -54,7 +54,7 @@ class _NewDepositScreenState extends State<NewDepositScreen> {
       builder: (controller) => AnnotatedRegionWidget(
         top: true,
         child: MyCustomScaffold(
-          pageTitle: controller.isSubscriptionDeposit ? 'Make payment' : MyStrings.deposit.tr,
+          pageTitle: controller.isSubscriptionDeposit ? 'Make payment' : Strings.deposit.tr,
           body: controller.isLoading
               ? const NewDepositShimmer()
               : SingleChildScrollView(
@@ -80,8 +80,8 @@ class _NewDepositScreenState extends State<NewDepositScreen> {
                             readOnly: true,
                             needOutline: true,
                             radius: Dimensions.defaultRadius,
-                            labelText: MyStrings.selectPaymentMethod,
-                            hintText: MyStrings.selectaMethod,
+                            labelText: Strings.selectPaymentMethod,
+                            hintText: Strings.selectaMethod,
                             textInputType: TextInputType.text,
                             inputAction: TextInputAction.next,
                             controller: controller.selectedPaymentMethodController,
@@ -103,8 +103,8 @@ class _NewDepositScreenState extends State<NewDepositScreen> {
                           const SizedBox(height: Dimensions.space15),
                           LabelTextField(
                             onTap: () {},
-                            labelText: MyStrings.amount,
-                            hintText: MyStrings.enterAmount.tr,
+                            labelText: Strings.amount,
+                            hintText: Strings.enterAmount.tr,
                             inputAction: TextInputAction.done,
                             controller: controller.amountController,
                             readOnly: controller.isSubscriptionDeposit,
@@ -148,7 +148,7 @@ class _NewDepositScreenState extends State<NewDepositScreen> {
                           const SizedBox(height: 35),
                           CustomElevatedBtn(
                             isLoading: controller.submitLoading,
-                            text: MyStrings.submit,
+                            text: Strings.submit,
                             onTap: () {
                               controller.submitDeposit();
                             },
@@ -185,22 +185,22 @@ class _SubscriptionPurchaseBanner extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            MyStrings.planDetails.tr,
+            Strings.planDetails.tr,
             style: theme.textTheme.labelLarge?.copyWith(color: MyColor.getPrimaryColor(), fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: Dimensions.space10),
-          _PurchaseInfoRow(label: MyStrings.plan, value: controller.subscriptionPlanName),
+          _PurchaseInfoRow(label: Strings.plan, value: controller.subscriptionPlanName),
           const SizedBox(height: Dimensions.space8),
-          _PurchaseInfoRow(label: MyStrings.billingCycle, value: controller.recurringLabel),
+          _PurchaseInfoRow(label: Strings.billingCycle, value: controller.recurringLabel),
           const SizedBox(height: Dimensions.space8),
           _PurchaseInfoRow(
-            label: MyStrings.amount,
+            label: Strings.amount,
             value:
                 '${AppConverter.formatNumber(controller.amountController.text, precision: 2)} ${controller.currency}',
           ),
           if (controller.subscriptionCouponCode.isNotEmpty) ...[
             const SizedBox(height: Dimensions.space8),
-            _PurchaseInfoRow(label: MyStrings.couponCode, value: controller.subscriptionCouponCode),
+            _PurchaseInfoRow(label: Strings.couponCode, value: controller.subscriptionCouponCode),
           ],
         ],
       ),

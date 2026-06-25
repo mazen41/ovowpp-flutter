@@ -3,6 +3,7 @@ import 'package:ovowpp/app/components/image/my_asset_widget.dart';
 import 'package:ovowpp/app/components/image_bg_widget.dart';
 import 'package:ovowpp/app/components/text/default_text.dart';
 import 'package:ovowpp/app/screens/auth/login/widget/or_line.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/text_style.dart';
 import 'package:ovowpp/data/controller/auth/auth/registration_controller.dart';
 import 'package:ovowpp/data/repo/auth/general_setting_repo.dart';
@@ -72,14 +73,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             ),
                           ),
                           DefaultText(
-                            text: MyStrings.createYourAccount2.tr,
+                            text: Strings.createYourAccount2.tr,
                             textStyle: MyTextStyle.heading20W700().copyWith(fontSize: 24.sp),
                           ),
                         ],
                       ),
                       spaceDown(Dimensions.space12.h),
                       DefaultText(
-                        text: MyStrings.registrationDescription.tr,
+                        text: Strings.registrationDescription.tr,
                         textStyle: MyTextStyle.subHeading16W400(fontFamily: 'Nunito'),
                         textAlign: TextAlign.center,
                       ),
@@ -99,7 +100,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            MyStrings.alreadyAccount.tr,
+                            Strings.alreadyAccount.tr,
                             overflow: TextOverflow.ellipsis,
                             style: MyTextStyle.subHeading16W400().copyWith(color: MyColor.regularHederColor),
                           ),
@@ -108,7 +109,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             onTap: () {
                               Get.back();
                             },
-                            text: MyStrings.loginHere.tr,
+                            text: Strings.loginHere.tr,
                             style: MyTextStyle.subHeading16W400().copyWith(
                               decorationColor: MyColor.getPrimaryColor(),
                               decoration: TextDecoration.underline,

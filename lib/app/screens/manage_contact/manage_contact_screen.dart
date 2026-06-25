@@ -25,7 +25,7 @@ class _ManageContactScreenState extends State<ManageContactScreen> {
       child: MyCustomScaffold(
         screenBgColor: MyColor.white,
         appBarBgColor: MyColor.white,
-        pageTitle: MyStrings.manageContact.tr,
+        pageTitle: Strings.manageContact.tr,
         body: Column(
           children: [
             ManageContactCard(
@@ -33,10 +33,10 @@ class _ManageContactScreenState extends State<ManageContactScreen> {
                 if (MyUtils.checkPermission(AppPermission.viewContact)) {
                   Get.toNamed(RouteHelper.contactScreen, arguments: {'isBackButton': true, 'isUpload': true});
                 } else {
-                  CustomSnackBar.error(errorList: [MyStrings.permissionDenyMessage]);
+                  CustomSnackBar.error(errorList: [Strings.permissionDenyMessage]);
                 }
               },
-              title: MyStrings.manageContact.tr,
+              title: Strings.manageContact.tr,
               image: MyImages.contact,
             ),
             spaceDown(Dimensions.space10.h),
@@ -45,10 +45,10 @@ class _ManageContactScreenState extends State<ManageContactScreen> {
                 if (MyUtils.checkPermission(AppPermission.viewContactList)) {
                   Get.toNamed(RouteHelper.allContactListScreen);
                 } else {
-                  CustomSnackBar.error(errorList: [MyStrings.permissionDenyMessage]);
+                  CustomSnackBar.error(errorList: [Strings.permissionDenyMessage]);
                 }
               },
-              title: MyStrings.manageContactList.tr,
+              title: Strings.manageContactList.tr,
               image: MyImages.contactList,
             ),
             spaceDown(Dimensions.space10.h),
@@ -57,10 +57,10 @@ class _ManageContactScreenState extends State<ManageContactScreen> {
                 if (MyUtils.checkPermission(AppPermission.viewContactTag)) {
                   Get.toNamed(RouteHelper.contactTagListScreen);
                 } else {
-                  CustomSnackBar.error(errorList: [MyStrings.permissionDenyMessage]);
+                  CustomSnackBar.error(errorList: [Strings.permissionDenyMessage]);
                 }
               },
-              title: MyStrings.manageContactTag.tr,
+              title: Strings.manageContactTag.tr,
               image: MyImages.contactTag,
             ),
           ],

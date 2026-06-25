@@ -10,7 +10,7 @@ import 'package:ovowpp/core/route/route.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/auth/auth/sms_verification_controler.dart';
 import 'package:ovowpp/data/repo/auth/sms_email_verification_repo.dart';
 
@@ -48,7 +48,7 @@ class _SmsVerificationScreenState extends State<SmsVerificationScreen> {
         backgroundColor: theme.scaffoldBackgroundColor,
         appBar: CustomAppBar(
           fromAuth: true,
-          title: MyStrings.smsVerification.tr,
+          title: Strings.smsVerification.tr,
           isShowBackBtn: true,
           isShowActionBtn: false,
           bgColor: theme.appBarTheme.backgroundColor,
@@ -87,7 +87,7 @@ class _SmsVerificationScreenState extends State<SmsVerificationScreen> {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * .07),
                             child: SmallText(
-                              text: MyStrings.smsVerificationMsg.tr,
+                              text: Strings.smsVerificationMsg.tr,
                               maxLine: 3,
                               textAlign: TextAlign.center,
                               textStyle: theme.textTheme.labelMedium!.copyWith(color: MyColor.getBodyTextColor()),
@@ -102,7 +102,7 @@ class _SmsVerificationScreenState extends State<SmsVerificationScreen> {
                           ),
                           const SizedBox(height: Dimensions.space30),
                           CustomElevatedBtn(
-                            text: MyStrings.verify.tr,
+                            text: Strings.verify.tr,
                             borderColor: controller.currentText.length != 6
                                 ? MyColor.lightTextFieldFillColor
                                 : MyColor.lightButtonBorderBorder,
@@ -117,7 +117,7 @@ class _SmsVerificationScreenState extends State<SmsVerificationScreen> {
                               if (controller.currentText.length == 6) {
                                 controller.verifyYourSms(controller.currentText);
                               } else {
-                                CustomSnackBar.error(errorList: [MyStrings.verificationCodeisRequired.tr]);
+                                CustomSnackBar.error(errorList: [Strings.verificationCodeisRequired.tr]);
                               }
                             },
                           ),
@@ -126,7 +126,7 @@ class _SmsVerificationScreenState extends State<SmsVerificationScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                MyStrings.didNotReceiveCode.tr,
+                                Strings.didNotReceiveCode.tr,
                                 style: theme.textTheme.labelMedium?.copyWith(color: MyColor.getBodyTextColor()),
                               ),
                               const SizedBox(width: Dimensions.space10),
@@ -142,7 +142,7 @@ class _SmsVerificationScreenState extends State<SmsVerificationScreen> {
                                         controller.sendCodeAgain();
                                       },
                                       child: Text(
-                                        MyStrings.resendCode.tr,
+                                        Strings.resendCode.tr,
                                         style: theme.textTheme.labelMedium?.copyWith(
                                           decoration: TextDecoration.underline,
                                           color: MyColor.getPrimaryColor(),

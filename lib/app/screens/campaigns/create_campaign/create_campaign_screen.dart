@@ -14,7 +14,7 @@ import 'package:ovowpp/core/utils/my_images.dart';
 import 'package:ovowpp/core/utils/text_style.dart';
 import 'package:ovowpp/data/controller/campaigns/campaigns_controller.dart';
 import 'package:ovowpp/data/repo/campaign/campaign_repo.dart';
-import '../../../../core/utils/my_strings.dart';
+import '../../../../core/translations/strings_enum.dart';
 import '../../../components/image/my_asset_widget.dart';
 import '../../../components/no_data.dart';
 import '../../../components/shimmer/home_shimmer.dart';
@@ -50,7 +50,7 @@ class _CreateCampaignScreenState extends State<CreateCampaignScreen> {
           statusBarColor: Colors.transparent,
           child: Scaffold(
             backgroundColor: MyColor.white,
-            appBar: CustomAppBar(elevation: 0, bgColor: Colors.white, title: MyStrings.createCampaign.tr),
+            appBar: CustomAppBar(elevation: 0, bgColor: Colors.white, title: Strings.createCampaign.tr),
             body: controller.createCampaignLoading
                 ? const HomeShimmer()
                 : SingleChildScrollView(
@@ -64,13 +64,13 @@ class _CreateCampaignScreenState extends State<CreateCampaignScreen> {
                             LabelTextField(
                               isRequired: true,
                               controller: controller.campaignNameController,
-                              labelText: MyStrings.campaignName.tr,
-                              hintText: MyStrings.enterCampaignName.tr,
+                              labelText: Strings.campaignName.tr,
+                              hintText: Strings.enterCampaignName.tr,
                               onChanged: (String value) {},
                               fillColor: MyColor.campaignFieldFillColor,
                               validator: (value) {
                                 if (value.isEmpty) {
-                                  return MyStrings.fieldErrorMsg.tr;
+                                  return Strings.fieldErrorMsg.tr;
                                 } else {
                                   return null;
                                 }
@@ -84,8 +84,8 @@ class _CreateCampaignScreenState extends State<CreateCampaignScreen> {
                               },
                               readOnly: true,
                               controller: controller.selectContactListController,
-                              labelText: MyStrings.selectContactList.tr,
-                              hintText: MyStrings.selectContactList.tr,
+                              labelText: Strings.selectContactList.tr,
+                              hintText: Strings.selectContactList.tr,
                               onChanged: (String value) {},
                               fillColor: MyColor.campaignFieldFillColor,
                               suffixIcon: MyAssetImageWidget(
@@ -97,7 +97,7 @@ class _CreateCampaignScreenState extends State<CreateCampaignScreen> {
                               ),
                               validator: (value) {
                                 if (value.isEmpty) {
-                                  return MyStrings.fieldErrorMsg.tr;
+                                  return Strings.fieldErrorMsg.tr;
                                 } else {
                                   return null;
                                 }
@@ -114,8 +114,8 @@ class _CreateCampaignScreenState extends State<CreateCampaignScreen> {
                               },
                               readOnly: true,
                               controller: controller.selectContactTagController,
-                              labelText: MyStrings.selectContactTag.tr,
-                              hintText: MyStrings.selectContactTag.tr,
+                              labelText: Strings.selectContactTag.tr,
+                              hintText: Strings.selectContactTag.tr,
                               onChanged: (String value) {},
                               fillColor: MyColor.campaignFieldFillColor,
                               suffixIcon: MyAssetImageWidget(
@@ -127,7 +127,7 @@ class _CreateCampaignScreenState extends State<CreateCampaignScreen> {
                               ),
                               // validator: (value) {
                               //   if (value.isEmpty) {
-                              //     return MyStrings.fieldErrorMsg.tr;
+                              //     return Strings.fieldErrorMsg.tr;
                               //   } else {
                               //     return null;
                               //   }
@@ -141,8 +141,8 @@ class _CreateCampaignScreenState extends State<CreateCampaignScreen> {
                               },
                               readOnly: true,
                               controller: controller.selectWhatsAppAccount,
-                              labelText: MyStrings.selectWhatsAppAccount.tr,
-                              hintText: MyStrings.selectWhatsAppAccount.tr,
+                              labelText: Strings.selectWhatsAppAccount.tr,
+                              hintText: Strings.selectWhatsAppAccount.tr,
                               onChanged: (String value) {},
                               fillColor: MyColor.campaignFieldFillColor,
                               suffixIcon: MyAssetImageWidget(
@@ -154,7 +154,7 @@ class _CreateCampaignScreenState extends State<CreateCampaignScreen> {
                               ),
                               // validator: (value) {
                               //   if (value.isEmpty) {
-                              //     return MyStrings.fieldErrorMsg.tr;
+                              //     return Strings.fieldErrorMsg.tr;
                               //   } else {
                               //     return null;
                               //   }
@@ -168,8 +168,8 @@ class _CreateCampaignScreenState extends State<CreateCampaignScreen> {
                               },
                               readOnly: true,
                               controller: controller.selectTemplateController,
-                              labelText: MyStrings.selectTemplate.tr,
-                              hintText: MyStrings.chooseAMessageTemplate.tr,
+                              labelText: Strings.selectTemplate.tr,
+                              hintText: Strings.chooseAMessageTemplate.tr,
                               onChanged: (String value) {},
                               fillColor: MyColor.campaignFieldFillColor,
                               suffixIcon: MyAssetImageWidget(
@@ -181,7 +181,7 @@ class _CreateCampaignScreenState extends State<CreateCampaignScreen> {
                               ),
                               validator: (value) {
                                 if (value.isEmpty) {
-                                  return MyStrings.fieldErrorMsg.tr;
+                                  return Strings.fieldErrorMsg.tr;
                                 } else {
                                   return null;
                                 }
@@ -190,14 +190,14 @@ class _CreateCampaignScreenState extends State<CreateCampaignScreen> {
 
                             spaceDown(Dimensions.space8.h),
                             DefaultText(
-                              text: MyStrings.messagePreviewLength.tr,
+                              text: Strings.messagePreviewLength.tr,
                               textStyle: MyTextStyle.subHeading16W400().copyWith(fontSize: 12.sp),
                             ),
                             spaceDown(Dimensions.space16.h),
                             SwitchWithLeadText(
                               isBorder: true,
-                              title: MyStrings.sendNow.tr,
-                              description: MyStrings.campaignWillStartImmediately.tr,
+                              title: Strings.sendNow.tr,
+                              description: Strings.campaignWillStartImmediately.tr,
                               controller: controller,
                               switchTap: () {
                                 controller.changeCampaignSwitch();
@@ -209,7 +209,7 @@ class _CreateCampaignScreenState extends State<CreateCampaignScreen> {
                               SizedBox.shrink(),
                             ] else ...[
                               DefaultText(
-                                text: MyStrings.scheduleCampaign,
+                                text: Strings.scheduleCampaign.tr,
                                 textStyle: MyTextStyle.subHeading12W400().copyWith(
                                   fontSize: 16.sp,
                                   color: MyColor.ovoTextColor,
@@ -222,7 +222,7 @@ class _CreateCampaignScreenState extends State<CreateCampaignScreen> {
                                     child: LabelTextField(
                                       readOnly: true,
                                       controller: controller.dateController,
-                                      labelText: MyStrings.date.tr,
+                                      labelText: Strings.date.tr,
                                       onChanged: () {},
 
                                       onTap: () {
@@ -243,7 +243,7 @@ class _CreateCampaignScreenState extends State<CreateCampaignScreen> {
                                   Expanded(
                                     child: LabelTextField(
                                       readOnly: true,
-                                      labelText: MyStrings.time.tr,
+                                      labelText: Strings.time.tr,
                                       onTap: () {
                                         controller.selectTime(context);
                                       },
@@ -269,7 +269,7 @@ class _CreateCampaignScreenState extends State<CreateCampaignScreen> {
                             // ),  spaceDown(Dimensions.space16.h),
                             CustomElevatedBtn(
                               isLoading: controller.isSaveCampaignLoader,
-                              text: MyStrings.saveCampaign.tr,
+                              text: Strings.saveCampaign.tr,
                               onTap: () {
                                 if (formKey.currentState?.validate() ?? false) {
                                   controller.saveCampaign();
@@ -278,7 +278,7 @@ class _CreateCampaignScreenState extends State<CreateCampaignScreen> {
                             ),
                             spaceDown(Dimensions.space12.h),
                             CustomElevatedBtn(
-                              text: MyStrings.cancel,
+                              text: Strings.cancel.tr,
                               onTap: () {},
                               bgColor: MyColor.cancelElevatedBtnBgColor,
                             ),

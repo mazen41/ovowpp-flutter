@@ -8,7 +8,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../../../../../core/utils/dimensions.dart';
 import '../../../../../../core/utils/my_color.dart';
-import '../../../../../../core/utils/my_strings.dart';
+import '../../../../../../core/translations/strings_enum.dart';
 
 class TwoFactorDisableSection extends StatelessWidget {
   const TwoFactorDisableSection({super.key});
@@ -33,12 +33,12 @@ class TwoFactorDisableSection extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(child: Text(MyStrings.disable2Fa.tr, style: theme.textTheme.titleMedium)),
+                  Center(child: Text(Strings.disable2Fa.tr, style: theme.textTheme.titleMedium)),
                   const CustomDivider(),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * .07),
                     child: SmallText(
-                      text: MyStrings.twoFactorMsg.tr,
+                      text: Strings.twoFactorMsg.tr,
                       maxLine: 3,
                       textAlign: TextAlign.center,
                       textStyle: theme.textTheme.labelMedium!.copyWith(color: MyColor.getBodyTextColor()),
@@ -88,7 +88,7 @@ class TwoFactorDisableSection extends StatelessWidget {
                     onTap: () {
                       twoFactorController.disable2fa(twoFactorController.currentText);
                     },
-                    text: MyStrings.submit.tr,
+                    text: Strings.submit.tr,
                   ),
                   const SizedBox(height: Dimensions.space30),
                 ],

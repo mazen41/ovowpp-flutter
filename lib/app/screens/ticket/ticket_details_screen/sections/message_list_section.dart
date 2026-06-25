@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/support/ticket_details_controller.dart';
 import 'package:get/get.dart';
 import '../widget/ticket_list_item.dart';
@@ -25,7 +25,7 @@ class MessageListSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    MyStrings.noMSgFound.tr,
+                    Strings.noMSgFound.tr,
                     style: theme.textTheme.labelMedium?.copyWith(color: MyColor.getBorderColor()),
                   ),
                 ],

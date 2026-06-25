@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import '../utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 
 class AppConverter {
   static String toCapitalized(String value) {
@@ -78,15 +78,15 @@ class AppConverter {
       if (dayDef == 0) {
         if (hourDef <= 0) {
           if (minDef <= 0) {
-            value = '$secondDef ${MyStrings.secondAgo}'.tr;
+            value = '$secondDef ${Strings.secondAgo}'.tr;
           } else {
-            value = '$hourDef ${MyStrings.minutesAgo}'.tr;
+            value = '$hourDef ${Strings.minutesAgo}'.tr;
           }
         } else {
-          value = '$hourDef ${MyStrings.hourAgo}'.tr;
+          value = '$hourDef ${Strings.hourAgo}'.tr;
         }
       } else {
-        value = '$dayDef ${MyStrings.daysAgo}'.tr;
+        value = '$dayDef ${Strings.daysAgo}'.tr;
       }
     } catch (e) {
       value = inputValue;

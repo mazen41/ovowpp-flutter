@@ -144,7 +144,7 @@ class HomeController extends GetxController {
       if (model.statusCode == 200) {
         HomeResponseModel responseModel = HomeResponseModel.fromJson(model.responseJson);
 
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           imagePath = responseModel.data?.profilePath ?? "";
           user = responseModel.data?.user;
 
@@ -207,11 +207,11 @@ class HomeController extends GetxController {
       if (model.statusCode == 200) {
         AllNumbersResponseModel responseModel = AllNumbersResponseModel.fromJson(model.responseJson);
 
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           whatsappNumbers = responseModel.data?.whatsappAccounts ?? [];
 
           selectedNumber =
-              whatsappNumbers.firstWhereOrNull((e) => e.isDefault == '1')?.phoneNumber ?? MyStrings.connectAccount.tr;
+              whatsappNumbers.firstWhereOrNull((e) => e.isDefault == '1')?.phoneNumber ?? Strings.connectAccount.tr;
           selectedWpAccountNumber = whatsappNumbers.firstWhereOrNull((e) => e.isDefault == '1')?.id ?? "";
         }
       } else {
@@ -329,7 +329,7 @@ class HomeController extends GetxController {
       ResponseModel model = await homeRepo.newNewChat(page, searchQuery: searchQuery, status: status);
       if (model.statusCode == 200) {
         final responseModel = ChatListResponseModel.fromJson(model.responseJson);
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           if (responseModel.data?.conversations?.nextPageUrl != null) {
             newNextPageUrl = responseModel.data?.conversations?.nextPageUrl ?? '';
           }
@@ -371,7 +371,7 @@ class HomeController extends GetxController {
 
       if (model.statusCode == 200) {
         ChatListResponseModel responseModel = ChatListResponseModel.fromJson(model.responseJson);
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           conversations = responseModel.data?.conversations;
           if (conversations?.data != null) {
             nextPageUrl = conversations?.nextPageUrl ?? "";
@@ -410,7 +410,7 @@ class HomeController extends GetxController {
 
       if (model.statusCode == 200) {
         ChatListResponseModel responseModel = ChatListResponseModel.fromJson(model.responseJson);
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           conversations = responseModel.data?.conversations;
           if (conversations?.data != null) {
             nextPageUrl = conversations?.nextPageUrl ?? "";
@@ -449,7 +449,7 @@ class HomeController extends GetxController {
 
       if (model.statusCode == 200) {
         ChatListResponseModel responseModel = ChatListResponseModel.fromJson(model.responseJson);
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           conversations = responseModel.data?.conversations;
           if (conversations?.data != null) {
             nextPageUrl = conversations?.nextPageUrl ?? "";
@@ -487,7 +487,7 @@ class HomeController extends GetxController {
 
       if (model.statusCode == 200) {
         ChatListResponseModel responseModel = ChatListResponseModel.fromJson(model.responseJson);
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           conversations = responseModel.data?.conversations;
           if (conversations?.data != null) {
             nextPageUrl = conversations?.nextPageUrl ?? "";
@@ -515,15 +515,15 @@ class HomeController extends GetxController {
       ResponseModel model = await homeRepo.switchNumberRepo(webId);
       if (model.statusCode == 200) {
         SwitchNumbersResponseModel responseModel = SwitchNumbersResponseModel.fromJson(model.responseJson);
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
-          CustomSnackBar.success(successList: responseModel.message ?? [MyStrings.requestSuccess.tr]);
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
+          CustomSnackBar.success(successList: responseModel.message ?? [Strings.requestSuccess.tr]);
           await homeData().then((v) {
             Get.find<PusherHomeServiceController>().ensureConnection(
               "private-receive-message-$selectedWpAccountNumber",
             );
           });
         } else {
-          CustomSnackBar.error(errorList: responseModel.message ?? [MyStrings.requestFail.tr]);
+          CustomSnackBar.error(errorList: responseModel.message ?? [Strings.requestFail.tr]);
         }
       } else {
         CustomSnackBar.error(errorList: [model.message]);

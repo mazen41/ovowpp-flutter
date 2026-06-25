@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/core/route/route.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/repo/auth/login_repo.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
@@ -18,7 +18,7 @@ class ForgetPasswordController extends GetxController {
     String input = emailOrUsernameController.text;
 
     if (input.isEmpty) {
-      CustomSnackBar.error(errorList: [MyStrings.enterYourEmail]);
+      CustomSnackBar.error(errorList: [Strings.enterYourEmail]);
       return;
     }
 

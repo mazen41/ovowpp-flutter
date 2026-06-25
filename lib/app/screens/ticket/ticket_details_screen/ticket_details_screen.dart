@@ -3,7 +3,7 @@ import 'package:ovowpp/app/components/annotated_region/annotated_region_widget.d
 import 'package:ovowpp/app/components/card/my_custom_scaffold.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/support/ticket_details_controller.dart';
 import 'package:ovowpp/data/repo/support/support_repo.dart';
 import 'package:ovowpp/app/components/custom_loader/custom_loader.dart';
@@ -42,7 +42,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
       builder: (controller) => AnnotatedRegionWidget(
         top: true,
         child: MyCustomScaffold(
-          pageTitle: MyStrings.replyTicket,
+          pageTitle: Strings.replyTicket,
           actionButton: [
             if (controller.model.data?.myTickets?.status != '3')
               Padding(
@@ -52,7 +52,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                     controller.closeTicket(controller.model.data?.myTickets?.id.toString() ?? '-1');
                   },
                   child: Text(
-                    MyStrings.close,
+                    Strings.close,
                     style: theme.textTheme.bodyLarge?.copyWith(color: MyColor.getErrorColor()),
                   ),
                 ),

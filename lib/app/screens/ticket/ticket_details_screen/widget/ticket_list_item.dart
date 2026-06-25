@@ -5,7 +5,7 @@ import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_icons.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/core/utils/url_container.dart';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/controller/support/ticket_details_controller.dart';
@@ -73,7 +73,7 @@ class TicketListItem extends StatelessWidget {
                             style: theme.textTheme.titleSmall?.copyWith(color: MyColor.getBodyTextColor()),
                           ),
                         Text(
-                          messages.adminId == "1" ? MyStrings.admin.tr : MyStrings.you.tr,
+                          messages.adminId == "1" ? Strings.admin.tr : Strings.you.tr,
                           style: theme.textTheme.labelMedium?.copyWith(color: MyColor.getBodyTextColor()),
                         ),
                       ],

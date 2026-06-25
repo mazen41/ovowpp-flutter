@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 
 class AlreadyVerifiedWidget extends StatefulWidget {
   final bool isPending;
@@ -36,7 +36,7 @@ class _AlreadyVerifiedWidgetState extends State<AlreadyVerifiedWidget> {
           ),
           const SizedBox(height: 25),
           Text(
-            widget.isPending ? MyStrings.kycUnderReviewMsg.tr : MyStrings.kycAlreadyVerifiedMsg.tr,
+            widget.isPending ? Strings.kycUnderReviewMsg.tr : Strings.kycAlreadyVerifiedMsg.tr,
             style: theme.textTheme.labelMedium?.copyWith(color: MyColor.black),
           ),
           const SizedBox(height: 40),

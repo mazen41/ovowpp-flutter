@@ -4,7 +4,7 @@ import 'package:ovowpp/app/components/annotated_region/annotated_region_widget.d
 import 'package:ovowpp/app/components/shimmer/edit_profile_shimmer.dart';
 import 'package:ovowpp/app/screens/edit_profile/widget/profile_form.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/account/profile_controller.dart';
 import 'package:ovowpp/data/repo/account/profile_repo.dart';
 
@@ -36,7 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       builder: (controller) => AnnotatedRegionWidget(
         child: Scaffold(
           backgroundColor: MyColor.white,
-          appBar: CustomAppBar(elevation: 0, bgColor: MyColor.white, title: MyStrings.personalInformation.tr),
+          appBar: CustomAppBar(elevation: 0, bgColor: MyColor.white, title: Strings.personalInformation.tr),
           body: controller.isLoading ? const EditProfileShimmer() : ProfileForm(),
         ),
       ),

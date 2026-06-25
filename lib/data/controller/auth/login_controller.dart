@@ -93,7 +93,7 @@ class LoginController extends GetxController {
         LoginResponseModel loginModel = LoginResponseModel.fromJson(model.responseJson);
 
         // Check if the login status is successful
-        if (loginModel.status.toString().toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (loginModel.status.toString().toLowerCase() == Strings.success.toLowerCase()) {
           // Extract access token, token type, and user details
           String accessToken = loginModel.data?.accessToken ?? "";
           String tokenType = loginModel.data?.tokenType ?? "";
@@ -108,7 +108,7 @@ class LoginController extends GetxController {
           );
         } else {
           // Show an error if login failed
-          CustomSnackBar.error(errorList: loginModel.message ?? [MyStrings.loginFailedTryAgain]);
+          CustomSnackBar.error(errorList: loginModel.message ?? [Strings.loginFailedTryAgain]);
         }
       } else {
         // Show an error if the status code is not 200
@@ -119,7 +119,7 @@ class LoginController extends GetxController {
       printE('Error during login: $e');
 
       // Show a generic error message
-      CustomSnackBar.error(errorList: [MyStrings.somethingWentWrong]);
+      CustomSnackBar.error(errorList: [Strings.somethingWentWrong]);
     } finally {
       // Reset the loading state
       isSubmitLoading = false;

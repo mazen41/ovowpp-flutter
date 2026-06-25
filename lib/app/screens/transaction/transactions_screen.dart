@@ -4,7 +4,7 @@ import 'package:ovowpp/app/components/text/label_text.dart';
 import 'package:ovowpp/core/helper/string_format_helper.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/controller/transaction/transactions_controller.dart';
 import 'package:ovowpp/data/repo/transaction/transaction_repo.dart';
@@ -65,7 +65,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
     return GetBuilder<TransactionsController>(
       builder: (controller) => Scaffold(
         appBar: CustomAppBar(
-          title: MyStrings.transaction.tr,
+          title: Strings.transaction.tr,
           action: [
             ActionButtonIconWidget(
               pressed: () => controller.changeSearchIcon(),
@@ -101,7 +101,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      const LabelText(text: MyStrings.type),
+                                      const LabelText(text: Strings.type),
                                       const SizedBox(height: Dimensions.space10),
                                       SizedBox(
                                         height: 40,
@@ -109,13 +109,13 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                                           fromTrx: true,
                                           bgColor: Colors.transparent,
                                           text: controller.selectedTrxType.isEmpty
-                                              ? MyStrings.trxType
+                                              ? Strings.trxType
                                               : controller.selectedTrxType,
                                           onTap: () {
                                             showTrxBottomSheet(
                                               controller.transactionTypeList.map((e) => e.toString()).toList(),
                                               1,
-                                              MyStrings.selectTrxType,
+                                              Strings.selectTrxType,
                                               context: context,
                                             );
                                           },
@@ -130,7 +130,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      const LabelText(text: MyStrings.remark),
+                                      const LabelText(text: Strings.remark),
                                       const SizedBox(height: Dimensions.space10),
                                       SizedBox(
                                         height: 40,
@@ -139,14 +139,14 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                                           bgColor: Colors.transparent,
                                           text: AppConverter.replaceUnderscoreWithSpace(
                                             controller.selectedRemark.isEmpty
-                                                ? MyStrings.any
+                                                ? Strings.any
                                                 : controller.selectedRemark,
                                           ),
                                           onTap: () {
                                             showTrxBottomSheet(
                                               controller.remarksList.map((e) => e.remark.toString()).toList(),
                                               2,
-                                              MyStrings.selectRemarks,
+                                              Strings.selectRemarks,
                                               context: context,
                                             );
                                           },
@@ -166,7 +166,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      const LabelText(text: MyStrings.trxNo),
+                                      const LabelText(text: Strings.trxNo),
                                       const SizedBox(height: Dimensions.space10),
                                       SizedBox(
                                         height: 45,

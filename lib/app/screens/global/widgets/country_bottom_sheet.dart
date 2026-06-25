@@ -35,7 +35,7 @@ class CountryBottomSheet {
                     });
                   },
                   decoration: InputDecoration(
-                    hintText: MyStrings.searchCountry.tr,
+                    hintText: Strings.searchCountry.tr,
                     prefixIcon: Icon(Icons.search, color: MyColor.getBodyTextColor()),
                     focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: MyColor.getPrimaryColor())),
                   ),

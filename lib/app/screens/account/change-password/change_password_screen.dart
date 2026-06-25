@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/text_style.dart';
 import 'package:ovowpp/data/controller/account/change_password_controller.dart';
 import 'package:ovowpp/data/repo/account/change_password_repo.dart';
@@ -42,7 +42,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         isShowBackBtn: true,
         elevation: 0,
         bgColor: MyColor.white,
-        title: MyStrings.changePassword.tr,
+        title: Strings.changePassword.tr,
       ),
       body: GetBuilder<ChangePasswordController>(
         builder: (controller) => SingleChildScrollView(
@@ -52,7 +52,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  MyStrings.createPasswordSubText.tr,
+                  Strings.createPasswordSubText.tr,
                   style: MyTextStyle.subHeading12W400().copyWith(fontSize: 14.sp),
                 ),
                 SizedBox(height: Dimensions.space20),

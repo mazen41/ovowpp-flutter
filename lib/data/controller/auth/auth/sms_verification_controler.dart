@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:get/get.dart';
 import 'package:ovowpp/core/route/route.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/data/model/authorization/authorization_response_model.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:ovowpp/data/repo/auth/sms_email_verification_repo.dart';
@@ -27,7 +27,7 @@ class SmsVerificationController extends GetxController {
   bool submitLoading = false;
   Future<void> verifyYourSms(String currentText) async {
     if (currentText.isEmpty) {
-      CustomSnackBar.error(errorList: [MyStrings.otpFieldEmptyMsg.tr]);
+      CustomSnackBar.error(errorList: [Strings.otpFieldEmptyMsg.tr]);
       return;
     }
 
@@ -41,9 +41,9 @@ class SmsVerificationController extends GetxController {
 
       bool is2FAEnable = model.data?.user?.tv == "0" ? true : false;
 
-      if (model.status == MyStrings.success) {
+      if (model.status == Strings.success) {
         CustomSnackBar.success(
-          successList: model.message ?? ['${MyStrings.sms.tr} ${MyStrings.verificationSuccess.tr}'],
+          successList: model.message ?? ['${Strings.sms.tr} ${Strings.verificationSuccess.tr}'],
         );
 
         if (is2FAEnable) {
@@ -52,7 +52,7 @@ class SmsVerificationController extends GetxController {
           await Get.offAndToNamed(RouteHelper.bottomNavScreen);
         }
       } else {
-        CustomSnackBar.error(errorList: model.message ?? ['${MyStrings.sms.tr} ${MyStrings.verificationFailed}']);
+        CustomSnackBar.error(errorList: model.message ?? ['${Strings.sms.tr} ${Strings.verificationFailed}']);
       }
     } else {
       CustomSnackBar.error(errorList: [responseModel.message]);

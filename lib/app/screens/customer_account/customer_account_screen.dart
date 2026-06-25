@@ -15,7 +15,7 @@ import 'package:ovowpp/core/utils/app_style.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/text_style.dart';
 import 'package:ovowpp/core/utils/url_container.dart';
 import 'package:ovowpp/data/controller/my_account/my_account_controller.dart';
@@ -61,7 +61,7 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen> with Sing
         appBar: CustomAppBar(
           elevation: 0,
           bgColor: Colors.white,
-          title: controller.isUpdate ? MyStrings.updateContact.tr : MyStrings.addContact.tr,
+          title: controller.isUpdate ? Strings.updateContact.tr : Strings.addContact.tr,
         ),
 
         body: controller.isLoading
@@ -75,8 +75,8 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen> with Sing
                       LabelTextField(
                         isRequired: true,
                         controller: controller.firstNameController,
-                        labelText: MyStrings.firstName.tr,
-                        hintText: MyStrings.enterYourFirstName.tr,
+                        labelText: Strings.firstName.tr,
+                        hintText: Strings.enterYourFirstName.tr,
                         onChanged: (value) {},
                         // focusNode: controller.emailFocusNode,
                         // nextFocus: controller.passwordFocusNode,
@@ -85,7 +85,7 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen> with Sing
                         radius: Dimensions.largeRadius,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return MyStrings.fieldErrorMsg.tr;
+                            return Strings.fieldErrorMsg.tr;
                           } else {
                             return null;
                           }
@@ -96,8 +96,8 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen> with Sing
                       spaceDown(Dimensions.space15.h),
                       LabelTextField(
                         controller: controller.lastNameController,
-                        labelText: MyStrings.lastName.tr,
-                        hintText: MyStrings.enterYourLastName.tr,
+                        labelText: Strings.lastName.tr,
+                        hintText: Strings.enterYourLastName.tr,
                         onChanged: (value) {},
                         // focusNode: controller.emailFocusNode,
                         // nextFocus: controller.passwordFocusNode,
@@ -106,7 +106,7 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen> with Sing
                         radius: Dimensions.largeRadius,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return MyStrings.fieldErrorMsg.tr;
+                            return Strings.fieldErrorMsg.tr;
                           } else {
                             return null;
                           }
@@ -137,8 +137,8 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen> with Sing
                           },
                           child: Icon(Icons.call, color: MyColor.getBodyTextColor()),
                         ),
-                        labelText: (MyStrings.phoneNo).replaceAll('.', '').tr,
-                        // hintText: MyStrings.enterYourPhoneNumber,
+                        labelText: (Strings.phoneNo).replaceAll('.', '').tr,
+                        // hintText: Strings.enterYourPhoneNumber,
                         controller: controller.mobileNoController,
                         focusNode: controller.mobileNoFocusNode,
                         textInputType: TextInputType.phone,
@@ -198,7 +198,7 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen> with Sing
                         ),
                         validator: (value) {
                           if ((value as String).trim().isEmpty) {
-                            return MyStrings.kPhoneNumberIsRequired.tr;
+                            return Strings.kPhoneNumberIsRequired.tr;
                           } else {
                             return null;
                           }
@@ -212,7 +212,7 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen> with Sing
                       Align(
                         alignment: Alignment.centerLeft,
                         child: LabelText(
-                          text: MyStrings.contactTags.tr,
+                          text: Strings.contactTags.tr,
                           textStyle: MyTextStyle.subHeading15W500FieldTitleColor,
                         ),
                       ),
@@ -230,7 +230,7 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen> with Sing
                       Align(
                         alignment: Alignment.centerLeft,
                         child: LabelText(
-                          text: MyStrings.contactList.tr,
+                          text: Strings.contactList.tr,
                           textStyle: MyTextStyle.subHeading15W500FieldTitleColor,
                         ),
                       ),
@@ -251,7 +251,7 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen> with Sing
                           Align(
                             alignment: Alignment.centerLeft,
                             child: LabelText(
-                              text: MyStrings.customAttributes.tr,
+                              text: Strings.customAttributes.tr,
                               textStyle: MyTextStyle.subHeading15W500FieldTitleColor,
                             ),
                           ),
@@ -288,14 +288,14 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen> with Sing
                                   controller: attribute['key'],
                                   labelText: "",
                                   hideLabel: true,
-                                  hintText: MyStrings.fieldName.tr,
+                                  hintText: Strings.fieldName.tr,
                                   onChanged: (value) {},
                                   textInputType: TextInputType.text,
                                   inputAction: TextInputAction.next,
                                   radius: Dimensions.largeRadius,
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      return MyStrings.fieldErrorMsg.tr;
+                                      return Strings.fieldErrorMsg.tr;
                                     } else {
                                       return null;
                                     }
@@ -311,14 +311,14 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen> with Sing
                                   controller: attribute['value'],
                                   labelText: "",
                                   hideLabel: true,
-                                  hintText: MyStrings.fieldValue.tr,
+                                  hintText: Strings.fieldValue.tr,
                                   onChanged: (value) {},
                                   textInputType: TextInputType.text,
                                   inputAction: TextInputAction.next,
                                   radius: Dimensions.largeRadius,
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      return MyStrings.fieldErrorMsg.tr;
+                                      return Strings.fieldErrorMsg.tr;
                                     } else {
                                       return null;
                                     }
@@ -354,14 +354,14 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen> with Sing
                       spaceDown(Dimensions.space16.h),
                       CustomElevatedBtn(
                         isLoading: controller.saving,
-                        text: controller.isUpdate ? MyStrings.update.tr : MyStrings.saveContact.tr,
+                        text: controller.isUpdate ? Strings.update.tr : Strings.saveContact.tr,
                         onTap: () {
                           controller.saveContact(controller.editIndex ?? -1, isChatEdit);
                         },
                       ),
                       spaceDown(Dimensions.space12.h),
                       CustomElevatedBtn(
-                        text: MyStrings.cancel.tr,
+                        text: Strings.cancel.tr,
                         onTap: () {
                           Get.back();
                         },

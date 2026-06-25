@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:ovowpp/data/services/shared_pref_service.dart';
 
 import '../../../core/route/route.dart';
-import '../../../core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import '../../model/deposit/deposit_insert_response_model.dart';
 import '../../model/deposit/deposit_method_response_model.dart';
 import '../../model/global/response_model/response_model.dart';
@@ -32,7 +32,7 @@ class AddNewDepositController extends GetxController {
   List<Methods> methodList = [];
   List<Methods> methods = [];
   String imagePath = UrlContainer.domainUrl;
-  Methods? paymentMethod = Methods(name: MyStrings.selectOne, id: -1);
+  Methods? paymentMethod = Methods(name: Strings.selectOne, id: -1);
 
   TextEditingController amountController = TextEditingController();
 
@@ -54,7 +54,7 @@ class AddNewDepositController extends GetxController {
     subscriptionCouponCode = '';
     amountController.clear();
     selectedPaymentMethodController.clear();
-    paymentMethod = Methods(name: MyStrings.selectOne, id: -1);
+    paymentMethod = Methods(name: Strings.selectOne, id: -1);
     depositLimit = '';
     charge = '';
     payableText = '';
@@ -116,13 +116,13 @@ class AddNewDepositController extends GetxController {
   bool submitLoading = false;
   Future<void> submitDeposit() async {
     if (paymentMethod?.id.toString() == '-1') {
-      CustomSnackBar.error(errorList: [MyStrings.selectPaymentMethod]);
+      CustomSnackBar.error(errorList: [Strings.selectPaymentMethod]);
       return;
     }
 
     String amount = amountController.text.toString();
     if (amount.isEmpty) {
-      CustomSnackBar.error(errorList: [MyStrings.enterAmount]);
+      CustomSnackBar.error(errorList: [Strings.enterAmount]);
       return;
     }
 
@@ -152,7 +152,7 @@ class AddNewDepositController extends GetxController {
       if (insertResponseModel.status.toString().toLowerCase() == "success") {
         showWebView(insertResponseModel.data?.redirectUrl ?? "");
       } else {
-        CustomSnackBar.error(errorList: insertResponseModel.message ?? [MyStrings.somethingWentWrong]);
+        CustomSnackBar.error(errorList: insertResponseModel.message ?? [Strings.somethingWentWrong]);
       }
     } else {
       CustomSnackBar.error(errorList: [responseModel.message]);
@@ -191,7 +191,7 @@ class AddNewDepositController extends GetxController {
     isLoading = false;
     methodList.clear();
     selectedPaymentMethodController.clear();
-    paymentMethod = Methods(name: MyStrings.selectOne, id: -1);
+    paymentMethod = Methods(name: Strings.selectOne, id: -1);
     isSubscriptionDeposit = false;
     subscriptionPlanId = '';
     subscriptionPlanName = '';
@@ -212,5 +212,5 @@ class AddNewDepositController extends GetxController {
     Get.offAndToNamed(RouteHelper.depositWebViewScreen, arguments: redirectUrl);
   }
 
-  String get recurringLabel => subscriptionRecurring == '2' ? MyStrings.yearly : MyStrings.monthly;
+  String get recurringLabel => subscriptionRecurring == '2' ? Strings.yearly : Strings.monthly;
 }

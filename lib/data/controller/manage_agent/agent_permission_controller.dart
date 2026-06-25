@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/data/model/authorization/authorization_response_model.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:ovowpp/data/model/manage_agent/agent_list_response_model.dart';
@@ -46,7 +46,7 @@ class AgentPermissionController extends GetxController {
     if (responseModel.statusCode == 200) {
       AgentPermissionResponseModel model = AgentPermissionResponseModel.fromJson(responseModel.responseJson);
 
-      if (model.status.toString() == MyStrings.success.toLowerCase()) {
+      if (model.status.toString() == Strings.success.toLowerCase()) {
         permissions.addAll(model.data?.permissions ?? []);
 
         activePermissionIds = model.data?.existingPermissions?.map((e) => e.id ?? "").toList() ?? [];
@@ -70,7 +70,7 @@ class AgentPermissionController extends GetxController {
         isLoading = false;
         update();
       } else {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.requestFail.tr]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.requestFail.tr]);
       }
     } else {
       CustomSnackBar.error(errorList: [responseModel.message.tr]);
@@ -179,13 +179,13 @@ class AgentPermissionController extends GetxController {
     if (responseModel.statusCode == 200) {
       AuthorizationResponseModel model = AuthorizationResponseModel.fromJson(responseModel.responseJson);
 
-      if (model.status.toString() == MyStrings.success.toString().toLowerCase()) {
+      if (model.status.toString() == Strings.success.toString().toLowerCase()) {
         Get.back();
         isLoading = false;
         update();
-        CustomSnackBar.success(successList: model.message ?? [MyStrings.success]);
+        CustomSnackBar.success(successList: model.message ?? [Strings.success]);
       } else {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.requestFail.tr]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.requestFail.tr]);
       }
     } else {
       CustomSnackBar.error(errorList: [responseModel.message.tr]);

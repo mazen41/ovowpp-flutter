@@ -10,7 +10,7 @@ import 'package:ovowpp/core/helper/date_converter.dart';
 import 'package:ovowpp/core/route/route.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/ticket_helper.dart';
 import 'package:ovowpp/data/controller/support/support_controller.dart';
 import 'package:ovowpp/data/repo/support/support_repo.dart';
@@ -55,7 +55,7 @@ class _AllTicketScreenState extends State<AllTicketScreen> {
             isScaffoldBgImage: false,
             screenBgColor: MyColor.white,
 
-            pageTitle: MyStrings.supportTicket.tr,
+            pageTitle: Strings.supportTicket.tr,
             appBarBgColor: MyColor.getTransparentColor(),
             body: RefreshIndicator(
               onRefresh: () async {

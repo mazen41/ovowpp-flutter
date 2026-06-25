@@ -29,8 +29,8 @@ class _UserBannerAndSearchSliversState extends State<UserBannerAndSearchSlivers>
           children: [
             spaceDown(Dimensions.space20.h),
             UserProfileBanner(
-              title: MyStrings.campaign,
-              subTitle: MyStrings.reachMorePeopleCloseMoreDetails,
+              title: Strings.campaign,
+              subTitle: Strings.reachMorePeopleCloseMoreDetails,
               trailingWidget: Visibility(
                 visible: MyUtils.checkPermission(AppPermission.addCampaign),
                 child: RoundIconWithBgColor(
@@ -48,8 +48,8 @@ class _UserBannerAndSearchSliversState extends State<UserBannerAndSearchSlivers>
             LabelTextField(
               controller: controller.searchController,
               hideLabel: true,
-              labelText: MyStrings.search.tr,
-              hintText: MyStrings.search.tr,
+              labelText: Strings.search.tr,
+              hintText: Strings.search.tr,
               hintStyle: MyTextStyle.subHeading16W400(),
               onChanged: (value) {
                 if (_debounce?.isActive ?? false) {

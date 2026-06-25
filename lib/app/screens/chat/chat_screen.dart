@@ -24,7 +24,7 @@ import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_icons.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/text_style.dart';
 import 'package:ovowpp/core/utils/url_container.dart';
 import 'package:ovowpp/core/utils/util.dart';
@@ -149,7 +149,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                       onDoubleTap: () {
                                                         Clipboard.setData(ClipboardData(text: item.message.toString()));
                                                         CustomSnackBar.success(
-                                                          successList: [MyStrings.messageCopiedToClipBoard.tr],
+                                                          successList: [Strings.messageCopiedToClipBoard.tr],
                                                         );
                                                       },
                                                       child: buildRichText(
@@ -364,7 +364,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                           ),
                                                           spaceSide(Dimensions.space5),
                                                           Text(
-                                                            MyStrings.document.tr,
+                                                            Strings.document.tr,
                                                             style: theme.textTheme.titleMedium?.copyWith(
                                                               color: MyColor.getBodyTextColor(),
                                                               fontWeight: FontWeight.w400,
@@ -387,7 +387,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                           ),
                                                           spaceSide(Dimensions.space5),
                                                           Text(
-                                                            MyStrings.video.tr,
+                                                            Strings.video.tr,
                                                             style: theme.textTheme.titleMedium?.copyWith(
                                                               color: MyColor.getBodyTextColor(),
                                                               fontWeight: FontWeight.w400,
@@ -445,7 +445,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                       controller.startRecording();
                                                     } else {
                                                       CustomSnackBar.error(
-                                                        errorList: [MyStrings.permissionDenyMessage],
+                                                        errorList: [Strings.permissionDenyMessage],
                                                       );
                                                     }
                                                   },
@@ -455,7 +455,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                       controller.startRecording();
                                                     } else {
                                                       CustomSnackBar.error(
-                                                        errorList: [MyStrings.permissionDenyMessage],
+                                                        errorList: [Strings.permissionDenyMessage],
                                                       );
                                                     }
                                                   },
@@ -486,7 +486,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                       controller.sendMessage();
                                                     } else {
                                                       CustomSnackBar.error(
-                                                        errorList: [MyStrings.permissionDenyMessage],
+                                                        errorList: [Strings.permissionDenyMessage],
                                                       );
                                                     }
                                                   },

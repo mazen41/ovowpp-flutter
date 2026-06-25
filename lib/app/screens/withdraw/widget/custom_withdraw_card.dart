@@ -5,7 +5,7 @@ import 'package:ovowpp/app/components/divider/custom_divider.dart';
 
 import '../../../../core/utils/dimensions.dart';
 import '../../../../core/utils/my_color.dart';
-import '../../../../core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 
 class CustomWithdrawCard extends StatelessWidget {
   final String trxValue, date, status, amount;
@@ -38,8 +38,8 @@ class CustomWithdrawCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CardColumn(header: MyStrings.trxNo, body: trxValue),
-                CardColumn(alignmentEnd: true, header: MyStrings.date, isDate: true, body: date),
+                CardColumn(header: Strings.trxNo, body: trxValue),
+                CardColumn(alignmentEnd: true, header: Strings.date, isDate: true, body: date),
               ],
             ),
             const CustomDivider(space: Dimensions.space10),
@@ -47,7 +47,7 @@ class CustomWithdrawCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CardColumn(header: MyStrings.amount, body: amount),
+                CardColumn(header: Strings.amount, body: amount),
                 StatusWidget(status: status, color: statusBgColor),
               ],
             ),

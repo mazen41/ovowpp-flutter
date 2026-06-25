@@ -6,7 +6,7 @@ import 'package:ovowpp/app/screens/auth/two_factor/two_factor_setup_screen/secti
 import 'package:ovowpp/app/screens/auth/two_factor/two_factor_setup_screen/sections/two_factor_enable_section.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
-import '../../../../../core/utils/my_strings.dart';
+import '../../../../../core/translations/strings_enum.dart';
 import '../../../../../core/utils/util_exporter.dart' show SizeExtension;
 import '../../../../../data/controller/account/profile_controller.dart';
 import '../../../../../data/controller/auth/two_factor_controller.dart';
@@ -42,7 +42,7 @@ class _TwoFactorSetupScreenState extends State<TwoFactorSetupScreen> {
           builder: (profileController) {
             return AnnotatedRegionWidget(
               child: Scaffold(
-                appBar: CustomAppBar(elevation: 0, title: MyStrings.twoFactorAuth.tr, fontSize: 16.sp),
+                appBar: CustomAppBar(elevation: 0, title: Strings.twoFactorAuth.tr, fontSize: 16.sp),
                 backgroundColor: MyColor.white,
 
                 body: controller.isLoading || profileController.isLoading

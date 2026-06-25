@@ -72,7 +72,7 @@ class _ViewContactScreenState extends State<ViewContactScreen> {
               children: [
                 Expanded(
                   child: Text(
-                    "${controller.name}-${MyStrings.viewContactList.tr}",
+                    "${controller.name}-${Strings.viewContactList.tr}",
                     style: MyTextStyle.heading20W700().copyWith(color: MyColor.appBarTitleColor),
                   ),
                 ),
@@ -96,7 +96,7 @@ class _ViewContactScreenState extends State<ViewContactScreen> {
             ),
           ),
           transformValue: 1,
-          pageTitle: MyStrings.allContacts.tr,
+          pageTitle: Strings.allContacts.tr,
           body: GetBuilder<ViewContactController>(
             builder: (controller) => RefreshIndicator(
               color: MyColor.getPrimaryColor(),
@@ -108,9 +108,9 @@ class _ViewContactScreenState extends State<ViewContactScreen> {
               child: Column(
                 children: [
                   LabelTextField(
-                    labelText: MyStrings.search.tr,
+                    labelText: Strings.search.tr,
                     hideLabel: true,
-                    hintText: MyStrings.search.tr,
+                    hintText: Strings.search.tr,
                     onChanged: (value) {
                       debounce = Timer(const Duration(milliseconds: 800), () {
                         controller.searchQuery = value.trim().toLowerCase();
@@ -131,7 +131,7 @@ class _ViewContactScreenState extends State<ViewContactScreen> {
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return MyStrings.fieldErrorMsg.tr;
+                        return Strings.fieldErrorMsg.tr;
                       } else {
                         return null;
                       }
@@ -141,7 +141,7 @@ class _ViewContactScreenState extends State<ViewContactScreen> {
                   controller.isLoading
                       ? Expanded(child: const AllContactShimmer(isViewContactList: true))
                       : controller.allContactListdata.isEmpty
-                      ? Expanded(child: NoDataWidget(text: MyStrings.noContactListFound.tr))
+                      ? Expanded(child: NoDataWidget(text: Strings.noContactListFound.tr))
                       : Expanded(
                           child: ListView.builder(
                             controller: _controller,
@@ -211,7 +211,7 @@ class _ViewContactScreenState extends State<ViewContactScreen> {
                                                       builder: (controller) {
                                                         return DeleteDialogue(
                                                           warningText:
-                                                              MyStrings.areYouSureYouWantToDeleteThisContact.tr,
+                                                              Strings.areYouSureYouWantToDeleteThisContact.tr,
                                                           isLoading: controller.isDeleting,
                                                           onTap: () {
                                                             controller.deleteMessage(index);

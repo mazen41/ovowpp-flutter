@@ -33,7 +33,7 @@ class _UploadCsvDialogueState extends State<UploadCsvDialogue> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  MyStrings.importContact.tr,
+                  Strings.importContact.tr,
                   style: theme.textTheme.headlineMedium?.copyWith(color: MyColor.getHeadingTextColor()),
                 ),
                 GestureDetector(
@@ -75,7 +75,7 @@ class _UploadCsvDialogueState extends State<UploadCsvDialogue> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(Icons.upload_file_outlined, color: MyColor.getBodyTextColor()),
-                                Text(MyStrings.upload.tr, style: theme.textTheme.bodyLarge),
+                                Text(Strings.upload.tr, style: theme.textTheme.bodyLarge),
                               ],
                             ),
                     ),
@@ -89,7 +89,7 @@ class _UploadCsvDialogueState extends State<UploadCsvDialogue> {
             padding: const EdgeInsets.symmetric(horizontal: Dimensions.horizontalScreenPadding),
             child: CustomElevatedBtn(
               isLoading: controller.uploadCsv,
-              text: MyStrings.upload.tr,
+              text: Strings.upload.tr,
               onTap: () {
                 controller.uploadCsvFile();
               },

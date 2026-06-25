@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
 import 'package:ovowpp/core/route/route.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/data/repo/menu_repo/menu_repo.dart';
 import 'package:ovowpp/data/services/shared_pref_service.dart';
 import '../../model/authorization/authorization_response_model.dart';
@@ -61,12 +61,12 @@ class MyMenuController extends GetxController {
     final responseModal = await menuRepo.removeAccount();
     if (responseModal.statusCode == 200) {
       AuthorizationResponseModel model = AuthorizationResponseModel.fromJson(jsonDecode(responseModal.responseJson));
-      if (model.status?.toLowerCase() == MyStrings.success) {
+      if (model.status?.toLowerCase() == Strings.success) {
         await menuRepo.clearSharedPrefData();
         Get.offAllNamed(RouteHelper.loginScreen);
-        CustomSnackBar.success(successList: model.message ?? [MyStrings.accountDeletedSuccessfully]);
+        CustomSnackBar.success(successList: model.message ?? [Strings.accountDeletedSuccessfully]);
       } else {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.somethingWentWrong]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.somethingWentWrong]);
       }
     } else {
       CustomSnackBar.error(errorList: [responseModal.message]);
@@ -81,7 +81,7 @@ class MyMenuController extends GetxController {
     update();
 
     await menuRepo.logout();
-    CustomSnackBar.success(successList: [MyStrings.logoutSuccessMsg]);
+    CustomSnackBar.success(successList: [Strings.logoutSuccessMsg]);
 
     logoutLoading = false;
     update();

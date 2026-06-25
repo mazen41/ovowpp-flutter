@@ -6,7 +6,7 @@ import '../../core/utils/app_style.dart';
 import '../../core/utils/dimensions.dart';
 import '../../core/utils/my_color.dart';
 import '../../core/utils/my_images.dart';
-import '../../core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import '../../core/utils/text_style.dart';
 import 'annotated_region/annotated_region_widget.dart';
 import 'image/my_asset_widget.dart';
@@ -31,7 +31,7 @@ class PermissionDeniedComponent extends StatelessWidget {
                 MyAssetImageWidget(assetPath: MyImages.unlock),
                 spaceDown(Dimensions.space14),
                 DefaultText(
-                  text: MyStrings.permissionDenyMessage.tr,
+                  text: Strings.permissionDenyMessage.tr,
                   textStyle: MyTextStyle.heading16W600(),
                   textAlign: TextAlign.center,
                 ),

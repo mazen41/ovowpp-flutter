@@ -3,7 +3,7 @@ import 'package:ovowpp/app/components/buttons/custom_elevated_button.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/text-field/label_text_field.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/account/change_password_controller.dart';
 
 class ChangePasswordForm extends StatefulWidget {
@@ -25,14 +25,14 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
           child: Column(
             children: [
               LabelTextField(
-                hintText: MyStrings.currentPassword.tr,
-                labelText: MyStrings.currentPassword.tr,
+                hintText: Strings.currentPassword.tr,
+                labelText: Strings.currentPassword.tr,
                 onChanged: (value) {
                   return;
                 },
                 validator: (value) {
                   if (value.toString().isEmpty) {
-                    return MyStrings.enterCurrentPass.tr;
+                    return Strings.enterCurrentPass.tr;
                   } else {
                     return null;
                   }
@@ -43,14 +43,14 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
               ),
               const SizedBox(height: Dimensions.space20),
               LabelTextField(
-                hintText: MyStrings.currentPassword.tr,
-                labelText: MyStrings.newPassword.tr,
+                hintText: Strings.newPasswordHint.tr,
+                labelText: Strings.newPassword.tr,
                 onChanged: (value) {
                   return;
                 },
                 validator: (value) {
                   if (value.toString().isEmpty) {
-                    return MyStrings.enterNewPass.tr;
+                    return Strings.enterNewPass.tr;
                   } else {
                     return null;
                   }
@@ -60,14 +60,14 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
               ),
               const SizedBox(height: Dimensions.space20),
               LabelTextField(
-                hintText: MyStrings.currentPassword.tr,
-                labelText: MyStrings.confirmPassword.tr,
+                hintText: Strings.confirmPassword.tr,
+                labelText: Strings.confirmPassword.tr,
                 onChanged: (value) {
                   return;
                 },
                 validator: (value) {
                   if (controller.confirmPassController.text != controller.passController.text) {
-                    return MyStrings.kMatchPassError.tr;
+                    return Strings.kMatchPassError.tr;
                   } else {
                     return null;
                   }
@@ -77,7 +77,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
               ),
               const SizedBox(height: Dimensions.space25),
               CustomElevatedBtn(
-                text: MyStrings.submit,
+                text: Strings.submit.tr,
                 isLoading: controller.submitLoading,
                 onTap: () {
                   if (formKey.currentState!.validate()) {

@@ -4,7 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ovowpp/core/route/route.dart';
 import 'package:ovowpp/core/utils/app_status.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/model/all_contact/create_contact_response_model.dart';
 import 'package:ovowpp/data/model/all_contact/delete_contact_response_model.dart';
@@ -51,7 +51,7 @@ class AllContactListController extends GetxController {
       final extension = file.extension?.toLowerCase();
       if (extension != 'csv' && extension != 'xlsx') {
         printX("Invalid file type selected: ${file.name}");
-        CustomSnackBar.error(errorList: [MyStrings.invalidFile.tr]);
+        CustomSnackBar.error(errorList: [Strings.invalidFile.tr]);
         return;
       }
 
@@ -84,7 +84,7 @@ class AllContactListController extends GetxController {
 
       if (response.statusCode == 200) {
         AllContactListResponseModel responseModel = AllContactListResponseModel.fromJson(response.responseJson);
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           List<AllContactData>? tempList = responseModel.data?.contactLists?.data ?? [];
           if (tempList.isNotEmpty) {
             nextPageUrl = responseModel.data?.contactLists?.nextPageUrl ?? "";
@@ -126,7 +126,7 @@ class AllContactListController extends GetxController {
       ResponseModel response = await repo.loadConversationRepo(contactId);
       if (response.statusCode == 200) {
         CreateContactResponseModel responseModel = CreateContactResponseModel.fromJson(response.responseJson);
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           conversation = responseModel.data?.conversation;
           Get.toNamed(RouteHelper.chatScreen, arguments: [conversation?.id.toString() ?? ""]);
         }

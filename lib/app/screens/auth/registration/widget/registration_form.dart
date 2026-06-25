@@ -6,7 +6,7 @@ import 'package:ovowpp/app/components/text-field/label_text_field.dart';
 import 'package:ovowpp/app/screens/auth/registration/widget/privacy_policy_terms_of_services.dart';
 import 'package:ovowpp/app/screens/auth/registration/widget/validation_widget.dart';
 import 'package:ovowpp/core/route/route.dart';
-import 'package:ovowpp/core/utils/util_exporter.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/auth/auth/registration_controller.dart';
 
 import '../../../../components/image/text_field_prefix_icon.dart';
@@ -32,8 +32,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               LabelTextField(
-                labelText: MyStrings.firstName.tr,
-                hintText: MyStrings.enterYourFirstName.tr,
+                labelText: Strings.firstName.tr,
+                hintText: Strings.enterYourFirstName.tr,
                 controller: controller.fNameController,
                 focusNode: controller.firstNameFocusNode,
                 textInputType: TextInputType.text,
@@ -41,7 +41,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 prefixIcon: TextFieldPrefixIcon(imagePath: MyImages.firstNameFieldIcon),
                 validator: (value) {
                   if (value != null && value.isEmpty) {
-                    return MyStrings.enterYourFirstName.tr;
+                    return Strings.enterYourFirstName.tr;
                   } else {
                     return null;
                   }
@@ -52,8 +52,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
               ),
               spaceDown(Dimensions.space12.h),
               LabelTextField(
-                labelText: MyStrings.lastName.tr,
-                hintText: MyStrings.lastName.tr,
+                labelText: Strings.lastName.tr,
+                hintText: Strings.lastName.tr,
                 controller: controller.lNameController,
                 focusNode: controller.lastNameFocusNode,
                 textInputType: TextInputType.text,
@@ -61,7 +61,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 prefixIcon: TextFieldPrefixIcon(imagePath: MyImages.firstNameFieldIcon),
                 validator: (value) {
                   if (value != null && value.isEmpty) {
-                    return MyStrings.enterYourLastName.tr;
+                    return Strings.enterYourLastName.tr;
                   } else {
                     return null;
                   }
@@ -72,8 +72,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
               ),
               spaceDown(Dimensions.space12.h),
               LabelTextField(
-                labelText: MyStrings.yourEmail.tr,
-                hintText: MyStrings.enterYourEmailOrUserName.tr,
+                labelText: Strings.yourEmail.tr,
+                hintText: Strings.enterYourEmailOrUserName.tr,
                 controller: controller.emailController,
                 focusNode: controller.emailFocusNode,
                 textInputType: TextInputType.emailAddress,
@@ -81,9 +81,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 prefixIcon: TextFieldPrefixIcon(imagePath: MyImages.emailFieldPrefixSVG),
                 validator: (value) {
                   if (value != null && value.isEmpty) {
-                    return MyStrings.enterYourEmail.tr;
-                  } else if (!MyStrings.emailValidatorRegExp.hasMatch(value ?? '')) {
-                    return MyStrings.invalidEmailMsg.tr;
+                    return Strings.enterYourEmail.tr;
+                  } else if (!Strings.emailValidatorRegExp.hasMatch(value ?? '')) {
+                    return Strings.invalidEmailMsg.tr;
                   } else {
                     return null;
                   }
@@ -99,8 +99,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 },
                 child: LabelTextField(
                   isPassword: true,
-                  labelText: MyStrings.password.tr,
-                  hintText: MyStrings.enterYourPassword_.tr,
+                  labelText: Strings.password.tr,
+                  hintText: Strings.enterYourPassword_.tr,
                   controller: controller.passwordController,
                   focusNode: controller.passwordFocusNode,
                   nextFocus: controller.confirmPasswordFocusNode,
@@ -124,8 +124,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
               ),
               spaceDown(Dimensions.space12.h),
               LabelTextField(
-                labelText: MyStrings.confirmPassword.tr,
-                hintText: MyStrings.confirmYourPassword.tr,
+                labelText: Strings.confirmPassword.tr,
+                hintText: Strings.confirmYourPassword.tr,
                 controller: controller.cPasswordController,
                 focusNode: controller.confirmPasswordFocusNode,
                 inputAction: TextInputAction.done,
@@ -135,7 +135,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 validator: (value) {
                   if (controller.passwordController.text.toLowerCase() !=
                       controller.cPasswordController.text.toLowerCase()) {
-                    return MyStrings.kMatchPassError.tr;
+                    return Strings.kMatchPassError.tr;
                   } else {
                     return null;
                   }
@@ -154,7 +154,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         //  controller.changeRememberMe();
                       },
                       isRememberMeTextShow: true,
-                      checkText: MyStrings.iAgreeToThe.tr,
+                      checkText: Strings.iAgreeToThe.tr,
                     ),
                     Expanded(
                       child: PrivacyPolicyTermsOfServices(
@@ -173,7 +173,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
               spaceDown(Dimensions.space24.h),
               CustomElevatedBtn(
                 isLoading: controller.submitLoading,
-                text: MyStrings.createNewAccount.tr,
+                text: Strings.createNewAccount.tr,
                 onTap: () {
                   if (formKey.currentState!.validate()) {
                     controller.signUpUser();

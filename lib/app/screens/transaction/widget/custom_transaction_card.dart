@@ -3,7 +3,7 @@ import 'package:ovowpp/app/components/divider/custom_divider.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/utils/dimensions.dart';
-import '../../../../core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import '../../../../data/controller/transaction/transactions_controller.dart';
 import '../../../components/animated_widget/expanded_widget.dart';
 import '../../../components/column_widget/card_column.dart';
@@ -46,13 +46,13 @@ class CustomTransactionCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: CardColumn(
-                    header: MyStrings.trxId,
+                    header: Strings.trxId,
                     body: trxData,
                     textColor: Theme.of(context).textTheme.titleLarge!.color,
                   ),
                 ),
                 Expanded(
-                  child: CardColumn(alignmentEnd: true, header: MyStrings.date, body: dateData, isDate: true),
+                  child: CardColumn(alignmentEnd: true, header: Strings.date, body: dateData, isDate: true),
                 ),
               ],
             ),
@@ -62,7 +62,7 @@ class CustomTransactionCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: CardColumn(
-                    header: MyStrings.amount,
+                    header: Strings.amount,
                     body: '$amountData ${controller.currency}',
                     textColor: controller.changeTextColor(trxType),
                   ),
@@ -70,7 +70,7 @@ class CustomTransactionCard extends StatelessWidget {
                 Expanded(
                   child: CardColumn(
                     alignmentEnd: true,
-                    header: MyStrings.postBalance,
+                    header: Strings.postBalance,
                     body: '$postBalanceData ${controller.currency}',
                   ),
                 ),
@@ -82,7 +82,7 @@ class CustomTransactionCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const CustomDivider(space: Dimensions.space15),
-                  CardColumn(header: MyStrings.details, body: detailsText),
+                  CardColumn(header: Strings.details, body: detailsText),
                 ],
               ),
             ),

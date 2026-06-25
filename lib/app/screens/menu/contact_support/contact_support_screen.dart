@@ -10,7 +10,7 @@ import 'package:ovowpp/core/utils/app_style.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/text_style.dart';
 
 class ContactSupportScreen extends StatelessWidget {
@@ -20,28 +20,28 @@ class ContactSupportScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColor.white,
-      appBar: CustomAppBar(title: MyStrings.contactSupport.tr, elevation: 0, bgColor: Colors.white),
+      appBar: CustomAppBar(title: Strings.contactSupport.tr, elevation: 0, bgColor: Colors.white),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: Dimensions.space16.w),
         child: SingleChildScrollView(
           child: Column(
             children: [
               LabelTextField(
-                labelText: MyStrings.subject.tr,
-                hintText: MyStrings.subjectFieldHint.tr,
+                labelText: Strings.subject.tr,
+                hintText: Strings.subjectFieldHint.tr,
                 onChanged: () {},
                 fillColor: MyColor.searchFieldColor,
               ),
               spaceDown(Dimensions.space11.h),
               LabelTextField(
-                labelText: MyStrings.issueCategory.tr,
+                labelText: Strings.issueCategory.tr,
                 onChanged: () {},
                 fillColor: MyColor.searchFieldColor,
               ),
               spaceDown(Dimensions.space11.h),
               LabelTextField(
-                labelText: MyStrings.message.tr,
-                hintText: MyStrings.describeIssue,
+                labelText: Strings.message.tr,
+                hintText: Strings.describeIssue,
                 onChanged: () {},
                 fillColor: MyColor.searchFieldColor,
                 maxLines: 6,
@@ -49,8 +49,8 @@ class ContactSupportScreen extends StatelessWidget {
               spaceDown(Dimensions.space11.h),
               LabelTextField(
                 readOnly: true,
-                labelText: MyStrings.attachmentOptional.tr,
-                hintText: MyStrings.attachAFile,
+                labelText: Strings.attachmentOptional.tr,
+                hintText: Strings.attachAFile,
                 prefixIcon: MyAssetImageWidget(
                   assetPath: MyImages.attach,
                   isSvg: true,
@@ -63,11 +63,11 @@ class ContactSupportScreen extends StatelessWidget {
               ),
               spaceDown(Dimensions.space26.h),
               DefaultText(
-                text: MyStrings.supportTeamHelp24Hours,
+                text: Strings.supportTeamHelp24Hours,
                 textStyle: MyTextStyle.subHeading12W400().copyWith(fontSize: 14.sp),
               ),
               spaceDown(Dimensions.space26.h),
-              CustomElevatedBtn(text: MyStrings.sendMessages, onTap: () {}),
+              CustomElevatedBtn(text: Strings.sendMessages, onTap: () {}),
             ],
           ),
         ),

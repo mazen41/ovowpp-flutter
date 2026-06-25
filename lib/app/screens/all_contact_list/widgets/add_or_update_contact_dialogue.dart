@@ -37,7 +37,7 @@ class _AddOrUpdateDialogueState extends State<AddOrUpdateDialogue> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  widget.isUpdate ? MyStrings.editContactList : MyStrings.newContactList.tr,
+                  widget.isUpdate ? Strings.editContactList : Strings.newContactList.tr,
                   style: theme.textTheme.headlineMedium?.copyWith(color: MyColor.getHeadingTextColor()),
                 ),
                 GestureDetector(
@@ -65,15 +65,15 @@ class _AddOrUpdateDialogueState extends State<AddOrUpdateDialogue> {
                 LabelTextField(
                   isRequired: true,
                   controller: controller.contactNameController,
-                  labelText: MyStrings.name.tr,
-                  hintText: MyStrings.enterListName.tr,
+                  labelText: Strings.name.tr,
+                  hintText: Strings.enterListName.tr,
                   onChanged: (value) {},
                   textInputType: TextInputType.emailAddress,
                   inputAction: TextInputAction.next,
                   radius: Dimensions.largeRadius,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return MyStrings.fieldErrorMsg.tr;
+                      return Strings.fieldErrorMsg.tr;
                     } else {
                       return null;
                     }
@@ -87,13 +87,13 @@ class _AddOrUpdateDialogueState extends State<AddOrUpdateDialogue> {
             padding: const EdgeInsets.symmetric(horizontal: Dimensions.horizontalScreenPadding),
             child: CustomElevatedBtn(
               isLoading: controller.submitContact,
-              text: MyStrings.submit.tr,
+              text: Strings.submit.tr,
               onTap: () {
                 if (controller.contactNameController.toString() != "") {
                   controller.id = widget.id;
                   controller.submitContactData();
                 } else {
-                  CustomSnackBar.error(errorList: [MyStrings.nameIsRequired.tr]);
+                  CustomSnackBar.error(errorList: [Strings.nameIsRequired.tr]);
                 }
               },
             ),

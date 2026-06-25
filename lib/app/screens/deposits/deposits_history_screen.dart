@@ -14,7 +14,7 @@ import '../../../core/helper/date_converter.dart';
 import '../../../core/route/route.dart';
 import '../../../core/utils/dimensions.dart';
 import '../../../core/utils/my_color.dart';
-import '../../../core/utils/my_strings.dart';
+import '../../../core/translations/strings_enum.dart';
 import '../../../data/controller/deposit/deposit_history_controller.dart';
 import '../../../data/repo/deposit/deposit_repo.dart';
 
@@ -65,7 +65,7 @@ class _DepositsHistoryScreenState extends State<DepositsHistoryScreen> {
         child: MyCustomScaffold(
           appBarBgColor: MyColor.white,
           screenBgColor: MyColor.white,
-          pageTitle: MyStrings.depositHistory.tr,
+          pageTitle: Strings.depositHistory.tr,
           titleFontSize: 18.sp,
 
           actionButton: [

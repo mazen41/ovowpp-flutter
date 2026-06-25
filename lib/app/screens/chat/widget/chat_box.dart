@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/text_style.dart';
 import 'package:ovowpp/core/utils/util_exporter.dart';
 import 'package:ovowpp/data/controller/chat/chat_controller.dart';
@@ -39,7 +40,7 @@ class _ChatBoxState extends State<ChatBox> {
             //       isSvg: true,
             //       assetPath: MyImages.selectEmoji),
             // ),
-            hintText: MyStrings.typeAMessage,
+            hintText: Strings.typeAMessage,
             hintStyle: MyTextStyle.subHeading12W400().copyWith(fontSize: 14.sp, color: MyColor.chatBoxHintColor),
             contentPadding: EdgeInsets.only(bottom: Dimensions.space5.h, left: Dimensions.space10.w),
             focusedBorder: OutlineInputBorder(
@@ -57,7 +58,7 @@ class _ChatBoxState extends State<ChatBox> {
             //     if (MyUtils.checkPermission(AppPermission.sendMessage)) {
             //       controller.sendMessage();
             //     } else {
-            //       CustomSnackBar.error(errorList: [MyStrings.permissionDenyMessage]);
+            //       CustomSnackBar.error(errorList: [Strings.permissionDenyMessage]);
             //     }
             //   },
             //   child: Padding(

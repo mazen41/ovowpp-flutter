@@ -21,7 +21,7 @@ class WithdrawConfirmController extends GetxController {
   List<FormModel> formList = [];
   bool isLoading = true;
   String trxId = '';
-  String selectOne = MyStrings.selectOne;
+  String selectOne = Strings.selectOne;
 
   void initData(WithdrawRequestResponseModel model) async {
     isLoading = true;
@@ -72,12 +72,12 @@ class WithdrawConfirmController extends GetxController {
 
     AuthorizationResponseModel model = await repo.confirmWithdrawRequest(trxId, formList, twoFactorCode);
 
-    if (model.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
-      CustomSnackBar.success(successList: model.message ?? [MyStrings.requestSuccess]);
+    if (model.status?.toLowerCase() == Strings.success.toLowerCase()) {
+      CustomSnackBar.success(successList: model.message ?? [Strings.requestSuccess]);
       Get.close(1);
       Get.offAndToNamed(RouteHelper.withdrawScreen);
     } else {
-      CustomSnackBar.error(errorList: model.message ?? [MyStrings.requestFail]);
+      CustomSnackBar.error(errorList: model.message ?? [Strings.requestFail]);
     }
 
     submitLoading = false;
@@ -90,7 +90,7 @@ class WithdrawConfirmController extends GetxController {
     for (var element in formList) {
       if (element.isRequired == 'required') {
         if (element.selectedValue == '' || element.selectedValue == selectOne) {
-          errorList.add('${element.name} ${MyStrings.isRequired}');
+          errorList.add('${element.name} ${Strings.isRequired}');
         }
       }
     }
@@ -246,7 +246,7 @@ class WithdrawConfirmController extends GetxController {
     ResponseModel responseModel = await profileRepo.loadProfileInfo();
     if (responseModel.statusCode == 200) {
       ProfileResponseModel model = ProfileResponseModel.fromJson(responseModel.responseJson);
-      if (model.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+      if (model.status?.toLowerCase() == Strings.success.toLowerCase()) {
         isTFAEnable = model.data?.user?.ts == '1' ? true : false;
       }
     }

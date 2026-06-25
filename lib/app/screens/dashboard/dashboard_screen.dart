@@ -10,11 +10,11 @@ import 'package:ovowpp/app/screens/dashboard/widget/quick_action/quick_action.da
 import 'package:ovowpp/app/screens/dashboard/widget/recent_activity/recent_campaign.dart';
 import 'package:ovowpp/app/screens/dashboard/widget/user_profile_banner.dart';
 import 'package:ovowpp/core/route/route.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/app_permission.dart';
 import 'package:ovowpp/core/utils/app_style.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/controller/dashboard/dashboard_controller.dart';
 import 'package:ovowpp/data/repo/campaign/campaign_repo.dart';
@@ -67,7 +67,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                     // USER PROFILE BANNER AND NOTIFICATION
                     UserProfileBanner(
                       title: "${controller.user?.firstname ?? ''} ${controller.user?.lastname ?? ''}",
-                      subTitle: MyStrings.businessOverView,
+                      subTitle: Strings.businessOverView.tr,
                       trailingWidget: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [

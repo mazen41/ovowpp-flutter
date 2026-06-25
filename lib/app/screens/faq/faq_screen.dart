@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 
 import '../../../core/utils/dimensions.dart';
-import '../../../core/utils/my_strings.dart';
+import '../../../core/translations/strings_enum.dart';
 import '../../../data/controller/faq_controller/faq_controller.dart';
 import '../../../data/repo/faq_repo/faq_repo.dart';
 import 'faq_widget.dart';
@@ -34,7 +34,7 @@ class _FaqScreenState extends State<FaqScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColor.white,
-      appBar: CustomAppBar(isShowBackBtn: true, title: MyStrings.faq.tr, bgColor: MyColor.white, elevation: 0),
+      appBar: CustomAppBar(isShowBackBtn: true, title: Strings.faq.tr, bgColor: MyColor.white, elevation: 0),
       body: GetBuilder<FaqController>(
         builder: (controller) => controller.isLoading
             ? const CustomLoader()

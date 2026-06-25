@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/kyc_controller/kyc_controller.dart';
 import 'package:ovowpp/data/model/kyc/kyc_response_model.dart';
 import 'package:ovowpp/app/screens/auth/kyc/widget/widget/choose_file_list_item.dart';
@@ -24,7 +24,7 @@ class _ConfirmKycFileItemState extends State<ConfirmKycFileItem> {
           onTap: () {
             controller.pickFile(widget.index, extention: model.extensions?.split(','));
           },
-          child: ChooseFileItem(fileName: model.selectedValue ?? MyStrings.chooseFile),
+          child: ChooseFileItem(fileName: model.selectedValue ?? Strings.chooseFile),
         );
       },
     );

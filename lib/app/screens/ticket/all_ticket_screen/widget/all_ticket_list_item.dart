@@ -6,7 +6,7 @@ import 'package:ovowpp/app/components/column_widget/card_column.dart';
 
 import '../../../../../core/utils/dimensions.dart';
 import '../../../../../core/utils/my_color.dart';
-import '../../../../../core/utils/my_strings.dart';
+import '../../../../../core/translations/strings_enum.dart';
 
 class AllTicketListItem extends StatelessWidget {
   final String ticketNumber;
@@ -50,7 +50,7 @@ class AllTicketListItem extends StatelessWidget {
                   child: Column(
                     children: [
                       CardColumn(
-                        header: "[${MyStrings.ticket.tr}#$ticketNumber]",
+                        header: "[${Strings.ticket.tr}#$ticketNumber]",
                         body: subject.tr,
                         space: 5,
                         headerTextStyle: theme.textTheme.labelMedium?.copyWith(

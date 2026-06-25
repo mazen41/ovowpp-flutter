@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
 import 'package:ovowpp/core/route/route.dart';
 import 'package:ovowpp/core/utils/app_status.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/model/all_contact/create_contact_response_model.dart';
 import 'package:ovowpp/data/model/all_contact/delete_contact_response_model.dart';
@@ -51,7 +51,7 @@ class ManageAgentController extends GetxController {
 
       if (response.statusCode == 200) {
         AgentListResponseModel responseModel = AgentListResponseModel.fromJson(response.responseJson);
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           List<AgentData>? tempList = responseModel.data?.agents?.data;
           imagePath = responseModel.data?.profilePath ?? "";
           nextPageUrl = responseModel.data?.agents?.nextPageUrl ?? "";
@@ -82,7 +82,7 @@ class ManageAgentController extends GetxController {
       ResponseModel response = await repo.loadConversationRepo(contactId);
       if (response.statusCode == 200) {
         CreateContactResponseModel responseModel = CreateContactResponseModel.fromJson(response.responseJson);
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           conversation = responseModel.data?.conversation;
           Get.toNamed(RouteHelper.chatScreen, arguments: [conversation?.id.toString() ?? ""]);
         }

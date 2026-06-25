@@ -10,7 +10,7 @@ import 'package:ovowpp/app/screens/auth/kyc/section/kyc_select_section.dart';
 import 'package:ovowpp/app/screens/auth/kyc/section/kyc_text_section.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/kyc_controller/kyc_controller.dart';
 import 'package:ovowpp/data/model/kyc/kyc_response_model.dart' as kyc;
 import 'package:ovowpp/data/repo/kyc/kyc_repo.dart';
@@ -50,7 +50,7 @@ class _KycScreenState extends State<KycScreen> {
           FocusScope.of(context).unfocus();
         },
         child: MyCustomScaffold(
-          pageTitle: MyStrings.kycVerification.tr,
+          pageTitle: Strings.kycVerification.tr,
           body: SizedBox(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
@@ -149,7 +149,7 @@ class _KycScreenState extends State<KycScreen> {
                                           Row(
                                             children: [
                                               Text(
-                                                MyStrings.supportedFileType,
+                                                Strings.supportedFileType,
                                                 style: theme.textTheme.bodySmall?.copyWith(
                                                   color: MyColor.getBodyTextColor(),
                                                 ),
@@ -180,7 +180,7 @@ class _KycScreenState extends State<KycScreen> {
                                   controller.submitKycData();
                                 } else {}
                               },
-                              text: MyStrings.submit,
+                              text: Strings.submit,
                             ),
                           ),
                         ],

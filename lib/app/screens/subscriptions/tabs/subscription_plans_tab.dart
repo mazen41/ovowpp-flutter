@@ -7,7 +7,7 @@ import 'package:ovowpp/app/components/text-field/custom_drop_down_button_with_te
 import 'package:ovowpp/app/screens/subscriptions/widgets/subscription_widgets.dart';
 import 'package:ovowpp/core/helper/string_format_helper.dart';
 import 'package:ovowpp/core/utils/text_style.dart';
-import 'package:ovowpp/core/utils/util_exporter.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/subscription/subscription_controller.dart';
 import 'package:ovowpp/data/model/subscription/pricing_plan_response_model.dart';
 import 'package:ovowpp/data/services/shared_pref_service.dart';
@@ -58,10 +58,10 @@ class _SubscriptionPlansTabState extends State<SubscriptionPlansTab> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SubscriptionSectionEyebrow(text: MyStrings.scaleYourVision.tr),
+                  SubscriptionSectionEyebrow(text: Strings.scaleYourVision.tr),
                   SizedBox(height: Dimensions.space10.h),
                   Text(
-                    MyStrings.investmentForEveryStage.tr,
+                    Strings.investmentForEveryStage.tr,
                     style: MyTextStyle.heading20W700().copyWith(
                       fontSize: 34.sp,
                       height: 1.12,
@@ -71,7 +71,7 @@ class _SubscriptionPlansTabState extends State<SubscriptionPlansTab> {
                   SizedBox(height: Dimensions.space18.h),
                   Center(
                     child: SubscriptionInlineSwitch(
-                      items: [MyStrings.monthly.tr, MyStrings.yearly.tr],
+                      items: [Strings.monthly.tr, Strings.yearly.tr],
                       selectedIndex: _selectedBillingIndex,
                       onChanged: (index) {
                         setState(() {
@@ -154,8 +154,8 @@ class SubscriptionPlanCard extends StatelessWidget {
     final String suffix = isYearly ? '/yr' : '/mo';
     final bool isStarterRepurchaseBlocked = controller.isStarterPlanRepurchaseBlocked(plan);
     final String buttonText = isStarterRepurchaseBlocked
-        ? MyStrings.alreadyPurchased
-        : (isCurrentPlan ? MyStrings.renewNow : MyStrings.buyNow);
+        ? Strings.alreadyPurchased
+        : (isCurrentPlan ? Strings.renewNow : Strings.buyNow);
     final bool isPopular = (plan.isPopular ?? '0') == '1';
 
     return AnimatedContainer(
@@ -192,7 +192,7 @@ class SubscriptionPlanCard extends StatelessWidget {
                 const Spacer(),
                 if (isPopular)
                   SubscriptionPillText(
-                    text: MyStrings.popular,
+                    text: Strings.popular,
                     backgroundColor: MyColor.getPrimaryColor().withValues(alpha: .12),
                     textColor: MyColor.getPrimaryColor(),
                   ),
@@ -228,7 +228,7 @@ class SubscriptionPlanCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    MyStrings.planLimits.tr,
+                    Strings.planLimits.tr,
                     style: MyTextStyle.heading14W600().copyWith(color: MyColor.regularHederColor),
                   ),
                   SizedBox(height: Dimensions.space14.h),
@@ -265,29 +265,29 @@ class SubscriptionPlanCard extends StatelessWidget {
 
   List<_PlanLimitItem> _buildHighlights() {
     return [
-      _PlanLimitItem(title: MyStrings.whatsappAccountLimit, value: _limitValue(plan.accountLimit)),
-      _PlanLimitItem(title: MyStrings.agentLimit, value: _limitValue(plan.agentLimit)),
-      _PlanLimitItem(title: MyStrings.contactLimit, value: _limitValue(plan.contactLimit)),
-      _PlanLimitItem(title: MyStrings.templateLimit, value: _limitValue(plan.templateLimit)),
-      _PlanLimitItem(title: MyStrings.automationFlowLimit, value: _limitValue(plan.flowLimit)),
-      _PlanLimitItem(title: MyStrings.campaignLimit, value: _limitValue(plan.campaignLimit)),
-      _PlanLimitItem(title: MyStrings.shortLinkLimit, value: _limitValue(plan.shortLinkLimit)),
-      _PlanLimitItem(title: MyStrings.floaterLimit, value: _limitValue(plan.floaterLimit)),
+      _PlanLimitItem(title: Strings.whatsappAccountLimit, value: _limitValue(plan.accountLimit)),
+      _PlanLimitItem(title: Strings.agentLimit, value: _limitValue(plan.agentLimit)),
+      _PlanLimitItem(title: Strings.contactLimit, value: _limitValue(plan.contactLimit)),
+      _PlanLimitItem(title: Strings.templateLimit, value: _limitValue(plan.templateLimit)),
+      _PlanLimitItem(title: Strings.automationFlowLimit, value: _limitValue(plan.flowLimit)),
+      _PlanLimitItem(title: Strings.campaignLimit, value: _limitValue(plan.campaignLimit)),
+      _PlanLimitItem(title: Strings.shortLinkLimit, value: _limitValue(plan.shortLinkLimit)),
+      _PlanLimitItem(title: Strings.floaterLimit, value: _limitValue(plan.floaterLimit)),
 
-      _PlanLimitItem(title: MyStrings.welcomeMessageAvailable, value: _yesNoValue(plan.welcomeMessage)),
-      _PlanLimitItem(title: MyStrings.aiAssistance, value: _yesNoValue(plan.aiAssistance)),
-      _PlanLimitItem(title: MyStrings.interactiveMessage, value: _yesNoValue(plan.interactiveMessage)),
-      _PlanLimitItem(title: MyStrings.ecommerceAvailable, value: _yesNoValue(plan.ecommerceAvailable)),
-      _PlanLimitItem(title: MyStrings.apiAvailable, value: _yesNoValue(plan.apiAvailable)),
+      _PlanLimitItem(title: Strings.welcomeMessageAvailable, value: _yesNoValue(plan.welcomeMessage)),
+      _PlanLimitItem(title: Strings.aiAssistance, value: _yesNoValue(plan.aiAssistance)),
+      _PlanLimitItem(title: Strings.interactiveMessage, value: _yesNoValue(plan.interactiveMessage)),
+      _PlanLimitItem(title: Strings.ecommerceAvailable, value: _yesNoValue(plan.ecommerceAvailable)),
+      _PlanLimitItem(title: Strings.apiAvailable, value: _yesNoValue(plan.apiAvailable)),
     ];
   }
 
   String _yesNoValue(String? value) {
-    return (value ?? '0') == '1' ? MyStrings.yes : MyStrings.no;
+    return (value ?? '0') == '1' ? Strings.yes : Strings.no;
   }
 
   String _limitValue(String? value) {
-    return (value ?? '0') == '-1' ? MyStrings.unlimited : (value ?? '0');
+    return (value ?? '0') == '-1' ? Strings.unlimited : (value ?? '0');
   }
 }
 
@@ -359,7 +359,7 @@ class _PlanPurchaseSheetBodyState extends State<_PlanPurchaseSheetBody> {
   @override
   Widget build(BuildContext context) {
     if (widget.isStarterRepurchaseBlocked) {
-      return _StarterPlanPurchasedSheet(planName: widget.plan.name ?? MyStrings.starter);
+      return _StarterPlanPurchasedSheet(planName: widget.plan.name ?? Strings.starter);
     }
 
     final bool isWalletSelected = selectedPaymentOption == 'wallet_payment';
@@ -395,7 +395,7 @@ class _PlanPurchaseSheetBodyState extends State<_PlanPurchaseSheetBody> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          (widget.isRenewal ? MyStrings.renewNow : MyStrings.buyNow).tr,
+                          (widget.isRenewal ? Strings.renewNow : Strings.buyNow).tr,
                           style: MyTextStyle.heading15W600().copyWith(color: MyColor.regularHederColor),
                         ),
                         SizedBox(height: Dimensions.space4.h),
@@ -420,7 +420,7 @@ class _PlanPurchaseSheetBodyState extends State<_PlanPurchaseSheetBody> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _PurchaseInfoTile(
-                      label: MyStrings.planDetails,
+                      label: Strings.planDetails,
                       value: widget.plan.name ?? '--',
                       trailing:
                           '${widget.controller.currencySymbol}${AppConverter.formatNumber(_selectedPrice, precision: 2)}',
@@ -428,7 +428,7 @@ class _PlanPurchaseSheetBodyState extends State<_PlanPurchaseSheetBody> {
                     if (isWalletSelected) ...[
                       SizedBox(height: Dimensions.space12.h),
                       _PurchaseInfoTile(
-                        label: MyStrings.currentBalance,
+                        label: Strings.currentBalance,
                         value: widget.controller.currencyCode,
                         trailing:
                             '${widget.controller.currencySymbol}${AppConverter.formatNumber(widget.controller.walletBalance, precision: 2)}',
@@ -440,8 +440,8 @@ class _PlanPurchaseSheetBodyState extends State<_PlanPurchaseSheetBody> {
               SizedBox(height: Dimensions.space18.h),
               if (recurringOptions.isNotEmpty)
                 CustomDropDownTextField2(
-                  labelText: MyStrings.billingCycle,
-                  hintText: MyStrings.billingCycle,
+                  labelText: Strings.billingCycle,
+                  hintText: Strings.billingCycle,
                   selectedValue: selectedRecurring,
                   textStyle: MyTextStyle.subHeading14W500().copyWith(color: MyColor.regularHederColor, fontSize: 14.sp),
                   onChanged: recurringOptions.length > 1
@@ -456,7 +456,7 @@ class _PlanPurchaseSheetBodyState extends State<_PlanPurchaseSheetBody> {
                         (item) => DropdownMenuItem(
                           value: item,
                           child: Text(
-                            (item == 'yearly' ? MyStrings.yearly : MyStrings.monthly).tr,
+                            (item == 'yearly' ? Strings.yearly : Strings.monthly).tr,
                             style: MyTextStyle.subHeading14W500().copyWith(
                               fontSize: 14.sp,
                               color: MyColor.regularHederColor,
@@ -467,14 +467,14 @@ class _PlanPurchaseSheetBodyState extends State<_PlanPurchaseSheetBody> {
                       .toList(),
                 )
               else
-                _PurchaseInfoTile(label: MyStrings.billingCycle, value: '--', trailing: '--'),
+                _PurchaseInfoTile(label: Strings.billingCycle, value: '--', trailing: '--'),
               SizedBox(height: Dimensions.space18.h),
-              Text(MyStrings.paymentOption.tr, style: MyTextStyle.heading14W600()),
+              Text(Strings.paymentOption.tr, style: MyTextStyle.heading14W600()),
               SizedBox(height: Dimensions.space10.h),
               _PaymentModeTile(
-                title: MyStrings.payFromWallet,
+                title: Strings.payFromWallet,
                 subtitle:
-                    '${MyStrings.walletBalance.tr}: ${widget.controller.currencySymbol}${AppConverter.formatNumber(widget.controller.walletBalance, precision: 2)}',
+                    '${Strings.walletBalance.tr}: ${widget.controller.currencySymbol}${AppConverter.formatNumber(widget.controller.walletBalance, precision: 2)}',
                 icon: Icons.account_balance_wallet_rounded,
                 isSelected: isWalletSelected,
                 onTap: () {
@@ -485,8 +485,8 @@ class _PlanPurchaseSheetBodyState extends State<_PlanPurchaseSheetBody> {
               ),
               SizedBox(height: Dimensions.space10.h),
               _PaymentModeTile(
-                title: MyStrings.paymentGateway,
-                subtitle: MyStrings.selectPaymentMethod,
+                title: Strings.paymentGateway,
+                subtitle: Strings.selectPaymentMethod,
                 icon: Icons.credit_card_rounded,
                 isSelected: !isWalletSelected,
                 onTap: () {
@@ -497,7 +497,7 @@ class _PlanPurchaseSheetBodyState extends State<_PlanPurchaseSheetBody> {
               ),
               SizedBox(height: Dimensions.space20.h),
               SubscriptionPrimaryButton(
-                text: isWalletSelected ? MyStrings.payFromWallet : MyStrings.continueToGateway,
+                text: isWalletSelected ? Strings.payFromWallet : Strings.continueToGateway,
                 onTap: isSubmitting || selectedRecurring == null
                     ? null
                     : () async {
@@ -559,18 +559,18 @@ class _StarterPlanPurchasedSheet extends StatelessWidget {
             MyAssetImageWidget(isSvg: true, assetPath: MyImages.noDataImage, height: 110.h, width: 110.w),
             SizedBox(height: Dimensions.space16.h),
             Text(
-              MyStrings.starterPlanAlreadyPurchased.tr,
+              Strings.starterPlanAlreadyPurchased.tr,
               textAlign: TextAlign.center,
               style: MyTextStyle.heading20W700().copyWith(color: MyColor.regularHederColor, fontSize: 22.sp),
             ),
             SizedBox(height: Dimensions.space10.h),
             Text(
-              '${planName.tr}: ${MyStrings.starterPlanPurchasedMessage.tr}',
+              '${planName.tr}: ${Strings.starterPlanPurchasedMessage.tr}',
               textAlign: TextAlign.center,
               style: MyTextStyle.subHeading14W500().copyWith(color: MyColor.fieldTitleTextColor, height: 1.5),
             ),
             SizedBox(height: Dimensions.space22.h),
-            SubscriptionPrimaryButton(text: MyStrings.close, onTap: Get.back),
+            SubscriptionPrimaryButton(text: Strings.close, onTap: Get.back),
           ],
         ),
       ),
@@ -685,8 +685,8 @@ class _PlanLimitRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String normalizedValue = item.value.toLowerCase();
-    final bool isEnabled = normalizedValue == MyStrings.yes.toLowerCase();
-    final bool isDisabled = normalizedValue == MyStrings.no.toLowerCase();
+    final bool isEnabled = normalizedValue == Strings.yes.toLowerCase();
+    final bool isDisabled = normalizedValue == Strings.no.toLowerCase();
     final Color valueColor = isEnabled
         ? MyColor.customerText
         : isDisabled

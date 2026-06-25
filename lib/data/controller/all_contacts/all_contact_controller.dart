@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
 import 'package:ovowpp/core/route/route.dart';
 import 'package:ovowpp/core/utils/app_status.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/model/all_contact/all_contact_response_model.dart';
 import 'package:ovowpp/data/model/all_contact/create_contact_response_model.dart';
@@ -66,7 +66,7 @@ class AllContactController extends GetxController {
 
       final extension = file.extension?.toLowerCase();
       if (extension != 'csv' && extension != 'xlsx') {
-        CustomSnackBar.error(errorList: [MyStrings.invalidFile.tr]);
+        CustomSnackBar.error(errorList: [Strings.invalidFile.tr]);
         return;
       }
 
@@ -124,7 +124,7 @@ class AllContactController extends GetxController {
       if (responseModel.statusCode == 200) {
         final newAllContactModel = AllContactResponseModel.fromJson(responseModel.responseJson);
 
-        if (newAllContactModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (newAllContactModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           final tempList = newAllContactModel.data?.contacts?.data;
 
           nextPageUrl = newAllContactModel.data?.contacts?.nextPageUrl ?? "";
@@ -167,7 +167,7 @@ class AllContactController extends GetxController {
 
       if (response.statusCode == 200) {
         AllContactResponseModel responseModel = AllContactResponseModel.fromJson(response.responseJson);
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           List<Contact>? tempList = responseModel.data?.contacts?.data;
 
           if (tempList != null && tempList.isNotEmpty) {
@@ -211,7 +211,7 @@ class AllContactController extends GetxController {
       ResponseModel response = await repo.loadConversationRepo(contactId);
       if (response.statusCode == 200) {
         CreateContactResponseModel responseModel = CreateContactResponseModel.fromJson(response.responseJson);
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           conversation = responseModel.data?.conversation;
           Get.toNamed(
             RouteHelper.chatScreen,
@@ -233,7 +233,7 @@ class AllContactController extends GetxController {
 
   Future<void> uploadCsvFile() async {
     if (csvFile == null) {
-      CustomSnackBar.error(errorList: [MyStrings.noCsvFileSelected.tr]);
+      CustomSnackBar.error(errorList: [Strings.noCsvFileSelected.tr]);
       return;
     }
     try {
@@ -242,7 +242,7 @@ class AllContactController extends GetxController {
       ResponseModel response = await repo.uploadCsvRepo(csvFile!);
       if (response.statusCode == 200) {
         UploadCsvResponseModel responseModel = UploadCsvResponseModel.fromJson(response.responseJson);
-        if (responseModel.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (responseModel.status?.toLowerCase() == Strings.success.toLowerCase()) {
           initData();
           Get.back();
         }

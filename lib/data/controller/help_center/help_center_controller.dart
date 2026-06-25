@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/data/repo/help_center/help_center_repo.dart';
 
 class HelpCenterController extends GetxController {
@@ -10,5 +10,5 @@ class HelpCenterController extends GetxController {
   bool isLoading = false;
   bool noInternet = false;
 
-  List<String> status = [MyStrings.selectOne, "avvv", "asdsad"];
+  List<String> status = [Strings.selectOne, "avvv", "asdsad"];
 }

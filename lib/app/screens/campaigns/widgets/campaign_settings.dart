@@ -23,13 +23,13 @@ class CampaignSettings extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           DefaultText(
-            text: MyStrings.campaignSettings.tr,
+            text: Strings.campaignSettings.tr,
             textStyle: MyTextStyle.subHeading12W400().copyWith(fontSize: 16.sp, color: MyColor.ovoTextColor),
           ),
           spaceDown(Dimensions.space18.h),
           SwitchWithLeadText(
-            title: MyStrings.enableTracking.tr,
-            description: MyStrings.trackMessageDeliveryStatus.tr,
+            title: Strings.enableTracking.tr,
+            description: Strings.trackMessageDeliveryStatus.tr,
             controller: controller,
 
             switchTap: () {
@@ -39,8 +39,8 @@ class CampaignSettings extends StatelessWidget {
           ),
           spaceDown(Dimensions.space16.h),
           SwitchWithLeadText(
-            title: MyStrings.autoRetryFailed.tr,
-            description: MyStrings.retryFailedMessageAfter1Hour.tr,
+            title: Strings.autoRetryFailed.tr,
+            description: Strings.retryFailedMessageAfter1Hour.tr,
             controller: controller,
 
             switchTap: () {

@@ -13,7 +13,7 @@ import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
 import 'package:ovowpp/core/utils/text_style.dart';
 import 'package:ovowpp/data/controller/notifications/notification_controller.dart';
-import '../../../../core/utils/my_strings.dart';
+import '../../../../core/translations/strings_enum.dart';
 import '../../../../data/repo/notification_repo/notification_repo.dart';
 
 class NotificationSettingScreen extends StatefulWidget {
@@ -37,7 +37,7 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
       builder: (controller) {
         return Scaffold(
           backgroundColor: MyColor.white,
-          appBar: CustomAppBar(elevation: 0, bgColor: MyColor.white, title: MyStrings.notificationSettings.tr),
+          appBar: CustomAppBar(elevation: 0, bgColor: MyColor.white, title: Strings.notificationSettings.tr),
           body: Padding(
             padding: EdgeInsetsGeometry.symmetric(horizontal: Dimensions.space12.w),
             child: Column(
@@ -49,8 +49,8 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
                     children: [
                       NotificationItem(
                         iconPath: MyImages.notificationIcon,
-                        title: MyStrings.receivePushNotification.tr,
-                        subtitle: MyStrings.pushNotificationSub.tr,
+                        title: Strings.receivePushNotification.tr,
+                        subtitle: Strings.pushNotificationSub.tr,
                         value: controller.pushNotificationValue,
                         switchTap: controller.changePushNotification,
                       ),
@@ -60,8 +60,8 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
                       ),
                       NotificationItem(
                         iconPath: MyImages.emailFieldPrefixSVG,
-                        title: MyStrings.emailNotification.tr,
-                        subtitle: MyStrings.emailNotificationSub.tr,
+                        title: Strings.emailNotification.tr,
+                        subtitle: Strings.emailNotificationSub.tr,
                         value: controller.emailNotificationValue,
                         switchTap: controller.changeEmailNotification,
                       ),
@@ -70,8 +70,8 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
                       spaceDown(Dimensions.space16.h),
                       NotificationItem(
                         iconPath: MyImages.promotional,
-                        title: MyStrings.promotionalOffer.tr,
-                        subtitle: MyStrings.promotionalOfferSub.tr,
+                        title: Strings.promotionalOffer.tr,
+                        subtitle: Strings.promotionalOfferSub.tr,
                         value: controller.promotionalOffer,
                         switchTap: controller.changePromotionalOffer,
                       ),

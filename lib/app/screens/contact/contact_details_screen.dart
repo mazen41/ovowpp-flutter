@@ -31,7 +31,7 @@ class _ContactDetailsScreenState extends State<ContactDetailsScreen> {
           top: true,
           child: Scaffold(
             backgroundColor: MyColor.white,
-            appBar: CustomAppBar(title: MyStrings.contactDetails.tr, elevation: 0, bgColor: Colors.white),
+            appBar: CustomAppBar(title: Strings.contactDetails.tr, elevation: 0, bgColor: Colors.white),
             body: SingleChildScrollView(
               child: SizedBox(
                 width: double.infinity,
@@ -52,30 +52,30 @@ class _ContactDetailsScreenState extends State<ContactDetailsScreen> {
                       ),
                       DefaultText(text: ".....Here a box....."),
                       DefaultText(
-                        text: "${MyStrings.lastActive.tr} 2h ago",
+                        text: "${Strings.lastActive.tr} 2h ago",
                         textStyle: MyTextStyle.subHeading12W400().copyWith(fontSize: 14.sp),
                       ),
                       spaceDown(Dimensions.space34.h),
                       ContactDetailsItem(
                         icon: MyImages.contactDetailsPhone,
-                        title: MyStrings.phoneNumber.tr,
+                        title: Strings.phoneNumber.tr,
                         phoneNumber: "+${item.mobileCode ?? ""}${item.mobile ?? ""}",
                       ),
                       spaceDown(Dimensions.space12.h),
                       ContactDetailsItem(
                         icon: MyImages.contactDetailsEmail,
-                        title: MyStrings.email.tr,
+                        title: Strings.email.tr,
                         phoneNumber: "+${item.mobileCode ?? ""}${item.mobile ?? ""}",
                       ),
                       spaceDown(Dimensions.space12.h),
                       ContactDetailsItem(
                         icon: MyImages.contactDetailsNotes,
-                        title: MyStrings.notes.tr,
+                        title: Strings.notes.tr,
                         phoneNumber: "+${item.mobileCode ?? ""}${item.mobile ?? ""}",
                       ),
                       spaceDown(Dimensions.space28.h),
                       CustomElevatedBtn(
-                        text: MyStrings.sendMessages.tr,
+                        text: Strings.sendMessages.tr,
                         onTap: () {
                           controller.contactId = item.id.toString();
                           controller.createConversation();
@@ -83,7 +83,7 @@ class _ContactDetailsScreenState extends State<ContactDetailsScreen> {
                       ),
                       spaceDown(Dimensions.space12.h),
                       CustomElevatedBtn(
-                        text: MyStrings.viewCampaigns,
+                        text: Strings.viewCampaigns,
                         onTap: () {},
                         bgColor: MyColor.cancelElevatedBtnBgColor,
                       ),
@@ -91,7 +91,7 @@ class _ContactDetailsScreenState extends State<ContactDetailsScreen> {
                       Align(
                         alignment: Alignment.topLeft,
                         child: DefaultText(
-                          text: MyStrings.recentActivity.tr,
+                          text: Strings.recentActivity.tr,
                           textStyle: MyTextStyle.subHeading12W400().copyWith(
                             fontSize: 14.sp,
                             color: MyColor.recentActivityTextColor,
@@ -100,18 +100,18 @@ class _ContactDetailsScreenState extends State<ContactDetailsScreen> {
                       ),
                       RecentlyActivityItem(
                         icon: MyImages.messageIcon,
-                        text: MyStrings.sendWelcomeMessage.tr,
+                        text: Strings.sendWelcomeMessage.tr,
                         subText: '2h ago',
                       ),
                       RecentlyActivityItem(
                         icon: MyImages.planStatus,
                         iconColor: MyColor.recentlyActivityIconColor,
-                        text: MyStrings.addedToSummerSaleCampaign.tr,
+                        text: Strings.addedToSummerSaleCampaign.tr,
                         subText: '2d ago',
                       ),
                       RecentlyActivityItem(
                         icon: MyImages.messageIcon,
-                        text: MyStrings.receivedInquiry.tr,
+                        text: Strings.receivedInquiry.tr,
                         subText: '3d ago',
                       ),
                     ],

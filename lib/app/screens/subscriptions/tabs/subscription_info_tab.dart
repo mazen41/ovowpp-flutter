@@ -5,7 +5,7 @@ import 'package:ovowpp/app/components/no_data.dart';
 import 'package:ovowpp/app/screens/subscriptions/widgets/subscription_widgets.dart';
 import 'package:ovowpp/core/helper/string_format_helper.dart';
 import 'package:ovowpp/core/utils/text_style.dart';
-import 'package:ovowpp/core/utils/util_exporter.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/subscription/subscription_controller.dart';
 import 'package:ovowpp/data/model/subscription/pricing_plan_response_model.dart';
 import 'package:ovowpp/data/services/shared_pref_service.dart';
@@ -42,7 +42,7 @@ class SubscriptionInfoTab extends StatelessWidget {
               SizedBox(height: Dimensions.space24.h),
               Row(
                 children: [
-                  Text(MyStrings.featureLimits.tr, style: MyTextStyle.heading20W700().copyWith(fontSize: 24.sp)),
+                  Text(Strings.featureLimits.tr, style: MyTextStyle.heading20W700().copyWith(fontSize: 24.sp)),
                   const Spacer(),
                   if (billingCycle.isNotEmpty)
                     Text(
@@ -68,54 +68,54 @@ class SubscriptionInfoTab extends StatelessWidget {
   List<_FeatureLimitData> _buildFeatures(SubscriptionController controller) {
     final user = controller.user;
     return [
-      _FeatureLimitData(title: MyStrings.whatsappAccountLimit, value: _limitValue(user?.accountLimit)),
-      _FeatureLimitData(title: MyStrings.agentLimit, value: _limitValue(user?.agentLimit)),
-      _FeatureLimitData(title: MyStrings.contactLimit, value: _limitValue(user?.contactLimit)),
-      _FeatureLimitData(title: MyStrings.templateLimit, value: _limitValue(user?.templateLimit)),
+      _FeatureLimitData(title: Strings.whatsappAccountLimit, value: _limitValue(user?.accountLimit)),
+      _FeatureLimitData(title: Strings.agentLimit, value: _limitValue(user?.agentLimit)),
+      _FeatureLimitData(title: Strings.contactLimit, value: _limitValue(user?.contactLimit)),
+      _FeatureLimitData(title: Strings.templateLimit, value: _limitValue(user?.templateLimit)),
       _FeatureLimitData(
-        title: MyStrings.automationFlowLimit,
+        title: Strings.automationFlowLimit,
         value: _limitValue(controller.currentPricingPlan?.flowLimit),
       ),
       _FeatureLimitData(
-        title: MyStrings.campaignLimit,
+        title: Strings.campaignLimit,
         value: _limitValue(user?.campaignLimit ?? controller.currentPricingPlan?.campaignLimit),
       ),
       _FeatureLimitData(
-        title: MyStrings.shortLinkLimit,
+        title: Strings.shortLinkLimit,
         value: _limitValue(user?.shortLinkLimit ?? controller.currentPricingPlan?.shortLinkLimit),
       ),
       _FeatureLimitData(
-        title: MyStrings.floaterLimit,
+        title: Strings.floaterLimit,
         value: _limitValue(user?.floaterLimit ?? controller.currentPricingPlan?.floaterLimit),
       ),
       _FeatureLimitData(
-        title: MyStrings.welcomeMessageAvailable,
+        title: Strings.welcomeMessageAvailable,
         value: _yesNoValue(user?.welcomeMessage ?? controller.currentPricingPlan?.welcomeMessage),
       ),
       _FeatureLimitData(
-        title: MyStrings.aiAssistance,
+        title: Strings.aiAssistance,
         value: _yesNoValue(user?.aiAssistance ?? controller.currentPricingPlan?.aiAssistance),
       ),
       _FeatureLimitData(
-        title: MyStrings.interactiveMessage,
+        title: Strings.interactiveMessage,
         value: _yesNoValue(controller.currentPricingPlan?.interactiveMessage),
       ),
       _FeatureLimitData(
-        title: MyStrings.ecommerceAvailable,
+        title: Strings.ecommerceAvailable,
         value: _yesNoValue(controller.currentPricingPlan?.ecommerceAvailable),
       ),
-      _FeatureLimitData(title: MyStrings.apiAvailable, value: _yesNoValue(controller.currentPricingPlan?.apiAvailable)),
+      _FeatureLimitData(title: Strings.apiAvailable, value: _yesNoValue(controller.currentPricingPlan?.apiAvailable)),
     ];
   }
 
   String _yesNoValue(String? value) {
     final normalized = _cleanValue(value) ?? '0';
-    return normalized == '1' ? MyStrings.yes : MyStrings.no;
+    return normalized == '1' ? Strings.yes : Strings.no;
   }
 
   String _limitValue(String? value) {
     final normalized = _cleanValue(value);
-    if (normalized == '-1') return MyStrings.unlimited;
+    if (normalized == '-1') return Strings.unlimited;
     return normalized ?? '0';
   }
 
@@ -150,14 +150,14 @@ class SubscriptionInfoCard extends StatelessWidget {
     final ActivePlan? activePlan = controller.activePlan;
     final PurchaseData? purchaseData = controller.purchaseData;
     final String currencyCode = SharedPreferenceService.getCurrencyText().isEmpty
-        ? MyStrings.usd
+        ? Strings.usd
         : SharedPreferenceService.getCurrencyText();
     final String amount =
         _cleanValue(purchaseData?.total) ??
         _cleanValue(purchaseData?.amount) ??
         _resolvePlanAmount(activePlan, plan, purchaseData?.billingCycle ?? activePlan?.billingCycle) ??
         '0';
-    final String planName = _cleanValue(activePlan?.name) ?? _cleanValue(plan?.name) ?? MyStrings.noData;
+    final String planName = _cleanValue(activePlan?.name) ?? _cleanValue(plan?.name) ?? Strings.noData;
     final String billingCycle = _resolveBillingLabel(purchaseData?.billingCycle ?? activePlan?.billingCycle);
     final String purchaseDate = _formatDateTime(purchaseData?.purchaseAt ?? purchaseData?.createdAt);
     final String activatedDate = _formatDateTime(purchaseData?.activeAt ?? purchaseData?.createdAt);
@@ -213,7 +213,7 @@ class SubscriptionInfoCard extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Text(MyStrings.autoRenewal.tr, style: MyTextStyle.heading12W600().copyWith(color: MyColor.white)),
+              Text(Strings.autoRenewal.tr, style: MyTextStyle.heading12W600().copyWith(color: MyColor.white)),
             ],
           ),
           SizedBox(height: Dimensions.space24.h),
@@ -232,22 +232,22 @@ class SubscriptionInfoCard extends StatelessWidget {
           Divider(color: Colors.white.withValues(alpha: .16), height: 1),
           SizedBox(height: Dimensions.space18.h),
           _InfoRow(
-            label: MyStrings.totalText,
+            label: Strings.totalText,
             value: '${AppConverter.formatNumber(amount, precision: 2)} $currencyCode',
           ),
           SizedBox(height: Dimensions.space8.h),
-          _InfoRow(label: MyStrings.billingCycle, value: billingCycle),
+          _InfoRow(label: Strings.billingCycle, value: billingCycle),
           SizedBox(height: Dimensions.space8.h),
-          _InfoRow(label: MyStrings.purchaseAt, value: purchaseDate),
+          _InfoRow(label: Strings.purchaseAt, value: purchaseDate),
           SizedBox(height: Dimensions.space8.h),
-          _InfoRow(label: MyStrings.activatedOn, value: activatedDate),
+          _InfoRow(label: Strings.activatedOn, value: activatedDate),
           SizedBox(height: Dimensions.space8.h),
-          _InfoRow(label: MyStrings.nextBillingDate, value: nextBillingDate),
+          _InfoRow(label: Strings.nextBillingDate, value: nextBillingDate),
           SizedBox(height: Dimensions.space20.h),
           SizedBox(
             width: 150.w,
             child: SubscriptionPrimaryButton(
-              text: MyStrings.renewNow,
+              text: Strings.renewNow,
               onTap: () => DefaultTabController.of(context).animateTo(0),
             ),
           ),
@@ -284,8 +284,8 @@ class SubscriptionInfoCard extends StatelessWidget {
 
   String _resolveBillingLabel(String? billingCycle) {
     final String value = (_cleanValue(billingCycle) ?? '').toLowerCase();
-    if (value.contains('year')) return MyStrings.yearly.tr;
-    if (value.contains('month')) return MyStrings.monthly.tr;
+    if (value.contains('year')) return Strings.yearly.tr;
+    if (value.contains('month')) return Strings.monthly.tr;
     return '--';
   }
 
@@ -367,8 +367,8 @@ class SubscriptionInfoListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String normalizedValue = data.value.toLowerCase();
-    final bool isEnabled = normalizedValue == MyStrings.yes.toLowerCase();
-    final bool isDisabled = normalizedValue == MyStrings.no.toLowerCase();
+    final bool isEnabled = normalizedValue == Strings.yes.toLowerCase();
+    final bool isDisabled = normalizedValue == Strings.no.toLowerCase();
 
     final Color badgeBackground = isEnabled
         ? MyColor.helpCenterItemBgColor

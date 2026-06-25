@@ -1,4 +1,4 @@
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/url_container.dart';
 import 'package:ovowpp/data/model/authorization/authorization_response_model.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
@@ -29,10 +29,10 @@ class SmsEmailVerificationRepo {
       AuthorizationResponseModel model = AuthorizationResponseModel.fromJson(response.responseJson);
 
       if (model.status == 'error') {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.resendCodeFail]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.resendCodeFail]);
         return false;
       } else {
-        CustomSnackBar.success(successList: model.message ?? [MyStrings.successfullyCodeResend]);
+        CustomSnackBar.success(successList: model.message ?? [Strings.successfullyCodeResend]);
         return true;
       }
     } else {

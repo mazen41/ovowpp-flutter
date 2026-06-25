@@ -41,7 +41,7 @@ class HeaderContent extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     DefaultText(
-                      text: MyStrings.whatsappNumber.tr,
+                      text: Strings.whatsappNumber.tr,
                       textStyle: MyTextStyle.heading20W700().copyWith(fontWeight: FontWeight.w600),
                     ),
                     controller.isHomeDataLoading
@@ -152,9 +152,9 @@ class HeaderContent extends StatelessWidget {
             spaceDown(Dimensions.space8.h),
             LabelTextField(
               controller: controller.searchController,
-              labelText: MyStrings.search.tr,
+              labelText: Strings.search.tr,
               hideLabel: true,
-              hintText: MyStrings.searchNameOfPhoneNumber.tr,
+              hintText: Strings.searchNameOfPhoneNumber.tr,
               onChanged: (value) {
                 if (debounce?.isActive ?? false) {
                   debounce?.cancel();

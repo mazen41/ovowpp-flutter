@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
 import 'package:ovowpp/core/route/route.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/controller/dashboard/dashboard_controller.dart';
 import 'package:ovowpp/data/model/authorization/authorization_response_model.dart';
@@ -53,8 +53,8 @@ class SubscriptionController extends GetxController {
       activePlan = model.data?.activePlan;
       purchaseData = model.data?.purchaseData;
 
-      if ((model.status ?? '').toLowerCase() != MyStrings.success.toLowerCase() && pricingPlanList.isEmpty) {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.somethingWentWrong]);
+      if ((model.status ?? '').toLowerCase() != Strings.success.toLowerCase() && pricingPlanList.isEmpty) {
+        CustomSnackBar.error(errorList: model.message ?? [Strings.somethingWentWrong]);
       }
     } else {
       CustomSnackBar.error(errorList: [responseModel.message]);
@@ -95,13 +95,13 @@ class SubscriptionController extends GetxController {
       PurchaseHistoryResponseModel model = PurchaseHistoryResponseModel.fromJson(responseModel.responseJson);
       purchaseHistoryNextPageUrl = model.data?.purchaseHistories?.nextPageUrl ?? "";
 
-      if (model.status.toString().toLowerCase() == MyStrings.success.toLowerCase()) {
+      if (model.status.toString().toLowerCase() == Strings.success.toLowerCase()) {
         List<PurchaseHistoryData>? tempHistoryList = model.data?.purchaseHistories?.data;
         if (tempHistoryList != null && tempHistoryList.isNotEmpty) {
           purchaseHistoryList.addAll(tempHistoryList);
         }
       } else {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.somethingWentWrong]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.somethingWentWrong]);
       }
     } else {
       CustomSnackBar.error(errorList: [responseModel.message]);
@@ -114,7 +114,7 @@ class SubscriptionController extends GetxController {
 
   bool isStarterPlan(PricingPlan? plan) {
     final String normalizedName = (plan?.name ?? '').trim().toLowerCase();
-    return normalizedName.contains(MyStrings.starter.toLowerCase());
+    return normalizedName.contains(Strings.starter.toLowerCase());
   }
 
   bool hasPurchasedPlan(PricingPlan? plan) {
@@ -166,7 +166,7 @@ class SubscriptionController extends GetxController {
     final plan = selectedPurchasePlan;
     if (plan == null) return;
     if (!isRecurringAvailable(plan, value!)) {
-      CustomSnackBar.error(errorList: [MyStrings.invalidBillingCycle]);
+      CustomSnackBar.error(errorList: [Strings.invalidBillingCycle]);
       return;
     }
     selectedPlanRecurring = value;
@@ -181,10 +181,10 @@ class SubscriptionController extends GetxController {
   void applyCouponCode() {
     appliedCouponCode = couponController.text.trim();
     if (appliedCouponCode.isEmpty) {
-      CustomSnackBar.error(errorList: [MyStrings.enterCouponCode]);
+      CustomSnackBar.error(errorList: [Strings.enterCouponCode]);
       return;
     }
-    CustomSnackBar.success(successList: [MyStrings.couponWillApply]);
+    CustomSnackBar.success(successList: [Strings.couponWillApply]);
     update();
   }
 
@@ -231,7 +231,7 @@ class SubscriptionController extends GetxController {
 
   String get currencyCode {
     return SharedPreferenceService.getCurrencyText().isEmpty
-        ? MyStrings.usd
+        ? Strings.usd
         : SharedPreferenceService.getCurrencyText();
   }
 
@@ -261,17 +261,17 @@ class SubscriptionController extends GetxController {
     String couponCode = '',
   }) async {
     if (plan == null || (plan.id ?? '').isEmpty) {
-      CustomSnackBar.error(errorList: [MyStrings.requestFail]);
+      CustomSnackBar.error(errorList: [Strings.requestFail]);
       return;
     }
 
     if (isStarterPlanRepurchaseBlocked(plan)) {
-      CustomSnackBar.error(errorList: [MyStrings.starterPlanAlreadyPurchased]);
+      CustomSnackBar.error(errorList: [Strings.starterPlanAlreadyPurchased]);
       return;
     }
 
     if (!isRecurringAvailable(plan, selectedRecurring)) {
-      CustomSnackBar.error(errorList: [MyStrings.invalidBillingCycle]);
+      CustomSnackBar.error(errorList: [Strings.invalidBillingCycle]);
       return;
     }
 
@@ -279,7 +279,7 @@ class SubscriptionController extends GetxController {
     final double selectedPriceValue = double.tryParse(selectedPrice) ?? 0;
 
     if (paymentOption == 'wallet_payment' && walletBalanceValue < selectedPriceValue) {
-      CustomSnackBar.error(errorList: [MyStrings.insufficientWalletBalance]);
+      CustomSnackBar.error(errorList: [Strings.insufficientWalletBalance]);
       return;
     }
 
@@ -328,7 +328,7 @@ class SubscriptionController extends GetxController {
 
       if (responseModel.statusCode == 200) {
         AuthorizationResponseModel model = AuthorizationResponseModel.fromJson(responseModel.responseJson);
-        if ((model.status ?? '').toLowerCase() == MyStrings.success.toLowerCase()) {
+        if ((model.status ?? '').toLowerCase() == Strings.success.toLowerCase()) {
           purchaseSubmitting = false;
           selectedPurchasePlan = null;
           selectedPlanRecurring = 'monthly';
@@ -341,21 +341,21 @@ class SubscriptionController extends GetxController {
             Get.back();
             await Future.delayed(const Duration(milliseconds: 150));
           }
-          CustomSnackBar.success(successList: model.message ?? [MyStrings.requestSuccess]);
+          CustomSnackBar.success(successList: model.message ?? [Strings.requestSuccess]);
           await loadPricingPlans();
           await initPurchaseHistory();
           if (Get.isRegistered<DashboardController>()) {
             await Get.find<DashboardController>().loadData();
           }
         } else {
-          CustomSnackBar.error(errorList: model.message ?? [MyStrings.requestFail]);
+          CustomSnackBar.error(errorList: model.message ?? [Strings.requestFail]);
         }
       } else {
         CustomSnackBar.error(errorList: [responseModel.message]);
       }
     } catch (e) {
       printE(e);
-      CustomSnackBar.error(errorList: [MyStrings.requestFail]);
+      CustomSnackBar.error(errorList: [Strings.requestFail]);
     } finally {
       purchaseSubmitting = false;
       update();
@@ -364,7 +364,7 @@ class SubscriptionController extends GetxController {
 
   Future<void> downloadInvoice(String invoiceId) async {
     if (invoiceId.isEmpty) {
-      CustomSnackBar.error(errorList: [MyStrings.requestFail]);
+      CustomSnackBar.error(errorList: [Strings.requestFail]);
       return;
     }
 
@@ -375,7 +375,7 @@ class SubscriptionController extends GetxController {
 
       bool isPermissionGranted = await MyUtils.checkAndRequestStoragePermission();
       if (!isPermissionGranted) {
-        CustomSnackBar.error(errorList: [MyStrings.permissionDenied]);
+        CustomSnackBar.error(errorList: [Strings.permissionDenied]);
         return;
       }
 
@@ -387,7 +387,7 @@ class SubscriptionController extends GetxController {
       }
 
       if (targetDir == null || !targetDir.existsSync()) {
-        CustomSnackBar.error(errorList: [MyStrings.downloadDirNotFound]);
+        CustomSnackBar.error(errorList: [Strings.downloadDirNotFound]);
         return;
       }
 
@@ -403,7 +403,7 @@ class SubscriptionController extends GetxController {
       }
     } catch (e) {
       printE(e);
-      CustomSnackBar.error(errorList: [MyStrings.errorDownloadingFile]);
+      CustomSnackBar.error(errorList: [Strings.errorDownloadingFile]);
     } finally {
       downloadingInvoice = false;
       downloadingInvoiceId = '';

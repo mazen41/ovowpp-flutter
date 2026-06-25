@@ -31,8 +31,8 @@ class _ContactScreenSliverAppBarState extends State<ContactScreenSliverAppBar> {
             spaceDown(Dimensions.space20.h),
             UserProfileBanner(
               isBackButton: widget.isBackButton,
-              title: MyStrings.contacts.tr,
-              subTitle: MyStrings.reachOutStayConnected.tr,
+              title: Strings.contacts.tr,
+              subTitle: Strings.reachOutStayConnected.tr,
               isUpload: widget.isUpload,
               trailingWidget: (MyUtils.checkPermission(AppPermission.addContact))
                   ? RoundIconWithBgColor(
@@ -60,9 +60,9 @@ class _ContactScreenSliverAppBarState extends State<ContactScreenSliverAppBar> {
             spaceDown(Dimensions.space10.h),
             LabelTextField(
               fillColor: MyColor.searchFieldColor,
-              labelText: MyStrings.search.tr,
+              labelText: Strings.search.tr,
               hideLabel: true,
-              hintText: MyStrings.searchNameOfPhoneNumber.tr,
+              hintText: Strings.searchNameOfPhoneNumber.tr,
               controller: controller.searchController,
               onChanged: (value) {
                 if (_debounceTimer?.isActive ?? false) {
@@ -88,7 +88,7 @@ class _ContactScreenSliverAppBarState extends State<ContactScreenSliverAppBar> {
               ),
               validator: (value) {
                 if (value!.isEmpty) {
-                  return MyStrings.fieldErrorMsg.tr;
+                  return Strings.fieldErrorMsg.tr;
                 } else {
                   return null;
                 }

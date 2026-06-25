@@ -7,7 +7,7 @@ import 'package:ovowpp/app/screens/contact/contact_screen.dart';
 import 'package:ovowpp/app/screens/dashboard/dashboard_screen.dart';
 import 'package:ovowpp/app/screens/menu/menu_screen.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import '../../../core/utils/my_images.dart';
 import '../campaigns/campaigns_screen.dart';
 import '../chat_home/chat_home_screen.dart';
@@ -84,7 +84,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       isSelected: currentIndex == 0,
                       selectedIcon: MyImages.selectedDashboard,
                       unSelectedIcon: MyImages.unSelectedDashboard,
-                      title: MyStrings.dashboard,
+                      title: Strings.dashboard.tr,
                     ),
                     BottomNavItem(
                       onTap: () {
@@ -93,33 +93,33 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       isSelected: currentIndex == 1,
                       selectedIcon: MyImages.selectedChat,
                       unSelectedIcon: MyImages.unSelectedChat,
-                      title: MyStrings.chats,
+                      title: Strings.chats.tr,
                     ),
                     BottomNavItem(
                       onTap: () {
                         // if (MyUtils.checkPermission(AppPermission.viewCampaign)) {
                         changeScreen(2);
                         //  } else {
-                        //  CustomSnackBar.error(errorList: [MyStrings.permissionDenyMessage]);
+                        //  CustomSnackBar.error(errorList: [Strings.permissionDenyMessage.tr]);
                         //  }
                       },
                       isSelected: currentIndex == 2,
                       selectedIcon: MyImages.selectedCampaigns,
                       unSelectedIcon: MyImages.unSelectedCampaigns,
-                      title: MyStrings.campaign,
+                      title: Strings.campaign.tr,
                     ),
                     BottomNavItem(
                       onTap: () {
                         //   if (MyUtils.checkPermission(AppPermission.viewContact)) {
                         changeScreen(3);
                         //   } else {
-                        //  CustomSnackBar.error(errorList: [MyStrings.permissionDenyMessage]);
+                        //  CustomSnackBar.error(errorList: [Strings.permissionDenyMessage.tr]);
                         //  }
                       },
                       isSelected: currentIndex == 3,
                       selectedIcon: MyImages.selectedContact,
                       unSelectedIcon: MyImages.unSelectedContact,
-                      title: MyStrings.contacts,
+                      title: Strings.contacts.tr,
                     ),
                     BottomNavItem(
                       onTap: () {
@@ -128,7 +128,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       isSelected: currentIndex == 4,
                       selectedIcon: MyImages.selectedAccount,
                       unSelectedIcon: MyImages.unSelectedAccount,
-                      title: MyStrings.account,
+                      title: Strings.account.tr,
                     ),
                   ],
                 ),

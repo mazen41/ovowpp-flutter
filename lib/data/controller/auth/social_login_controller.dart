@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:ovowpp/app/packages/signin_with_linkdin/signin_with_linkedin.dart';
 import 'package:ovowpp/core/route/route.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/model/general_setting/general_setting_response_model.dart';
 import 'package:ovowpp/data/model/user/user.dart';
@@ -27,25 +27,38 @@ class SocialLoginController extends GetxController {
     try {
       isGoogleSignInLoading = true;
       update();
-      const List<String> scopes = <String>['email', 'profile'];
-      googleSignIn.signOut();
+      
+      // Sign out first to ensure fresh login
+      await googleSignIn.signOut();
+      
+      // Initialize Google Sign-In
       await googleSignIn.initialize();
-      var googleUser = await googleSignIn.attemptLightweightAuthentication();
-      var googleAuth = googleUser?.authentication;
-      if (googleAuth == null || googleAuth.idToken == null) {
+      
+      // Use standard signIn for mobile (attemptLightweightAuthentication is for web only)
+      var googleUser = await googleSignIn.signIn();
+      
+      if (googleUser == null) {
         isGoogleSignInLoading = false;
         update();
+        CustomSnackBar.error(errorList: [Strings.loginFailedTryAgain.tr]);
         return;
       }
-      final GoogleSignInClientAuthorization? authorization = await googleUser?.authorizationClient
-          .authorizationForScopes(scopes);
+      
+      var googleAuth = await googleUser.authentication;
+      
+      if (googleAuth.idToken == null) {
+        isGoogleSignInLoading = false;
+        update();
+        CustomSnackBar.error(errorList: [Strings.loginFailedTryAgain.tr]);
+        return;
+      }
 
-      await socialLoginUser(provider: 'google', accessToken: authorization?.accessToken ?? '');
+      await socialLoginUser(provider: 'google', accessToken: googleAuth.idToken ?? '');
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
       }
-      // CustomSnackBar.error(errorList: [e.toString()]);
+      CustomSnackBar.error(errorList: [e.toString()]);
     }
 
     isGoogleSignInLoading = false;
@@ -82,7 +95,7 @@ class SocialLoginController extends GetxController {
         },
         onSignInError: (error) {
           printX('Error on sign in: $error');
-          CustomSnackBar.error(errorList: [error.description ?? MyStrings.loginFailedTryAgain.tr]);
+          CustomSnackBar.error(errorList: [error.description ?? Strings.loginFailedTryAgain.tr]);
           isLinkedinLoading = false;
           update();
         },
@@ -99,7 +112,7 @@ class SocialLoginController extends GetxController {
       ResponseModel responseModel = await repo.socialLoginUser(accessToken: accessToken, provider: provider);
       if (responseModel.statusCode == 200) {
         LoginResponseModel loginModel = LoginResponseModel.fromJson(responseModel.responseJson);
-        if (loginModel.status.toString().toLowerCase() == MyStrings.success.toLowerCase()) {
+        if (loginModel.status.toString().toLowerCase() == Strings.success.toLowerCase()) {
           String accessToken = loginModel.data?.accessToken ?? "";
           String tokenType = loginModel.data?.tokenType ?? "";
           User? user = loginModel.data?.user;
@@ -110,7 +123,7 @@ class SocialLoginController extends GetxController {
             isRemember: true,
           );
         } else {
-          CustomSnackBar.error(errorList: loginModel.message ?? [MyStrings.loginFailedTryAgain.tr]);
+          CustomSnackBar.error(errorList: loginModel.message ?? [Strings.loginFailedTryAgain.tr]);
         }
       } else {
         CustomSnackBar.error(errorList: [responseModel.message]);

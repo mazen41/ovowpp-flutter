@@ -10,7 +10,7 @@ import 'package:ovowpp/core/utils/app_style.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/core/utils/text_style.dart';
 
@@ -21,7 +21,7 @@ class NewHelpCenterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColor.white,
-      appBar: CustomAppBar(title: MyStrings.helpCenter.tr, elevation: 0, bgColor: Colors.white),
+      appBar: CustomAppBar(title: Strings.helpCenter.tr, elevation: 0, bgColor: Colors.white),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Dimensions.space16),
         child: SingleChildScrollView(
@@ -30,7 +30,7 @@ class NewHelpCenterScreen extends StatelessWidget {
               spaceDown(Dimensions.space4.h),
               LabelTextField(
                 hideLabel: true,
-                hintText: MyStrings.searchForHelp,
+                hintText: Strings.searchForHelp,
                 onChanged: () {},
                 prefixIcon: MyAssetImageWidget(
                   isSvg: true,
@@ -45,26 +45,26 @@ class NewHelpCenterScreen extends StatelessWidget {
               Column(
                 children: [
                   HelpCenterItem(
-                    title: MyStrings.gettingStarted.tr,
-                    subTitle: MyStrings.gettingStartedSub.tr,
+                    title: Strings.gettingStarted.tr,
+                    subTitle: Strings.gettingStartedSub.tr,
                     iconPath: MyImages.gettingStart,
                     onTap: () {},
                   ),
                   HelpCenterItem(
-                    title: MyStrings.accountAndBilling.tr,
-                    subTitle: MyStrings.accountAndBillingSub.tr,
+                    title: Strings.accountAndBilling.tr,
+                    subTitle: Strings.accountAndBillingSub.tr,
                     iconPath: MyImages.accountAndBilling,
                     onTap: () {},
                   ),
                   HelpCenterItem(
-                    title: MyStrings.templatesAndAutomation.tr,
-                    subTitle: MyStrings.templatesAndAutomationSub.tr,
+                    title: Strings.templatesAndAutomation.tr,
+                    subTitle: Strings.templatesAndAutomationSub.tr,
                     iconPath: MyImages.templatesAndAutomation,
                     onTap: () {},
                   ),
                   HelpCenterItem(
-                    title: MyStrings.troubleshooting.tr,
-                    subTitle: MyStrings.troubleshootingSub.tr,
+                    title: Strings.troubleshooting.tr,
+                    subTitle: Strings.troubleshootingSub.tr,
                     iconPath: MyImages.troubleshooting,
                     onTap: () {},
                   ),

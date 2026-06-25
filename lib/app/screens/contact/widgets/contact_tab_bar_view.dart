@@ -19,7 +19,7 @@ class ContactTabBarView extends StatelessWidget {
         return controller.isContactLoading
             ? const AllContactShimmer()
             : controller.newAllContactsData.isEmpty
-            ? NoDataWidget(text: MyStrings.noContactFound.tr)
+            ? NoDataWidget(text: Strings.noContactFound.tr)
             : NotificationListener<ScrollNotification>(
                 onNotification: (notification) {
                   if (notification is ScrollUpdateNotification) {

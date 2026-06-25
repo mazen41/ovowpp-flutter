@@ -4,7 +4,7 @@ import 'package:ovowpp/app/components/annotated_region/annotated_region_widget.d
 import 'package:ovowpp/app/components/card/my_custom_scaffold.dart';
 import 'package:ovowpp/app/components/no_notification_screen.dart';
 import 'package:ovowpp/app/components/shimmer/notification_shimmer.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/repo/notification_repo/notification_repo.dart';
 
 import '../../../core/helper/date_converter.dart';
@@ -54,7 +54,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return AnnotatedRegionWidget(
       top: true,
       child: MyCustomScaffold(
-        pageTitle: MyStrings.myNotifications.tr,
+        pageTitle: Strings.myNotifications.tr,
         body: GetBuilder<NotificationsController>(
           builder: (controller) => RefreshIndicator(
             color: MyColor.getPrimaryColor(),

@@ -25,8 +25,8 @@ class NewTicketController extends GetxController {
   TextEditingController messageController = TextEditingController();
   TextEditingController subjectController = TextEditingController();
 
-  String noFileChosen = MyStrings.noFileChosen;
-  String chooseFile = MyStrings.chooseFile;
+  String noFileChosen = Strings.noFileChosen;
+  String chooseFile = Strings.chooseFile;
 
   bool isRtl = false;
 
@@ -56,7 +56,7 @@ class NewTicketController extends GetxController {
 
   void addNewAttachment() {
     if (attachmentList.length > 4) {
-      CustomSnackBar.error(errorList: [MyStrings.somethingWentWrong]);
+      CustomSnackBar.error(errorList: [Strings.somethingWentWrong]);
       return;
     }
 
@@ -69,8 +69,8 @@ class NewTicketController extends GetxController {
     update();
   }
 
-  List<String> priorityList = [MyStrings.low.tr, MyStrings.medium.tr, MyStrings.high.tr];
-  String? selectedPriority = MyStrings.low.tr;
+  List<String> priorityList = [Strings.low.tr, Strings.medium.tr, Strings.high.tr];
+  String? selectedPriority = Strings.low.tr;
 
   int selectedIndex = 0;
   void setPriority(String? newValue) {
@@ -127,12 +127,12 @@ class NewTicketController extends GetxController {
     String message = messageController.text.toString();
 
     if (message.isEmpty) {
-      CustomSnackBar.error(errorList: [MyStrings.messageRequired]);
+      CustomSnackBar.error(errorList: [Strings.messageRequired]);
       return;
     }
 
     if (message.isEmpty) {
-      CustomSnackBar.error(errorList: [MyStrings.subjectRequired]);
+      CustomSnackBar.error(errorList: [Strings.subjectRequired]);
       return;
     }
 
@@ -151,13 +151,13 @@ class NewTicketController extends GetxController {
 
     if (responseModel.statusCode == 200) {
       AuthorizationResponseModel model = AuthorizationResponseModel.fromJson(responseModel.responseJson);
-      if (model.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+      if (model.status?.toLowerCase() == Strings.success.toLowerCase()) {
         Get.back(result: "updated");
-        CustomSnackBar.success(successList: [MyStrings.ticketCreateSuccessfully]);
+        CustomSnackBar.success(successList: [Strings.ticketCreateSuccessfully]);
         clearSelectedData();
       } else {
         Get.back(result: "updated");
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.requestFail]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.requestFail]);
         clearSelectedData();
       }
     } else {

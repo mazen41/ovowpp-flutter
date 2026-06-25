@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:ovowpp/data/model/transctions/transaction_response_model.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
@@ -70,7 +70,7 @@ class TransactionsController extends GetxController {
 
       nextPageUrl = model.data?.transactions?.nextPageUrl;
 
-      if (model.status.toString().toLowerCase() == MyStrings.success.toLowerCase()) {
+      if (model.status.toString().toLowerCase() == Strings.success.toLowerCase()) {
         List<TransactionData>? tempDataList = model.data?.transactions?.data;
         if (page == 1) {
           List<Remarks>? tempRemarksList = model.data?.remarks;
@@ -88,7 +88,7 @@ class TransactionsController extends GetxController {
           transactionList.addAll(tempDataList);
         }
       } else {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.somethingWentWrong]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.somethingWentWrong]);
       }
     } else {
       CustomSnackBar.error(errorList: [responseModel.message]);

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/model/authorization/authorization_response_model.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:ovowpp/data/model/support/support_ticket_view_response_model.dart';
@@ -44,8 +44,8 @@ class TicketDetailsController extends GetxController {
   MyTickets? receivedTicketModel;
   List<File> attachmentList = [];
 
-  String noFileChosen = MyStrings.noFileChosen;
-  String chooseFile = MyStrings.chooseFile;
+  String noFileChosen = Strings.noFileChosen;
+  String chooseFile = Strings.chooseFile;
 
   String ticketImagePath = "";
 
@@ -83,7 +83,7 @@ class TicketDetailsController extends GetxController {
 
     if (response.statusCode == 200) {
       model = SupportTicketViewResponseModel.fromJson(response.responseJson);
-      if (model.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+      if (model.status?.toLowerCase() == Strings.success.toLowerCase()) {
         ticket = model.data?.myTickets?.ticket ?? '';
         subject = model.data?.myTickets?.subject ?? '';
         status = model.data?.myTickets?.status ?? '';
@@ -95,7 +95,7 @@ class TicketDetailsController extends GetxController {
           messageList.addAll(tempTicketList);
         }
       } else {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.somethingWentWrong]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.somethingWentWrong]);
       }
     } else {
       CustomSnackBar.error(errorList: [response.message]);
@@ -108,7 +108,7 @@ class TicketDetailsController extends GetxController {
   bool submitLoading = false;
   Future<void> submitReply() async {
     if (replyController.text.toString().isEmpty) {
-      CustomSnackBar.error(errorList: [MyStrings.replyTicketEmptyMsg]);
+      CustomSnackBar.error(errorList: [Strings.replyTicketEmptyMsg]);
       return;
     }
     submitLoading = true;
@@ -119,7 +119,7 @@ class TicketDetailsController extends GetxController {
 
       if (b) {
         await loadTicketDetailsData(shouldLoad: false);
-        CustomSnackBar.success(successList: [MyStrings.repliedSuccessfully]);
+        CustomSnackBar.success(successList: [Strings.repliedSuccessfully]);
         replyController.text = '';
         refreshAttachmentList();
       }
@@ -155,12 +155,12 @@ class TicketDetailsController extends GetxController {
     ResponseModel responseModel = await repo.closeTicket(supportTicketID);
     if (responseModel.statusCode == 200) {
       AuthorizationResponseModel model = AuthorizationResponseModel.fromJson(responseModel.responseJson);
-      if (model.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+      if (model.status?.toLowerCase() == Strings.success.toLowerCase()) {
         clearAllData();
         Get.back(result: "updated");
-        CustomSnackBar.success(successList: model.message ?? [MyStrings.requestSuccess]);
+        CustomSnackBar.success(successList: model.message ?? [Strings.requestSuccess]);
       } else {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.requestFail]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.requestFail]);
       }
     } else {
       CustomSnackBar.error(errorList: [responseModel.message]);
@@ -214,7 +214,7 @@ class TicketDetailsController extends GetxController {
     isSubmitLoading = true;
     update();
     var downloadsDirectory = Directory('/storage/emulated/0/Download');
-    var fileName = '${MyStrings.appName}_${DateTime.now().millisecondsSinceEpoch}.$extension';
+    var fileName = '${Strings.appName}_${DateTime.now().millisecondsSinceEpoch}.$extension';
     if (downloadsDirectory.existsSync() == true) {
       final downloadPath = '${downloadsDirectory.path}/$fileName';
       ResponseModel responseModel = await ApiService.downloadFile(url, downloadPath);
@@ -232,7 +232,7 @@ class TicketDetailsController extends GetxController {
     if (Platform.isAndroid) {
       var status = await Permission.storage.request();
       if (!status.isGranted) {
-        CustomSnackBar.error(errorList: [MyStrings.permissionDenied]);
+        CustomSnackBar.error(errorList: [Strings.permissionDenied]);
         return;
       }
       downloadsDirectory = Directory('/storage/emulated/0/Download');
@@ -247,7 +247,7 @@ class TicketDetailsController extends GetxController {
       CustomSnackBar.success(successList: ['File saved at: $downloadPath']);
       await openFile(downloadPath, extension);
     } else {
-      CustomSnackBar.error(errorList: [MyStrings.downloadDirNotFound]);
+      CustomSnackBar.error(errorList: [Strings.downloadDirNotFound]);
     }
   }
 
@@ -257,11 +257,11 @@ class TicketDetailsController extends GetxController {
       final result = await OpenFile.open(path);
       if (result.type != ResultType.done) {
         if (result.type == ResultType.noAppToOpen) {
-          CustomSnackBar.error(errorList: [MyStrings.noDocOpenerApp, 'File saved at: $path']);
+          CustomSnackBar.error(errorList: [Strings.noDocOpenerApp, 'File saved at: $path']);
         }
       }
     } else {
-      CustomSnackBar.error(errorList: [MyStrings.fileNotFound]);
+      CustomSnackBar.error(errorList: [Strings.fileNotFound]);
     }
   }
 }

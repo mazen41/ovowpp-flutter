@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ovowpp/data/services/shared_pref_service.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/core/route/route.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/data/model/auth/sign_up_model/registration_response_model.dart';
 import 'package:ovowpp/data/model/auth/sign_up_model/sign_up_model.dart';
 import 'package:ovowpp/data/model/general_setting/general_setting_response_model.dart';
@@ -58,7 +58,7 @@ class RegistrationController extends GetxController {
 
   Future<void> signUpUser() async {
     if (needAgree && !agreeTC) {
-      CustomSnackBar.error(errorList: [MyStrings.agreePolicyMessage]);
+      CustomSnackBar.error(errorList: [Strings.agreePolicyMessage]);
       return;
     }
 
@@ -70,8 +70,8 @@ class RegistrationController extends GetxController {
 
     if (responseModel.statusCode == 200) {
       RegistrationResponseModel model = RegistrationResponseModel.fromJson(responseModel.responseJson);
-      if (model.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
-        CustomSnackBar.success(successList: model.message ?? [MyStrings.success.tr]);
+      if (model.status?.toLowerCase() == Strings.success.toLowerCase()) {
+        CustomSnackBar.success(successList: model.message ?? [Strings.success.tr]);
         emailController.clear();
         passwordController.clear();
         cPasswordController.clear();
@@ -79,7 +79,7 @@ class RegistrationController extends GetxController {
         lNameController.clear();
         checkAndGotoNextStep(model);
       } else {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.somethingWentWrong.tr]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.somethingWentWrong.tr]);
       }
     } else {
       CustomSnackBar.error(errorList: [responseModel.message]);
@@ -150,11 +150,11 @@ class RegistrationController extends GetxController {
   }
 
   List<ErrorModel> passwordValidationRules = [
-    ErrorModel(text: MyStrings.hasUpperLetter.tr, hasError: true),
-    ErrorModel(text: MyStrings.hasLowerLetter.tr, hasError: true),
-    ErrorModel(text: MyStrings.hasDigit.tr, hasError: true),
-    ErrorModel(text: MyStrings.hasSpecialChar.tr, hasError: true),
-    ErrorModel(text: MyStrings.minSixChar.tr, hasError: true),
+    ErrorModel(text: Strings.hasUpperLetter.tr, hasError: true),
+    ErrorModel(text: Strings.hasLowerLetter.tr, hasError: true),
+    ErrorModel(text: Strings.hasDigit.tr, hasError: true),
+    ErrorModel(text: Strings.hasSpecialChar.tr, hasError: true),
+    ErrorModel(text: Strings.minSixChar.tr, hasError: true),
   ];
 
   bool isCountryLoading = true;
@@ -169,7 +169,7 @@ class RegistrationController extends GetxController {
         generalSettingMainModel = model;
         SharedPreferenceService.setGeneralSettingData(model);
       } else {
-        List<String> message = [MyStrings.somethingWentWrong.tr];
+        List<String> message = [Strings.somethingWentWrong.tr];
         CustomSnackBar.error(errorList: model.message ?? message);
         return;
       }
@@ -193,11 +193,11 @@ class RegistrationController extends GetxController {
 
   String? validatePassword(String value) {
     if (value.isEmpty) {
-      return MyStrings.enterYourPassword_.tr;
+      return Strings.enterYourPassword_.tr;
     } else {
       if (checkPasswordStrength) {
         if (!regex.hasMatch(value)) {
-          return MyStrings.invalidPassMsg.tr;
+          return Strings.invalidPassMsg.tr;
         } else {
           return null;
         }

@@ -60,7 +60,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
           child: MyCustomScaffold(
             appBarBgColor: MyColor.white,
             screenBgColor: MyColor.white,
-            pageTitle: MyStrings.withdraw.tr,
+            pageTitle: Strings.withdraw.tr,
             actionButton: [
               GestureDetector(
                 onTap: () {

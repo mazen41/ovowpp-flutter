@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/screens/profile/widget/profile_top_section.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/account/profile_controller.dart';
 import 'package:ovowpp/data/repo/account/profile_repo.dart';
 import 'package:ovowpp/app/components/app-bar/custom_app_bar.dart';
@@ -37,7 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     ThemeData theme = Theme.of(context);
     return GetBuilder<ProfileController>(
       builder: (controller) => Scaffold(
-        appBar: CustomAppBar(title: MyStrings.profile.tr, bgColor: theme.appBarTheme.backgroundColor),
+        appBar: CustomAppBar(title: Strings.profile.tr, bgColor: theme.appBarTheme.backgroundColor),
         body: controller.isLoading
             ? const CustomLoader()
             : const Align(

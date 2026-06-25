@@ -73,7 +73,7 @@ class _AllContactListScreenState extends State<AllContactListScreen> {
         appBarContent: GetBuilder<AllContactListController>(
           builder: (controller) => Row(
             children: [
-              Expanded(child: Text(MyStrings.manageContactList.tr, style: MyTextStyle.heading20W700())),
+              Expanded(child: Text(Strings.manageContactList.tr, style: MyTextStyle.heading20W700())),
               spaceSide(Dimensions.space5.w),
               Visibility(
                 visible: MyUtils.checkPermission(AppPermission.addContactList),
@@ -96,7 +96,7 @@ class _AllContactListScreenState extends State<AllContactListScreen> {
           ),
         ),
         transformValue: 1,
-        pageTitle: MyStrings.allContacts.tr,
+        pageTitle: Strings.allContacts.tr,
         body: GetBuilder<AllContactListController>(
           builder: (controller) => RefreshIndicator(
             color: MyColor.getPrimaryColor(),
@@ -109,9 +109,9 @@ class _AllContactListScreenState extends State<AllContactListScreen> {
               children: [
                 LabelTextField(
                   controller: controller.searchController,
-                  labelText: MyStrings.search.tr,
+                  labelText: Strings.search.tr,
                   hideLabel: true,
-                  hintText: MyStrings.search.tr,
+                  hintText: Strings.search.tr,
                   onChanged: (value) {
                     if (_debounce?.isActive ?? false) {
                       _debounce?.cancel();
@@ -135,7 +135,7 @@ class _AllContactListScreenState extends State<AllContactListScreen> {
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return MyStrings.fieldErrorMsg.tr;
+                      return Strings.fieldErrorMsg.tr;
                     } else {
                       return null;
                     }
@@ -145,7 +145,7 @@ class _AllContactListScreenState extends State<AllContactListScreen> {
                 controller.isLoading
                     ? Expanded(child: const AllContactShimmer(isContactList: true))
                     : controller.allContactListdata.isEmpty
-                    ? NoDataWidget(text: MyStrings.noContactListFound.tr)
+                    ? NoDataWidget(text: Strings.noContactListFound.tr)
                     : Expanded(
                         child: ListView.builder(
                           controller: _controller,
@@ -181,7 +181,7 @@ class _AllContactListScreenState extends State<AllContactListScreen> {
                                               Text(item.name ?? "", style: MyTextStyle.heading16W600()),
                                               spaceDown(Dimensions.space4.h),
                                               Text(
-                                                "${item.contact?.length ?? ""} ${MyStrings.contacts}",
+                                                "${item.contact?.length ?? ""} ${Strings.contacts}",
                                                 style: MyTextStyle.subHeading15W500FieldTitleColor.copyWith(
                                                   fontSize: 13.sp,
                                                 ),
@@ -196,7 +196,7 @@ class _AllContactListScreenState extends State<AllContactListScreen> {
                                                 if (!MyUtils.checkPermission(AppPermission.editContactList) &&
                                                     !MyUtils.checkPermission(AppPermission.deleteContactList) &&
                                                     !MyUtils.checkPermission(AppPermission.viewListContact)) {
-                                                  CustomSnackBar.error(errorList: [MyStrings.permissionDenyMessage]);
+                                                  CustomSnackBar.error(errorList: [Strings.permissionDenyMessage]);
                                                 }
                                                 return [
                                                   if (MyUtils.checkPermission(AppPermission.editContactList))
@@ -213,7 +213,7 @@ class _AllContactListScreenState extends State<AllContactListScreen> {
                                                         ).customAlertDialog(context);
                                                       },
                                                       child: Text(
-                                                        MyStrings.edit.tr,
+                                                        Strings.edit.tr,
                                                         style: MyTextStyle.heading16W600(),
                                                       ),
                                                     ),
@@ -228,7 +228,7 @@ class _AllContactListScreenState extends State<AllContactListScreen> {
                                                             child: GetBuilder<AllContactListController>(
                                                               builder: (context) {
                                                                 return DeleteDialogue(
-                                                                  warningText: MyStrings
+                                                                  warningText: Strings
                                                                       .areYouSureYouWantToDeleteThisContactList
                                                                       .tr,
                                                                   isLoading: controller.isDeleting,
@@ -243,7 +243,7 @@ class _AllContactListScreenState extends State<AllContactListScreen> {
                                                       },
 
                                                       child: Text(
-                                                        MyStrings.delete.tr,
+                                                        Strings.delete.tr,
                                                         style: MyTextStyle.heading16W600(),
                                                       ),
                                                     ),
@@ -258,7 +258,7 @@ class _AllContactListScreenState extends State<AllContactListScreen> {
                                                         });
                                                       },
                                                       child: Text(
-                                                        MyStrings.viewContactList.tr,
+                                                        Strings.viewContactList.tr,
                                                         style: MyTextStyle.heading16W600(),
                                                       ),
                                                     ),

@@ -8,7 +8,7 @@ import 'package:ovowpp/app/components/custom_loader/custom_loader.dart';
 import 'package:ovowpp/app/components/shimmer/privacy_policy_shimmer.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/privacy/privacy_controller.dart';
 import 'package:ovowpp/data/repo/privacy_repo/privacy_repo.dart';
 
@@ -38,7 +38,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
     return AnnotatedRegionWidget(
       child: Scaffold(
         backgroundColor: MyColor.white,
-        appBar: CustomAppBar(title: MyStrings.privacyPolicy.tr, elevation: 0, bgColor: MyColor.white),
+        appBar: CustomAppBar(title: Strings.privacyPolicy.tr, elevation: 0, bgColor: MyColor.white),
         body: GetBuilder<PrivacyController>(
           builder: (controller) => SizedBox(
             width: MediaQuery.of(context).size.width,

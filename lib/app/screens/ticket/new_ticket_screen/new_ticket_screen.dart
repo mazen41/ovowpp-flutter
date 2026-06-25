@@ -41,7 +41,7 @@ class _NewTicketScreenState extends State<NewTicketScreen> {
     return GetBuilder<NewTicketController>(
       builder: (controller) => Scaffold(
         backgroundColor: MyColor.white,
-        appBar: CustomAppBar(title: MyStrings.addNewTicket.tr),
+        appBar: CustomAppBar(title: Strings.addNewTicket.tr),
 
         body: controller.isLoading
             ? const Center(child: CircularProgressIndicator())
@@ -58,8 +58,8 @@ class _NewTicketScreenState extends State<NewTicketScreen> {
                     children: [
                       const SizedBox(height: Dimensions.textToTextSpace),
                       LabelTextField(
-                        labelText: MyStrings.subject.tr,
-                        hintText: MyStrings.enterYourSubject.tr,
+                        labelText: Strings.subject.tr,
+                        hintText: Strings.enterYourSubject.tr,
                         controller: controller.subjectController,
                         isPassword: false,
                         nextFocus: controller.messageFocusNode,
@@ -67,7 +67,7 @@ class _NewTicketScreenState extends State<NewTicketScreen> {
                       ),
                       const SizedBox(height: Dimensions.textToTextSpace),
                       const SizedBox(height: Dimensions.textToTextSpace),
-                      DefaultText(text: MyStrings.priority.tr, textStyle: MyTextStyle.subHeading15W500FieldTitleColor),
+                      DefaultText(text: Strings.priority.tr, textStyle: MyTextStyle.subHeading15W500FieldTitleColor),
                       const SizedBox(height: Dimensions.space5),
 
                       DropDownTextFieldContainer(
@@ -102,8 +102,8 @@ class _NewTicketScreenState extends State<NewTicketScreen> {
                       const SizedBox(height: Dimensions.textToTextSpace),
 
                       LabelTextField(
-                        labelText: MyStrings.message.tr,
-                        hintText: MyStrings.enterYourMessage.tr,
+                        labelText: Strings.message.tr,
+                        hintText: Strings.enterYourMessage.tr,
                         isPassword: false,
                         controller: controller.messageController,
                         maxLines: 5,
@@ -120,8 +120,8 @@ class _NewTicketScreenState extends State<NewTicketScreen> {
                           readOnly: true,
                           contentPadding: const EdgeInsets.all(Dimensions.space10),
                           isAttachment: true,
-                          labelText: MyStrings.attachment.tr,
-                          hintText: MyStrings.chooseAFile.tr,
+                          labelText: Strings.attachment.tr,
+                          hintText: Strings.chooseAFile.tr,
                           inputAction: TextInputAction.done,
                           onChanged: (value) {
                             return;
@@ -141,7 +141,7 @@ class _NewTicketScreenState extends State<NewTicketScreen> {
                                 color: MyColor.getPrimaryColor(),
                               ),
                               child: Text(
-                                MyStrings.upload,
+                                Strings.upload,
                                 style: theme.textTheme.labelMedium?.copyWith(color: MyColor.white),
                               ),
                             ),
@@ -150,7 +150,7 @@ class _NewTicketScreenState extends State<NewTicketScreen> {
                       ),
                       const SizedBox(height: Dimensions.space2),
                       Text(
-                        "${MyStrings.supportedFileType.tr.toTitleCase()} ${MyStrings.ext.tr}",
+                        "${Strings.supportedFileType.tr.toTitleCase()} ${Strings.ext.tr}",
                         style: theme.textTheme.bodySmall?.copyWith(color: MyColor.getBodyTextColor()),
                       ),
                       const SizedBox(height: Dimensions.space10),
@@ -164,7 +164,7 @@ class _NewTicketScreenState extends State<NewTicketScreen> {
                           // verticalPadding: Dimensions.space15,
                           radius: Dimensions.space8,
                           bgColor: MyColor.getPrimaryColor(),
-                          text: MyStrings.submit.tr,
+                          text: Strings.submit.tr,
                           onTap: () {
                             controller.submit();
                           },

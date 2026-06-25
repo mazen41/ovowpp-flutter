@@ -18,7 +18,7 @@ class Details extends StatelessWidget {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              MyStrings.tags.tr,
+              Strings.tags.tr,
               style: theme.textTheme.titleSmall?.copyWith(color: MyColor.getHeadingTextColor()),
             ),
           ),
@@ -27,7 +27,7 @@ class Details extends StatelessWidget {
           spaceDown(Dimensions.space15.h),
           CustomDropDownTextField2(
             radius: Dimensions.space10,
-            labelText: MyStrings.selectStatus.tr,
+            labelText: Strings.selectStatus.tr,
             selectedValue: controller.conversation?.status == "2"
                 ? "Pending"
                 : controller.conversation?.status == "3"

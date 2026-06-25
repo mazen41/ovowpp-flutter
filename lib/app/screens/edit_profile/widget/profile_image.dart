@@ -78,7 +78,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 borderRadius: BorderRadius.circular(Dimensions.space12.r),
               ),
               child: DefaultText(
-                text: widget.isEdit == true ? MyStrings.edit.tr : MyStrings.cancel.tr,
+                text: widget.isEdit == true ? Strings.edit.tr : Strings.cancel.tr,
                 textStyle: MyTextStyle.heading16W600().copyWith(
                   color: widget.isEdit == true ? MyColor.white : MyColor.dark,
                   fontWeight: FontWeight.w500,

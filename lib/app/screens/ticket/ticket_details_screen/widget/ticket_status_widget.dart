@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/app/components/badges/status_badge.dart';
 import 'package:ovowpp/app/components/column_widget/card_column.dart';
 import 'package:get/get.dart';
@@ -33,7 +33,7 @@ class TicketStatusWidget extends StatelessWidget {
                 Expanded(
                   child: CardColumn(
                     isOnlyHeader: false,
-                    header: "[${MyStrings.ticket.tr}#${controller.model.data?.myTickets?.ticket ?? ''}]",
+                    header: "[${Strings.ticket.tr}#${controller.model.data?.myTickets?.ticket ?? ''}]",
                     body: controller.model.data?.myTickets?.subject ?? '',
                     bodyMaxLine: 3,
                     space: 7,

@@ -8,7 +8,7 @@ import 'package:ovowpp/core/utils/app_style.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 
 class DeleteDialogue extends StatelessWidget {
   final Callback onTap;
@@ -31,12 +31,12 @@ class DeleteDialogue extends StatelessWidget {
           ),
           spaceDown(Dimensions.space14),
           Text(
-            MyStrings.pleaseConfirm.tr,
+            Strings.pleaseConfirm.tr,
             style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600, fontSize: 22, color: MyColor.black),
           ),
           spaceDown(Dimensions.space10),
           Text(
-            warningText ?? MyStrings.areYouSureYouWantToDeleteThisAgent.tr,
+            warningText ?? Strings.areYouSureYouWantToDeleteThisAgent.tr,
             style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w400, fontSize: 14, color: MyColor.black),
           ),
           spaceDown(Dimensions.space14),
@@ -47,7 +47,7 @@ class DeleteDialogue extends StatelessWidget {
                   isLoading: false,
                   bgColor: MyColor.white,
                   borderColor: MyColor.getBorderColor(),
-                  text: MyStrings.no.tr,
+                  text: Strings.no.tr,
                   onTap: () {
                     Get.back();
                   },
@@ -57,7 +57,7 @@ class DeleteDialogue extends StatelessWidget {
               Expanded(
                 child: CustomElevatedBtn(
                   isLoading: isLoading,
-                  text: MyStrings.yes.tr,
+                  text: Strings.yes.tr,
                   loaderColor: MyColor.lightPrimary,
                   bgColor: MyColor.white,
                   textColor: MyColor.lightSuccess,

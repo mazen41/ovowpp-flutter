@@ -4,7 +4,7 @@ import 'package:ovowpp/app/components/file_download_dialog/download_dialogue.dar
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
 import 'package:ovowpp/data/services/shared_pref_service.dart';
 import '../../../core/utils/my_color.dart';
-import '../../../core/utils/my_strings.dart';
+import '../../../core/translations/strings_enum.dart';
 import '../../../core/utils/url_container.dart';
 import '../../model/global/response_model/response_model.dart';
 import '../../model/withdraw/withdraw_history_response_model.dart';
@@ -47,7 +47,7 @@ class WithdrawHistoryController extends GetxController {
           withdrawList.addAll(tempWithdrawList);
         }
       } else {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.somethingWentWrong]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.somethingWentWrong]);
       }
     } else {
       CustomSnackBar.error(errorList: [responseModel.message]);
@@ -98,11 +98,11 @@ class WithdrawHistoryController extends GetxController {
 
   String getStatus(int index) {
     String status = withdrawList[index].status == "1"
-        ? MyStrings.approved
+        ? Strings.approved
         : withdrawList[index].status == "2"
-        ? MyStrings.pending
+        ? Strings.pending
         : withdrawList[index].status == "3"
-        ? MyStrings.rejected
+        ? Strings.rejected
         : "";
 
     return status;

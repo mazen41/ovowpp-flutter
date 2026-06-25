@@ -28,7 +28,7 @@ class NoDataWidget extends StatelessWidget {
             ),
             const SizedBox(height: Dimensions.space3),
             Text(
-              text ?? MyStrings.noDataToShow.tr,
+              text ?? Strings.noDataToShow.tr,
               style: theme.textTheme.labelLarge?.copyWith(color: MyColor.getBodyTextColor()),
             ),
           ],

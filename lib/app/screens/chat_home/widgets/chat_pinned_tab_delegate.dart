@@ -57,7 +57,7 @@ class ChatPinnedTabDelegate extends SliverPersistentHeaderDelegate {
                     )
                   : controller.newChatData.isNotEmpty
                   ? DefaultText(
-                      text: '${MyStrings.results.tr} (${controller.newChatData.length.toString()})',
+                      text: '${Strings.results.tr} (${controller.newChatData.length.toString()})',
                       textStyle: MyTextStyle.heading16W600().copyWith(color: MyColor.usdTextColor),
                     )
                   : SizedBox.shrink(),

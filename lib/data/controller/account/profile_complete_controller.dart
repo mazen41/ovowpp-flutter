@@ -4,7 +4,7 @@ import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:ovowpp/data/model/profile_complete/profile_complete_response_model.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/core/route/route.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/data/repo/account/profile_repo.dart';
 import 'package:ovowpp/data/services/shared_pref_service.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
@@ -92,7 +92,7 @@ class ProfileCompleteController extends GetxController {
     print("this is model ${model.toMap()}");
     if (responseModel.statusCode == 200) {
       ProfileCompleteResponseModel model = ProfileCompleteResponseModel.fromJson(responseModel.responseJson);
-      if (model.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+      if (model.status?.toLowerCase() == Strings.success.toLowerCase()) {
         countryController.clear();
         usernameController.clear();
         mobileNoController.clear();
@@ -102,7 +102,7 @@ class ProfileCompleteController extends GetxController {
         cityController.clear();
         checkAndGotoNextStep(model.data?.user);
       } else {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.requestFail]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.requestFail]);
       }
     } else {
       CustomSnackBar.error(errorList: [responseModel.message]);

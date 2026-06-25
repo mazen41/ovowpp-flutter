@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/data/model/authorization/authorization_response_model.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
@@ -48,12 +48,12 @@ class ChangePasswordController extends GetxController {
 
     if (responseModel.statusCode == 200) {
       AuthorizationResponseModel model = AuthorizationResponseModel.fromJson(responseModel.responseJson);
-      if (model.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+      if (model.status?.toLowerCase() == Strings.success.toLowerCase()) {
         currentPassController.clear();
         passController.clear();
         confirmPassController.clear();
       } else {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.requestFail]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.requestFail]);
       }
     } else {
       CustomSnackBar.error(errorList: [responseModel.message]);

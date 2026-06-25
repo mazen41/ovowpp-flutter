@@ -42,7 +42,7 @@ class CampaignBottomSheet {
                         children: [
                           SizedBox(),
                           DefaultText(
-                            text: MyStrings.selectTemplate.tr,
+                            text: Strings.selectTemplate.tr,
                             textStyle: MyTextStyle.heading20W700().copyWith(
                               color: MyColor.regularHederColor,
                               fontSize: 16.sp,
@@ -58,7 +58,7 @@ class CampaignBottomSheet {
                     Column(
                       children: [
                         spaceDown(Dimensions.space50),
-                        NoDataWidget(text: MyStrings.noTemplateAvailable.tr),
+                        NoDataWidget(text: Strings.noTemplateAvailable.tr),
                       ],
                     ),
                   ] else ...[
@@ -146,7 +146,7 @@ class CampaignBottomSheet {
                         children: [
                           SizedBox(),
                           DefaultText(
-                            text: MyStrings.selectWhatsAppAccount.tr,
+                            text: Strings.selectWhatsAppAccount.tr,
                             textStyle: MyTextStyle.heading20W700().copyWith(
                               color: MyColor.regularHederColor,
                               fontSize: 16.sp,
@@ -162,7 +162,7 @@ class CampaignBottomSheet {
                     Column(
                       children: [
                         spaceDown(Dimensions.space50),
-                        NoDataWidget(text: MyStrings.noAccountFound.tr),
+                        NoDataWidget(text: Strings.noAccountFound.tr),
                       ],
                     ),
                   ] else ...[
@@ -252,7 +252,7 @@ class CampaignBottomSheet {
                         children: [
                           SizedBox(),
                           DefaultText(
-                            text: MyStrings.selectContactList.tr,
+                            text: Strings.selectContactList.tr,
                             textStyle: MyTextStyle.heading20W700().copyWith(
                               color: MyColor.regularHederColor,
                               fontSize: 16.sp,
@@ -270,7 +270,7 @@ class CampaignBottomSheet {
                       children: [
                         spaceDown(Dimensions.space50),
                         DefaultText(
-                          text: MyStrings.noContactAvailable.tr,
+                          text: Strings.noContactAvailable.tr,
                           textStyle: MyTextStyle.heading20W700().copyWith(
                             color: MyColor.regularHederColor,
                             fontSize: 16.sp,
@@ -295,8 +295,8 @@ class CampaignBottomSheet {
 
                                     controller.selectContactListController.text =
                                         controller.selectContactList.isNotEmpty
-                                        ? "${MyStrings.selectedContactList.tr} (${controller.selectContactList.length})"
-                                        : MyStrings.selectContactList.tr;
+                                        ? "${Strings.selectedContactList.tr} (${controller.selectContactList.length})"
+                                        : Strings.selectContactList.tr;
                                   },
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(
@@ -333,7 +333,7 @@ class CampaignBottomSheet {
                   ],
                   if (controller.contactList.isNotEmpty)
                     CustomElevatedBtn(
-                      text: MyStrings.done.tr,
+                      text: Strings.done.tr,
                       onTap: () {
                         Get.back();
                       },
@@ -378,7 +378,7 @@ class CampaignBottomSheet {
                         children: [
                           SizedBox(),
                           DefaultText(
-                            text: MyStrings.selectContactTag.tr,
+                            text: Strings.selectContactTag.tr,
                             textStyle: MyTextStyle.heading20W700().copyWith(
                               color: MyColor.regularHederColor,
                               fontSize: 16.sp,
@@ -393,7 +393,7 @@ class CampaignBottomSheet {
 
                   if (controller.contactTag.isEmpty) ...[
                     DefaultText(
-                      text: MyStrings.noContactTagAvailable.tr,
+                      text: Strings.noContactTagAvailable.tr,
                       textStyle: MyTextStyle.heading20W700().copyWith(
                         color: MyColor.regularHederColor,
                         fontSize: 16.sp,
@@ -415,8 +415,8 @@ class CampaignBottomSheet {
                                     controller.selectTags(item.id.toString());
 
                                     controller.selectContactTagController.text = controller.selectContactTag.isNotEmpty
-                                        ? "${MyStrings.selectedContactTags.tr} (${controller.selectContactTag.length})"
-                                        : MyStrings.selectContactTag.tr;
+                                        ? "${Strings.selectedContactTags.tr} (${controller.selectContactTag.length})"
+                                        : Strings.selectContactTag.tr;
                                   },
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(
@@ -454,7 +454,7 @@ class CampaignBottomSheet {
 
                   if (controller.contactTag.isNotEmpty)
                     CustomElevatedBtn(
-                      text: MyStrings.done.tr,
+                      text: Strings.done.tr,
                       onTap: () {
                         Get.back();
                       },

@@ -16,7 +16,7 @@ import 'package:ovowpp/core/utils/app_style.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/text_style.dart';
 import 'package:ovowpp/data/controller/customer_details/customer_details_controller.dart';
 import 'package:ovowpp/data/controller/home/home_controller.dart';
@@ -62,7 +62,7 @@ class _ChatPersonDetailsScreenState extends State<ChatPersonDetailsScreen> with 
       builder: (controller) => AnnotatedRegionWidget(
         child: Scaffold(
           backgroundColor: MyColor.white,
-          appBar: CustomAppBar(title: MyStrings.customerDetails.tr, bgColor: MyColor.white, elevation: 0),
+          appBar: CustomAppBar(title: Strings.customerDetails.tr, bgColor: MyColor.white, elevation: 0),
           body: controller.isLoading
               ? const CustomerDetailsShimmer()
               : Padding(
@@ -134,7 +134,7 @@ class _ChatPersonDetailsScreenState extends State<ChatPersonDetailsScreen> with 
                                             width: Dimensions.space16.h,
                                           ),
                                           spaceSide(Dimensions.space4),
-                                          Text(MyStrings.edit.tr, style: theme.textTheme.titleSmall),
+                                          Text(Strings.edit.tr, style: theme.textTheme.titleSmall),
                                         ],
                                       ),
                                     ),
@@ -144,7 +144,7 @@ class _ChatPersonDetailsScreenState extends State<ChatPersonDetailsScreen> with 
                                 GestureDetector(
                                   onTap: () {
                                     Clipboard.setData(ClipboardData(text: controller.contact?.mobile ?? "")).then((_) {
-                                      CustomSnackBar.success(successList: [MyStrings.contactCopiedToClipBoard.tr]);
+                                      CustomSnackBar.success(successList: [Strings.contactCopiedToClipBoard.tr]);
                                     });
                                   },
                                   child: DefaultText(
@@ -160,7 +160,7 @@ class _ChatPersonDetailsScreenState extends State<ChatPersonDetailsScreen> with 
                       spaceDown(Dimensions.space16.h),
                       ChatPersonDetailsItem(
                         iconPath: MyImages.editIcon.tr,
-                        text: MyStrings.addNote.tr,
+                        text: Strings.addNote.tr,
                         isLine: false,
                         onTap: () {
                           NotesBottomSheet.addNotesBottomSheet(context, controller);
@@ -169,7 +169,7 @@ class _ChatPersonDetailsScreenState extends State<ChatPersonDetailsScreen> with 
                       spaceDown(Dimensions.space8.h),
                       ChatPersonDetailsItem(
                         iconPath: MyImages.viewNotes,
-                        text: MyStrings.viewNotes.tr,
+                        text: Strings.viewNotes.tr,
                         isLine: false,
                         onTap: () {
                           NotesBottomSheet.viewNotesBottomSheet(context, controller);
@@ -179,7 +179,7 @@ class _ChatPersonDetailsScreenState extends State<ChatPersonDetailsScreen> with 
                       spaceDown(Dimensions.space16.h),
 
                       DefaultText(
-                        text: MyStrings.conversationStatus.tr,
+                        text: Strings.conversationStatus.tr,
                         textStyle: MyTextStyle.subHeading15W500FieldTitleColor.copyWith(
                           fontSize: 16.sp,
                           color: MyColor.usdTextColor,
@@ -189,7 +189,7 @@ class _ChatPersonDetailsScreenState extends State<ChatPersonDetailsScreen> with 
                       CustomDropDownTextField2(
                         radius: Dimensions.space10,
                         needLabel: false,
-                        labelText: MyStrings.conversationStatus.tr,
+                        labelText: Strings.conversationStatus.tr,
                         selectedValue: controller.conversation?.status == "2"
                             ? "Pending"
                             : controller.conversation?.status == "3"

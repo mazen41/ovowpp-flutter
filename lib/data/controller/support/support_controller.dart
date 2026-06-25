@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:ovowpp/data/model/support/support_ticket_response_model.dart';
 import 'package:ovowpp/data/repo/support/support_repo.dart';
@@ -11,10 +11,10 @@ class SupportController extends GetxController {
   SupportRepo repo;
   SupportController({required this.repo});
 
-  List<FileChooserModel> attachmentList = [FileChooserModel(fileName: MyStrings.noFileChosen)];
+  List<FileChooserModel> attachmentList = [FileChooserModel(fileName: Strings.noFileChosen)];
 
-  String noFileChosen = MyStrings.noFileChosen;
-  String chooseFile = MyStrings.chooseFile;
+  String noFileChosen = Strings.noFileChosen;
+  String chooseFile = Strings.chooseFile;
 
   bool isLoading = false;
 
@@ -45,7 +45,7 @@ class SupportController extends GetxController {
     ResponseModel responseModel = await repo.getSupportTicketList(page.toString());
     if (responseModel.statusCode == 200) {
       SupportTicketListResponseModel model = SupportTicketListResponseModel.fromJson(responseModel.responseJson);
-      if (model.status == MyStrings.success) {
+      if (model.status == Strings.success) {
         nextPageUrl = model.data?.tickets?.nextPageUrl;
         List<TicketData>? tempList = model.data?.tickets?.data;
         imagePath = model.data?.tickets?.path.toString() ?? '';
@@ -53,7 +53,7 @@ class SupportController extends GetxController {
           ticketList.addAll(tempList);
         }
       } else {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.somethingWentWrong]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.somethingWentWrong]);
       }
     } else {
       CustomSnackBar.error(errorList: [responseModel.message]);

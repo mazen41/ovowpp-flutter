@@ -34,7 +34,7 @@ class OnboardTransparentImageAndSkip extends StatelessWidget {
             ? Positioned(
                 top: Dimensions.space40.h,
                 right: Dimensions.space30.w,
-                child: CustomTextButton(text: MyStrings.skip, onTap: skipTap, textColor: MyColor.lightBodyText),
+                child: CustomTextButton(text: Strings.skip, onTap: skipTap, textColor: MyColor.lightBodyText),
               )
             : SizedBox.shrink(),
       ],

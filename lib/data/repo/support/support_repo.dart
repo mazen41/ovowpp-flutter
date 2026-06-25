@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/url_container.dart';
 import 'package:ovowpp/data/model/authorization/authorization_response_model.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
@@ -59,10 +59,10 @@ class SupportRepo {
 
       AuthorizationResponseModel model = AuthorizationResponseModel.fromJson(response.responseJson);
 
-      if (model.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+      if (model.status?.toLowerCase() == Strings.success.toLowerCase()) {
         return true;
       } else {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.error]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.error]);
         return false;
       }
     } catch (e) {

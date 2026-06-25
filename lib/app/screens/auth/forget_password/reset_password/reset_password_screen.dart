@@ -51,7 +51,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         customAppBar: CustomAppBar(
           fromAuth: true,
           isShowBackBtn: true,
-          title: MyStrings.forgetPassword.tr,
+          title: Strings.forgetPassword.tr,
           bgColor: Colors.transparent,
         ),
         screen: GetBuilder<ResetPasswordController>(
@@ -64,9 +64,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   spaceDown(Dimensions.space25.h),
-                  DefaultText(text: MyStrings.resetPassword.tr, textStyle: MyTextStyle.heading20W700()),
+                  DefaultText(text: Strings.resetPassword.tr, textStyle: MyTextStyle.heading20W700()),
                   spaceDown(Dimensions.space12.h),
-                  DefaultText(text: MyStrings.resetPassContent.tr, textStyle: MyTextStyle.subHeading15W400()),
+                  DefaultText(text: Strings.resetPassContent.tr, textStyle: MyTextStyle.subHeading15W400()),
 
                   spaceDown(Dimensions.space15),
                   Focus(
@@ -77,8 +77,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       fillColor: Theme.of(context).scaffoldBackgroundColor,
                       focusNode: controller.passwordFocusNode,
                       nextFocus: controller.confirmPasswordFocusNode,
-                      hintText: MyStrings.enterNewPassword,
-                      labelText: MyStrings.password,
+                      hintText: Strings.enterNewPassword,
+                      labelText: Strings.password,
                       isPassword: true,
                       textInputType: TextInputType.text,
                       controller: controller.passController,
@@ -103,16 +103,16 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     fillColor: Theme.of(context).scaffoldBackgroundColor,
                     inputAction: TextInputAction.done,
                     isPassword: true,
-                    labelText: MyStrings.confirmPassword.tr,
+                    labelText: Strings.confirmPassword.tr,
                     controller: controller.confirmPassController,
-                    hintText: MyStrings.enterConfirmPassword,
+                    hintText: Strings.enterConfirmPassword,
                     onChanged: (value) {
                       return;
                     },
                     validator: (value) {
                       if (controller.passController.text.toLowerCase() !=
                           controller.confirmPassController.text.toLowerCase()) {
-                        return MyStrings.kMatchPassError.tr;
+                        return Strings.kMatchPassError.tr;
                       } else {
                         return null;
                       }
@@ -122,7 +122,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   const SizedBox(height: Dimensions.space35),
                   CustomElevatedBtn(
                     isLoading: controller.submitLoading,
-                    text: MyStrings.submit.tr,
+                    text: Strings.submit.tr,
                     onTap: () {
                       if (formKey.currentState!.validate()) {
                         controller.resetPassword();

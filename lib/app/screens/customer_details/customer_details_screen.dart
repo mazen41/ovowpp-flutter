@@ -19,7 +19,7 @@ import 'package:ovowpp/core/utils/app_style.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/url_container.dart';
 import 'package:ovowpp/data/controller/customer_details/customer_details_controller.dart';
 import 'package:ovowpp/data/repo/customer_detais/customer_details_repo.dart';
@@ -63,7 +63,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> with Sing
         child: MyCustomScaffold(
           transformValue: -8,
           centerTitle: true,
-          pageTitle: MyStrings.customerDetails.tr,
+          pageTitle: Strings.customerDetails.tr,
           appBarBgColor: MyColor.getTransparentColor(),
           body: controller.isLoading
               ? const CustomerDetailsShimmer()
@@ -124,7 +124,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> with Sing
                                             width: Dimensions.space16.h,
                                           ),
                                           spaceSide(Dimensions.space4),
-                                          Text(MyStrings.edit.tr, style: theme.textTheme.titleSmall),
+                                          Text(Strings.edit.tr, style: theme.textTheme.titleSmall),
                                         ],
                                       ),
                                     ),
@@ -134,7 +134,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> with Sing
                                 GestureDetector(
                                   onTap: () {
                                     Clipboard.setData(ClipboardData(text: controller.contact?.mobile ?? "")).then((_) {
-                                      CustomSnackBar.success(successList: [MyStrings.contactCopiedToClipBioard.tr]);
+                                      CustomSnackBar.success(successList: [Strings.contactCopiedToClipBioard.tr]);
                                     });
                                   },
                                   child: Text(
@@ -168,7 +168,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> with Sing
                                 ),
                                 child: Center(
                                   child: Text(
-                                    MyStrings.details.tr,
+                                    Strings.details.tr,
                                     style: theme.textTheme.titleSmall?.copyWith(
                                       color: controller.currentIndex == 0
                                           ? MyColor.getHeadingTextColor()
@@ -187,7 +187,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> with Sing
                                 ),
                                 child: Center(
                                   child: Text(
-                                    MyStrings.notes.tr,
+                                    Strings.notes.tr,
                                     style: theme.textTheme.titleSmall?.copyWith(
                                       color: controller.currentIndex == 1
                                           ? MyColor.getHeadingTextColor()
@@ -210,10 +210,10 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> with Sing
                               children: [
                                 spaceDown(Dimensions.space24.h),
                                 CustomTextField(
-                                  labelText: MyStrings.addNote.tr,
+                                  labelText: Strings.addNote.tr,
                                   needOutlineBorder: true,
                                   fillColor: MyColor.getCardBackgroundColor(),
-                                  hintText: MyStrings.writeDescription.tr,
+                                  hintText: Strings.writeDescription.tr,
                                   isPassword: false,
                                   controller: controller.noteController,
                                   maxLines: 4,
@@ -224,7 +224,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> with Sing
                                 spaceDown(Dimensions.space25.h),
                                 CustomElevatedBtn(
                                   isLoading: controller.noteLoading,
-                                  text: MyStrings.add.tr,
+                                  text: Strings.add.tr,
                                   onTap: () {
                                     controller.addNote();
                                   },

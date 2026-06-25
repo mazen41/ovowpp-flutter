@@ -7,7 +7,7 @@ import 'package:ovowpp/core/route/route.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/auth/two_factor_controller.dart';
 import 'package:ovowpp/data/repo/auth/two_factor_repo.dart';
 import 'package:ovowpp/app/components/app-bar/custom_app_bar.dart';
@@ -41,7 +41,7 @@ class _TwoFactorVerificationScreenState extends State<TwoFactorVerificationScree
       nextRoute: RouteHelper.loginScreen,
       child: Scaffold(
         backgroundColor: theme.scaffoldBackgroundColor,
-        appBar: CustomAppBar(title: MyStrings.twoFactorAuth.tr, fromAuth: true),
+        appBar: CustomAppBar(title: Strings.twoFactorAuth.tr, fromAuth: true),
         body: Container(
           height: double.infinity,
           width: double.infinity,
@@ -74,7 +74,7 @@ class _TwoFactorVerificationScreenState extends State<TwoFactorVerificationScree
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * .07),
                       child: SmallText(
-                        text: MyStrings.twoFactorMsg.tr,
+                        text: Strings.twoFactorMsg.tr,
                         maxLine: 3,
                         textAlign: TextAlign.center,
                         textStyle: theme.textTheme.labelMedium!.copyWith(color: MyColor.getBodyTextColor()),
@@ -125,7 +125,7 @@ class _TwoFactorVerificationScreenState extends State<TwoFactorVerificationScree
                       onTap: () {
                         controller.verify2FACode(controller.currentText);
                       },
-                      text: MyStrings.verify.tr,
+                      text: Strings.verify.tr,
                     ),
                     const SizedBox(height: Dimensions.space30),
                   ],

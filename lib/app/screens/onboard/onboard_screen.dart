@@ -8,7 +8,7 @@ import 'package:ovowpp/core/route/route.dart';
 import 'package:ovowpp/core/utils/app_style.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/onboard/onboard_controller.dart';
 import 'package:get/get.dart';
 
@@ -82,8 +82,8 @@ class _OnboardScreenState extends State<OnboardScreen> {
                   paddingLeft: Dimensions.space16,
                   paddingRight: Dimensions.space16,
                   text: controller.currentIndex != controller.onBoardDataList.length - 1
-                      ? MyStrings.next
-                      : MyStrings.continueText,
+                      ? Strings.next
+                      : Strings.continueText,
                   onTap: () async {
                     if (controller.currentIndex < controller.onBoardDataList.length - 1) {
                       controller.pageController?.nextPage(

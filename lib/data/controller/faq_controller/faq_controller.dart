@@ -1,4 +1,4 @@
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/model/faq/faq_response_model.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:ovowpp/data/repo/faq_repo/faq_repo.dart';
@@ -33,7 +33,7 @@ class FaqController extends GetxController {
       if (tempFaqList != null && tempFaqList.isNotEmpty) {
         faqList.addAll(tempFaqList);
       } else {
-        CustomSnackBar.error(errorList: responseModel.message ?? [MyStrings.somethingWentWrong]);
+        CustomSnackBar.error(errorList: responseModel.message ?? [Strings.somethingWentWrong]);
       }
     } else {
       CustomSnackBar.error(errorList: [model.message]);

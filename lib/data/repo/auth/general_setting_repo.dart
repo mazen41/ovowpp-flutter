@@ -1,4 +1,4 @@
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/url_container.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:ovowpp/data/services/api_service.dart';
@@ -16,7 +16,7 @@ class GeneralSettingRepo {
       ResponseModel response = await ApiService.getRequest(url);
       return response;
     } catch (e) {
-      return ResponseModel(isSuccess: false, message: MyStrings.somethingWentWrong, statusCode: 300, responseJson: "");
+      return ResponseModel(isSuccess: false, message: Strings.somethingWentWrong, statusCode: 300, responseJson: "");
     }
   }
 

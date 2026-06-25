@@ -5,7 +5,7 @@ import 'package:ovowpp/app/components/divider/custom_divider.dart';
 import 'package:ovowpp/app/screens/withdraw/widget/status_widget.dart';
 import '../../../../core/utils/dimensions.dart';
 import '../../../../core/utils/my_color.dart';
-import '../../../../core/utils/my_strings.dart';
+import '../../../../core/translations/strings_enum.dart';
 import '../../../../core/utils/util.dart';
 
 class CustomDepositsCard extends StatelessWidget {
@@ -41,10 +41,10 @@ class CustomDepositsCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CardColumn(header: MyStrings.trxNo, body: trxValue),
+                CardColumn(header: Strings.trxNo, body: trxValue),
                 CardColumn(
                   alignmentEnd: true,
-                  header: MyStrings.date,
+                  header: Strings.date,
                   // isDate: true,
                   body: date,
                 ),
@@ -55,7 +55,7 @@ class CustomDepositsCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CardColumn(header: MyStrings.amount, body: amount),
+                CardColumn(header: Strings.amount, body: amount),
                 StatusWidget(status: status, color: statusBgColor),
               ],
             ),

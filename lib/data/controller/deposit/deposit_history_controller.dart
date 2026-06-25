@@ -6,7 +6,7 @@ import 'package:ovowpp/data/services/shared_pref_service.dart';
 
 import '../../../core/route/route.dart';
 import '../../../core/utils/my_color.dart';
-import '../../../core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import '../../../core/utils/url_container.dart';
 import '../../model/deposit/deposit_history_response_model.dart';
 import '../../model/global/response_model/response_model.dart';
@@ -44,7 +44,7 @@ class DepositController extends GetxController {
           depositList.addAll(tempDepositList);
         }
       } else {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.somethingWentWrong]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.somethingWentWrong]);
       }
     } else {
       CustomSnackBar.error(errorList: [response.message]);
@@ -67,7 +67,7 @@ class DepositController extends GetxController {
           depositList.addAll(tempDepositList);
         }
       } else {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.somethingWentWrong]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.somethingWentWrong]);
       }
     } else {
       CustomSnackBar.error(errorList: [response.message]);
@@ -95,7 +95,7 @@ class DepositController extends GetxController {
           depositList.addAll(tempDepositList);
         }
       } else {
-        CustomSnackBar.error(errorList: model.message ?? [MyStrings.somethingWentWrong]);
+        CustomSnackBar.error(errorList: model.message ?? [Strings.somethingWentWrong]);
       }
     } else {
       CustomSnackBar.error(errorList: [response.message]);
@@ -145,13 +145,13 @@ class DepositController extends GetxController {
     String methodCode = depositList[index].methodCode ?? '1';
     if (status == '1') {
       double code = double.tryParse(methodCode) ?? 1;
-      return code >= 1000 ? MyStrings.approved : MyStrings.succeed;
+      return code >= 1000 ? Strings.approved : Strings.succeed;
     } else {
       return status == '2'
-          ? MyStrings.pending
+          ? Strings.pending
           : status == '3'
-          ? MyStrings.rejected
-          : MyStrings.initiated;
+          ? Strings.rejected
+          : Strings.initiated;
     }
   }
 

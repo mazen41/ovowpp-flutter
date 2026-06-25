@@ -32,7 +32,7 @@ class DashboardMasterCards extends StatelessWidget {
                       image: MyImages.walletBalance,
                       amount:
                           "${AppConverter.formatNumber(controller.dashboardData?.walletBalance ?? "")} ${SharedPreferenceService.getCurrencyText()}",
-                      type: MyStrings.walletBalance.tr,
+                      type: Strings.walletBalance.tr,
                       bgColor: MyColor.getPrimaryColor(),
                       gradientColor: MyColor.getPrimaryColor().withValues(alpha: 0.0),
                     ),
@@ -48,7 +48,7 @@ class DashboardMasterCards extends StatelessWidget {
                       image: MyImages.message,
                       amount:
                           "${controller.dashboardData?.sentMessage ?? ""}/${controller.dashboardData?.totalMessage ?? ""}",
-                      type: MyStrings.messagesSent.tr,
+                      type: Strings.messagesSent.tr,
                       bgColor: MyColor.messageSentBgColor,
                       gradientColor: MyColor.messageSentBgColor.withAlpha(1),
                     ),
@@ -70,7 +70,7 @@ class DashboardMasterCards extends StatelessWidget {
                     onTap: onMenuTap != null ? () => onMenuTap!(3) : null,
                     image: MyImages.totalContacts,
                     amount: "${controller.dashboardData?.contactCount.toString() ?? 0}",
-                    type: MyStrings.totalContacts.tr,
+                    type: Strings.totalContacts.tr,
                     bgColor: MyColor.totalContactBgColor,
                     gradientColor: MyColor.totalContactBgColor.withValues(alpha: 0.01),
                   ),
@@ -85,7 +85,7 @@ class DashboardMasterCards extends StatelessWidget {
                     image: MyImages.campaigns,
                     amount:
                         "${(int.tryParse(controller.dashboardData?.activeCampaign.toString() ?? '0') ?? 0) + (int.tryParse(controller.dashboardData?.completedCampaign.toString() ?? '0') ?? 0)}",
-                    type: MyStrings.totalCampaigns.tr,
+                    type: Strings.totalCampaigns.tr,
                     bgColor: MyColor.totalCampaignsBgColor,
                     gradientColor: MyColor.totalCampaignsBgColor.withValues(alpha: 0.01),
                   ),

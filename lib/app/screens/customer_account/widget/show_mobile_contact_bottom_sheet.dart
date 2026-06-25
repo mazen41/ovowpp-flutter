@@ -138,7 +138,7 @@ class _ContactPickerBottomSheetState extends State<ContactPickerBottomSheet> {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Text(MyStrings.selectContact.tr, style: theme.textTheme.headlineMedium),
+            child: Text(Strings.selectContact.tr, style: theme.textTheme.headlineMedium),
           ),
           Padding(
             padding: const EdgeInsets.all(16),

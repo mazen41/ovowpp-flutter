@@ -42,7 +42,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       customAppBar: CustomAppBar(
         fromAuth: true,
         isShowBackBtn: true,
-        title: MyStrings.forgetPassword.tr,
+        title: Strings.forgetPassword.tr,
         bgColor: Colors.transparent,
       ),
       screen: GetBuilder<ForgetPasswordController>(
@@ -54,15 +54,15 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 spaceDown(Dimensions.space30.h),
-                DefaultText(text: MyStrings.recoverAccount.tr, textStyle: MyTextStyle.heading20W700()),
+                DefaultText(text: Strings.recoverAccount.tr, textStyle: MyTextStyle.heading20W700()),
                 spaceDown(Dimensions.space12.h),
-                DefaultText(text: MyStrings.forgetPasswordSubText.tr, textStyle: MyTextStyle.subHeading15W400()),
+                DefaultText(text: Strings.forgetPasswordSubText.tr, textStyle: MyTextStyle.subHeading15W400()),
 
                 const SizedBox(height: Dimensions.space40),
                 LabelTextField(
                   fillColor: Theme.of(context).scaffoldBackgroundColor,
-                  labelText: MyStrings.usernameOrEmail.tr,
-                  hintText: MyStrings.usernameOrEmailHint.tr,
+                  labelText: Strings.usernameOrEmail.tr,
+                  hintText: Strings.usernameOrEmailHint.tr,
                   textInputType: TextInputType.emailAddress,
                   inputAction: TextInputAction.done,
                   controller: auth.emailOrUsernameController,
@@ -71,7 +71,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   },
                   validator: (value) {
                     if (auth.emailOrUsernameController.text.isEmpty) {
-                      return MyStrings.enterEmailOrUserName.tr;
+                      return Strings.enterEmailOrUserName.tr;
                     } else {
                       return null;
                     }
@@ -90,7 +90,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                       auth.submitForgetPassCode();
                     }
                   },
-                  text: MyStrings.submit.tr,
+                  text: Strings.submit.tr,
                 ),
                 const SizedBox(height: Dimensions.space40),
               ],

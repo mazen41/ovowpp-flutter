@@ -26,7 +26,7 @@ class PlanStatusAndCreateNew extends StatelessWidget {
           Visibility(
             visible: MyUtils.checkPermission(AppPermission.viewSubscription),
             child: PlanStatusAndCreateNewItem(
-              title: MyStrings.planStatus.tr,
+              title: Strings.planStatus.tr,
               imagPath: MyImages.planStatus,
               bgColor: MyColor.white,
               onTap: () {
@@ -43,13 +43,13 @@ class PlanStatusAndCreateNew extends StatelessWidget {
                 ? spaceSide(Dimensions.space16.w)
                 : SizedBox.shrink(),
             PlanStatusAndCreateNewItem(
-              title: MyStrings.createNew.tr,
+              title: Strings.createNew.tr,
               imagPath: MyImages.createNew,
               roundIconBgColor: MyColor.white.withAlpha(55),
               bgColor: MyColor.getPrimaryColor(),
               isTextWhite: true,
               isTitleText: true,
-              secondText: MyStrings.campaign,
+              secondText: Strings.campaign,
               onTap: () {
                 createNewTap();
               },

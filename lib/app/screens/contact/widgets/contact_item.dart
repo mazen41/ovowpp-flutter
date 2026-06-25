@@ -68,7 +68,7 @@ class ContactItem extends StatelessWidget {
                                     : MyColor.splashTextColor.withAlpha(MyColor.getAlpha(10)),
                               ),
                               child: DefaultText(
-                                text: item.status == '1' ? MyStrings.active.tr : MyStrings.inactive.tr,
+                                text: item.status == '1' ? Strings.active.tr : Strings.inactive.tr,
 
                                 textStyle: MyTextStyle.subHeading12W400().copyWith(
                                   color: item.status == '1' ? MyColor.campaignsRunning : MyColor.splashTextColor,
@@ -91,7 +91,7 @@ class ContactItem extends StatelessWidget {
                     if (!MyUtils.checkPermission(AppPermission.editContact) &&
                         !MyUtils.checkPermission(AppPermission.deleteContact) &&
                         !MyUtils.checkPermission(AppPermission.sendMessage)) {
-                      CustomSnackBar.error(errorList: [MyStrings.permissionDenyMessage]);
+                      CustomSnackBar.error(errorList: [Strings.permissionDenyMessage]);
                     }
                     return [
                       if (MyUtils.checkPermission(AppPermission.editContact))
@@ -103,7 +103,7 @@ class ContactItem extends StatelessWidget {
                               arguments: [item.imageSrc, item, true, index, false],
                             );
                           },
-                          child: Text(MyStrings.edit.tr),
+                          child: Text(Strings.edit.tr),
                         ),
                       if (MyUtils.checkPermission(AppPermission.deleteContact))
                         PopupMenuItem(
@@ -118,7 +118,7 @@ class ContactItem extends StatelessWidget {
                                 child: GetBuilder<AllContactController>(
                                   builder: (controller) {
                                     return DeleteDialogue(
-                                      warningText: MyStrings.areYouSureYouWantToDeleteThisContact.tr,
+                                      warningText: Strings.areYouSureYouWantToDeleteThisContact.tr,
                                       isLoading: controller.isDeleteLoading,
                                       onTap: () {
                                         controller.deleteMessage(index);
@@ -129,7 +129,7 @@ class ContactItem extends StatelessWidget {
                               ).customAlertDialog(context);
                             });
                           },
-                          child: Text(MyStrings.delete.tr),
+                          child: Text(Strings.delete.tr),
                         ),
 
                       if (MyUtils.checkPermission(AppPermission.sendMessage))
@@ -141,7 +141,7 @@ class ContactItem extends StatelessWidget {
                             controller.createConversation();
                           },
 
-                          child: Text(MyStrings.chats.tr),
+                          child: Text(Strings.chats.tr),
                         ),
                     ];
                   },

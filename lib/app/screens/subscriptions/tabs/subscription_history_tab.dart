@@ -56,7 +56,7 @@ class _SubscriptionHistoryTabState extends State<SubscriptionHistoryTab> {
         }
 
         final String currencyCode = SharedPreferenceService.getCurrencyText().isEmpty
-            ? MyStrings.usd
+            ? Strings.usd
             : SharedPreferenceService.getCurrencyText();
         final String currencySymbol = SharedPreferenceService.getCurrencySymbol().isEmpty
             ? r'$'
@@ -71,7 +71,7 @@ class _SubscriptionHistoryTabState extends State<SubscriptionHistoryTab> {
           children: [
             // Row(
             //   children: [
-            //     Text(MyStrings.billingOverview.tr.toUpperCase(), style: MyTextStyle.heading14W600().copyWith(color: MyColor.fieldTitleTextColor)),
+            //     Text(Strings.billingOverview.tr.toUpperCase(), style: MyTextStyle.heading14W600().copyWith(color: MyColor.fieldTitleTextColor)),
             //     const Spacer(),
             //     Text(currencyCode, style: MyTextStyle.heading14W600().copyWith(color: MyColor.customerText)),
             //   ],
@@ -80,17 +80,17 @@ class _SubscriptionHistoryTabState extends State<SubscriptionHistoryTab> {
             // Row(
             //   children: [
             //     Expanded(
-            //       child: SubscriptionMetricCard(title: MyStrings.activeCredit, value: '$currencySymbol${totalSpent.toStringAsFixed(0)}', trailing: totalSpent.toStringAsFixed(2).split('.').last == '00' ? '' : '.${totalSpent.toStringAsFixed(2).split('.').last}', isHighlighted: false),
+            //       child: SubscriptionMetricCard(title: Strings.activeCredit, value: '$currencySymbol${totalSpent.toStringAsFixed(0)}', trailing: totalSpent.toStringAsFixed(2).split('.').last == '00' ? '' : '.${totalSpent.toStringAsFixed(2).split('.').last}', isHighlighted: false),
             //     ),
             //     SizedBox(width: Dimensions.space12.w),
             //     Expanded(
-            //       child: SubscriptionMetricCard(title: MyStrings.status, value: controller.currentPricingPlan?.name ?? MyStrings.noData, trailing: '', isHighlighted: true),
+            //       child: SubscriptionMetricCard(title: Strings.status, value: controller.currentPricingPlan?.name ?? Strings.noData, trailing: '', isHighlighted: true),
             //     ),
             //   ],
             // ),
             SizedBox(height: Dimensions.space24.h),
             Text(
-              MyStrings.recentTransactions.tr.toUpperCase(),
+              Strings.recentTransactions.tr.toUpperCase(),
               style: MyTextStyle.heading14W600().copyWith(color: MyColor.fieldTitleTextColor),
             ),
             SizedBox(height: Dimensions.space14.h),
@@ -197,9 +197,9 @@ class SubscriptionTransactionTile extends StatelessWidget {
             ],
           ),
           SizedBox(height: Dimensions.space8.h),
-          _HistoryMetaRow(label: MyStrings.expiryDate, value: _formatDate(data.expiredAt)),
+          _HistoryMetaRow(label: Strings.expiryDate, value: _formatDate(data.expiredAt)),
           SizedBox(height: Dimensions.space4.h),
-          _HistoryMetaRow(label: MyStrings.paymentMethod, value: _paymentMethod()),
+          _HistoryMetaRow(label: Strings.paymentMethod, value: _paymentMethod()),
           SizedBox(height: Dimensions.space8.h),
           InkWell(
             onTap: isDownloadingThisInvoice || (data.id ?? '').isEmpty
@@ -221,7 +221,7 @@ class SubscriptionTransactionTile extends StatelessWidget {
                         Icon(Icons.picture_as_pdf_outlined, size: 16.sp, color: MyColor.getPrimaryColor()),
                         SizedBox(width: Dimensions.space4.w),
                         Text(
-                          MyStrings.viewInvoice.tr,
+                          Strings.viewInvoice.tr,
                           style: MyTextStyle.subHeading12W600().copyWith(color: MyColor.getPrimaryColor()),
                         ),
                       ],
@@ -245,8 +245,8 @@ class SubscriptionTransactionTile extends StatelessWidget {
     final String? gatewayName = _cleanValue(data.gateway?.name);
     final String? gatewayMethodCode = _cleanValue(data.gatewayMethodCode);
 
-    if (paymentMethod == '1') return MyStrings.wallet;
-    if (paymentMethod == '2') return MyStrings.paymentGateway;
+    if (paymentMethod == '1') return Strings.wallet;
+    if (paymentMethod == '2') return Strings.paymentGateway;
     if (gatewayName != null) return gatewayName;
     if (paymentMethod.isNotEmpty) return paymentMethod;
     if (gatewayMethodCode != null) return gatewayMethodCode;
@@ -255,8 +255,8 @@ class SubscriptionTransactionTile extends StatelessWidget {
 
   String _billingText(String? value) {
     final String recurring = (value ?? '').toLowerCase();
-    if (recurring == '2' || recurring.contains('year')) return MyStrings.yearly;
-    if (recurring == '1' || recurring.contains('month')) return MyStrings.monthly;
+    if (recurring == '2' || recurring.contains('year')) return Strings.yearly;
+    if (recurring == '1' || recurring.contains('month')) return Strings.monthly;
     return recurring.isEmpty ? '--' : (recurring.capitalizeFirst ?? recurring);
   }
 

@@ -8,7 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../../../core/utils/dimensions.dart';
 import '../../../../../../core/utils/my_color.dart';
 import '../../../../../../core/utils/my_images.dart';
-import '../../../../../../core/utils/my_strings.dart';
+import '../../../../../../core/translations/strings_enum.dart';
 
 class EnableQRCodeWidget extends StatelessWidget {
   final String qrImage;
@@ -41,13 +41,13 @@ class EnableQRCodeWidget extends StatelessWidget {
 
         //COPY
         const SizedBox(height: Dimensions.space15),
-        Text(MyStrings.setupKey.tr, style: theme.textTheme.titleMedium?.copyWith(color: MyColor.getHeadingTextColor())),
+        Text(Strings.setupKey.tr, style: theme.textTheme.titleMedium?.copyWith(color: MyColor.getHeadingTextColor())),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: Dimensions.space10),
           child: GestureDetector(
             onTap: () {
               Clipboard.setData(ClipboardData(text: secret)).then((_) {
-                CustomSnackBar.success(successList: [MyStrings.copiedToClipBoard.tr], duration: 2);
+                CustomSnackBar.success(successList: [Strings.copiedToClipBoard.tr], duration: 2);
               });
             },
             child: Padding(
@@ -101,11 +101,11 @@ class EnableQRCodeWidget extends StatelessWidget {
             TextSpan(
               children: [
                 TextSpan(
-                  text: MyStrings.useQRCODETips2.tr,
+                  text: Strings.useQRCODETips2.tr,
                   style: theme.textTheme.labelMedium?.copyWith(color: MyColor.getHeadingTextColor()),
                 ),
                 TextSpan(
-                  text: ' ${MyStrings.download}',
+                  text: ' ${Strings.download}',
                   recognizer: TapGestureRecognizer()
                     ..onTap = () async {
                       final Uri url = Uri.parse(

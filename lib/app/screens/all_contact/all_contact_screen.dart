@@ -66,7 +66,7 @@ class _AllContactScreenState extends State<AllContactScreen> {
           children: [
             Expanded(
               child: Text(
-                MyStrings.allContacts.tr,
+                Strings.allContacts.tr,
                 style: theme.textTheme.headlineMedium?.copyWith(color: MyColor.getHeadingTextColor()),
               ),
             ),
@@ -109,7 +109,7 @@ class _AllContactScreenState extends State<AllContactScreen> {
         ),
       ),
       transformValue: 1,
-      pageTitle: MyStrings.allContacts.tr,
+      pageTitle: Strings.allContacts.tr,
       body: GetBuilder<AllContactController>(
         builder: (controller) => RefreshIndicator(
           color: MyColor.getPrimaryColor(),
@@ -121,9 +121,9 @@ class _AllContactScreenState extends State<AllContactScreen> {
           child: Column(
             children: [
               LabelTextField(
-                labelText: MyStrings.search.tr,
+                labelText: Strings.search.tr,
                 hideLabel: true,
-                hintText: MyStrings.search.tr,
+                hintText: Strings.search.tr,
                 controller: controller.searchController,
                 onChanged: (value) {
                   if (_debounceTimer?.isActive ?? false) {
@@ -148,7 +148,7 @@ class _AllContactScreenState extends State<AllContactScreen> {
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return MyStrings.fieldErrorMsg.tr;
+                    return Strings.fieldErrorMsg.tr;
                   } else {
                     return null;
                   }
@@ -158,7 +158,7 @@ class _AllContactScreenState extends State<AllContactScreen> {
               controller.isContactLoading
                   ? Expanded(child: const AllContactShimmer())
                   : controller.allContactsData.isEmpty
-                  ? Expanded(child: NoDataWidget(text: MyStrings.noContactFound.tr))
+                  ? Expanded(child: NoDataWidget(text: Strings.noContactFound.tr))
                   : Expanded(
                       child: ListView.builder(
                         controller: _controller,
@@ -251,7 +251,7 @@ class _AllContactScreenState extends State<AllContactScreen> {
                                                 child: GetBuilder<AllContactController>(
                                                   builder: (context) {
                                                     return DeleteDialogue(
-                                                      warningText: MyStrings.areYouSureYouWantToDeleteThisContact.tr,
+                                                      warningText: Strings.areYouSureYouWantToDeleteThisContact.tr,
                                                       isLoading: controller.isDeleteLoading,
                                                       onTap: () {
                                                         controller.deleteMessage(index);

@@ -32,7 +32,7 @@ class _MyWebViewScreenState extends State<MyWebViewScreen> {
     return AnnotatedRegionWidget(
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: CustomAppBar(title: MyStrings.payNow.tr, isShowBackBtn: true),
+        appBar: CustomAppBar(title: Strings.payNow.tr, isShowBackBtn: true),
         body: MyWebViewWidget(url: widget.redirectUrl),
         floatingActionButton: favoriteButton(),
       ),

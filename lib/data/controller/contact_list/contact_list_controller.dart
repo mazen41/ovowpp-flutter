@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
 import 'package:ovowpp/core/translations/localization_controller.dart';
 import 'package:ovowpp/core/utils/app_status.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import 'package:ovowpp/data/model/chat/chat_data_response_model.dart';
 import 'package:ovowpp/data/model/chat/message_model.dart';
 import 'package:ovowpp/data/model/chat/send_message_response_model.dart';
@@ -91,13 +91,13 @@ class ContactListController extends GetxController {
       final responseModal = await repo.getContactListDataRepo(page.toString(), searchQuery);
       if (responseModal.statusCode == 200) {
         ChatDataResponseModel model = ChatDataResponseModel.fromJson(responseModal.responseJson);
-        if (model.status?.toLowerCase() == MyStrings.success) {
+        if (model.status?.toLowerCase() == Strings.success) {
           messages.addAll(model.data?.messages?.data ?? []);
           contact = model.data?.contact;
           imagePath = model.data?.profilePath ?? "";
           nextPageUrl = model.data?.messages?.nextPageUrl ?? "";
         } else {
-          CustomSnackBar.error(errorList: model.message ?? [MyStrings.somethingWentWrong]);
+          CustomSnackBar.error(errorList: model.message ?? [Strings.somethingWentWrong]);
         }
       } else {
         CustomSnackBar.error(errorList: [responseModal.message]);
@@ -190,7 +190,7 @@ class ContactListController extends GetxController {
     update();
   }
 
-  List<String> status = [MyStrings.selectTemplate, "avvv", "asdsad"];
+  List<String> status = [Strings.selectTemplate, "avvv", "asdsad"];
   int selectedIndex = 0;
   void changeSelectedIndex(int index) {
     selectedIndex = index;

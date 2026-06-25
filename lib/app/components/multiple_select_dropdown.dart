@@ -80,7 +80,7 @@ class TagSelectorState extends State<TagSelector> {
         spacing: 10,
       ),
       fieldDecoration: FieldDecoration(
-        hintText: widget.isContact ? MyStrings.selectContact.tr : MyStrings.selectTags.tr,
+        hintText: widget.isContact ? Strings.selectContact.tr : Strings.selectTags.tr,
         hintStyle: MyTextStyle.subHeading15W500FieldTitleColor.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w400),
         showClearIcon: false,
         border: OutlineInputBorder(
@@ -98,7 +98,7 @@ class TagSelectorState extends State<TagSelector> {
         header: Padding(
           padding: EdgeInsets.all(8),
           child: Text(
-            widget.isContact ? MyStrings.selectContactFromTheList.tr : MyStrings.selectTagsFromTheList.tr,
+            widget.isContact ? Strings.selectContactFromTheList.tr : Strings.selectTagsFromTheList.tr,
             textAlign: TextAlign.start,
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),

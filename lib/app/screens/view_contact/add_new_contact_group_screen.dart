@@ -61,7 +61,7 @@ class _AddNewContactGroupScreenState extends State<AddNewContactGroupScreen> {
             children: [
               Expanded(
                 child: Text(
-                  MyStrings.viewContactList.tr,
+                  Strings.viewContactList.tr,
                   style: MyTextStyle.heading20W700().copyWith(color: MyColor.appBarTitleColor),
                 ),
               ),
@@ -70,7 +70,7 @@ class _AddNewContactGroupScreenState extends State<AddNewContactGroupScreen> {
           ),
         ),
         transformValue: 1,
-        pageTitle: MyStrings.allContacts.tr,
+        pageTitle: Strings.allContacts.tr,
         body: GetBuilder<AddNewContactGroupController>(
           builder: (controller) => RefreshIndicator(
             color: MyColor.getPrimaryColor(),
@@ -158,7 +158,7 @@ class _AddNewContactGroupScreenState extends State<AddNewContactGroupScreen> {
                 padding: EdgeInsets.all(Dimensions.space15.sp),
                 child: CustomElevatedBtn(
                   isLoading: controller.savingContact,
-                  text: MyStrings.save.tr,
+                  text: Strings.save.tr,
                   onTap: () {
                     controller.addContact();
                   },

@@ -26,7 +26,7 @@ Future<void> main() async {
   ApiService.init();
   //Dependency injection
   await di_service.initDependency();
-  runApp(OvoApp(languages: {}));
+  runApp(const OvoApp());
 
   /// ============= DEVICE PREVIEW NEW ==================
   //   runApp(DevicePreview(
@@ -40,8 +40,7 @@ Future<void> main() async {
 
 //APP ENTRY POINT
 class OvoApp extends StatefulWidget {
-  final Map<String, Map<String, String>> languages;
-  const OvoApp({super.key, required this.languages});
+  const OvoApp({super.key});
 
   @override
   State<OvoApp> createState() => _OvoAppState();
@@ -89,7 +88,7 @@ class _OvoAppState extends State<OvoApp> {
                 navigatorKey: Get.key,
                 getPages: RouteHelper().routes,
                 locale: LocalizationController().locale,
-                translations: Messages(languages: widget.languages),
+                translations: Messages(),
                 fallbackLocale: Locale(
                   LocalizationController().locale.languageCode,
                   LocalizationController().locale.countryCode,

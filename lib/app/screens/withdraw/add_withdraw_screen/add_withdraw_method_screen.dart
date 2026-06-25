@@ -6,7 +6,7 @@ import 'package:ovowpp/app/screens/withdraw/add_withdraw_screen/withdraw_bottoms
 import 'package:get/get.dart';
 import '../../../../core/utils/dimensions.dart';
 import '../../../../core/utils/my_color.dart';
-import '../../../../core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';';
 import '../../../../data/controller/withdraw/add_new_withdraw_controller.dart';
 import '../../../../data/repo/withdraw/withdraw_repo.dart';
 import '../../../components/app-bar/custom_app_bar.dart';
@@ -44,7 +44,7 @@ class _AddWithdrawMethodState extends State<AddWithdrawMethod> {
       builder: (controller) {
         return Scaffold(
           backgroundColor: MyColor.white,
-          appBar: CustomAppBar(title: MyStrings.addWithdraw.tr),
+          appBar: CustomAppBar(title: Strings.addWithdraw.tr),
           body: controller.isLoading
               ? const NewDepositShimmer()
               : SingleChildScrollView(
@@ -66,8 +66,8 @@ class _AddWithdrawMethodState extends State<AddWithdrawMethod> {
                           readOnly: true,
                           needOutline: true,
                           radius: Dimensions.defaultRadius,
-                          labelText: MyStrings.selectPaymentMethod,
-                          hintText: MyStrings.selectaMethod,
+                          labelText: Strings.selectPaymentMethod,
+                          hintText: Strings.selectaMethod,
                           textInputType: TextInputType.text,
                           inputAction: TextInputAction.next,
                           controller: controller.selectedPaymentMethodController,
@@ -89,8 +89,8 @@ class _AddWithdrawMethodState extends State<AddWithdrawMethod> {
                         const SizedBox(height: Dimensions.space15),
                         LabelTextField(
                           onTap: () {},
-                          labelText: MyStrings.amount,
-                          hintText: MyStrings.enterAmount.tr,
+                          labelText: Strings.amount,
+                          hintText: Strings.enterAmount.tr,
                           inputAction: TextInputAction.done,
                           controller: controller.amountController,
                           textInputType: TextInputType.number,
@@ -133,7 +133,7 @@ class _AddWithdrawMethodState extends State<AddWithdrawMethod> {
                             children: [
                               const SizedBox(height: Dimensions.space15),
                               CustomDropDownTextField2(
-                                labelText: MyStrings.authorizationMethod.tr,
+                                labelText: Strings.authorizationMethod.tr,
                                 selectedValue: controller.selectedAuthorizationMode,
                                 onChanged: (value) {
                                   controller.changeAuthorizationMode(value);
@@ -155,7 +155,7 @@ class _AddWithdrawMethodState extends State<AddWithdrawMethod> {
                         const SizedBox(height: 35),
                         CustomElevatedBtn(
                           isLoading: controller.submitLoading,
-                          text: MyStrings.submit,
+                          text: Strings.submit,
                           onTap: () {
                             controller.submitWithdrawRequest();
                           },

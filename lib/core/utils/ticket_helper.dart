@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'my_color.dart';
-import 'my_strings.dart';
+import '../translations/strings_enum.dart';
 
 class TicketHelper {
   static Color getStatusColor(String status) {
@@ -35,11 +35,11 @@ class TicketHelper {
   static String getPriorityText(String priority) {
     String priorityText = '';
     priorityText = priority == '1'
-        ? MyStrings.low.tr
+        ? Strings.low.tr
         : priority == '2'
-        ? MyStrings.medium.tr
+        ? Strings.medium.tr
         : priority == '3'
-        ? MyStrings.high.tr
+        ? Strings.high.tr
         : '';
     return priorityText;
   }
@@ -47,13 +47,13 @@ class TicketHelper {
   static String getStatusText(String status) {
     String statusText = '';
     statusText = status == '0'
-        ? MyStrings.open.tr
+        ? Strings.open.tr
         : status == '1'
-        ? MyStrings.answered.tr
+        ? Strings.answered.tr
         : status == '2'
-        ? MyStrings.replied.tr
+        ? Strings.replied.tr
         : status == '3'
-        ? MyStrings.closed.tr
+        ? Strings.closed.tr
         : '';
     return statusText;
   }

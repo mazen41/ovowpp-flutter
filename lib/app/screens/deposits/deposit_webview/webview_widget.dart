@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../core/utils/my_strings.dart';
+import '../../../../core/translations/strings_enum.dart';
 import '../../../../core/utils/url_container.dart';
 
 class MyWebViewWidget extends StatefulWidget {
@@ -78,10 +78,10 @@ class _MyWebViewWidgetState extends State<MyWebViewWidget> {
             printX('payment url: ${url.toString()}');
             if (url.toString() == '${UrlContainer.domainUrl}/user/deposit/history') {
               Get.offAndToNamed(RouteHelper.depositsHistoryScreen);
-              CustomSnackBar.success(successList: [MyStrings.requestSuccess.tr]);
+              CustomSnackBar.success(successList: [Strings.requestSuccess.tr]);
             } else if (url.toString() == '${UrlContainer.domainUrl}/user/deposit') {
               Navigator.pop(context);
-              CustomSnackBar.error(errorList: [MyStrings.requestFail.tr]);
+              CustomSnackBar.error(errorList: [Strings.requestFail.tr]);
             }
 
             setState(() {

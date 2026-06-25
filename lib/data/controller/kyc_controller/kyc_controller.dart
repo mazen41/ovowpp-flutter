@@ -16,7 +16,7 @@ class KycController extends GetxController {
 
   bool isLoading = true;
   List<KycFormModel> formList = [];
-  String selectOne = MyStrings.selectOne;
+  String selectOne = Strings.selectOne;
 
   KycResponseModel model = KycResponseModel();
   bool isNoDataFound = false;
@@ -29,7 +29,7 @@ class KycController extends GetxController {
     try {
       model = await repo.getKycData();
 
-      if (model.data != null && model.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+      if (model.data != null && model.status?.toLowerCase() == Strings.success.toLowerCase()) {
         List<KycFormModel>? tList = model.data?.form?.list;
 
         if (tList != null && tList.isNotEmpty) {
@@ -89,11 +89,11 @@ class KycController extends GetxController {
 
     AuthorizationResponseModel response = await repo.submitKycData(formList);
 
-    if (response.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+    if (response.status?.toLowerCase() == Strings.success.toLowerCase()) {
       isAlreadyPending = true;
-      CustomSnackBar.success(successList: response.message ?? [MyStrings.success.tr]);
+      CustomSnackBar.success(successList: response.message ?? [Strings.success.tr]);
     } else {
-      CustomSnackBar.error(errorList: response.message ?? [MyStrings.requestFail.tr]);
+      CustomSnackBar.error(errorList: response.message ?? [Strings.requestFail.tr]);
     }
 
     submitLoading = false;
@@ -108,15 +108,15 @@ class KycController extends GetxController {
       if (element.isRequired == 'required') {
         if (element.type == 'checkbox') {
           if (element.cbSelected == null) {
-            errorList.add('${element.name} ${MyStrings.isRequired}');
+            errorList.add('${element.name} ${Strings.isRequired}');
           }
         } else if (element.type == 'file') {
           if (element.imageFile == null) {
-            errorList.add('${element.name} ${MyStrings.isRequired}');
+            errorList.add('${element.name} ${Strings.isRequired}');
           }
         } else {
           if (element.selectedValue == '' || element.selectedValue == selectOne) {
-            errorList.add('${element.name} ${MyStrings.isRequired}');
+            errorList.add('${element.name} ${Strings.isRequired}');
           }
         }
       }

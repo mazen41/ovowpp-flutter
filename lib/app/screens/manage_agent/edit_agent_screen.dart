@@ -11,7 +11,7 @@ import 'package:ovowpp/app/screens/global/widgets/country_bottom_sheet.dart';
 import 'package:ovowpp/core/utils/app_style.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
-import 'package:ovowpp/core/utils/my_strings.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/url_container.dart';
 import 'package:ovowpp/data/controller/manage_agent/edit_agent_controller.dart';
 import 'package:ovowpp/data/model/country_model/country_model.dart';
@@ -52,7 +52,7 @@ class EditAgentScreenState extends State<EditAgentScreen> with SingleTickerProvi
           transformValue: -8,
           centerTitle: true,
           appBarHeight: 80,
-          pageTitle: MyStrings.editAgent.tr,
+          pageTitle: Strings.editAgent.tr,
           appBarBgColor: MyColor.getTransparentColor(),
           body: controller.isLoading
               ? const CustomLoader()
@@ -67,8 +67,8 @@ class EditAgentScreenState extends State<EditAgentScreen> with SingleTickerProvi
                             child: LabelTextField(
                               isRequired: true,
                               controller: controller.firstNameController,
-                              labelText: MyStrings.firstName.tr,
-                              hintText: MyStrings.enterYourFirstName.tr,
+                              labelText: Strings.firstName.tr,
+                              hintText: Strings.enterYourFirstName.tr,
                               onChanged: (value) {},
                               // focusNode: controller.emailFocusNode,
                               // nextFocus: controller.passwordFocusNode,
@@ -77,7 +77,7 @@ class EditAgentScreenState extends State<EditAgentScreen> with SingleTickerProvi
                               radius: Dimensions.largeRadius,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return MyStrings.fieldErrorMsg.tr;
+                                  return Strings.fieldErrorMsg.tr;
                                 } else {
                                   return null;
                                 }
@@ -89,8 +89,8 @@ class EditAgentScreenState extends State<EditAgentScreen> with SingleTickerProvi
                             child: LabelTextField(
                               isRequired: true,
                               controller: controller.lastNameController,
-                              labelText: MyStrings.lastName.tr,
-                              hintText: MyStrings.enterYourLastName.tr,
+                              labelText: Strings.lastName.tr,
+                              hintText: Strings.enterYourLastName.tr,
                               onChanged: (value) {},
                               // focusNode: controller.emailFocusNode,
                               // nextFocus: controller.passwordFocusNode,
@@ -99,7 +99,7 @@ class EditAgentScreenState extends State<EditAgentScreen> with SingleTickerProvi
                               radius: Dimensions.largeRadius,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return MyStrings.fieldErrorMsg.tr;
+                                  return Strings.fieldErrorMsg.tr;
                                 } else {
                                   return null;
                                 }
@@ -114,15 +114,15 @@ class EditAgentScreenState extends State<EditAgentScreen> with SingleTickerProvi
                         readOnly: true,
                         isRequired: true,
                         controller: controller.userNameController,
-                        labelText: MyStrings.username.tr,
-                        hintText: MyStrings.username.tr,
+                        labelText: Strings.username.tr,
+                        hintText: Strings.username.tr,
                         onChanged: (value) {},
                         textInputType: TextInputType.emailAddress,
                         inputAction: TextInputAction.next,
                         radius: Dimensions.largeRadius,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return MyStrings.fieldErrorMsg.tr;
+                            return Strings.fieldErrorMsg.tr;
                           } else {
                             return null;
                           }
@@ -134,15 +134,15 @@ class EditAgentScreenState extends State<EditAgentScreen> with SingleTickerProvi
                         isRequired: true,
                         isEnable: false,
                         controller: controller.emailController,
-                        labelText: MyStrings.email.tr,
-                        hintText: MyStrings.email.tr,
+                        labelText: Strings.email.tr,
+                        hintText: Strings.email.tr,
                         onChanged: (value) {},
                         textInputType: TextInputType.emailAddress,
                         inputAction: TextInputAction.next,
                         radius: Dimensions.largeRadius,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return MyStrings.fieldErrorMsg.tr;
+                            return Strings.fieldErrorMsg.tr;
                           } else {
                             return null;
                           }
@@ -153,15 +153,15 @@ class EditAgentScreenState extends State<EditAgentScreen> with SingleTickerProvi
                       LabelTextField(
                         isEnable: false,
                         controller: controller.countryController,
-                        labelText: MyStrings.country.tr,
-                        hintText: MyStrings.country.tr,
+                        labelText: Strings.country.tr,
+                        hintText: Strings.country.tr,
                         onChanged: (value) {},
                         textInputType: TextInputType.emailAddress,
                         inputAction: TextInputAction.next,
                         radius: Dimensions.largeRadius,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return MyStrings.fieldErrorMsg.tr;
+                            return Strings.fieldErrorMsg.tr;
                           } else {
                             return null;
                           }
@@ -174,8 +174,8 @@ class EditAgentScreenState extends State<EditAgentScreen> with SingleTickerProvi
                         isRequired: true,
                         isEnable: false,
                         onChanged: (v) {},
-                        labelText: (MyStrings.phoneNo).replaceAll('.', '').tr,
-                        // hintText: MyStrings.enterYourPhoneNumber,
+                        labelText: (Strings.phoneNo).replaceAll('.', '').tr,
+                        // hintText: Strings.enterYourPhoneNumber,
                         controller: controller.mobileNoController,
                         focusNode: controller.mobileNoFocusNode,
                         textInputType: TextInputType.phone,
@@ -232,7 +232,7 @@ class EditAgentScreenState extends State<EditAgentScreen> with SingleTickerProvi
                         ),
                         validator: (value) {
                           if ((value as String).trim().isEmpty) {
-                            return MyStrings.kPhoneNumberIsRequired.tr;
+                            return Strings.kPhoneNumberIsRequired.tr;
                           } else {
                             return null;
                           }
@@ -246,15 +246,15 @@ class EditAgentScreenState extends State<EditAgentScreen> with SingleTickerProvi
                           Expanded(
                             child: LabelTextField(
                               controller: controller.cityController,
-                              labelText: MyStrings.city.tr,
-                              hintText: MyStrings.city.tr,
+                              labelText: Strings.city.tr,
+                              hintText: Strings.city.tr,
                               onChanged: (value) {},
                               textInputType: TextInputType.text,
                               inputAction: TextInputAction.next,
                               radius: Dimensions.largeRadius,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return MyStrings.fieldErrorMsg.tr;
+                                  return Strings.fieldErrorMsg.tr;
                                 } else {
                                   return null;
                                 }
@@ -266,15 +266,15 @@ class EditAgentScreenState extends State<EditAgentScreen> with SingleTickerProvi
                           Expanded(
                             child: LabelTextField(
                               controller: controller.stateController,
-                              labelText: MyStrings.state.tr,
-                              hintText: MyStrings.state.tr,
+                              labelText: Strings.state.tr,
+                              hintText: Strings.state.tr,
                               onChanged: (value) {},
                               textInputType: TextInputType.text,
                               inputAction: TextInputAction.next,
                               radius: Dimensions.largeRadius,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return MyStrings.fieldErrorMsg.tr;
+                                  return Strings.fieldErrorMsg.tr;
                                 } else {
                                   return null;
                                 }
@@ -291,15 +291,15 @@ class EditAgentScreenState extends State<EditAgentScreen> with SingleTickerProvi
                           Expanded(
                             child: LabelTextField(
                               controller: controller.zipCodeController,
-                              labelText: MyStrings.zipCode.tr,
-                              hintText: MyStrings.zipCode.tr,
+                              labelText: Strings.zipCode.tr,
+                              hintText: Strings.zipCode.tr,
                               onChanged: (value) {},
                               textInputType: TextInputType.number,
                               inputAction: TextInputAction.next,
                               radius: Dimensions.largeRadius,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return MyStrings.fieldErrorMsg.tr;
+                                  return Strings.fieldErrorMsg.tr;
                                 } else {
                                   return null;
                                 }
@@ -311,15 +311,15 @@ class EditAgentScreenState extends State<EditAgentScreen> with SingleTickerProvi
                           Expanded(
                             child: LabelTextField(
                               controller: controller.addressController,
-                              labelText: MyStrings.address.tr,
-                              hintText: MyStrings.address.tr,
+                              labelText: Strings.address.tr,
+                              hintText: Strings.address.tr,
                               onChanged: (value) {},
                               textInputType: TextInputType.text,
                               inputAction: TextInputAction.next,
                               radius: Dimensions.largeRadius,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return MyStrings.fieldErrorMsg.tr;
+                                  return Strings.fieldErrorMsg.tr;
                                 } else {
                                   return null;
                                 }
@@ -332,7 +332,7 @@ class EditAgentScreenState extends State<EditAgentScreen> with SingleTickerProvi
                       spaceDown(Dimensions.space30.h),
                       CustomElevatedBtn(
                         isLoading: controller.isUpdateAgentLoading,
-                        text: MyStrings.updateAgent.tr,
+                        text: Strings.updateAgent.tr,
                         onTap: () {
                           controller.updateAgent();
                         },
