@@ -4,29 +4,26 @@ import 'package:ovowpp/data/services/shared_pref_service.dart';
 import 'package:ovowpp/data/model/language/language_model.dart';
 
 class LocalizationController {
-  // Singleton instance
   static final LocalizationController _instance = LocalizationController._internal();
 
-  factory LocalizationController() {
-    return _instance;
-  }
+  factory LocalizationController() => _instance;
 
   LocalizationController._internal() {
     loadCurrentLanguage();
   }
 
-  // supported languages fonts family (must be in assets & pubspec yaml) or you can use google fonts
   static Map<String, TextStyle> supportedLanguagesFontsFamilies = {
     'en': const TextStyle(fontFamily: 'Nunito'),
     'ar': const TextStyle(fontFamily: 'Cairo'),
   };
 
+  // IMPORTANT: countryCode must match keys in Messages: en_US and ar_SA
   static List<MyLanguageModel> myLanguages = [
     MyLanguageModel(languageName: 'English', countryCode: 'US', languageCode: 'en'),
     MyLanguageModel(languageName: 'Arabic', countryCode: 'SA', languageCode: 'ar'),
   ];
 
-  Locale _locale = Locale(myLanguages[0].languageCode, myLanguages[0].countryCode);
+  Locale _locale = const Locale('en', 'US');
   bool _isLtr = true;
   final List<MyLanguageModel> _languages = [];
 
@@ -47,20 +44,14 @@ class LocalizationController {
   void loadCurrentLanguage() {
     String languageCode = SharedPreferenceService.getString(
       SharedPreferenceService.languageCode,
-      defaultValue: myLanguages[0].languageCode,
+      defaultValue: 'en',
     );
-    String countryCode = SharedPreferenceService.getString(
-      SharedPreferenceService.countryCode,
-      defaultValue: myLanguages[0].countryCode,
-    );
-    
-    // Ensure we always have a valid locale with country code
-    if (countryCode.isEmpty) {
-      countryCode = languageCode == 'ar' ? 'SA' : 'US';
-    }
-    
+
+    // Always derive countryCode from languageCode to guarantee it matches Messages keys
+    String countryCode = languageCode == 'ar' ? 'SA' : 'US';
+
     _locale = Locale(languageCode, countryCode);
-    _isLtr = _locale.languageCode != 'ar';
+    _isLtr = languageCode != 'ar';
   }
 
   void saveLanguage(Locale locale, String? imageUrl) {
