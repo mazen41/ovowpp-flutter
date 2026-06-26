@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:get/get.dart';
 import 'package:ovowpp/core/route/route.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/model/authorization/authorization_response_model.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:ovowpp/data/repo/auth/sms_email_verification_repo.dart';

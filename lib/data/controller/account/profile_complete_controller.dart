@@ -4,7 +4,7 @@ import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:ovowpp/data/model/profile_complete/profile_complete_response_model.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/core/route/route.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/repo/account/profile_repo.dart';
 import 'package:ovowpp/data/services/shared_pref_service.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:ovowpp/app/components/annotated_region/annotated_region_widget.dart';
 import 'package:ovowpp/app/components/will_pop_widget.dart';
 import 'package:ovowpp/app/screens/bottom_nav_bar/widget/bottom_nav_item.dart';
@@ -8,6 +9,7 @@ import 'package:ovowpp/app/screens/dashboard/dashboard_screen.dart';
 import 'package:ovowpp/app/screens/menu/menu_screen.dart';
 import 'package:ovowpp/core/utils/util_exporter.dart';
 import 'package:ovowpp/core/translations/strings_enum.dart';
+import 'package:ovowpp/core/utils/my_strings.dart';
 import '../campaigns/campaigns_screen.dart';
 import '../chat_home/chat_home_screen.dart';
 
@@ -83,7 +85,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       isSelected: currentIndex == 0,
                       selectedIcon: MyImages.selectedDashboard,
                       unSelectedIcon: MyImages.unSelectedDashboard,
-                      title: Strings.dashboard.tr,
+                      title: 'dashboard'.tr,
                     ),
                     BottomNavItem(
                       onTap: () {
@@ -92,7 +94,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       isSelected: currentIndex == 1,
                       selectedIcon: MyImages.selectedChat,
                       unSelectedIcon: MyImages.unSelectedChat,
-                      title: Strings.chats.tr,
+                      title: 'chats'.tr,
                     ),
                     BottomNavItem(
                       onTap: () {
@@ -105,7 +107,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       isSelected: currentIndex == 2,
                       selectedIcon: MyImages.selectedCampaigns,
                       unSelectedIcon: MyImages.unSelectedCampaigns,
-                      title: Strings.campaign.tr,
+                      title: 'campaigns'.tr,
                     ),
                     BottomNavItem(
                       onTap: () {
@@ -118,7 +120,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       isSelected: currentIndex == 3,
                       selectedIcon: MyImages.selectedContact,
                       unSelectedIcon: MyImages.unSelectedContact,
-                      title: Strings.contacts.tr,
+                      title: 'contacts'.tr,
                     ),
                     BottomNavItem(
                       onTap: () {
@@ -127,7 +129,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       isSelected: currentIndex == 4,
                       selectedIcon: MyImages.selectedAccount,
                       unSelectedIcon: MyImages.unSelectedAccount,
-                      title: Strings.account.tr,
+                      title: 'account'.tr,
                     ),
                   ],
                 ),

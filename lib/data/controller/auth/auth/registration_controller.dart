@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ovowpp/data/services/shared_pref_service.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/core/route/route.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/model/auth/sign_up_model/registration_response_model.dart';
 import 'package:ovowpp/data/model/auth/sign_up_model/sign_up_model.dart';
 import 'package:ovowpp/data/model/general_setting/general_setting_response_model.dart';

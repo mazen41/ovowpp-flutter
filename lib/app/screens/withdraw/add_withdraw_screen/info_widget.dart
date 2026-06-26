@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../../core/utils/dimensions.dart';
 import '../../../../core/utils/my_color.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import '../../../../data/controller/withdraw/add_new_withdraw_controller.dart';
 import '../../../components/row_widget/custom_row.dart';
 

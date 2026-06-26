@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/app/screens/auth/kyc/widget/widget/choose_file_list_item.dart';
 
 import '../../../../../data/controller/withdraw/withdraw_confirm_controller.dart';

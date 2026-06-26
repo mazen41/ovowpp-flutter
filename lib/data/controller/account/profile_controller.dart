@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ovowpp/core/helper/string_format_helper.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:get/get.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/url_container.dart';
 import 'package:ovowpp/data/repo/account/profile_repo.dart';
 import 'package:ovowpp/data/services/shared_pref_service.dart';

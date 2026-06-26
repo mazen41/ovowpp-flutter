@@ -10,7 +10,7 @@ import 'package:record/record.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
 import 'package:ovowpp/core/translations/localization_controller.dart';
 import 'package:ovowpp/core/utils/app_status.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/model/chat/chat_data_response_model.dart';
 import 'package:ovowpp/data/model/chat/message_model.dart';

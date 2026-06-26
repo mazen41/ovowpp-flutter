@@ -3,7 +3,7 @@ import 'package:ovowpp/app/components/text-field/search_text_field.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:get/get.dart';
 import '../../../../core/utils/my_color.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import '../../../../core/utils/util.dart';
 import '../../../../data/controller/withdraw/withdraw_history_controller.dart';
 

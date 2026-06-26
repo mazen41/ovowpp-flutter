@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
 import 'package:ovowpp/core/route/route.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/repo/menu_repo/menu_repo.dart';
 import 'package:ovowpp/data/services/shared_pref_service.dart';
 import '../../model/authorization/authorization_response_model.dart';

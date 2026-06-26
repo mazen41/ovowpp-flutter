@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 
 class AppConverter {
   static String toCapitalized(String value) {

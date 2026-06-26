@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/model/authorization/authorization_response_model.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:ovowpp/data/model/manage_agent/agent_list_response_model.dart';

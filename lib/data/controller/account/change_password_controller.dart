@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/model/authorization/authorization_response_model.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';

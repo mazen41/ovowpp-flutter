@@ -5,7 +5,7 @@ import 'package:ovowpp/app/components/divider/custom_divider.dart';
 
 import '../../../../core/utils/dimensions.dart';
 import '../../../../core/utils/my_color.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 
 class CustomWithdrawCard extends StatelessWidget {
   final String trxValue, date, status, amount;

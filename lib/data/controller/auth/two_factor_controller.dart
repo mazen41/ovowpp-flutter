@@ -3,7 +3,7 @@ import 'package:ovowpp/data/controller/account/profile_controller.dart';
 import 'package:ovowpp/data/model/auth/two_factor/two_factor_data_model.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/core/route/route.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/model/authorization/authorization_response_model.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:ovowpp/data/repo/auth/two_factor_repo.dart';

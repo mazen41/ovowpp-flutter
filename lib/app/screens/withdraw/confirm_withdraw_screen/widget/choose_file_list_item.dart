@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../../../core/utils/dimensions.dart';
 import '../../../../../core/utils/my_color.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 
 class ChooseFileItem extends StatelessWidget {
   final String fileName;

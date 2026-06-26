@@ -3,7 +3,7 @@ import 'package:ovowpp/app/components/divider/custom_divider.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/utils/dimensions.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import '../../../../data/controller/transaction/transactions_controller.dart';
 import '../../../components/animated_widget/expanded_widget.dart';
 import '../../../components/column_widget/card_column.dart';

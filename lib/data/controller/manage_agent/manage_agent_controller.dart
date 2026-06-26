@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
 import 'package:ovowpp/core/route/route.dart';
 import 'package:ovowpp/core/utils/app_status.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/model/all_contact/create_contact_response_model.dart';
 import 'package:ovowpp/data/model/all_contact/delete_contact_response_model.dart';

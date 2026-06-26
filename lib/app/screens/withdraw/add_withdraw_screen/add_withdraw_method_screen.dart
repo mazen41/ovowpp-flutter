@@ -6,7 +6,7 @@ import 'package:ovowpp/app/screens/withdraw/add_withdraw_screen/withdraw_bottoms
 import 'package:get/get.dart';
 import '../../../../core/utils/dimensions.dart';
 import '../../../../core/utils/my_color.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import '../../../../data/controller/withdraw/add_new_withdraw_controller.dart';
 import '../../../../data/repo/withdraw/withdraw_repo.dart';
 import '../../../components/app-bar/custom_app_bar.dart';

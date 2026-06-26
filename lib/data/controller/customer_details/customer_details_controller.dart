@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
 import 'package:ovowpp/core/translations/localization_controller.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/model/customer_details/change_status_response_model.dart';
 import 'package:ovowpp/data/model/customer_details/customer_details_response_model.dart';

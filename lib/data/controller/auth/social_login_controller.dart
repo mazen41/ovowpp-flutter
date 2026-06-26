@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:ovowpp/app/packages/signin_with_linkdin/signin_with_linkedin.dart';
 import 'package:ovowpp/core/route/route.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/model/general_setting/general_setting_response_model.dart';
 import 'package:ovowpp/data/model/user/user.dart';
@@ -34,7 +34,7 @@ class SocialLoginController extends GetxController {
       // Initialize Google Sign-In
       await googleSignIn.initialize();
       
-      // Use standard signIn for mobile
+      // Use signIn for Google Sign-In
       var googleUser = await googleSignIn.signIn();
       
       if (googleUser == null) {

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/repo/help_center/help_center_repo.dart';
 
 class HelpCenterController extends GetxController {

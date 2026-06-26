@@ -49,6 +49,8 @@ const Map<String, String> enUs = {
   Strings.chats: 'Chats',
   Strings.dashboard: 'Dashboard',
   Strings.campaigns: 'Campaigns',
+  Strings.contacts: 'Contacts',
+  Strings.account: 'Account',
   Strings.reachMorePeopleCloseMoreDetails: 'Reach more people. Close more deals.',
   Strings.all: 'All',
   Strings.schedule: 'Scheduled: ',

@@ -5,7 +5,7 @@ import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/my_icons.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/url_container.dart';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/controller/support/ticket_details_controller.dart';

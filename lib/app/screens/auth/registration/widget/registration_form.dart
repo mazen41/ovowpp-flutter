@@ -8,6 +8,7 @@ import 'package:ovowpp/app/screens/auth/registration/widget/validation_widget.da
 import 'package:ovowpp/core/route/route.dart';
 import 'package:ovowpp/core/utils/util_exporter.dart';
 import 'package:ovowpp/core/translations/strings_enum.dart';
+import 'package:ovowpp/core/utils/my_strings.dart';
 import 'package:ovowpp/data/controller/auth/auth/registration_controller.dart';
 
 import '../../../../components/image/text_field_prefix_icon.dart';

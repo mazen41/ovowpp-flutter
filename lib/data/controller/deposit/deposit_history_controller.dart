@@ -6,7 +6,7 @@ import 'package:ovowpp/data/services/shared_pref_service.dart';
 
 import '../../../core/route/route.dart';
 import '../../../core/utils/my_color.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import '../../../core/utils/url_container.dart';
 import '../../model/deposit/deposit_history_response_model.dart';
 import '../../model/global/response_model/response_model.dart';

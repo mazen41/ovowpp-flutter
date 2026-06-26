@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:ovowpp/core/translations/strings_enum.dart';';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/model/authorization/authorization_response_model.dart';
 import 'package:ovowpp/data/model/campaign/campaign_model.dart';
 import 'package:ovowpp/data/model/campaign/create_campaign_model.dart';
