@@ -17,14 +17,13 @@ class LocalizationController {
 
   // supported languages fonts family (must be in assets & pubspec yaml) or you can use google fonts
   static Map<String, TextStyle> supportedLanguagesFontsFamilies = {
-    // todo add your English font families (add to assets/fonts, pubspec and name it here) default is poppins for english and cairo for arabic
     'en': const TextStyle(fontFamily: 'Nunito'),
     'ar': const TextStyle(fontFamily: 'Cairo'),
   };
 
   static List<MyLanguageModel> myLanguages = [
     MyLanguageModel(languageName: 'English', countryCode: 'US', languageCode: 'en'),
-    MyLanguageModel(languageName: 'Arabic', countryCode: 'SA', languageCode: 'ar'),
+    MyLanguageModel(languageName: 'Arabic', countryCode: 'AR', languageCode: 'ar'),
   ];
 
   Locale _locale = Locale(myLanguages[0].languageCode, myLanguages[0].countryCode);
@@ -43,7 +42,6 @@ class LocalizationController {
     _locale = locale;
     _isLtr = _locale.languageCode != 'ar';
     saveLanguage(_locale, imageUrl);
-    // Call a method here to notify necessary parts of the app
   }
 
   void loadCurrentLanguage() {
@@ -52,7 +50,10 @@ class LocalizationController {
         SharedPreferenceService.languageCode,
         defaultValue: myLanguages[0].languageCode,
       ),
-      SharedPreferenceService.getString(SharedPreferenceService.countryCode, defaultValue: myLanguages[0].countryCode),
+      SharedPreferenceService.getString(
+        SharedPreferenceService.countryCode,
+        defaultValue: myLanguages[0].countryCode,
+      ),
     );
     _isLtr = _locale.languageCode != 'ar';
   }
@@ -65,6 +66,5 @@ class LocalizationController {
 
   void setSelectIndex(int index) {
     _selectedIndex = index;
-    // Call a method here to notify necessary parts of the app
   }
 }

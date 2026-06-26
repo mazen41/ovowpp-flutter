@@ -27,15 +27,6 @@ Future<void> main() async {
   //Dependency injection
   await di_service.initDependency();
   runApp(const OvoApp());
-
-  /// ============= DEVICE PREVIEW NEW ==================
-  //   runApp(DevicePreview(
-  //       enabled: !kReleaseMode,
-  //     builder: (context) {
-  //       return OvoApp(languages: {},);
-  //     }
-  //    ),
-  // );
 }
 
 //APP ENTRY POINT
@@ -54,23 +45,18 @@ class _OvoAppState extends State<OvoApp> {
         final size = MediaQuery.of(context).size;
         Size designSize;
         if (size.width > 900) {
-          // **Tablets or Large Screens**
           designSize = orientation == Orientation.landscape ? const Size(1400, 900) : const Size(900, 1400);
         } else if (size.width > 600) {
-          // **Medium-sized tablets**
           designSize = orientation == Orientation.landscape ? const Size(1200, 800) : const Size(800, 1200);
         } else if (size.width > 430) {
-          // **Big Phones like Galaxy S24 Ultra, iPhone 15 Pro Max**
           designSize = orientation == Orientation.landscape
-              ? const Size(1000, 450) // Adjust for landscape
-              : const Size(450, 1000); // Adjust for portrait
+              ? const Size(1000, 450)
+              : const Size(450, 1000);
         } else {
-          // **Default mobile phones**
           designSize = orientation == Orientation.landscape ? const Size(812, 375) : const Size(375, 812);
         }
 
         return ScreenUtilInit(
-          // todo add your (Xd / Figma) artboard size
           designSize: designSize,
           minTextAdapt: true,
           splitScreenMode: true,
@@ -84,15 +70,12 @@ class _OvoAppState extends State<OvoApp> {
                 defaultTransition: Transition.noTransition,
                 transitionDuration: const Duration(milliseconds: 200),
                 initialRoute: RouteHelper.splashScreen,
-                // initialRoute: RouteHelper.verifyPassCodeScreen,
                 navigatorKey: Get.key,
                 getPages: RouteHelper().routes,
                 locale: LocalizationController().locale,
                 translations: Messages(),
-                fallbackLocale: Locale(
-                  LocalizationController().locale.languageCode,
-                  LocalizationController().locale.countryCode,
-                ),
+                // Always fall back to English so keys never show raw
+                fallbackLocale: const Locale('en', 'US'),
                 builder: (context, widget) {
                   bool themeIsLight = SharedPreferenceService.getThemeIsLight();
                   return Theme(

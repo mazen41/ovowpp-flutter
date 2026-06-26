@@ -7,7 +7,7 @@ class Messages extends Translations {
   Map<String, Map<String, String>> get keys {
     return {
       'en_US': enUs,
-      'ar_SA': arAR,
+      'ar_AR': arAR,
     };
   }
 }
