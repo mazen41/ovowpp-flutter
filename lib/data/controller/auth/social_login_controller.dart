@@ -20,37 +20,25 @@ class SocialLoginController extends GetxController {
   SocialLoginController({required this.repo});
 
   //SIGN IN With Google
-  final GoogleSignIn googleSignIn = GoogleSignIn.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   bool isGoogleSignInLoading = false;
 
   Future<void> signInWithGoogle() async {
     try {
       isGoogleSignInLoading = true;
       update();
-      
-      // Sign out first to ensure fresh login
-      await googleSignIn.signOut();
-      
-      // Initialize Google Sign-In
-      await googleSignIn.initialize();
-      
-      // Try to get the already signed-in user
-      var googleUser = await googleSignIn.currentUser;
-      
-      // If no user is signed in, try to sign in
+
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
       if (googleUser == null) {
-        googleUser = await googleSignIn.signIn();
-      }
-      
-      if (googleUser == null) {
+        // User cancelled the sign-in
         isGoogleSignInLoading = false;
         update();
-        CustomSnackBar.error(errorList: [Strings.loginFailedTryAgain.tr]);
         return;
       }
-      
-      var googleAuth = await googleUser.authentication;
-      
+
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
       if (googleAuth.idToken == null) {
         isGoogleSignInLoading = false;
         update();
