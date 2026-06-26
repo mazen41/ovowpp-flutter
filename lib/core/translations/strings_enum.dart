@@ -28,6 +28,14 @@ class Strings {
   static const String termsOfService = 'termsOfService';
   static const String createNewAccount = 'createNewAccount';
   static const String loginHere = 'loginHere';
+  static const String usernameOrEmail = 'usernameOrEmail';
+  static const String password = 'password';
+  static const String enterYourPassword_ = 'enterYourPassword_';
+  static const String rememberMe = 'rememberMe';
+  static const String forgetPassword = 'forgetPassword';
+  static const String signIn = 'signIn';
+  static const String doNotHaveAccount = 'doNotHaveAccount';
+  static const String registerHere = 'registerHere';
   static const String hi = 'hi';
   static const String businessOverView = 'businessOverView';
   static const String messagesSent = 'messagesSent';
