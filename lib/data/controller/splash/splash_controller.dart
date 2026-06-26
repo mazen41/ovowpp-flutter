@@ -104,23 +104,13 @@ class SplashController extends GetxController {
     ResponseModel response = await repo.getLanguage(languageCode);
     if (response.statusCode == 200) {
       try {
-        Map<String, Map<String, String>> language = {};
-
         saveLanguageList(jsonEncode(response.responseJson));
-        var resJson = (response.responseJson);
-        Map value = resJson['data']['file'].toString() == '[]' ? {} : resJson['data']['file'];
-        Map<String, String> json = {};
-        value.forEach((key, value) {
-          json[key] = value.toString();
-        });
-        language['${localizationController.locale.languageCode}_${localizationController.locale.countryCode}'] = json;
-        Get.addTranslations(language);
       } catch (e) {
-        CustomSnackBar.error(errorList: [e.toString()]);
+        printX(e.toString());
       }
-    } else {
-      CustomSnackBar.error(errorList: [response.message]);
     }
+    // Don't load backend translations - use static translations from Messages class
+    // Backend translations are incomplete and overwrite static translations
   }
 
   Future<void> loadCountryDataAndSaveToLocalStorage() async {

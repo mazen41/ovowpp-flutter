@@ -82,20 +82,13 @@ class MyLanguageController extends GetxController {
         await SharedPreferenceService.setString(SharedPreferenceService.countryCode, selectedLangModel.countryCode);
         await SharedPreferenceService.setString(SharedPreferenceService.languageCode, selectedLangModel.languageCode);
 
-        Locale local = Locale(selectedLangModel.languageCode, 'US');
+        Locale local = Locale(selectedLangModel.languageCode, selectedLangModel.languageCode == 'ar' ? 'SA' : 'US');
         localizationController.setLanguage(local, "$languageImagePath/${langList[index].imageUrl}");
-        var resJson = (response.responseJson);
-        Map<String, dynamic> value = resJson['data']['file'].toString() == '[]' ? {} : resJson['data']['file'];
-        Map<String, String> json = {};
-        value.forEach((key, value) {
-          json[key] = value.toString();
-        });
-
-        Map<String, Map<String, String>> language = {};
-        language['${selectedLangModel.languageCode}_${'US'}'] = json;
-
-        Get.clearTranslations();
-        Get.addTranslations(language);
+        
+        // Don't load backend translations - use static translations instead
+        // Backend translations are incomplete and overwrite static translations
+        // Get.clearTranslations();
+        // Get.addTranslations(language);
 
         final MyMenuController menuController = Get.find<MyMenuController>();
         menuController.setSelectedLanguage(selectedLangModel.languageName);

@@ -23,7 +23,7 @@ class LocalizationController {
 
   static List<MyLanguageModel> myLanguages = [
     MyLanguageModel(languageName: 'English', countryCode: 'US', languageCode: 'en'),
-    MyLanguageModel(languageName: 'Arabic', countryCode: 'AR', languageCode: 'ar'),
+    MyLanguageModel(languageName: 'Arabic', countryCode: 'SA', languageCode: 'ar'),
   ];
 
   Locale _locale = Locale(myLanguages[0].languageCode, myLanguages[0].countryCode);
@@ -45,16 +45,21 @@ class LocalizationController {
   }
 
   void loadCurrentLanguage() {
-    _locale = Locale(
-      SharedPreferenceService.getString(
-        SharedPreferenceService.languageCode,
-        defaultValue: myLanguages[0].languageCode,
-      ),
-      SharedPreferenceService.getString(
-        SharedPreferenceService.countryCode,
-        defaultValue: myLanguages[0].countryCode,
-      ),
+    String languageCode = SharedPreferenceService.getString(
+      SharedPreferenceService.languageCode,
+      defaultValue: myLanguages[0].languageCode,
     );
+    String countryCode = SharedPreferenceService.getString(
+      SharedPreferenceService.countryCode,
+      defaultValue: myLanguages[0].countryCode,
+    );
+    
+    // Ensure we always have a valid locale with country code
+    if (countryCode.isEmpty) {
+      countryCode = languageCode == 'ar' ? 'SA' : 'US';
+    }
+    
+    _locale = Locale(languageCode, countryCode);
     _isLtr = _locale.languageCode != 'ar';
   }
 
