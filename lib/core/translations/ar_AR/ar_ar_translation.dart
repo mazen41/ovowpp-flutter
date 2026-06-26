@@ -49,7 +49,6 @@ final Map<String, String> arAR = {
   Strings.chats: 'المحادثات',
   Strings.dashboard: 'لوحة التحكم',
   Strings.campaigns: 'الحملات',
-  Strings.contacts: 'جهات الاتصال',
   Strings.account: 'الحساب',
   Strings.reachMorePeopleCloseMoreDetails: 'تواصل مع المزيد من الأشخاص. أغلق المزيد من الصفقات.',
   Strings.all: 'الكل',

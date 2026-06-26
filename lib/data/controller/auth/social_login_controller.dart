@@ -34,8 +34,8 @@ class SocialLoginController extends GetxController {
       // Initialize Google Sign-In
       await googleSignIn.initialize();
       
-      // Use signIn for Google Sign-In
-      var googleUser = await googleSignIn.signIn();
+      // Use signInSilently for Google Sign-In
+      var googleUser = await googleSignIn.signInSilently();
       
       if (googleUser == null) {
         isGoogleSignInLoading = false;
