@@ -1,4 +1,4 @@
-﻿{
+{
   "project_info": {
     "project_number": "161838628370",
     "project_id": "whatsapp-project-13a81",
@@ -10,6 +10,25 @@
         "mobilesdk_app_id": "1:161838628370:android:c31f84da09aabb125d62cb",
         "android_client_info": {
           "package_name": "com.ovosolution.ovowpp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrJcb_0ww4HjdCwR0w8ZlNbOWUYpbukVE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161838628370:android:30853a0f3a80badf5d62cb",
+        "android_client_info": {
+          "package_name": "com.ovosolution.ovowppapp"
         }
       },
       "oauth_client": [],

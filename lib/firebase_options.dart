@@ -20,7 +20,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBrJcb_0ww4HjdCwR0w8ZlNbOWUYpbukVE',
-    appId: '1:161838628370:android:c31f84da09aabb125d62cb',
+    appId: '1:161838628370:android:30853a0f3a80badf5d62cb',
     messagingSenderId: '161838628370',
     projectId: 'whatsapp-project-13a81',
     storageBucket: 'whatsapp-project-13a81.firebasestorage.app',
@@ -28,10 +28,10 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBrJcb_0ww4HjdCwR0w8ZlNbOWUYpbukVE',
-    appId: '1:161838628370:android:c31f84da09aabb125d62cb',
+    appId: '1:161838628370:android:30853a0f3a80badf5d62cb',
     messagingSenderId: '161838628370',
     projectId: 'whatsapp-project-13a81',
     storageBucket: 'whatsapp-project-13a81.firebasestorage.app',
-    iosBundleId: 'com.ovosolution.ovowpp',
+    iosBundleId: 'com.ovosolution.ovowppapp',
   );
 }
