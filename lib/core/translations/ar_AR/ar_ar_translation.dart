@@ -203,7 +203,6 @@ final Map<String, String> arAR = {
   Strings.total: 'المجموع',
   Strings.appName: 'دبليو أي سي آر إم',
   Strings.remark: 'ملاحظة',
-  Strings.account: 'حساب',
   Strings.agentPermission: 'إذن الوكيل',
   Strings.permission: 'إذن',
   Strings.hereIsYourOverviewOfTheDay: 'إليك نظرة عامة ليومك.',

@@ -203,7 +203,6 @@ const Map<String, String> enUs = {
   Strings.total: 'Total',
   Strings.appName: 'WACRM',
   Strings.remark: 'Remark',
-  Strings.account: 'Account',
   Strings.agentPermission: 'Agent Permission',
   Strings.permission: 'Permission',
   Strings.hereIsYourOverviewOfTheDay: 'Here\'s your overview for the day.',
