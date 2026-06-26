@@ -1,4 +1,4 @@
-﻿name: Build APK
+name: Build AAB
 
 on:
   push:
@@ -28,11 +28,20 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
 
-      - name: Build APK
-        run: flutter build apk --release --no-tree-shake-icons
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/upload-keystore.jks
 
-      - name: Upload APK
+      - name: Build AAB
+        run: flutter build appbundle --release --no-tree-shake-icons
+        env:
+          KEYSTORE_PATH: upload-keystore.jks
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Upload AAB
         uses: actions/upload-artifact@v4
         with:
-          name: ovowpp-release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          name: ovowpp-release-aab
+          path: build/app/outputs/bundle/release/app-release.aab
