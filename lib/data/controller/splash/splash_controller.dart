@@ -114,7 +114,7 @@ class SplashController extends GetxController {
           json[key] = value.toString();
         });
         language['${localizationController.locale.languageCode}_${localizationController.locale.countryCode}'] = json;
-        Get.addTranslations(Messages(languages: language).keys);
+        Get.addTranslations(language);
       } catch (e) {
         CustomSnackBar.error(errorList: [e.toString()]);
       }

@@ -6,9 +6,8 @@ import 'package:ovowpp/app/screens/bottom_nav_bar/widget/bottom_nav_item.dart';
 import 'package:ovowpp/app/screens/contact/contact_screen.dart';
 import 'package:ovowpp/app/screens/dashboard/dashboard_screen.dart';
 import 'package:ovowpp/app/screens/menu/menu_screen.dart';
-import 'package:ovowpp/core/utils/my_color.dart';
+import 'package:ovowpp/core/utils/util_exporter.dart';
 import 'package:ovowpp/core/translations/strings_enum.dart';
-import '../../../core/utils/my_images.dart';
 import '../campaigns/campaigns_screen.dart';
 import '../chat_home/chat_home_screen.dart';
 

@@ -95,7 +95,7 @@ class MyLanguageController extends GetxController {
         language['${selectedLangModel.languageCode}_${'US'}'] = json;
 
         Get.clearTranslations();
-        Get.addTranslations(Messages(languages: language).keys);
+        Get.addTranslations(language);
 
         final MyMenuController menuController = Get.find<MyMenuController>();
         menuController.setSelectedLanguage(selectedLangModel.languageName);

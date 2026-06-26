@@ -6,6 +6,7 @@ import 'package:ovowpp/app/components/text-field/label_text_field.dart';
 import 'package:ovowpp/app/screens/auth/registration/widget/privacy_policy_terms_of_services.dart';
 import 'package:ovowpp/app/screens/auth/registration/widget/validation_widget.dart';
 import 'package:ovowpp/core/route/route.dart';
+import 'package:ovowpp/core/utils/util_exporter.dart';
 import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/data/controller/auth/auth/registration_controller.dart';
 
@@ -82,7 +83,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 validator: (value) {
                   if (value != null && value.isEmpty) {
                     return Strings.enterYourEmail.tr;
-                  } else if (!Strings.emailValidatorRegExp.hasMatch(value ?? '')) {
+                  } else if (!MyStrings.emailValidatorRegExp.hasMatch(value ?? '')) {
                     return Strings.invalidEmailMsg.tr;
                   } else {
                     return null;

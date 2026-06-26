@@ -34,7 +34,7 @@ class SocialLoginController extends GetxController {
       // Initialize Google Sign-In
       await googleSignIn.initialize();
       
-      // Use standard signIn for mobile (attemptLightweightAuthentication is for web only)
+      // Use standard signIn for mobile
       var googleUser = await googleSignIn.signIn();
       
       if (googleUser == null) {

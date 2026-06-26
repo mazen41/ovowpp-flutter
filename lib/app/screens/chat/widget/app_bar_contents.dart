@@ -146,7 +146,7 @@ class _AppBarContentsState extends State<AppBarContents> {
               offset: Offset(0, 50),
               menuPadding: EdgeInsets.zero,
               itemBuilder: (context) {
-                if (!MyUtils.checkPermission(AppPerssion.viewContactProfile)) {
+                if (!MyUtils.checkPermission(AppPermission.viewContactProfile)) {
                   CustomSnackBar.error(errorList: [Strings.permissionDenyMessage]);
                 }
 
