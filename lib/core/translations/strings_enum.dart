@@ -28,14 +28,6 @@ class Strings {
   static const String termsOfService = 'termsOfService';
   static const String createNewAccount = 'createNewAccount';
   static const String loginHere = 'loginHere';
-  static const String usernameOrEmail = 'usernameOrEmail';
-  static const String password = 'password';
-  static const String enterYourPassword_ = 'enterYourPassword_';
-  static const String rememberMe = 'rememberMe';
-  static const String forgetPassword = 'forgetPassword';
-  static const String signIn = 'signIn';
-  static const String doNotHaveAccount = 'doNotHaveAccount';
-  static const String registerHere = 'registerHere';
   static const String hi = 'hi';
   static const String businessOverView = 'businessOverView';
   static const String messagesSent = 'messagesSent';
@@ -163,7 +155,6 @@ class Strings {
   static const String campaignCreateSuccessfully = 'campaignCreateSuccessfully';
   static const String areYouSureYouWantToSignOut = 'areYouSureYouWantToSignOut';
   static const String linkedin = 'linkedin';
-  static const String signInWithLinkedIn = 'signInWithLinkedIn';
   static const String deleteAccount = 'deleteAccount';
   static const String deleteYourAccount = 'deleteYourAccount';
   static const String deleteBottomSheetSubtitle = 'deleteBottomSheetSubtitle';
@@ -247,7 +238,6 @@ class Strings {
   static const String startLearntingWithCreateAccount = 'startLearntingWithCreateAccount';
   static const String messageCopiedToClipBoard = 'messageCopiedToClipBoard';
   static const String selectTagsFromTheList = 'selectTagsFromTheList';
-  static const String signUp = 'signUp';
   static const String customAttributes = 'customAttributes';
   static const String document = 'document';
   static const String video = 'video';
@@ -298,7 +288,6 @@ class Strings {
   static const String notes = 'notes';
   static const String tags = 'tags';
   static const String tag = 'tag';
-  static const String registerHere = 'registerHere';
   static const String verificationCodeisRequired = 'verificationCodeisRequired';
   static const String continueWith = 'continueWith';
   static const String continueText = 'continueText';
@@ -349,10 +338,7 @@ class Strings {
   static const String enterTransactionNo = 'enterTransactionNo';
   static const String latestTransactions = 'latestTransactions';
   static const String username = 'username';
-  static const String password = 'password';
-  static const String rememberMe = 'rememberMe';
   static const String forgotPassword = 'forgotPassword';
-  static const String signIn = 'signIn';
   static const String firstName = 'firstName';
   static const String lastName = 'lastName';
   static const String last = 'last';
@@ -413,7 +399,6 @@ class Strings {
   static const String in_ = 'in_';
   static const String initiated = 'initiated';
   static const String recoverAccount = 'recoverAccount';
-  static const String usernameOrEmail = 'usernameOrEmail';
   static const String emailOrPhoneNumber = 'emailOrPhoneNumber';
   static const String usernameOrEmailHint = 'usernameOrEmailHint';
   static const String signUP = 'signUP';
@@ -460,15 +445,12 @@ class Strings {
   static const String transactionNo = 'transactionNo';
   static const String privacyAndPolicy = 'privacyAndPolicy';
   static const String privacyPolicy = 'privacyPolicy';
-  static const String forgetPassword = 'forgetPassword';
-  static const String doNotHaveAccount = 'doNotHaveAccount';
   static const String enterEmailOrUserName = 'enterEmailOrUserName';
   static const String policies = 'policies';
   static const String verificationFailed = 'verificationFailed';
   static const String emailVerificationFailed = 'emailVerificationFailed';
   static const String smsVerificationFailed = 'smsVerificationFailed';
   static const String emailVerificationSuccess = 'emailVerificationSuccess';
-  static const String enterYourPassword_ = 'enterYourPassword_';
   static const String noDataToShow = 'noDataToShow';
   static const String noNotificationToShow = 'noNotificationToShow';
   static const String noTransectionsToShow = 'noTransectionsToShow';
