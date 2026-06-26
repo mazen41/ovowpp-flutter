@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:ovowpp/app/packages/signin_with_linkdin/signin_with_linkedin.dart';
@@ -19,24 +20,69 @@ class SocialLoginController extends GetxController {
   SocialLoginRepo repo;
   SocialLoginController({required this.repo});
 
-  //SIGN IN With Google
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  //SIGN IN With Google (google_sign_in v7.x API)
+  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
+  bool _googleSignInInitialized = false;
   bool isGoogleSignInLoading = false;
+
+  Future<void> _ensureGoogleSignInInitialized() async {
+    if (!_googleSignInInitialized) {
+      await _googleSignIn.initialize();
+      _googleSignInInitialized = true;
+    }
+  }
 
   Future<void> signInWithGoogle() async {
     try {
       isGoogleSignInLoading = true;
       update();
 
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      await _ensureGoogleSignInInitialized();
+
+      // v7 uses an event-driven approach with a Completer
+      final Completer<GoogleSignInAccount?> completer = Completer<GoogleSignInAccount?>();
+      late StreamSubscription<GoogleSignInAuthenticationEvent> subscription;
+
+      subscription = _googleSignIn.authenticationEvents.listen(
+        (GoogleSignInAuthenticationEvent event) {
+          if (!completer.isCompleted) {
+            if (event is GoogleSignInAuthenticationEventSignIn) {
+              subscription.cancel();
+              completer.complete(event.user);
+            } else if (event is GoogleSignInAuthenticationEventSignOut) {
+              subscription.cancel();
+              completer.complete(null);
+            }
+          }
+        },
+        onError: (Object error) {
+          if (!completer.isCompleted) {
+            subscription.cancel();
+            completer.completeError(error);
+          }
+        },
+      );
+
+      // Trigger the sign-in flow
+      if (_googleSignIn.supportsAuthenticate()) {
+        await _googleSignIn.authenticate();
+      } else {
+        subscription.cancel();
+        isGoogleSignInLoading = false;
+        update();
+        CustomSnackBar.error(errorList: ['Google Sign-In is not supported on this platform']);
+        return;
+      }
+
+      final GoogleSignInAccount? googleUser = await completer.future;
 
       if (googleUser == null) {
-        // User cancelled the sign-in
         isGoogleSignInLoading = false;
         update();
         return;
       }
 
+      // Get the ID token via authorizationClient
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
       if (googleAuth.idToken == null) {
@@ -95,7 +141,6 @@ class SocialLoginController extends GetxController {
       );
     } catch (e) {
       printE(e.toString());
-
       CustomSnackBar.error(errorList: [e.toString()]);
     }
   }
