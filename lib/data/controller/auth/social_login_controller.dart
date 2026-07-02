@@ -21,7 +21,15 @@ class SocialLoginController extends GetxController {
   SocialLoginController({required this.repo});
 
   //SIGN IN With Google (google_sign_in v7.x API)
-  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
+  GoogleSignIn get _googleSignIn {
+    // Web OAuth Client ID (serverClientId) is required for Android
+    // Using the Web OAuth Client ID from Google Cloud Console
+    const String serverClientId = '230160154555-01cq0m33tj7ekbjo99m9v9g2g0g8fd36.apps.googleusercontent.com';
+    
+    return GoogleSignIn(
+      serverClientId: serverClientId,
+    );
+  }
   bool _googleSignInInitialized = false;
   bool isGoogleSignInLoading = false;
 
