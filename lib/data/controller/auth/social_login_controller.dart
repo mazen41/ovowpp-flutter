@@ -1,4 +1,4 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:ovowpp/app/packages/signin_with_linkdin/signin_with_linkedin.dart';
@@ -20,7 +20,7 @@ class SocialLoginController extends GetxController {
   SocialLoginRepo repo;
   SocialLoginController({required this.repo});
 
-  // google_sign_in v7.x — use the singleton, never the constructor
+  // google_sign_in v7.x â€” use the singleton, never the constructor
   final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
   bool _initialized = false;
   StreamSubscription<GoogleSignInAuthenticationEvent>? _authSubscription;
@@ -32,9 +32,13 @@ class SocialLoginController extends GetxController {
     super.onClose();
   }
 
+  // Web OAuth client ID - used as serverClientId so backend receives valid ID token
+  static const String _serverClientId =
+      '230160154555-01cq0m33tj7ekbjo99m9v9g2g0g8fd36.apps.googleusercontent.com';
+
   Future<void> _ensureInitialized() async {
     if (_initialized) return;
-    await _googleSignIn.initialize();
+    await _googleSignIn.initialize(serverClientId: _serverClientId);
     _initialized = true;
   }
 
