@@ -20,24 +20,22 @@ class SocialLoginController extends GetxController {
   SocialLoginRepo repo;
   SocialLoginController({required this.repo});
 
-  //SIGN IN With Google (google_sign_in v7.x API)
-  GoogleSignIn get _googleSignIn {
-    // Web OAuth Client ID (serverClientId) is required for Android
-    // Using the Web OAuth Client ID from Google Cloud Console
-    const String serverClientId = '230160154555-01cq0m33tj7ekbjo99m9v9g2g0g8fd36.apps.googleusercontent.com';
-    
-    return GoogleSignIn(
-      serverClientId: serverClientId,
-    );
-  }
-  bool _googleSignInInitialized = false;
+  // google_sign_in v7.x — use the singleton, never the constructor
+  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
+  bool _initialized = false;
+  StreamSubscription<GoogleSignInAuthenticationEvent>? _authSubscription;
   bool isGoogleSignInLoading = false;
 
-  Future<void> _ensureGoogleSignInInitialized() async {
-    if (!_googleSignInInitialized) {
-      await _googleSignIn.initialize();
-      _googleSignInInitialized = true;
-    }
+  @override
+  void onClose() {
+    _authSubscription?.cancel();
+    super.onClose();
+  }
+
+  Future<void> _ensureInitialized() async {
+    if (_initialized) return;
+    await _googleSignIn.initialize();
+    _initialized = true;
   }
 
   Future<void> signInWithGoogle() async {
@@ -45,42 +43,40 @@ class SocialLoginController extends GetxController {
       isGoogleSignInLoading = true;
       update();
 
-      await _ensureGoogleSignInInitialized();
+      await _ensureInitialized();
 
-      // v7 uses an event-driven approach with a Completer
-      final Completer<GoogleSignInAccount?> completer = Completer<GoogleSignInAccount?>();
-      late StreamSubscription<GoogleSignInAuthenticationEvent> subscription;
+      if (!_googleSignIn.supportsAuthenticate()) {
+        CustomSnackBar.error(errorList: ['Google Sign-In is not supported on this platform']);
+        isGoogleSignInLoading = false;
+        update();
+        return;
+      }
 
-      subscription = _googleSignIn.authenticationEvents.listen(
+      // Set up a one-shot completer to capture the auth event result
+      final completer = Completer<GoogleSignInAccount?>();
+
+      _authSubscription?.cancel();
+      _authSubscription = _googleSignIn.authenticationEvents.listen(
         (GoogleSignInAuthenticationEvent event) {
-          if (!completer.isCompleted) {
-            if (event is GoogleSignInAuthenticationEventSignIn) {
-              subscription.cancel();
-              completer.complete(event.user);
-            } else if (event is GoogleSignInAuthenticationEventSignOut) {
-              subscription.cancel();
-              completer.complete(null);
-            }
+          if (completer.isCompleted) return;
+          if (event is GoogleSignInAuthenticationEventSignIn) {
+            _authSubscription?.cancel();
+            completer.complete(event.user);
+          } else if (event is GoogleSignInAuthenticationEventSignOut) {
+            _authSubscription?.cancel();
+            completer.complete(null);
           }
         },
         onError: (Object error) {
           if (!completer.isCompleted) {
-            subscription.cancel();
+            _authSubscription?.cancel();
             completer.completeError(error);
           }
         },
       );
 
-      // Trigger the sign-in flow
-      if (_googleSignIn.supportsAuthenticate()) {
-        await _googleSignIn.authenticate();
-      } else {
-        subscription.cancel();
-        isGoogleSignInLoading = false;
-        update();
-        CustomSnackBar.error(errorList: ['Google Sign-In is not supported on this platform']);
-        return;
-      }
+      // Trigger the interactive sign-in UI
+      await _googleSignIn.authenticate();
 
       final GoogleSignInAccount? googleUser = await completer.future;
 
@@ -90,7 +86,7 @@ class SocialLoginController extends GetxController {
         return;
       }
 
-      // Get the ID token via authorizationClient
+      // In v7, authentication is synchronous (no await needed)
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
       if (googleAuth.idToken == null) {
@@ -101,10 +97,12 @@ class SocialLoginController extends GetxController {
       }
 
       await socialLoginUser(provider: 'google', accessToken: googleAuth.idToken ?? '');
-    } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
+    } on GoogleSignInException catch (e) {
+      if (e.code != GoogleSignInExceptionCode.canceled) {
+        CustomSnackBar.error(errorList: [e.description ?? Strings.loginFailedTryAgain.tr]);
       }
+    } catch (e) {
+      if (kDebugMode) print(e.toString());
       CustomSnackBar.error(errorList: [e.toString()]);
     }
 
@@ -112,7 +110,7 @@ class SocialLoginController extends GetxController {
     update();
   }
 
-  //SIGN IN With LinkeDin
+  //SIGN IN With LinkedIn
   bool isLinkedinLoading = false;
   Future<void> signInWithLinkedin(BuildContext context) async {
     try {
@@ -155,7 +153,10 @@ class SocialLoginController extends GetxController {
 
   Future socialLoginUser({String accessToken = '', String? provider}) async {
     try {
-      ResponseModel responseModel = await repo.socialLoginUser(accessToken: accessToken, provider: provider);
+      ResponseModel responseModel = await repo.socialLoginUser(
+        accessToken: accessToken,
+        provider: provider,
+      );
       if (responseModel.statusCode == 200) {
         LoginResponseModel loginModel = LoginResponseModel.fromJson(responseModel.responseJson);
         if (loginModel.status.toString().toLowerCase() == Strings.success.toLowerCase()) {
@@ -175,13 +176,12 @@ class SocialLoginController extends GetxController {
         CustomSnackBar.error(errorList: [responseModel.message]);
       }
     } catch (e) {
-      //printx(e.toString());
+      if (kDebugMode) print(e.toString());
     }
   }
 
   bool checkSocialAuthActiveOrNot({String provider = 'all'}) {
     final config = SharedPreferenceService.getSocialCredentialsConfig();
-
     switch (provider) {
       case 'google':
         return config.google?.status == '1';
@@ -190,7 +190,9 @@ class SocialLoginController extends GetxController {
       case 'facebook':
         return config.facebook?.status == '1';
       case 'all':
-        return config.google?.status == '1' || config.linkedin?.status == '1' || config.facebook?.status == '1';
+        return config.google?.status == '1' ||
+            config.linkedin?.status == '1' ||
+            config.facebook?.status == '1';
       default:
         return false;
     }
