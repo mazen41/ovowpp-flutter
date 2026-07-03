@@ -104,8 +104,7 @@ class SocialLoginController extends GetxController {
       // Send ID token for Google (backend now validates ID tokens)
       final String tokenToSend = googleAuth.idToken ?? '';
       printX('Google ID Token length: ${tokenToSend.length}');
-      printX('Google ID Token preview: ${tokenToSend.substring(0, min(50, tokenToSend.length))}...');
-      printX('Access Token available: ${googleAuth.accessToken != null}');
+      printX('Google ID Token preview: ${tokenToSend.length > 50 ? tokenToSend.substring(0, 50) : tokenToSend}...');
       await socialLoginUser(provider: 'google', accessToken: tokenToSend);
     } on GoogleSignInException catch (e) {
       if (e.code != GoogleSignInExceptionCode.canceled) {
