@@ -33,8 +33,9 @@ class SocialLoginController extends GetxController {
   }
 
   // Web OAuth client ID - used as serverClientId so backend receives valid ID token
+  // Must match the backend's Google client ID configuration
   static const String _serverClientId =
-      '230160154555-01cq0m33tj7ekbjo99m9v9g2g0g8fd36.apps.googleusercontent.com';
+      '230160154555-bhvam3l4kl5mb8rgsuelu30kah32ilvp.apps.googleusercontent.com';
 
   Future<void> _ensureInitialized() async {
     if (_initialized) return;
@@ -102,6 +103,9 @@ class SocialLoginController extends GetxController {
 
       // Send ID token for Google (backend now validates ID tokens)
       final String tokenToSend = googleAuth.idToken ?? '';
+      printX('Google ID Token length: ${tokenToSend.length}');
+      printX('Google ID Token preview: ${tokenToSend.substring(0, min(50, tokenToSend.length))}...');
+      printX('Access Token available: ${googleAuth.accessToken != null}');
       await socialLoginUser(provider: 'google', accessToken: tokenToSend);
     } on GoogleSignInException catch (e) {
       if (e.code != GoogleSignInExceptionCode.canceled) {
