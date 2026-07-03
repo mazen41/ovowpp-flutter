@@ -100,7 +100,9 @@ class SocialLoginController extends GetxController {
         return;
       }
 
-      await socialLoginUser(provider: 'google', accessToken: googleAuth.idToken ?? '');
+      // Backend may expect accessToken instead of idToken - send whichever is available
+      final String tokenToSend = googleAuth.accessToken ?? googleAuth.idToken ?? '';
+      await socialLoginUser(provider: 'google', accessToken: tokenToSend);
     } on GoogleSignInException catch (e) {
       if (e.code != GoogleSignInExceptionCode.canceled) {
         CustomSnackBar.error(errorList: [e.description ?? Strings.loginFailedTryAgain.tr]);
