@@ -100,8 +100,8 @@ class SocialLoginController extends GetxController {
         return;
       }
 
-      // Backend may expect accessToken instead of idToken - send whichever is available
-      final String tokenToSend = googleAuth.accessToken ?? googleAuth.idToken ?? '';
+      // Send ID token for Google (backend now validates ID tokens)
+      final String tokenToSend = googleAuth.idToken ?? '';
       await socialLoginUser(provider: 'google', accessToken: tokenToSend);
     } on GoogleSignInException catch (e) {
       if (e.code != GoogleSignInExceptionCode.canceled) {
