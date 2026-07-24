@@ -30,6 +30,16 @@ class ChatRepo {
   Future<ResponseModel> sendMessageRepo(MessageModel messageModel, String? chatId) async {
     final Map<String, dynamic> map = {};
 
+    // Validate conversation_id for new messages
+    if (chatId == null && messageModel.chatId.isEmpty) {
+      return ResponseModel(
+        isSuccess: false,
+        message: 'Conversation ID is required',
+        statusCode: 400,
+        responseJson: {'status': 'error', 'message': ['Conversation ID is required']},
+      );
+    }
+
     if (chatId == null) {
       map.addAll({
         'conversation_id': messageModel.chatId,
@@ -80,6 +90,7 @@ class ChatRepo {
 
     String url =
         '${UrlContainer.baseUrl}${chatId != null ? UrlContainer.resendMessageUrl : UrlContainer.sendMessageUrl}';
+    printX('Sending message with data: $map');
     final response = await ApiService.postMultiPartRequest(url, map, attachmentFile);
     printW(response.responseJson);
     return response;
@@ -88,10 +99,33 @@ class ChatRepo {
   /// Send an approved message template.
   Future<ResponseModel> sendTemplateMessageRepo(String conversationId, String templateId) async {
     final url = '${UrlContainer.baseUrl}${UrlContainer.sendTemplateMessageUrl}';
-    return ApiService.postRequest(url, {
+    
+    // Validate required parameters
+    if (conversationId.isEmpty) {
+      return ResponseModel(
+        isSuccess: false,
+        message: 'Conversation ID is required',
+        statusCode: 400,
+        responseJson: {'status': 'error', 'message': ['Conversation ID is required']},
+      );
+    }
+    
+    if (templateId.isEmpty) {
+      return ResponseModel(
+        isSuccess: false,
+        message: 'Template ID is required',
+        statusCode: 400,
+        responseJson: {'status': 'error', 'message': ['Template ID is required']},
+      );
+    }
+    
+    final requestData = {
       'conversation_id': conversationId,
       'template_id': templateId,
-    });
+    };
+    
+    printX('Sending template with data: $requestData');
+    return ApiService.postRequest(url, requestData);
   }
 
   /// Send a CTA URL message.

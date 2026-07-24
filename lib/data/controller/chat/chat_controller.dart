@@ -189,6 +189,8 @@ class ChatController extends GetxController {
     final requestedPage = page + 1;
     try {
       final responseModal = await repo.getChatsDataRepo(conversationId, requestedPage.toString(), searchQuery);
+      printX('Chat data response: ${responseModal.responseJson}');
+      
       if (responseModal.statusCode == 200) {
         ChatDataResponseModel model = ChatDataResponseModel.fromJson(responseModal.responseJson);
         if (model.status?.toLowerCase() == Strings.success) {
@@ -214,7 +216,7 @@ class ChatController extends GetxController {
         CustomSnackBar.error(errorList: [responseModal.message]);
       }
     } catch (e) {
-      printE(e.toString());
+      printE('Get chats data error: $e');
     } finally {
       _isFetchingChats = false;
       isLoading = false;
@@ -319,6 +321,11 @@ class ChatController extends GetxController {
       return;
     }
 
+    if (conversationId.isEmpty) {
+      CustomSnackBar.error(errorList: ['Conversation ID is missing']);
+      return;
+    }
+
     sendingMessage = true;
     update(['chat_screen_main', 'recording_area']);
     final pendingReply = replyingTo == null ? null : MessageReplayTo.fromJson(replyingTo!.toJson());
@@ -330,6 +337,8 @@ class ChatController extends GetxController {
         file: selectedFile,
       );
       ResponseModel model = await repo.sendMessageRepo(messageModel, chatId);
+      printX('Send message response: ${model.responseJson}');
+      
       if (model.statusCode == 200) {
         SentMessageResponseModel responseModel = SentMessageResponseModel.fromJson(model.responseJson);
         if (responseModel.status?.toLowerCase() == AppStatus.success) {
@@ -339,6 +348,8 @@ class ChatController extends GetxController {
           if (sentMessage != null) {
             sentMessage.replayTo ??= pendingReply;
             insertMessageIfAbsent(sentMessage);
+            // Refresh chat data to ensure persistence
+            await getChatsData(initPage: false);
           }
           chatController.clear();
           selectedFile = null;
@@ -361,6 +372,7 @@ class ChatController extends GetxController {
         _queueFailedMessage(chatController.text, selectedFile, pendingReply?.id);
       }
     } catch (e) {
+      printE('Send message error: $e');
       sendingMessage = false;
       update(['chat_screen_main', 'recording_area']);
       // Queue for retry on network error
@@ -769,23 +781,40 @@ class ChatController extends GetxController {
   // ─── Send template ────────────────────────────────────────────────────────
 
   Future<void> sendTemplateMessage(String templateId) async {
+    if (conversationId.isEmpty) {
+      CustomSnackBar.error(errorList: ['Conversation ID is missing']);
+      return;
+    }
+    if (templateId.isEmpty) {
+      CustomSnackBar.error(errorList: ['Template ID is missing']);
+      return;
+    }
+    
     sendingMessage = true;
     update(['chat_screen_main', 'recording_area']);
     try {
       final res = await repo.sendTemplateMessageRepo(conversationId, templateId);
+      printX('Template response: ${res.responseJson}');
+      
       if (res.statusCode == 200 &&
           (res.responseJson['status'] as String?)?.toLowerCase() == AppStatus.success) {
         final sentMessage = res.responseJson['data']?['message'];
         if (sentMessage != null) {
           final msg = MessagesData.fromJson(Map<String, dynamic>.from(sentMessage as Map));
           insertMessageIfAbsent(msg);
+          // Refresh chat data to ensure persistence
+          await getChatsData(initPage: false);
         }
         CustomSnackBar.success(successList: ['Template sent successfully']);
       } else {
-        CustomSnackBar.error(errorList: [(res.responseJson['message'] as List?)?.first?.toString() ?? Strings.somethingWentWrong]);
+        final errorMessage = (res.responseJson['message'] as List?)?.first?.toString() ?? 
+                            res.responseJson['message']?.toString() ?? 
+                            Strings.somethingWentWrong;
+        CustomSnackBar.error(errorList: [errorMessage]);
       }
     } catch (e) {
-      CustomSnackBar.error(errorList: [Strings.somethingWentWrong]);
+      printE('Template send error: $e');
+      CustomSnackBar.error(errorList: ['Failed to send template: ${e.toString()}']);
     } finally {
       sendingMessage = false;
       update(['chat_screen_main', 'recording_area']);
