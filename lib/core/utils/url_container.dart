@@ -40,6 +40,7 @@ class UrlContainer {
   static const String customerDetailsStatusUrl = 'inbox/conversation/status/';
   static const String customerDetailsNoteUrl = 'inbox/note/store';
   static const String sendMessageUrl = 'inbox/chat/message/send';
+  static const String seenMessageUrl = 'inbox/chat/message/status';
   static const String updateContactUrl = 'contact-list/update/';
   static const String updateContactTagUrl = 'contact-tag/update/';
   static const String createContactUrl = 'contact-list/save';
@@ -113,6 +114,7 @@ class UrlContainer {
   static const String subscriptionPlanPurchaseEndPoint = 'subscription/purchase/';
 
   static const String supportImagePath = '$domainUrl/assets/support/';
+
   static const String withDrawImagePath = '$domainUrl/assets/images/withdraw_method/';
 
   static const String seenMessageEndPoint = 'inbox/chat/message/status/';

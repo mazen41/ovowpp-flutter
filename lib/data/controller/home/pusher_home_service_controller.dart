@@ -19,7 +19,7 @@ class PusherHomeServiceController extends GetxController {
 
   void onEvent(PusherEvent event) async {
     try {
-      printX("HomeService onEvent: ${event.data}");
+      // printX("HomeService onEvent: ${event.data}");
       if (event.data.toString() == "{}") return;
       var msgData = jsonDecode(event.data);
       bool isNewContact = msgData["data"]["newContact"].toString() == "true";

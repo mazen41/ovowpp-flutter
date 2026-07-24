@@ -332,13 +332,15 @@ class CampaignBottomSheet {
                     ),
                   ],
                   if (controller.contactList.isNotEmpty)
-                    CustomElevatedBtn(
-                      text: MyStrings.done.tr,
-                      onTap: () {
-                        Get.back();
-                      },
+                    Padding(
+                      padding: EdgeInsets.only(top: Dimensions.space16.h),
+                      child: CustomElevatedBtn(
+                        text: MyStrings.done.tr,
+                        onTap: () {
+                          Get.back();
+                        },
+                      ),
                     ),
-                  Expanded(child: SizedBox()),
                 ],
               ),
             ),
@@ -453,13 +455,15 @@ class CampaignBottomSheet {
                   ],
 
                   if (controller.contactTag.isNotEmpty)
-                    CustomElevatedBtn(
-                      text: MyStrings.done.tr,
-                      onTap: () {
-                        Get.back();
-                      },
+                    Padding(
+                      padding: EdgeInsets.only(top: Dimensions.space16),
+                      child: CustomElevatedBtn(
+                        text: MyStrings.done.tr,
+                        onTap: () {
+                          Get.back();
+                        },
+                      ),
                     ),
-                  Expanded(child: SizedBox()),
                 ],
               ),
             ),

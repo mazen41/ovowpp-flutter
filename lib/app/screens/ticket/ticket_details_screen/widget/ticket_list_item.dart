@@ -17,9 +17,10 @@ import 'package:get/get.dart';
 import '../../../../../data/model/support/support_ticket_view_response_model.dart';
 
 class TicketListItem extends StatelessWidget {
-  const TicketListItem({super.key, required this.index, required this.messages});
+  const TicketListItem({super.key, required this.index, required this.messages, required this.mediabasePath});
 
   final SupportMessage messages;
+  final String mediabasePath;
   final int index;
 
   @override
@@ -127,8 +128,11 @@ class TicketListItem extends StatelessWidget {
                                   )
                                 : GestureDetector(
                                     onTap: () {
+                                      printX(
+                                        '=== media base url : ${"${UrlContainer.domainUrl}/$mediabasePath/${messages.attachments?[i].attachment}"}',
+                                      );
                                       String url =
-                                          '${UrlContainer.supportImagePath}${messages.attachments?[i].attachment}';
+                                          '${UrlContainer.domainUrl}/$mediabasePath/${messages.attachments?[i].attachment}';
                                       String ext = messages.attachments?[i].attachment!.split('.')[1] ?? 'pdf';
                                       if (MyUtils.isImage(messages.attachments?[i].attachment.toString() ?? "")) {
                                         // Get.toNamed(
@@ -151,7 +155,7 @@ class TicketListItem extends StatelessWidget {
                                       child: MyUtils.isImage(messages.attachments?[i].attachment.toString() ?? "")
                                           ? MyNetworkImageWidget(
                                               imageUrl:
-                                                  "${UrlContainer.supportImagePath}${messages.attachments?[i].attachment}",
+                                                  "${UrlContainer.domainUrl}/$mediabasePath/${messages.attachments?[i].attachment}",
                                               width: MediaQuery.of(context).size.width > 500 ? 100 : 100,
                                               height: MediaQuery.of(context).size.width > 500 ? 100 : 100,
                                             )

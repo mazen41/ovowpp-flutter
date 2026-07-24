@@ -6,6 +6,7 @@ import 'package:ovowpp/app/components/permission_denied_component.dart';
 import 'package:ovowpp/app/screens/chat_home/widgets/chat_home_header_content.dart';
 import 'package:ovowpp/app/screens/chat_home/widgets/chat_home_tab_bar.dart';
 import 'package:ovowpp/app/screens/chat_home/widgets/chat_pinned_tab_delegate.dart';
+import 'package:ovowpp/core/utils/app_status.dart';
 import '../../../core/utils/app_permission.dart';
 import '../../../core/utils/my_color.dart';
 import '../../../core/utils/util.dart';
@@ -126,16 +127,22 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> with SingleTickerProvid
                             onRefresh: () async => controller.newChatMethod(),
                             child: MySliverTabBarView(index: 0),
                           ),
+                          // pending
                           RefreshIndicator(
-                            onRefresh: () async => controller.newChatMethod(),
-                            child: MySliverTabBarView(index: 1),
-                          ),
-                          RefreshIndicator(
-                            onRefresh: () async => controller.newChatMethod(),
+                            onRefresh: () async =>
+                                controller.newChatMethod(status: int.tryParse(AppStatus.PENDING_CONVERSATION)),
                             child: MySliverTabBarView(index: 2),
                           ),
+                          // Done
                           RefreshIndicator(
-                            onRefresh: () async => controller.newChatMethod(),
+                            onRefresh: () async =>
+                                controller.newChatMethod(status: int.tryParse(AppStatus.DONE_CONVERSATION)),
+                            child: MySliverTabBarView(index: 2),
+                          ),
+                          // important
+                          RefreshIndicator(
+                            onRefresh: () async =>
+                                controller.newChatMethod(status: int.tryParse(AppStatus.IMPORTANT_CONVERSATION)),
                             child: MySliverTabBarView(index: 3),
                           ),
                         ],

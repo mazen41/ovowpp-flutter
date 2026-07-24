@@ -29,6 +29,7 @@ import 'package:ovowpp/core/utils/text_style.dart';
 import 'package:ovowpp/core/utils/url_container.dart';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/controller/chat/chat_controller.dart';
+import 'package:ovowpp/data/model/chat/chat_data_response_model.dart';
 import 'package:ovowpp/data/repo/chat/chat_repo.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../core/utils/app_status.dart';
@@ -44,22 +45,33 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   String comeFrom = '';
+  final Map<String, GlobalKey> _messageKeys = {};
+  String customerName = '';
+  late final ChatController _chatController;
 
   @override
   void initState() {
     Get.put(ChatRepo());
     final controller = Get.put(ChatController(repo: Get.find()));
+    _chatController = controller;
     final pusherController = Get.put(PusherChatServiceController(repo: Get.find()));
     super.initState();
     controller.conversationId = Get.arguments[0];
     controller.lastseen = Get.arguments[1];
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await controller.getChatsData().then((v) async {
-        pusherController.ensureConnection("private-receive-message-${controller.whatsappAccountId}");
-      });
+      await controller.getChatsData();
+      if (!mounted) return;
+      controller.scrollController.removeListener(controller.scrollListener);
       controller.scrollController.addListener(controller.scrollListener);
+      await pusherController.ensureConnection("private-receive-message-${controller.whatsappAccountId}");
     });
+  }
+
+  @override
+  void dispose() {
+    _chatController.scrollController.removeListener(_chatController.scrollListener);
+    super.dispose();
   }
 
   @override
@@ -102,10 +114,9 @@ class _ChatScreenState extends State<ChatScreen> {
                             reverse: true,
                             physics: const BouncingScrollPhysics(),
                             itemCount: controller.messages.length + 1,
-                            shrinkWrap: true,
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             itemBuilder: (context, index) {
-                              if (controller.messages.length == index) {
+                              if (index >= controller.messages.length) {
                                 return controller.hasNext()
                                     ? Container(
                                         child: controller.isSearch
@@ -116,126 +127,200 @@ class _ChatScreenState extends State<ChatScreen> {
                               }
                               final item = controller.messages[index];
                               final isSender = item.type == "1";
-                              return Row(
-                                key: ValueKey(item.id),
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment: isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
-                                children: [
-                                  ConstrainedBox(
-                                    constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.8),
-                                    child: IntrinsicWidth(
-                                      child: Container(
-                                        margin: EdgeInsets.symmetric(vertical: 2.h, horizontal: 12.w),
-                                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                        decoration: BoxDecoration(
-                                          color: isSender ? MyColor.sendMessage : MyColor.white,
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: const Radius.circular(12),
-                                            topRight: const Radius.circular(12),
-                                            bottomLeft: Radius.circular(isSender ? 12 : 0),
-                                            bottomRight: Radius.circular(isSender ? 0 : 12),
+                              final messageIdentity = _messageIdentity(item, index);
+                              final itemKey = _messageKeys.putIfAbsent(messageIdentity, () => GlobalKey());
+                              final isHighlighted = controller.highlightedMessageId == messageIdentity;
+                              final dragOffset = !isSender && controller.activeReplyDragMessageId == item.id
+                                  ? controller.activeReplyDragOffset
+                                  : 0.0;
+
+                              return Container(
+                                key: itemKey,
+                                child: Stack(
+                                  alignment: isSender ? Alignment.centerRight : Alignment.centerLeft,
+                                  children: [
+                                    if (!isSender)
+                                      Positioned(
+                                        left: 18.w,
+                                        child: AnimatedOpacity(
+                                          duration: const Duration(milliseconds: 120),
+                                          opacity: dragOffset > 6 ? 1 : 0,
+                                          child: Container(
+                                            height: 30.h,
+                                            width: 30.w,
+                                            decoration: BoxDecoration(
+                                              color: MyColor.getPrimaryColor().withAlpha(MyColor.getAlpha(12)),
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Icon(
+                                              Icons.reply_rounded,
+                                              color: MyColor.getPrimaryColor(),
+                                              size: 18.h,
+                                            ),
                                           ),
                                         ),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                      ),
+                                    GestureDetector(
+                                      behavior: HitTestBehavior.translucent,
+                                      onHorizontalDragUpdate: !isSender
+                                          ? (details) {
+                                              final currentOffset = controller.activeReplyDragMessageId == item.id
+                                                  ? controller.activeReplyDragOffset
+                                                  : 0.0;
+                                              final nextOffset = details.delta.dx > 0
+                                                  ? currentOffset + details.delta.dx
+                                                  : currentOffset + (details.delta.dx * 0.35);
+                                              controller.updateReplyDrag(item.id ?? '$index', nextOffset);
+                                            }
+                                          : null,
+                                      onHorizontalDragEnd: !isSender ? (_) => controller.finishReplyDrag(item) : null,
+                                      onHorizontalDragCancel: !isSender ? () => controller.finishReplyDrag(item) : null,
+                                      child: AnimatedContainer(
+                                        duration: const Duration(milliseconds: 120),
+                                        curve: Curves.easeOut,
+                                        transform: Matrix4.translationValues(dragOffset, 0, 0),
+                                        child: Row(
+                                          key: ValueKey(item.id),
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          mainAxisAlignment: isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
                                           children: [
-                                            if (item.message != null)
-                                              Row(
-                                                crossAxisAlignment: CrossAxisAlignment.end,
-                                                children: [
-                                                  Flexible(
-                                                    child: InkWell(
-                                                      onDoubleTap: () {
-                                                        Clipboard.setData(ClipboardData(text: item.message.toString()));
-                                                        CustomSnackBar.success(
-                                                          successList: [MyStrings.messageCopiedToClipBoard.tr],
-                                                        );
-                                                      },
-                                                      child: buildRichText(
-                                                        item.message.toString(),
-                                                        theme.textTheme.bodyLarge?.copyWith(
-                                                          fontSize: Dimensions.space15.sp,
-                                                          color: MyColor.getHeadingTextColor(),
-                                                        ),
-                                                      ),
+                                            ConstrainedBox(
+                                              constraints: BoxConstraints(
+                                                maxWidth: MediaQuery.of(context).size.width * 0.8,
+                                              ),
+                                              child: IntrinsicWidth(
+                                                child: Container(
+                                                  margin: EdgeInsets.symmetric(vertical: 2.h, horizontal: 12.w),
+                                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                                  decoration: BoxDecoration(
+                                                    color: isHighlighted
+                                                        ? Color.alphaBlend(
+                                                            MyColor.getPrimaryColor().withAlpha(
+                                                              MyColor.getAlpha(16),
+                                                            ),
+                                                            isSender ? MyColor.sendMessage : MyColor.white,
+                                                          )
+                                                        : isSender
+                                                        ? MyColor.sendMessage
+                                                        : MyColor.white,
+                                                    border: Border.all(
+                                                      color: isHighlighted
+                                                          ? MyColor.getPrimaryColor().withAlpha(200)
+                                                          : Colors.transparent,
+                                                      width: isHighlighted ? 1.5 : 1,
+                                                    ),
+                                                    borderRadius: BorderRadius.only(
+                                                      topLeft: const Radius.circular(12),
+                                                      topRight: const Radius.circular(12),
+                                                      bottomLeft: Radius.circular(isSender ? 12 : 0),
+                                                      bottomRight: Radius.circular(isSender ? 0 : 12),
                                                     ),
                                                   ),
-                                                ],
-                                              ),
-                                            if (item.mediaPath != null)
-                                              buildMediaWidget(
-                                                "${UrlContainer.domainUrl}/${controller.mediaPath}/${item.mediaPath}",
-                                                item.messageType.toString(),
-                                                item.mediaId ?? "",
-                                                item.mimeType ?? "",
-                                                index,
-                                                controller,
-                                              ),
-                                            if (item.messageType.toString() == "3" ||
-                                                item.messageType.toString() == "4" ||
-                                                item.messageType.toString() == "5")
-                                              buildMediaWidget(
-                                                "${item.mediaUrl}",
-                                                item.messageType.toString(),
-                                                item.mediaId ?? "",
-                                                item.mimeType ?? "",
-                                                index,
-                                                controller,
-                                              ),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.end,
-                                              children: [
-                                                DefaultText(
-                                                  text: DateConverter.convertUtcToLocalTime(item.createdAt.toString()),
-                                                  textStyle: MyTextStyle.subHeading16W400(fontFamily: 'SFPRODISPLAY')
-                                                      .copyWith(
-                                                        color: MyColor.dashboardCardBorder.withAlpha(
-                                                          MyColor.getAlpha(50),
+                                                  child: Column(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      if (item.replayTo != null)
+                                                        Padding(
+                                                          padding: const EdgeInsets.only(bottom: 6),
+                                                          child: InkWell(
+                                                            onTap: () =>
+                                                                _scrollToRepliedMessage(controller, item.replayTo),
+                                                            borderRadius: BorderRadius.circular(10),
+                                                            child: _buildReplyPreviewCard(
+                                                              title: _replyAuthorName(controller, item.replayTo),
+                                                              previewText: _replyPreviewText(item.replayTo),
+                                                              previewIcon: _replyPreviewIcon(item.replayTo),
+                                                              accentColor: isSender
+                                                                  ? MyColor.getPrimaryColor()
+                                                                  : MyColor.chatMessageSendBgColor,
+                                                              backgroundColor: Colors.white.withAlpha(
+                                                                MyColor.getAlpha(isSender ? 55 : 100),
+                                                              ),
+                                                            ),
+                                                          ),
                                                         ),
-                                                        fontSize: 11.sp,
+                                                      if ((item.message ?? '').isNotEmpty ||
+                                                          _messageDisplayLabel(item.messageType, item.templateId) !=
+                                                              null)
+                                                        _buildMessageText(item, theme),
+                                                      if (item.mediaPath != null)
+                                                        buildMediaWidget(
+                                                          "${UrlContainer.domainUrl}/${controller.mediaPath}/${item.mediaPath}",
+                                                          item.messageType.toString(),
+                                                          item.mediaId ?? "",
+                                                          item.mimeType ?? "",
+                                                          index,
+                                                          controller,
+                                                        ),
+                                                      if ( 
+                                                          item.messageType.toString() == "4" ||
+                                                          item.messageType.toString() == "5")
+                                                        buildMediaWidget(
+                                                          "${item.mediaUrl}",
+                                                          item.messageType.toString(),
+                                                          item.mediaId ?? "",
+                                                          item.mimeType ?? "",
+                                                          index,
+                                                          controller,
+                                                        ),
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment.end,
+                                                        children: [
+                                                          DefaultText(
+                                                            text: DateConverter.convertUtcToLocalTime(
+                                                              item.createdAt.toString(),
+                                                            ),
+                                                            textStyle:
+                                                                MyTextStyle.subHeading16W400(
+                                                                  fontFamily: 'SFPRODISPLAY',
+                                                                ).copyWith(
+                                                                  color: MyColor.dashboardCardBorder.withAlpha(
+                                                                    MyColor.getAlpha(50),
+                                                                  ),
+                                                                  fontSize: 11.sp,
+                                                                ),
+                                                          ),
+                                                          if (isSender) ...[
+                                                            spaceSide(Dimensions.space4.w),
+                                                            InkWell(
+                                                              onTap: () {
+                                                                if (item.status == AppStatus.FAILED) {
+                                                                  controller.sendMessage(chatId: item.id, index: index);
+                                                                }
+                                                              },
+                                                              child: Icon(
+                                                                item.status == AppStatus.SENT
+                                                                    ? Icons.done
+                                                                    : item.status == AppStatus.DELIVERED
+                                                                    ? Icons.done_all
+                                                                    : item.status == AppStatus.READ
+                                                                    ? Icons.done_all
+                                                                    : item.status == AppStatus.FAILED
+                                                                    ? Icons.refresh
+                                                                    : null,
+                                                                color: item.status == AppStatus.READ
+                                                                    ? MyColor.getPrimaryColor()
+                                                                    : item.status == AppStatus.FAILED
+                                                                    ? MyColor.pendingColor
+                                                                    : MyColor.getBodyTextColor(),
+                                                                size: Dimensions.space17.h,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ],
                                                       ),
+                                                    ],
+                                                  ),
                                                 ),
-                                                if (isSender) ...[
-                                                  spaceSide(Dimensions.space4.w),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      if (item.status == AppStatus.FAILED) {
-                                                        controller.sendMessage(chatId: item.id, index: index);
-                                                      }
-                                                    },
-                                                    child: Icon(
-                                                      item.status == AppStatus.SENT
-                                                          ? Icons.done
-                                                          : item.status == AppStatus.DELIVERED
-                                                          ? Icons.done_all
-                                                          : item.status == AppStatus.READ
-                                                          ? Icons.done_all
-                                                          : item.status == AppStatus.FAILED
-                                                          ? Icons.refresh
-                                                          : null,
-                                                      color: item.status == AppStatus.READ
-                                                          ? MyColor.getPrimaryColor()
-                                                          : item.status == AppStatus.FAILED
-                                                          ? MyColor.pendingColor
-                                                          : MyColor.getBodyTextColor(),
-                                                      size: Dimensions.space17.h,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ],
+                                              ),
                                             ),
-                                            // const SizedBox(height: 4),
-                                            // // Align(
-                                            // //   alignment: Alignment.bottomRight,
-                                            // //   child: Text(DateConverter.convertUtcToLocalTime(item.createdAt.toString()), style: const TextStyle(fontSize: 10, color: Colors.grey)),
-                                            // // ),
                                           ],
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               );
                             },
                           ),
@@ -262,6 +347,39 @@ class _ChatScreenState extends State<ChatScreen> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
+                                          if (controller.replyingTo != null)
+                                            Padding(
+                                              padding: EdgeInsets.only(bottom: 8.h),
+                                              child: Container(
+                                                width: double.infinity,
+                                                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+                                                decoration: BoxDecoration(
+                                                  color: MyColor.getPrimaryColor().withAlpha(MyColor.getAlpha(6)),
+                                                  borderRadius: BorderRadius.circular(12.r),
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: _buildReplyPreviewCard(
+                                                        title: _replyAuthorName(controller, controller.replyingTo),
+                                                        previewText: _replyPreviewText(controller.replyingTo),
+                                                        previewIcon: _replyPreviewIcon(controller.replyingTo),
+                                                        accentColor: MyColor.getPrimaryColor(),
+                                                        backgroundColor: Colors.transparent,
+                                                      ),
+                                                    ),
+                                                    IconButton(
+                                                      onPressed: controller.clearReply,
+                                                      icon: Icon(
+                                                        Icons.close,
+                                                        color: MyColor.getBodyTextColor(),
+                                                        size: 20.h,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
                                           controller.selectedFile != null
                                               ? Stack(
                                                   children: [
@@ -651,6 +769,334 @@ class _ChatScreenState extends State<ChatScreen> {
       ],
     );
   }
+
+  Future<void> _scrollToRepliedMessage(ChatController controller, MessageReplayTo? replyTo) async {
+    var targetIndex = controller.findRepliedMessageIndex(replyTo);
+    if (targetIndex < 0 || !controller.scrollController.hasClients) return;
+
+    var targetIdentity = _messageIdentity(controller.messages[targetIndex], targetIndex);
+    var targetKey = _messageKeys[targetIdentity];
+
+    // ListView.builder does not build off-screen messages. Move close to the
+    // target index first so its GlobalKey receives a context.
+    if (targetKey?.currentContext == null && controller.messages.length > 1) {
+      final position = controller.scrollController.position;
+      final estimatedOffset =
+          position.maxScrollExtent * targetIndex / (controller.messages.length - 1);
+      await controller.scrollController.animateTo(
+        estimatedOffset.clamp(position.minScrollExtent, position.maxScrollExtent),
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+      await WidgetsBinding.instance.endOfFrame;
+    }
+
+    // Variable-height message bubbles can make the first estimate imperfect.
+    // Walk by overlapping viewport-sized steps until the target is built.
+    for (var attempt = 0; attempt < 40 && mounted; attempt++) {
+      targetIndex = controller.findRepliedMessageIndex(replyTo);
+      if (targetIndex < 0) return;
+
+      targetIdentity = _messageIdentity(controller.messages[targetIndex], targetIndex);
+      targetKey = _messageKeys[targetIdentity];
+      if (targetKey?.currentContext != null) break;
+
+      final builtIndices = <int>[];
+      for (var index = 0; index < controller.messages.length; index++) {
+        final identity = _messageIdentity(controller.messages[index], index);
+        if (_messageKeys[identity]?.currentContext != null) builtIndices.add(index);
+      }
+      if (builtIndices.isEmpty || !controller.scrollController.hasClients) break;
+
+      final position = controller.scrollController.position;
+      final moveTowardOlderMessages = targetIndex > builtIndices.last;
+      final delta = position.viewportDimension * 0.7 * (moveTowardOlderMessages ? 1 : -1);
+      final nextOffset = (position.pixels + delta).clamp(
+        position.minScrollExtent,
+        position.maxScrollExtent,
+      );
+      if ((nextOffset - position.pixels).abs() < 1) break;
+
+      controller.scrollController.jumpTo(nextOffset);
+      await WidgetsBinding.instance.endOfFrame;
+    }
+
+    final targetContext = targetKey?.currentContext;
+    if (!mounted || targetContext == null || !targetContext.mounted) return;
+
+    await Scrollable.ensureVisible(
+      targetContext,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+      alignment: 0.5,
+    );
+    controller.highlightMessage(targetIdentity);
+  }
+
+  String _messageIdentity(MessagesData message, int index) {
+    final id = message.id?.trim();
+    if (id != null && id.isNotEmpty) return 'id:$id';
+
+    final whatsappMessageId = message.whatsappMessageId?.trim();
+    if (whatsappMessageId != null && whatsappMessageId.isNotEmpty) {
+      return 'wa:$whatsappMessageId';
+    }
+
+    return 'index:$index';
+  }
+
+  Widget _buildReplyPreviewCard({
+    required String title,
+    required String previewText,
+    IconData? previewIcon,
+    required Color accentColor,
+    required Color backgroundColor,
+  }) {
+    final contentIcon = previewIcon ?? Icons.chat_bubble_outline_rounded;
+
+    return Container(
+      padding: EdgeInsets.fromLTRB(8.w, 8.h, 10.w, 8.h),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(color: accentColor.withValues(alpha: 0.18)),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 3.5.w,
+            height: 48.h,
+            decoration: BoxDecoration(color: accentColor, borderRadius: BorderRadius.circular(8.r)),
+          ),
+          SizedBox(width: 6.w),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.reply_rounded, size: 14.sp, color: accentColor),
+                    SizedBox(width: 4.w),
+                    Expanded(
+                      child: Text(
+                        title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: MyTextStyle.subHeading14W500().copyWith(
+                          color: accentColor,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5.h),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 21.h,
+                      width: 21.w,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: accentColor.withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(6.r),
+                      ),
+                      child: Icon(contentIcon, size: 12.sp, color: accentColor),
+                    ),
+                    SizedBox(width: 7.w),
+                    Expanded(
+                      child: Text(
+                        previewText,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: MyTextStyle.subHeading12W400().copyWith(
+                          color: MyColor.getBodyTextColor(),
+                          fontSize: 12.sp,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _replyAuthorName(ChatController controller, MessageReplayTo? replyTo) {
+    if (replyTo?.type == '1') return 'You';
+
+    final contactName = controller.contact?.getFullName().trim() ?? '';
+    if (contactName.isNotEmpty) return contactName;
+
+    final mobile = controller.contact?.mobile?.trim() ?? '';
+    return mobile.isNotEmpty ? mobile : 'Customer';
+  }
+
+  Widget _buildMessageText(MessagesData item, ThemeData theme) {
+    final message = item.message ?? '';
+    final icon = _messageDisplayIcon(item.messageType, item.templateId);
+    final displayText = _messageDisplayLabel(item.messageType, item.templateId) ?? message;
+    final textStyle =
+        (displayText == AppStatus.ctaUrl ||
+            displayText == AppStatus.location ||
+            displayText == AppStatus.listMessage ||
+            displayText == AppStatus.template)
+        ? theme.textTheme.bodyLarge?.copyWith(
+            fontSize: Dimensions.space14.sp,
+            color: MyColor.fieldTitleTextColor.withAlpha(160),
+          )
+        : theme.textTheme.bodyLarge?.copyWith(fontSize: Dimensions.space15.sp, color: MyColor.getHeadingTextColor());
+
+    return InkWell(
+      onDoubleTap: () {
+        Clipboard.setData(ClipboardData(text: message));
+        CustomSnackBar.success(successList: [MyStrings.messageCopiedToClipBoard.tr]);
+      },
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (icon != null) ...[
+            Padding(
+              padding: EdgeInsets.only(top: 2.h),
+              child: Icon(icon, size: 18.sp, color: MyColor.fieldTitleTextColor.withAlpha(160)),
+            ),
+            SizedBox(width: 6.w),
+          ],
+          Flexible(child: buildRichText(displayText, textStyle)),
+        ],
+      ),
+    );
+  }
+}
+
+bool _isTemplateMessage(String? templateId) {
+  return templateId != null && templateId.isNotEmpty && templateId != '0';
+}
+
+IconData? _messageDisplayIcon(String? messageType, String? templateId) {
+  if (_isTemplateMessage(templateId)) {
+    return Icons.description_outlined;
+  }
+
+  switch (messageType?.toString()) {
+    case AppStatus.URL_TYPE_MESSAGE:
+      return Icons.link_rounded;
+    case AppStatus.LOCATION_TYPE_MESSAGE:
+      return Icons.location_on_outlined;
+    case AppStatus.LIST_TYPE_MESSAGE:
+      return Icons.format_list_bulleted_rounded;
+    default:
+      return null;
+  }
+}
+
+String? _messageDisplayLabel(String? messageType, String? templateId) {
+  if (_isTemplateMessage(templateId)) {
+    return AppStatus.template;
+  }
+
+  switch (messageType?.toString()) {
+    case AppStatus.URL_TYPE_MESSAGE:
+      return AppStatus.ctaUrl;
+    case AppStatus.LOCATION_TYPE_MESSAGE:
+      return AppStatus.location;
+    case AppStatus.LIST_TYPE_MESSAGE:
+      return AppStatus.listMessage;
+    default:
+      return null;
+  }
+}
+
+String _replyPreviewText(MessageReplayTo? replyTo) {
+  final mediaLabel = _replyMediaLabel(replyTo);
+  if (mediaLabel != null) return mediaLabel;
+
+  final typeLabel = _messageDisplayLabel(replyTo?.messageType, replyTo?.templateId);
+  if (typeLabel != null) return typeLabel;
+
+  final message = replyTo?.message?.trim() ?? '';
+  if (message.isNotEmpty) return message;
+
+  if ((replyTo?.mediaId ?? '').isNotEmpty || (replyTo?.mediaFilename ?? '').isNotEmpty) {
+    return 'document';
+  }
+
+  return 'Message';
+}
+
+String? _replyMediaLabel(MessageReplayTo? replyTo) {
+  final messageType = replyTo?.messageType?.toString() ?? '';
+  final mediaType = replyTo?.mediaType?.toLowerCase() ?? '';
+  final mimeType = replyTo?.mimeType?.toLowerCase() ?? '';
+  final mediaPath = replyTo?.mediaPath?.toLowerCase() ?? '';
+
+  if (messageType == AppStatus.VIDEO_TYPE_MESSAGE ||
+      mediaType.contains('video') ||
+      mimeType.contains('video') ||
+      mediaPath.endsWith('.mp4') ||
+      mediaPath.endsWith('.mov') ||
+      mediaPath.endsWith('.avi') ||
+      mediaPath.endsWith('.mkv')) {
+    return 'video';
+  }
+
+  if (messageType == AppStatus.AUDIO_TYPE_MESSAGE ||
+      mediaType.contains('audio') ||
+      mimeType.contains('audio') ||
+      mediaPath.endsWith('.mp3') ||
+      mediaPath.endsWith('.ogg') ||
+      mediaPath.endsWith('.opus') ||
+      mediaPath.endsWith('.wav') ||
+      mediaPath.endsWith('.m4a') ||
+      mediaPath.endsWith('.aac')) {
+    return 'audio';
+  }
+
+  if (messageType == AppStatus.DOCUMENT_TYPE_MESSAGE ||
+      mediaType.contains('document') ||
+      mimeType.contains('pdf') ||
+      mimeType.contains('document') ||
+      mediaPath.endsWith('.pdf') ||
+      mediaPath.endsWith('.doc') ||
+      mediaPath.endsWith('.docx') ||
+      mediaPath.endsWith('.xls') ||
+      mediaPath.endsWith('.xlsx')) {
+    return 'document';
+  }
+
+  if (messageType == AppStatus.IMAGE_TYPE_MESSAGE ||
+      mediaType.contains('image') ||
+      mimeType.contains('image') ||
+      mediaPath.endsWith('.jpg') ||
+      mediaPath.endsWith('.jpeg') ||
+      mediaPath.endsWith('.png') ||
+      mediaPath.endsWith('.webp')) {
+    return 'image';
+  }
+
+  return null;
+}
+
+IconData? _replyPreviewIcon(MessageReplayTo? replyTo) {
+  switch (_replyMediaLabel(replyTo)) {
+    case 'video':
+      return Icons.videocam_outlined;
+    case 'audio':
+      return Icons.mic_outlined;
+    case 'document':
+      return Icons.insert_drive_file_outlined;
+    case 'image':
+      return Icons.image_outlined;
+    default:
+      return _messageDisplayIcon(replyTo?.messageType, replyTo?.templateId);
+  }
 }
 
 Widget buildMediaWidget(
@@ -754,7 +1200,7 @@ Widget buildMediaWidget(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
-                    Icons.insert_drive_file,
+                    msgType == "3" ? Icons.videocam_outlined : Icons.insert_drive_file,
                     size: Dimensions.space20,
                     color: MyColor.getBodyTextColor().withValues(alpha: .7),
                   ),
@@ -769,7 +1215,7 @@ Widget buildMediaWidget(
                   ),
                   SizedBox(width: 8),
                   controller.downloadingFile && controller.selectedIndex == index
-                      ? CustomLoader()
+                      ? CustomLoader(loaderSize: 6)
                       : Icon(
                           Icons.download,
                           size: Dimensions.space24,
@@ -813,7 +1259,7 @@ Widget buildRichText(String text, TextStyle? style) {
     final url = match.group(0) ?? '';
     spans.add(
       TextSpan(
-        text: '\n$url', // Add newline before URL
+        text: match.start == 0 ? url : '\n$url',
         style: style?.copyWith(
           color: MyColor.getPrimaryColor(),
           // decoration: TextDecoration.underline,

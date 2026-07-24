@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:ovowpp/app/components/annotated_region/annotated_region_widget.dart';
 import 'package:ovowpp/app/components/buttons/custom_elevated_button.dart';
 import 'package:ovowpp/app/components/image/my_asset_widget.dart';
 import 'package:ovowpp/app/components/image/my_network_image_widget.dart';
@@ -56,322 +57,326 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen> with Sing
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     return GetBuilder<MyAccountController>(
-      builder: (controller) => Scaffold(
-        backgroundColor: MyColor.white,
-        appBar: CustomAppBar(
-          elevation: 0,
-          bgColor: Colors.white,
-          title: controller.isUpdate ? MyStrings.updateContact.tr : MyStrings.addContact.tr,
-        ),
+      builder: (controller) => AnnotatedRegionWidget(
+        child: Scaffold(
+          backgroundColor: MyColor.white,
+          appBar: CustomAppBar(
+            elevation: 0,
+            bgColor: Colors.white,
+            title: controller.isUpdate ? MyStrings.updateContact.tr : MyStrings.addContact.tr,
+          ),
 
-        body: controller.isLoading
-            ? const EditCustomerProfileShimmer()
-            : SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.space16.w),
-                  child: Column(
-                    children: [
-                      CustomerProfileWidget(isEdit: true, imagePath: controller.imageUrl, onClicked: () async {}),
-                      LabelTextField(
-                        isRequired: true,
-                        controller: controller.firstNameController,
-                        labelText: MyStrings.firstName.tr,
-                        hintText: MyStrings.enterYourFirstName.tr,
-                        onChanged: (value) {},
-                        // focusNode: controller.emailFocusNode,
-                        // nextFocus: controller.passwordFocusNode,
-                        textInputType: TextInputType.emailAddress,
-                        inputAction: TextInputAction.next,
-                        radius: Dimensions.largeRadius,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return MyStrings.fieldErrorMsg.tr;
-                          } else {
-                            return null;
-                          }
-                        },
-                        isShadow: true,
-                        fillColor: MyColor.searchFieldColor,
-                      ),
-                      spaceDown(Dimensions.space15.h),
-                      LabelTextField(
-                        controller: controller.lastNameController,
-                        labelText: MyStrings.lastName.tr,
-                        hintText: MyStrings.enterYourLastName.tr,
-                        onChanged: (value) {},
-                        // focusNode: controller.emailFocusNode,
-                        // nextFocus: controller.passwordFocusNode,
-                        textInputType: TextInputType.emailAddress,
-                        inputAction: TextInputAction.next,
-                        radius: Dimensions.largeRadius,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return MyStrings.fieldErrorMsg.tr;
-                          } else {
-                            return null;
-                          }
-                        },
-                        isShadow: true,
-                        fillColor: MyColor.searchFieldColor,
-                      ),
-                      spaceDown(Dimensions.space15.h),
-                      LabelTextField(
-                        isRequired: true,
-                        suffixIcon: InkWell(
-                          onTap: () {
-                            showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              backgroundColor: MyColor.getTransparentColor(),
-                              builder: (context) => ContactPickerBottomSheet(
-                                onContactSelected: (contact) {
-                                  final phoneNumber = contact.phones.first.number;
-                                  final name = contact.displayName;
-                                  controller.mobileNoController = TextEditingController(text: phoneNumber.toString());
-                                  controller.firstNameController = TextEditingController(text: name.toString());
-
-                                  controller.update();
-                                },
-                              ),
-                            );
+          body: controller.isLoading
+              ? const EditCustomerProfileShimmer()
+              : SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: Dimensions.space16.w),
+                    child: Column(
+                      children: [
+                        CustomerProfileWidget(isEdit: true, imagePath: controller.imageUrl, onClicked: () async {}),
+                        LabelTextField(
+                          isRequired: true,
+                          controller: controller.firstNameController,
+                          labelText: MyStrings.firstName.tr,
+                          hintText: MyStrings.enterYourFirstName.tr,
+                          onChanged: (value) {},
+                          // focusNode: controller.emailFocusNode,
+                          // nextFocus: controller.passwordFocusNode,
+                          textInputType: TextInputType.emailAddress,
+                          inputAction: TextInputAction.next,
+                          radius: Dimensions.largeRadius,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return MyStrings.fieldErrorMsg.tr;
+                            } else {
+                              return null;
+                            }
                           },
-                          child: Icon(Icons.call, color: MyColor.getBodyTextColor()),
+                          isShadow: true,
+                          fillColor: MyColor.searchFieldColor,
                         ),
-                        labelText: (MyStrings.phoneNo).replaceAll('.', '').tr,
-                        // hintText: MyStrings.enterYourPhoneNumber,
-                        controller: controller.mobileNoController,
-                        focusNode: controller.mobileNoFocusNode,
-                        textInputType: TextInputType.phone,
-                        inputAction: TextInputAction.next,
-                        prefixIcon: SizedBox(
-                          width: 120,
-                          child: FittedBox(
-                            child: Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    CountryBottomSheet.countryBottomSheet(
-                                      context,
-                                      onSelectedData: (Countries data) {
-                                        controller.selectACountry(countryDataValue: data);
-                                      },
-                                    );
+                        spaceDown(Dimensions.space15.h),
+                        LabelTextField(
+                          controller: controller.lastNameController,
+                          labelText: MyStrings.lastName.tr,
+                          hintText: MyStrings.enterYourLastName.tr,
+                          onChanged: (value) {},
+                          // focusNode: controller.emailFocusNode,
+                          // nextFocus: controller.passwordFocusNode,
+                          textInputType: TextInputType.emailAddress,
+                          inputAction: TextInputAction.next,
+                          radius: Dimensions.largeRadius,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return MyStrings.fieldErrorMsg.tr;
+                            } else {
+                              return null;
+                            }
+                          },
+                          isShadow: true,
+                          fillColor: MyColor.searchFieldColor,
+                        ),
+                        spaceDown(Dimensions.space15.h),
+                        LabelTextField(
+                          isRequired: true,
+                          suffixIcon: InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: MyColor.getTransparentColor(),
+                                builder: (context) => ContactPickerBottomSheet(
+                                  onContactSelected: (contact) {
+                                    final phoneNumber = contact.phones.first.number;
+                                    final name = contact.displayName;
+                                    controller.mobileNoController = TextEditingController(text: phoneNumber.toString());
+                                    controller.firstNameController = TextEditingController(text: name.toString());
+
+                                    controller.update();
                                   },
-                                  child: Container(
-                                    padding: const EdgeInsetsDirectional.symmetric(horizontal: Dimensions.space12),
-                                    decoration: BoxDecoration(
-                                      color: MyColor.getTransparentColor(),
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    alignment: Alignment.center,
-                                    child: Row(
-                                      children: [
-                                        MyNetworkImageWidget(
-                                          imageUrl: UrlContainer.countryFlagImageLink.replaceAll(
-                                            "{countryCode}",
-                                            (controller.countryData?.countryCode ?? Environment.defaultCountryCode)
-                                                .toLowerCase(),
+                                ),
+                              );
+                            },
+                            child: Icon(Icons.call, color: MyColor.getBodyTextColor()),
+                          ),
+                          labelText: (MyStrings.phoneNo).replaceAll('.', '').tr,
+                          // hintText: MyStrings.enterYourPhoneNumber,
+                          controller: controller.mobileNoController,
+                          focusNode: controller.mobileNoFocusNode,
+                          textInputType: TextInputType.phone,
+                          inputAction: TextInputAction.next,
+                          prefixIcon: SizedBox(
+                            width: 120,
+                            child: FittedBox(
+                              child: Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      CountryBottomSheet.countryBottomSheet(
+                                        context,
+                                        onSelectedData: (Countries data) {
+                                          controller.selectACountry(countryDataValue: data);
+                                        },
+                                      );
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsetsDirectional.symmetric(horizontal: Dimensions.space12),
+                                      decoration: BoxDecoration(
+                                        color: MyColor.getTransparentColor(),
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      alignment: Alignment.center,
+                                      child: Row(
+                                        children: [
+                                          MyNetworkImageWidget(
+                                            imageUrl: UrlContainer.countryFlagImageLink.replaceAll(
+                                              "{countryCode}",
+                                              (controller.countryData?.countryCode ?? Environment.defaultCountryCode)
+                                                  .toLowerCase(),
+                                            ),
+                                            height: Dimensions.space25,
+                                            width: Dimensions.space40,
                                           ),
-                                          height: Dimensions.space25,
-                                          width: Dimensions.space40,
-                                        ),
-                                        const SizedBox(width: Dimensions.space5),
-                                        Text(
-                                          "+${controller.countryData?.dialCode ?? ''}",
-                                          style: theme.textTheme.bodyLarge?.copyWith(color: MyColor.getBodyTextColor()),
-                                        ),
-                                        const SizedBox(width: Dimensions.space3),
-                                        Icon(Icons.arrow_drop_down_rounded, color: MyColor.getAccent1Color()),
-                                        Container(
-                                          width: 2,
-                                          height: Dimensions.space12,
-                                          color: MyColor.getBorderColor(),
-                                        ),
-                                        const SizedBox(width: Dimensions.space8),
-                                      ],
+                                          const SizedBox(width: Dimensions.space5),
+                                          Text(
+                                            "+${controller.countryData?.dialCode ?? ''}",
+                                            style: theme.textTheme.bodyLarge?.copyWith(
+                                              color: MyColor.getBodyTextColor(),
+                                            ),
+                                          ),
+                                          const SizedBox(width: Dimensions.space3),
+                                          Icon(Icons.arrow_drop_down_rounded, color: MyColor.getAccent1Color()),
+                                          Container(
+                                            width: 2,
+                                            height: Dimensions.space12,
+                                            color: MyColor.getBorderColor(),
+                                          ),
+                                          const SizedBox(width: Dimensions.space8),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          validator: (value) {
+                            if ((value as String).trim().isEmpty) {
+                              return MyStrings.kPhoneNumberIsRequired.tr;
+                            } else {
+                              return null;
+                            }
+                          },
+                          onChanged: (v) {},
+                          onTap: () {},
+                          isShadow: true,
+                          fillColor: MyColor.searchFieldColor,
+                        ),
+                        spaceDown(Dimensions.space15.h),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: LabelText(
+                            text: MyStrings.contactTags.tr,
+                            textStyle: MyTextStyle.subHeading15W500FieldTitleColor,
+                          ),
+                        ),
+                        spaceDown(Dimensions.textToTextSpace),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: MyColor.searchFieldColor,
+                            borderRadius: BorderRadius.circular(Dimensions.cardMargin),
+                            border: Border.all(color: MyColor.socialContainerBorder),
+                            boxShadow: [fieldShadow],
+                          ),
+                          child: TagSelector(tags: controller.tags),
+                        ),
+                        spaceDown(Dimensions.space15.h),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: LabelText(
+                            text: MyStrings.contactList.tr,
+                            textStyle: MyTextStyle.subHeading15W500FieldTitleColor,
+                          ),
+                        ),
+                        spaceDown(Dimensions.textToTextSpace),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: MyColor.searchFieldColor,
+                            borderRadius: BorderRadius.circular(Dimensions.cardMargin),
+                            border: Border.all(color: MyColor.socialContainerBorder),
+                            boxShadow: [fieldShadow],
+                          ),
+                          child: TagSelector(tags: controller.contactTags, isContact: true),
+                        ),
+                        spaceDown(Dimensions.space15.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: LabelText(
+                                text: MyStrings.customAttributes.tr,
+                                textStyle: MyTextStyle.subHeading15W500FieldTitleColor,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                controller.customAttributeControllers.add({
+                                  'key': TextEditingController(),
+                                  'value': TextEditingController(),
+                                });
+                                controller.update();
+                              },
+                              child: MyAssetImageWidget(
+                                assetPath: MyImages.add,
+                                isSvg: true,
+                                height: Dimensions.space25.w,
+                                width: Dimensions.space25.w,
+                              ),
+                            ),
+                          ],
+                        ),
+                        spaceDown(Dimensions.space15.h),
+                        ListView.separated(
+                          separatorBuilder: (context, index) => spaceDown(Dimensions.space10),
+                          itemCount: controller.customAttributeControllers.length,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            final attribute = controller.customAttributeControllers[index];
+                            return Row(
+                              children: [
+                                Expanded(
+                                  flex: 5,
+                                  child: LabelTextField(
+                                    controller: attribute['key'],
+                                    labelText: "",
+                                    hideLabel: true,
+                                    hintText: MyStrings.fieldName.tr,
+                                    onChanged: (value) {},
+                                    textInputType: TextInputType.text,
+                                    inputAction: TextInputAction.next,
+                                    radius: Dimensions.largeRadius,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return MyStrings.fieldErrorMsg.tr;
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    fillColor: MyColor.searchFieldColor,
+                                    isShadow: true,
+                                  ),
+                                ),
+                                spaceSide(Dimensions.space10.w),
+                                Expanded(
+                                  flex: 5,
+                                  child: LabelTextField(
+                                    controller: attribute['value'],
+                                    labelText: "",
+                                    hideLabel: true,
+                                    hintText: MyStrings.fieldValue.tr,
+                                    onChanged: (value) {},
+                                    textInputType: TextInputType.text,
+                                    inputAction: TextInputAction.next,
+                                    radius: Dimensions.largeRadius,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return MyStrings.fieldErrorMsg.tr;
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    fillColor: MyColor.searchFieldColor,
+                                    isShadow: true,
+                                  ),
+                                ),
+                                spaceSide(Dimensions.space10.w),
+                                Flexible(
+                                  fit: FlexFit.loose,
+                                  child: InkWell(
+                                    onTap: () {
+                                      controller.customAttributeControllers.removeAt(index);
+                                      controller.update();
+                                    },
+                                    child: Container(
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        color: MyColor.getErrorColor(),
+                                        borderRadius: BorderRadius.circular(Dimensions.defaultRadius),
+                                      ),
+                                      width: 40,
+                                      child: Icon(Icons.delete, color: MyColor.white),
                                     ),
                                   ),
                                 ),
                               ],
-                            ),
-                          ),
+                            );
+                          },
                         ),
-                        validator: (value) {
-                          if ((value as String).trim().isEmpty) {
-                            return MyStrings.kPhoneNumberIsRequired.tr;
-                          } else {
-                            return null;
-                          }
-                        },
-                        onChanged: (v) {},
-                        onTap: () {},
-                        isShadow: true,
-                        fillColor: MyColor.searchFieldColor,
-                      ),
-                      spaceDown(Dimensions.space15.h),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: LabelText(
-                          text: MyStrings.contactTags.tr,
-                          textStyle: MyTextStyle.subHeading15W500FieldTitleColor,
+                        spaceDown(Dimensions.space15.h),
+                        spaceDown(Dimensions.space16.h),
+                        CustomElevatedBtn(
+                          isLoading: controller.saving,
+                          text: controller.isUpdate ? MyStrings.update.tr : MyStrings.saveContact.tr,
+                          onTap: () {
+                            controller.saveContact(controller.editIndex ?? -1, isChatEdit);
+                          },
                         ),
-                      ),
-                      spaceDown(Dimensions.textToTextSpace),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: MyColor.searchFieldColor,
-                          borderRadius: BorderRadius.circular(Dimensions.cardMargin),
-                          border: Border.all(color: MyColor.socialContainerBorder),
-                          boxShadow: [fieldShadow],
+                        spaceDown(Dimensions.space12.h),
+                        CustomElevatedBtn(
+                          text: MyStrings.cancel.tr,
+                          onTap: () {
+                            Get.back();
+                          },
+                          bgColor: MyColor.cancelElevatedBtnBgColor,
                         ),
-                        child: TagSelector(tags: controller.tags),
-                      ),
-                      spaceDown(Dimensions.space15.h),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: LabelText(
-                          text: MyStrings.contactList.tr,
-                          textStyle: MyTextStyle.subHeading15W500FieldTitleColor,
-                        ),
-                      ),
-                      spaceDown(Dimensions.textToTextSpace),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: MyColor.searchFieldColor,
-                          borderRadius: BorderRadius.circular(Dimensions.cardMargin),
-                          border: Border.all(color: MyColor.socialContainerBorder),
-                          boxShadow: [fieldShadow],
-                        ),
-                        child: TagSelector(tags: controller.contactTags, isContact: true),
-                      ),
-                      spaceDown(Dimensions.space15.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: LabelText(
-                              text: MyStrings.customAttributes.tr,
-                              textStyle: MyTextStyle.subHeading15W500FieldTitleColor,
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              controller.customAttributeControllers.add({
-                                'key': TextEditingController(),
-                                'value': TextEditingController(),
-                              });
-                              controller.update();
-                            },
-                            child: MyAssetImageWidget(
-                              assetPath: MyImages.add,
-                              isSvg: true,
-                              height: Dimensions.space25.w,
-                              width: Dimensions.space25.w,
-                            ),
-                          ),
-                        ],
-                      ),
-                      spaceDown(Dimensions.space15.h),
-                      ListView.separated(
-                        separatorBuilder: (context, index) => spaceDown(Dimensions.space10),
-                        itemCount: controller.customAttributeControllers.length,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          final attribute = controller.customAttributeControllers[index];
-                          return Row(
-                            children: [
-                              Expanded(
-                                flex: 5,
-                                child: LabelTextField(
-                                  controller: attribute['key'],
-                                  labelText: "",
-                                  hideLabel: true,
-                                  hintText: MyStrings.fieldName.tr,
-                                  onChanged: (value) {},
-                                  textInputType: TextInputType.text,
-                                  inputAction: TextInputAction.next,
-                                  radius: Dimensions.largeRadius,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return MyStrings.fieldErrorMsg.tr;
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  fillColor: MyColor.searchFieldColor,
-                                  isShadow: true,
-                                ),
-                              ),
-                              spaceSide(Dimensions.space10.w),
-                              Expanded(
-                                flex: 5,
-                                child: LabelTextField(
-                                  controller: attribute['value'],
-                                  labelText: "",
-                                  hideLabel: true,
-                                  hintText: MyStrings.fieldValue.tr,
-                                  onChanged: (value) {},
-                                  textInputType: TextInputType.text,
-                                  inputAction: TextInputAction.next,
-                                  radius: Dimensions.largeRadius,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return MyStrings.fieldErrorMsg.tr;
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  fillColor: MyColor.searchFieldColor,
-                                  isShadow: true,
-                                ),
-                              ),
-                              spaceSide(Dimensions.space10.w),
-                              Flexible(
-                                fit: FlexFit.loose,
-                                child: InkWell(
-                                  onTap: () {
-                                    controller.customAttributeControllers.removeAt(index);
-                                    controller.update();
-                                  },
-                                  child: Container(
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      color: MyColor.getErrorColor(),
-                                      borderRadius: BorderRadius.circular(Dimensions.defaultRadius),
-                                    ),
-                                    width: 40,
-                                    child: Icon(Icons.delete, color: MyColor.white),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                      spaceDown(Dimensions.space15.h),
-                      spaceDown(Dimensions.space16.h),
-                      CustomElevatedBtn(
-                        isLoading: controller.saving,
-                        text: controller.isUpdate ? MyStrings.update.tr : MyStrings.saveContact.tr,
-                        onTap: () {
-                          controller.saveContact(controller.editIndex ?? -1, isChatEdit);
-                        },
-                      ),
-                      spaceDown(Dimensions.space12.h),
-                      CustomElevatedBtn(
-                        text: MyStrings.cancel.tr,
-                        onTap: () {
-                          Get.back();
-                        },
-                        bgColor: MyColor.cancelElevatedBtnBgColor,
-                      ),
-                      spaceDown(Dimensions.space23.h),
-                    ],
+                        spaceDown(Dimensions.space23.h),
+                      ],
+                    ),
                   ),
                 ),
-              ),
+        ),
       ),
     );
   }

@@ -75,6 +75,7 @@ class TicketDetailsController extends GetxController {
   String subject = '';
   String status = '-1';
   String ticketName = '';
+  String mediaBasePath = '';
 
   Future<void> loadTicketDetailsData({bool shouldLoad = true}) async {
     isLoading = shouldLoad;
@@ -84,6 +85,7 @@ class TicketDetailsController extends GetxController {
     if (response.statusCode == 200) {
       model = SupportTicketViewResponseModel.fromJson(response.responseJson);
       if (model.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+        mediaBasePath = model.data?.mediaBasePath ?? '';
         ticket = model.data?.myTickets?.ticket ?? '';
         subject = model.data?.myTickets?.subject ?? '';
         status = model.data?.myTickets?.status ?? '';

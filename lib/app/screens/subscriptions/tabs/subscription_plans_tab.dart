@@ -1,3 +1,4 @@
+import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/image/my_asset_widget.dart';
@@ -53,7 +54,6 @@ class _SubscriptionPlansTabState extends State<SubscriptionPlansTab> {
           : controller.pricingPlanList.isEmpty
           ? const Center(child: NoDataWidget())
           : SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
               padding: EdgeInsets.only(bottom: Dimensions.space24.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,40 +81,37 @@ class _SubscriptionPlansTabState extends State<SubscriptionPlansTab> {
                     ),
                   ),
                   SizedBox(height: Dimensions.space24.h),
-                  SizedBox(
-                    height: 930.h,
-                    child: PageView.builder(
-                      controller: _pageController,
-                      itemCount: controller.pricingPlanList.length,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (_, index) {
-                        final double distance = (_currentPage - index).abs().clamp(0, 1);
-                        final double scale = 1 - (distance * .08);
-                        final double verticalPadding = 18 * distance;
-                        final bool isCentered = distance < .5;
+                  ExpandablePageView.builder(
+                    controller: _pageController,
+                    itemCount: controller.pricingPlanList.length,
+                    itemBuilder: (_, index) {
+                      final double distance = (_currentPage - index).abs().clamp(0, 1);
+                      final double scale = 1 - (distance * .08);
+                      final double verticalPadding = 18 * distance;
+                      final bool isCentered = distance < .5;
 
-                        return AnimatedPadding(
+                      return AnimatedPadding(
+                        duration: const Duration(milliseconds: 320),
+                        curve: Curves.easeOutCubic,
+                        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: verticalPadding.h),
+                        child: TweenAnimationBuilder<double>(
+                          tween: Tween(begin: scale, end: scale),
                           duration: const Duration(milliseconds: 320),
                           curve: Curves.easeOutCubic,
-                          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: verticalPadding.h),
-                          child: TweenAnimationBuilder<double>(
-                            tween: Tween(begin: scale, end: scale),
-                            duration: const Duration(milliseconds: 320),
-                            curve: Curves.easeOutCubic,
-                            builder: (_, value, child) => Transform.scale(scale: value, child: child),
-                            child: SubscriptionPlanCard(
-                              plan: controller.pricingPlanList[index],
-                              isYearly: _selectedBillingIndex == 1,
-                              isCentered: isCentered,
-                              isCurrentPlan: controller.isCurrentPlan(controller.pricingPlanList[index].id),
-                            ),
+                          builder: (_, value, child) => Transform.scale(scale: value, child: child),
+                          child: SubscriptionPlanCard(
+                            plan: controller.pricingPlanList[index],
+                            isYearly: _selectedBillingIndex == 1,
+                            isCentered: isCentered,
+                            isCurrentPlan: controller.isCurrentPlan(controller.pricingPlanList[index].id),
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
                   ),
                   SizedBox(height: Dimensions.space16.h),
                   _CarouselDots(itemCount: controller.pricingPlanList.length, currentPage: _currentPage),
+                  SizedBox(height: Dimensions.space10.h),
                 ],
               ),
             ),
@@ -214,7 +211,11 @@ class SubscriptionPlanCard extends StatelessWidget {
               ),
             ),
             SizedBox(height: Dimensions.space8.h),
-            Text((plan.description ?? '').tr, style: MyTextStyle.subHeading14W500().copyWith(height: 1.45)),
+            Text(
+              (plan.description ?? '').tr,
+              style: MyTextStyle.subHeading14W500().copyWith(height: 1.45),
+              overflow: TextOverflow.fade,
+            ),
             SizedBox(height: Dimensions.space18.h),
             Container(
               width: double.infinity,

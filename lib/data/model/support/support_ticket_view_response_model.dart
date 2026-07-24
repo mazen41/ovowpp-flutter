@@ -33,8 +33,9 @@ class Data {
   MyTickets? myTickets;
   List<SupportMessage>? myMessages;
   String? ticketImagePath;
+  String? mediaBasePath;
 
-  Data({this.myTickets, this.myMessages, this.ticketImagePath});
+  Data({this.myTickets, this.myMessages, this.ticketImagePath, this.mediaBasePath});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     myTickets: json["my_ticket"] == null ? null : MyTickets.fromJson(json["my_ticket"]),
@@ -42,12 +43,14 @@ class Data {
         ? []
         : List<SupportMessage>.from(json["messages"]!.map((x) => SupportMessage.fromJson(x))),
     ticketImagePath: json["ticket_image_path"],
+    mediaBasePath: json["mediaBasePath"],
   );
 
   Map<String, dynamic> toJson() => {
     "my_ticket": myTickets?.toJson(),
     "messages": myMessages == null ? [] : List<dynamic>.from(myMessages!.map((x) => x.toJson())),
     "ticket_image_path": ticketImagePath,
+    "mediaBasePath": mediaBasePath,
   };
 }
 

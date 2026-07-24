@@ -37,7 +37,11 @@ class MessageListSection extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: controller.messageList.length,
                 shrinkWrap: true,
-                itemBuilder: (context, index) => TicketListItem(index: index, messages: controller.messageList[index]),
+                itemBuilder: (context, index) => TicketListItem(
+                  index: index,
+                  mediabasePath: controller.mediaBasePath,
+                  messages: controller.messageList[index],
+                ),
               ),
             ),
     );

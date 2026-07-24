@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
@@ -23,15 +24,23 @@ class PusherChatServiceController extends GetxController {
 
   void onEvent(PusherEvent event) {
     try {
+      printX("ChatScrren onEvent: ${event.data}");
       var msgData = jsonDecode(event.data);
       bool isNewMsg = msgData["data"]["newMessage"].toString() == "true";
       MessagesData msg = MessagesData.fromJson(msgData["data"]["message"]);
 
-      bool messageExists = controller.messages.any((m) => m.id == msg.id);
+      if (controller.conversationId == msg.conversationId && isNewMsg) {
+        final shouldShowNewMessage = controller.isNearLatestMessage;
+        final wasInserted = controller.insertMessageIfAbsent(msg);
+        if (!wasInserted) return;
+        controller.update(['chat_screen_main']);
 
-      if (!messageExists && controller.conversationId == msg.conversationId && isNewMsg) {
-        controller.messages.insert(0, msg);
-        controller.update();
+        // A realtime callback can run while Flutter has no pending frame.
+        // Explicitly request one so the message appears without a screen tap.
+        WidgetsBinding.instance.ensureVisualUpdate();
+        if (shouldShowNewMessage) {
+          controller.scrollToLatestMessage();
+        }
       }
 
       if (controller.conversationId == msg.conversationId && !isNewMsg) {

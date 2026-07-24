@@ -27,15 +27,6 @@ Future<void> main() async {
   //Dependency injection
   await di_service.initDependency();
   runApp(OvoApp(languages: {}));
-
-  /// ============= DEVICE PREVIEW NEW ==================
-  //   runApp(DevicePreview(
-  //       enabled: !kReleaseMode,
-  //     builder: (context) {
-  //       return OvoApp(languages: {},);
-  //     }
-  //    ),
-  // );
 }
 
 //APP ENTRY POINT

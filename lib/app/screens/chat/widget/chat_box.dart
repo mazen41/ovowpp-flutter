@@ -12,6 +12,28 @@ class ChatBox extends StatefulWidget {
 }
 
 class _ChatBoxState extends State<ChatBox> {
+  late final FocusNode _focusNode;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode = FocusNode()..addListener(_handleFocusChange);
+  }
+
+  void _handleFocusChange() {
+    if (_focusNode.hasFocus && Get.isRegistered<ChatController>()) {
+      Get.find<ChatController>().seenMessage();
+    }
+  }
+
+  @override
+  void dispose() {
+    _focusNode
+      ..removeListener(_handleFocusChange)
+      ..dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -21,6 +43,7 @@ class _ChatBoxState extends State<ChatBox> {
         height: 48,
         width: MediaQuery.of(context).size.width * .61,
         child: TextFormField(
+          focusNode: _focusNode,
           controller: controller.chatController,
           textAlign: TextAlign.start,
           style: theme.textTheme.bodyLarge?.copyWith(color: MyColor.black),
