@@ -122,6 +122,10 @@ class ChatRepo {
     final requestData = {
       'conversation_id': conversationId,
       'template_id': templateId,
+      'header_variables': [],
+      'body_variables': [],
+      'mobile_code': '967', // Default Yemen country code
+      'mobile': '784440991', // Default phone number from your WhatsApp account
     };
     
     printX('Sending template with data: $requestData');
