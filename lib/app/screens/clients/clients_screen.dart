@@ -101,11 +101,13 @@ class _ClientsScreenState extends State<ClientsScreen> {
           title: 'Clients',
           bgColor: MyColor.white,
           elevation: 0,
-          action: IconButton(
-            icon: Icon(Icons.label_outlined, color: MyColor.getPrimaryColor()),
-            onPressed: () => Get.toNamed(RouteHelper.clientTagsScreen)?.then((_) => _loadData()),
-            tooltip: 'Manage Tags',
-          ),
+          action: [
+            IconButton(
+              icon: Icon(Icons.label_outlined, color: MyColor.getPrimaryColor()),
+              onPressed: () => Get.toNamed(RouteHelper.clientTagsScreen)?.then((_) => _loadData()),
+              tooltip: 'Manage Tags',
+            ),
+          ],
         ),
         body: Column(
           children: [
@@ -121,7 +123,7 @@ class _ClientsScreenState extends State<ClientsScreen> {
                             padding: EdgeInsets.symmetric(vertical: 8.h),
                             itemCount: _filtered.length,
                             separatorBuilder: (_, __) =>
-                                Divider(height: 1, color: MyColor.borderColor.withAlpha(80)),
+                                Divider(height: 1, color: MyColor.lightBorder.withAlpha(80)),
                             itemBuilder: (context, index) => _buildClientTile(_filtered[index]),
                           ),
                         ),
@@ -158,7 +160,7 @@ class _ClientsScreenState extends State<ClientsScreen> {
                     )
                   : null,
               filled: true,
-              fillColor: MyColor.borderColor.withAlpha(30),
+              fillColor: MyColor.lightBorder.withAlpha(30),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.r),
                 borderSide: BorderSide.none,
@@ -283,7 +285,7 @@ class _ClientsScreenState extends State<ClientsScreen> {
                     SizedBox(height: 2.h),
                     Text(
                       '+$mobile',
-                      style: MyTextStyle.subHeading13W400()
+                      style: MyTextStyle.subHeading14W400()
                           .copyWith(color: MyColor.getBodyTextColor()),
                     ),
                   ],

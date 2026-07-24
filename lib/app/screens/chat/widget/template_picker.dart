@@ -39,7 +39,7 @@ class TemplatePicker extends StatelessWidget {
                 width: 40.w,
                 height: 4.h,
                 decoration: BoxDecoration(
-                  color: MyColor.borderColor,
+                  color: MyColor.lightBorder,
                   borderRadius: BorderRadius.circular(8.r),
                 ),
               ),
@@ -50,7 +50,7 @@ class TemplatePicker extends StatelessWidget {
                     Icon(Icons.description_outlined, color: MyColor.getPrimaryColor(), size: 20.sp),
                     SizedBox(width: 8.w),
                     Text(
-                      Strings.sendTemplates.tr,
+                      Strings.sendTemplate.tr,
                       style: MyTextStyle.heading16W600().copyWith(color: MyColor.usdTextColor),
                     ),
                     const Spacer(),
@@ -63,7 +63,7 @@ class TemplatePicker extends StatelessWidget {
                   ],
                 ),
               ),
-              Divider(height: 1, color: MyColor.borderColor),
+              Divider(height: 1, color: MyColor.lightBorder),
               controller.loadingTemplates
                   ? Padding(
                       padding: EdgeInsets.all(32.w),
@@ -84,7 +84,7 @@ class TemplatePicker extends StatelessWidget {
                             shrinkWrap: true,
                             padding: EdgeInsets.symmetric(vertical: 8.h),
                             itemCount: templates.length,
-                            separatorBuilder: (_, __) => Divider(height: 1, color: MyColor.borderColor),
+                            separatorBuilder: (_, __) => Divider(height: 1, color: MyColor.lightBorder),
                             itemBuilder: (context, i) {
                               final t = templates[i];
                               return ListTile(

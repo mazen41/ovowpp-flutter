@@ -91,7 +91,7 @@ class _ClientTagsScreenState extends State<ClientTagsScreen> {
                       ),
                       itemCount: _tags.length,
                       separatorBuilder: (_, __) =>
-                          Divider(height: 1, color: MyColor.borderColor.withAlpha(60)),
+                          Divider(height: 1, color: MyColor.lightBorder.withAlpha(60)),
                       itemBuilder: (context, index) {
                         final tag = _tags[index];
                         final color = _hexToColor(tag['color'] as String?) ?? MyColor.getPrimaryColor();

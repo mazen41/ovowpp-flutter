@@ -37,7 +37,7 @@ class InteractiveListPicker extends StatelessWidget {
                 width: 40.w,
                 height: 4.h,
                 decoration: BoxDecoration(
-                  color: MyColor.borderColor,
+                  color: MyColor.lightBorder,
                   borderRadius: BorderRadius.circular(8.r),
                 ),
               ),
@@ -62,7 +62,7 @@ class InteractiveListPicker extends StatelessWidget {
                   ],
                 ),
               ),
-              Divider(height: 1, color: MyColor.borderColor),
+              Divider(height: 1, color: MyColor.lightBorder),
               controller.loadingTemplates
                   ? Padding(
                       padding: EdgeInsets.all(32.w),
@@ -84,7 +84,7 @@ class InteractiveListPicker extends StatelessWidget {
                             shrinkWrap: true,
                             padding: EdgeInsets.symmetric(vertical: 8.h),
                             itemCount: lists.length,
-                            separatorBuilder: (_, __) => Divider(height: 1, color: MyColor.borderColor),
+                            separatorBuilder: (_, __) => Divider(height: 1, color: MyColor.lightBorder),
                             itemBuilder: (context, i) {
                               final item = lists[i];
                               return ListTile(

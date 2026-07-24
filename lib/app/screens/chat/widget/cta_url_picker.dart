@@ -36,7 +36,7 @@ class CtaUrlPicker extends StatelessWidget {
                 width: 40.w,
                 height: 4.h,
                 decoration: BoxDecoration(
-                  color: MyColor.borderColor,
+                  color: MyColor.lightBorder,
                   borderRadius: BorderRadius.circular(8.r),
                 ),
               ),
@@ -60,7 +60,7 @@ class CtaUrlPicker extends StatelessWidget {
                   ],
                 ),
               ),
-              Divider(height: 1, color: MyColor.borderColor),
+              Divider(height: 1, color: MyColor.lightBorder),
               controller.loadingTemplates
                   ? Padding(
                       padding: EdgeInsets.all(32.w),
@@ -82,7 +82,7 @@ class CtaUrlPicker extends StatelessWidget {
                             shrinkWrap: true,
                             padding: EdgeInsets.symmetric(vertical: 8.h),
                             itemCount: ctaUrls.length,
-                            separatorBuilder: (_, __) => Divider(height: 1, color: MyColor.borderColor),
+                            separatorBuilder: (_, __) => Divider(height: 1, color: MyColor.lightBorder),
                             itemBuilder: (context, i) {
                               final cta = ctaUrls[i];
                               return ListTile(

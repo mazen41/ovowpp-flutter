@@ -137,7 +137,7 @@ class _AppBarContentsState extends State<AppBarContents> {
                 _menuItem(
                   action: _ChatAction.sendTemplate,
                   icon: Icons.description_outlined,
-                  label: Strings.sendTemplates.tr,
+                  label: Strings.sendTemplate.tr,
                 ),
                 _menuItem(
                   action: _ChatAction.interactiveList,
@@ -158,7 +158,7 @@ class _AppBarContentsState extends State<AppBarContents> {
                   enabled: false,
                   height: 1,
                   padding: EdgeInsets.zero,
-                  child: Divider(height: 1, color: MyColor.borderColor),
+                  child: Divider(height: 1, color: MyColor.lightBorder),
                 ),
                 _menuItem(
                   action: _ChatAction.block,
