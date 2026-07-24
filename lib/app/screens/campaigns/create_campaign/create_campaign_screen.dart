@@ -16,7 +16,6 @@ import 'package:ovowpp/data/controller/campaigns/campaigns_controller.dart';
 import 'package:ovowpp/data/repo/campaign/campaign_repo.dart';
 import '../../../../core/translations/strings_enum.dart';
 import '../../../components/image/my_asset_widget.dart';
-import '../../../components/no_data.dart';
 import '../../../components/shimmer/home_shimmer.dart';
 import '../widgets/send_now_switch.dart';
 
@@ -38,6 +37,7 @@ class _CreateCampaignScreenState extends State<CreateCampaignScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.createCampaignData();
       controller.initDateTime();
+      controller.clearCampaignForm();
     });
     super.initState();
   }
@@ -279,7 +279,9 @@ class _CreateCampaignScreenState extends State<CreateCampaignScreen> {
                             spaceDown(Dimensions.space12.h),
                             CustomElevatedBtn(
                               text: Strings.cancel.tr,
-                              onTap: () {},
+                              onTap: () {
+                                Get.back();
+                              },
                               bgColor: MyColor.cancelElevatedBtnBgColor,
                             ),
                             spaceDown(Dimensions.space23.h),

@@ -14,8 +14,8 @@ class ChatRepo {
   }
 
   Future<ResponseModel> seenMessageRepo(String conversationId) async {
-    String url = '${UrlContainer.baseUrl}${UrlContainer.seenMessageEndPoint}$conversationId';
-    ResponseModel responseModel = await ApiService.getRequest(url);
+    final url = '${UrlContainer.baseUrl}${UrlContainer.seenMessageUrl}/$conversationId';
+    final responseModel = await ApiService.getRequest(url);
 
     return responseModel;
   }
@@ -31,7 +31,13 @@ class ChatRepo {
     final Map<String, dynamic> map = {};
 
     if (chatId == null) {
-      map.addAll({'conversation_id': messageModel.chatId, 'message': messageModel.message});
+      map.addAll({
+        'conversation_id': messageModel.chatId,
+        'message': messageModel.message,
+      });
+      if (messageModel.id != null && messageModel.id!.isNotEmpty) {
+        map['wa_message_id'] = messageModel.id;
+      }
     } else {
       map.addAll({'message_id': chatId});
     }

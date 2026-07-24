@@ -83,35 +83,31 @@ class _TwoFactorVerificationScreenState extends State<TwoFactorVerificationScree
                     const SizedBox(height: Dimensions.space50),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: Dimensions.space30),
-                      child: PinCodeTextField(
-                        appContext: context,
-                        pastedTextStyle: theme.textTheme.labelMedium?.copyWith(color: MyColor.getBodyTextColor()),
+                      child: MaterialPinField(
                         length: 6,
-                        textStyle: theme.textTheme.labelMedium?.copyWith(color: MyColor.getBodyTextColor()),
                         obscureText: false,
-                        obscuringCharacter: '*',
                         blinkWhenObscuring: false,
-                        animationType: AnimationType.fade,
-                        pinTheme: PinTheme(
-                          shape: PinCodeFieldShape.box,
+                        theme: MaterialPinTheme(
+                          shape: MaterialPinShape.outlined,
+                          cellSize: const Size(40, 40),
+                          spacing: 8,
                           borderWidth: 1,
+                          focusedBorderWidth: 1,
                           borderRadius: BorderRadius.circular(5),
-                          fieldHeight: 40,
-                          fieldWidth: 40,
-                          inactiveColor: MyColor.getBorderColor(),
-                          inactiveFillColor: MyColor.getTransparentColor(),
-                          activeFillColor: MyColor.getTransparentColor(),
-                          activeColor: MyColor.getPrimaryColor(),
-                          selectedFillColor: MyColor.getTransparentColor(),
-                          selectedColor: MyColor.getPrimaryColor(),
+                          borderColor: MyColor.getBorderColor(),
+                          fillColor: MyColor.getTransparentColor(),
+                          filledFillColor: MyColor.getTransparentColor(),
+                          filledBorderColor: MyColor.getPrimaryColor(),
+                          focusedFillColor: MyColor.getTransparentColor(),
+                          focusedBorderColor: MyColor.getPrimaryColor(),
+                          textStyle: theme.textTheme.labelMedium?.copyWith(color: MyColor.getBodyTextColor()),
+                          obscuringCharacter: '*',
+                          cursorColor: MyColor.white,
+                          entryAnimation: MaterialPinAnimation.fade,
+                          animationDuration: const Duration(milliseconds: 100),
                         ),
-                        cursorColor: MyColor.white,
-                        animationDuration: const Duration(milliseconds: 100),
-                        enableActiveFill: true,
                         keyboardType: TextInputType.number,
-                        beforeTextPaste: (text) {
-                          return true;
-                        },
+                        enablePaste: true,
                         onChanged: (value) {
                           setState(() {
                             controller.currentText = value;

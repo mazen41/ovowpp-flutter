@@ -278,19 +278,7 @@ class CampaignsController extends GetxController {
       if (responseModel.statusCode == 200) {
         AuthorizationResponseModel response = AuthorizationResponseModel.fromJson(responseModel.responseJson);
         if (response.status?.toLowerCase() == Strings.success.toLowerCase()) {
-          campaignNameController.clear();
-          selectContactList.clear();
-          selectContactTag.clear();
-          selectContactTagController.clear();
-          selectContactListController.clear();
-          selectedWhatsAppAccountId = '';
-          selectWhatsAppAccount.clear();
-          selectTemplateController.clear();
-          selectedTemplateId = '';
-          messagePreviewController.clear();
-          dateController.clear();
-          timeController.clear();
-          initDateTime();
+          clearCampaignForm();
 
           CustomSnackBar.success(successList: response.message ?? [Strings.campaignCreateSuccessfully.tr]);
         } else {
@@ -305,6 +293,22 @@ class CampaignsController extends GetxController {
       isSaveCampaignLoader = false;
       update();
     }
+  }
+
+  void clearCampaignForm() {
+    campaignNameController.clear();
+    selectContactList.clear();
+    selectContactTag.clear();
+    selectContactTagController.clear();
+    selectContactListController.clear();
+    selectedWhatsAppAccountId = '';
+    selectWhatsAppAccount.clear();
+    selectTemplateController.clear();
+    selectedTemplateId = '';
+    messagePreviewController.clear();
+    dateController.clear();
+    timeController.clear();
+    initDateTime();
   }
 
   String searchQuery = '';

@@ -43,7 +43,7 @@ class HomeController extends GetxController {
   final ScrollController openScrollController = ScrollController();
   final ScrollController solvedScrollController = ScrollController();
   final TextEditingController searchController = TextEditingController();
-  List<String> tabsList = ['All', 'Pending', 'Open', 'Solved'];
+  List<String> tabsList = ['All', 'Pending', 'Done', 'Important'];
 
   String image = "";
   String imagePaths = "";
@@ -194,6 +194,36 @@ class HomeController extends GetxController {
   List<ConversationData> filteredOpenChats = [];
   List<ConversationData> filteredSolvedChats = [];
 
+  void updateConversationUnseenCount(String conversationId, String unseenMessageCount) {
+    if (conversationId.trim().isEmpty) return;
+
+    var hasUpdatedConversation = false;
+    final conversationLists = <List<ConversationData>>[
+      newChatData,
+      allChatsData,
+      pendingChatsData,
+      openChatsData,
+      solvedChatsData,
+      filteredAllChats,
+      filteredPendingChats,
+      filteredOpenChats,
+      filteredSolvedChats,
+    ];
+
+    for (final conversations in conversationLists) {
+      final index = conversations.indexWhere(
+        (conversation) =>
+            conversation.id == conversationId || conversation.lastMessage?.conversationId == conversationId,
+      );
+      if (index < 0) continue;
+
+      conversations[index] = conversations[index].copyWith(unseenMessages: unseenMessageCount);
+      hasUpdatedConversation = true;
+    }
+
+    if (hasUpdatedConversation) update();
+  }
+
   int allChatsPage = 0;
   int pendingChatsPage = 0;
   int openChatsPage = 0;
@@ -278,13 +308,15 @@ class HomeController extends GetxController {
         status = null;
         break;
       case 1:
-        status = 1;
+        status = int.tryParse(AppStatus.PENDING_CONVERSATION);
+
         break;
       case 2:
-        status = 2;
+        status = int.tryParse(AppStatus.DONE_CONVERSATION);
         break;
       case 3:
-        status = 3;
+        status = int.tryParse(AppStatus.IMPORTANT_CONVERSATION);
+
         break;
       default:
         status = null;

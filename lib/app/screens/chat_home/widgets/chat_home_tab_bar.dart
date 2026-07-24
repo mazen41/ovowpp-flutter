@@ -58,21 +58,42 @@ class MySliverTabBarView extends StatelessWidget {
                   String? tag = (tags != null && tags.isNotEmpty) ? tags.first.name : null;
 
                   String previewText = '';
+                  IconData? previewIcon;
                   final lastMsg = item.lastMessage;
-                  if (lastMsg?.message != null && lastMsg!.message!.isNotEmpty) {
-                    previewText = lastMsg.message!;
-                  } else if (lastMsg != null) {
+                  if (lastMsg != null) {
                     final mediaType = lastMsg.mediaType?.toLowerCase() ?? '';
                     final msgType = lastMsg.messageType?.toString() ?? '';
+                    final hasTemplate =
+                        lastMsg.templateId != null && lastMsg.templateId!.isNotEmpty && lastMsg.templateId != '0';
 
-                    if (mediaType == 'image') {
+
+                    // Keep special-message previews consistent with ChatScreen.
+                    if (hasTemplate) {
+                      previewText = AppStatus.template;
+                      previewIcon = Icons.description_outlined;
+                    } else if (msgType == AppStatus.URL_TYPE_MESSAGE) {
+                      previewText = AppStatus.ctaUrl;
+                      previewIcon = Icons.link_rounded;
+                    } else if (msgType == AppStatus.LOCATION_TYPE_MESSAGE) {
+                      previewText = AppStatus.location;
+                      previewIcon = Icons.location_on_outlined;
+                    } else if (msgType == AppStatus.LIST_TYPE_MESSAGE) {
+                      previewText = AppStatus.listMessage;
+                      previewIcon = Icons.format_list_bulleted_rounded;
+                    } else if (mediaType == 'image') {
                       previewText = Strings.sentAnImage.tr;
+                      previewIcon = Icons.image_outlined;
                     } else if (mediaType == 'audio' || msgType == '5') {
                       previewText = Strings.sentAnAudio.tr;
+                      previewIcon = Icons.mic_outlined;
                     } else if (mediaType == 'video') {
                       previewText = Strings.sentAVideo.tr;
+                      previewIcon = Icons.videocam_outlined;
                     } else if (mediaType == 'document' || msgType == '3' || msgType == '4') {
                       previewText = Strings.sentADocument.tr;
+                      previewIcon = Icons.insert_drive_file_outlined;
+                    } else if ((lastMsg.message ?? '').isNotEmpty) {
+                      previewText = lastMsg.message!;
                     }
                   }
 
@@ -183,12 +204,27 @@ class MySliverTabBarView extends StatelessWidget {
 
                                 if (previewText.isNotEmpty) ...[
                                   spaceDown(Dimensions.space4.h),
-                                  DefaultText(
-                                    text: previewText,
-                                    textStyle: MyTextStyle.subHeading14W400().copyWith(
-                                      color: MyColor.planStatusTextColor,
-                                    ),
-                                    maxLines: 1,
+                                  Row(
+                                    children: [
+                                      if (previewIcon != null) ...[
+                                        Icon(
+                                          previewIcon,
+                                          size: Dimensions.space16.sp,
+                                          color: MyColor.planStatusTextColor,
+                                        ),
+                                        spaceSide(Dimensions.space6.w),
+                                      ],
+                                      Expanded(
+                                        child: DefaultText(
+                                          text: previewText,
+                                          textStyle: MyTextStyle.subHeading14W400().copyWith(
+                                            color: MyColor.planStatusTextColor,
+                                          ),
+                                          textOverFlow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ] else ...[
                                   spaceDown(Dimensions.space6.h),
@@ -197,35 +233,40 @@ class MySliverTabBarView extends StatelessWidget {
                                 Row(
                                   children: [
                                     if (controller.tabController.index == 0) ...[
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: Dimensions.space8.w,
-                                          vertical: Dimensions.space4.h,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: (int.tryParse(item.status.toString()) == 1)
-                                              ? MyColor.errorColor.withAlpha(MyColor.getAlpha(10))
-                                              : (int.tryParse(item.status.toString()) == 2)
-                                              ? MyColor.openColor.withAlpha(MyColor.getAlpha(10))
-                                              : MyColor.campaignsRunning.withAlpha(MyColor.getAlpha(10)),
-                                          borderRadius: BorderRadius.circular(Dimensions.space10.r),
-                                        ),
-                                        child: DefaultText(
-                                          text: (int.tryParse(item.status.toString()) == 1)
-                                              ? Strings.pending.tr
-                                              : (int.tryParse(item.status.toString()) == 2)
-                                              ? Strings.open.tr
-                                              : Strings.solved.tr,
-                                          textStyle: MyTextStyle.subHeading14W600().copyWith(
+                                      if ((int.tryParse(item.status.toString()) == 1) ||
+                                          (int.tryParse(item.status.toString()) == 2) ||
+                                          (int.tryParse(item.status.toString()) == 3)) ...[
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: Dimensions.space8.w,
+                                            vertical: Dimensions.space4.h,
+                                          ),
+                                          decoration: BoxDecoration(
                                             color: (int.tryParse(item.status.toString()) == 1)
-                                                ? MyColor.errorColor
+                                                ? MyColor.errorColor.withAlpha(MyColor.getAlpha(10))
                                                 : (int.tryParse(item.status.toString()) == 2)
-                                                ? MyColor.openColor
-                                                : MyColor.campaignsRunning,
-                                            fontSize: 12.sp,
+                                                ? MyColor.openColor.withAlpha(MyColor.getAlpha(10))
+                                                : MyColor.campaignsRunning.withAlpha(MyColor.getAlpha(10)),
+                                            borderRadius: BorderRadius.circular(Dimensions.space10.r),
+                                          ),
+                                          child: DefaultText(
+                                            text: (int.tryParse(item.status.toString()) == 1)
+                                                ? Strings.pending.tr
+                                                : (int.tryParse(item.status.toString()) == 2)
+                                                ? Strings.open.tr
+                                                : Strings.solved.tr,
+                                            textStyle: MyTextStyle.subHeading14W600().copyWith(
+                                              color: (int.tryParse(item.status.toString()) == 1)
+                                                  ? MyColor.errorColor
+                                                  : (int.tryParse(item.status.toString()) == 2)
+                                                  ? MyColor.openColor
+                                                  : MyColor.campaignsRunning,
+                                              fontSize: 12.sp,
+                                            ),
                                           ),
                                         ),
-                                      ),
+                                      ],
+
                                       spaceSide(Dimensions.space8.w),
                                       (tag?.isNotEmpty == true)
                                           ? Container(

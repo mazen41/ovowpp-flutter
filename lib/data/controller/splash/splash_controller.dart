@@ -99,8 +99,6 @@ class SplashController extends GetxController {
   Future<void> loadLanguage() async {
     localizationController.loadCurrentLanguage();
     String languageCode = localizationController.locale.languageCode;
-    printX("===========  LANGUAGE CODE : $languageCode");
-
     ResponseModel response = await repo.getLanguage(languageCode);
     if (response.statusCode == 200) {
       try {

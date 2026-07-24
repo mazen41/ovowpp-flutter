@@ -16,13 +16,10 @@ class VoiceMessagePlayer extends StatefulWidget {
   State<VoiceMessagePlayer> createState() => _VoiceMessagePlayerState();
 }
 
-class _VoiceMessagePlayerState extends State<VoiceMessagePlayer> with AutomaticKeepAliveClientMixin {
+class _VoiceMessagePlayerState extends State<VoiceMessagePlayer> {
   VideoPlayerController? _controller;
   bool _isInitialized = false;
   bool _hasError = false;
-
-  @override
-  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -33,10 +30,10 @@ class _VoiceMessagePlayerState extends State<VoiceMessagePlayer> with AutomaticK
   @override
   void didUpdateWidget(covariant VoiceMessagePlayer oldWidget) {
     super.didUpdateWidget(oldWidget);
-    
+
     String oldPath = oldWidget.audioPath.trim();
     String newPath = widget.audioPath.trim();
-    
+
     if (oldPath != newPath) {
       _controller?.dispose();
       _controller = null;
@@ -64,20 +61,23 @@ class _VoiceMessagePlayerState extends State<VoiceMessagePlayer> with AutomaticK
         ? VideoPlayerController.file(File(widget.audioPath))
         : VideoPlayerController.networkUrl(Uri.parse(widget.audioPath));
 
-    _controller?.initialize().then((_) {
-      if (mounted) {
-        setState(() {
-          _isInitialized = true;
+    _controller
+        ?.initialize()
+        .then((_) {
+          if (mounted) {
+            setState(() {
+              _isInitialized = true;
+            });
+          }
+        })
+        .catchError((error) {
+          if (mounted) {
+            setState(() {
+              _hasError = true;
+            });
+          }
+          debugPrint("Audio Player Error: $error");
         });
-      }
-    }).catchError((error) {
-      if (mounted) {
-        setState(() {
-          _hasError = true;
-        });
-      }
-      print("Audio Player Error: $error");
-    });
 
     _controller?.addListener(() {
       if (mounted) setState(() {});
@@ -99,8 +99,6 @@ class _VoiceMessagePlayerState extends State<VoiceMessagePlayer> with AutomaticK
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-
     if (_hasError) {
       return Container(
         padding: EdgeInsets.all(8.r),
@@ -110,12 +108,14 @@ class _VoiceMessagePlayerState extends State<VoiceMessagePlayer> with AutomaticK
     }
 
     if (!_isInitialized || _controller == null) {
-      return Container(
-        padding: EdgeInsets.all(8.r),
-        child: SizedBox(
-          width: 20.r,
-          height: 20.r,
-          child: CircularProgressIndicator(strokeWidth: 2, color: widget.activeColor ?? MyColor.getPrimaryColor()),
+      return Center(
+        child: Container(
+          padding: EdgeInsets.all(8.r),
+          child: SizedBox(
+            width: 20,
+            height: 20,
+            child: CircularProgressIndicator(strokeWidth: 2, color: widget.activeColor ?? MyColor.getPrimaryColor()),
+          ),
         ),
       );
     }

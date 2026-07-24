@@ -21,8 +21,8 @@ class SharedPreferenceService {
   static const String fcmDeviceKey = 'device-key';
   static const String needTwoFactorVerification = 'need-tfa';
   static const String userIdKey = 'user_id';
-  static const String hasNewNotificationKey = 'new-notification-key';
   static const String theme = 'theme';
+  static const String hasNewNotificationKey = 'new-notification-key';
   static const String token = 'token';
   static const String countryCode = 'country_code';
   static const String address = 'address';

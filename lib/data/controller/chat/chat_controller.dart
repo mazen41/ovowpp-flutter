@@ -18,6 +18,7 @@ import 'package:ovowpp/data/model/chat/send_message_response_model.dart';
 import 'package:ovowpp/data/model/customer_details/customer_details_response_model.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:ovowpp/data/repo/chat/chat_repo.dart';
+import 'package:ovowpp/data/controller/home/home_controller.dart';
 
 import '../../../environment.dart';
 import '../../model/chat/seen_message_response_model.dart';
@@ -100,26 +101,48 @@ class ChatController extends GetxController {
   String lastseen = "";
   Contact? contact;
   List<MessagesData> messages = [];
+  MessageReplayTo? replyingTo;
+  String? highlightedMessageId;
+  String? activeReplyDragMessageId;
+  double activeReplyDragOffset = 0;
+  bool _isFetchingChats = false;
 
   // List<MessagesData> filteredMessages = [];
   Future<void> getChatsData({bool initPage = false}) async {
-    try {
-      if (initPage) {
-        page = 0;
-        isLoading = true;
-        nextPageLoading = true;
-        update(['chat_screen_main', 'recording_area']);
-      }
-      if (page == 0) {
-        messages.clear();
-      }
+    if (_isFetchingChats) return;
+    if (!initPage && page > 0 && !hasNext()) return;
 
-      page = page + 1;
-      final responseModal = await repo.getChatsDataRepo(conversationId, page.toString(), searchQuery);
+    _isFetchingChats = true;
+    final isInitialLoad = initPage || page == 0;
+    if (initPage) {
+      page = 0;
+      nextPageUrl = '';
+      messages.clear();
+    }
+
+    if (isInitialLoad) {
+      isLoading = true;
+    } else {
+      nextPageLoading = true;
+    }
+    update(['chat_screen_main', 'recording_area']);
+
+    final requestedPage = page + 1;
+    try {
+      final responseModal = await repo.getChatsDataRepo(conversationId, requestedPage.toString(), searchQuery);
       if (responseModal.statusCode == 200) {
         ChatDataResponseModel model = ChatDataResponseModel.fromJson(responseModal.responseJson);
         if (model.status?.toLowerCase() == Strings.success) {
-          messages.addAll(model.data?.messages?.data ?? []);
+          final loadedMessages = model.data?.messages?.data ?? <MessagesData>[];
+          if (requestedPage == 1) {
+            messages
+              ..clear()
+              ..addAll(loadedMessages);
+          } else {
+            final existingIds = messages.map((message) => message.id).whereType<String>().toSet();
+            messages.addAll(loadedMessages.where((message) => message.id == null || existingIds.add(message.id!)));
+          }
+          page = requestedPage;
           contact = model.data?.contact;
           imagePath = model.data?.profilePath ?? "";
           mediaPath = model.data?.mediaBasePath ?? "";
@@ -131,33 +154,32 @@ class ChatController extends GetxController {
       } else {
         CustomSnackBar.error(errorList: [responseModal.message]);
       }
-      if (page == 1) {
-        isLoading = false;
-        update(['chat_screen_main', 'recording_area']);
-      } else {
-        nextPageLoading = false;
-        update(['chat_screen_main', 'recording_area']);
-      }
     } catch (e) {
       printE(e.toString());
-      if (page == 0) {
-        isLoading = false;
-        update(['chat_screen_main', 'recording_area']);
-      } else {
-        nextPageLoading = false;
-        update(['chat_screen_main', 'recording_area']);
-      }
+    } finally {
+      _isFetchingChats = false;
+      isLoading = false;
+      nextPageLoading = false;
+      update(['chat_screen_main', 'recording_area']);
     }
   }
 
   String unseenMessageCount = "";
+  bool _isMarkingMessagesAsSeen = false;
+
   Future<void> seenMessage() async {
+    if (_isMarkingMessagesAsSeen || conversationId.trim().isEmpty) return;
+
+    _isMarkingMessagesAsSeen = true;
     try {
       final responseModal = await repo.seenMessageRepo(conversationId);
       if (responseModal.statusCode == 200) {
         SeenMessageResponseModel model = SeenMessageResponseModel.fromJson(responseModal.responseJson);
         if (model.status?.toLowerCase() == Strings.success) {
-          unseenMessageCount = model.data?.unseenMessageCount ?? "";
+          unseenMessageCount = model.data?.unseenMessageCount ?? "0";
+          if (Get.isRegistered<HomeController>()) {
+            Get.find<HomeController>().updateConversationUnseenCount(conversationId, unseenMessageCount);
+          }
         } else {
           CustomSnackBar.error(errorList: model.message ?? [Strings.somethingWentWrong]);
         }
@@ -166,16 +188,19 @@ class ChatController extends GetxController {
       }
     } catch (e) {
       printE(e.toString());
+    } finally {
+      _isMarkingMessagesAsSeen = false;
     }
   }
 
   String searchQuery = '';
 
   void scrollListener() {
-    if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
-      if (hasNext()) {
-        getChatsData();
-      }
+    if (!scrollController.hasClients || _isFetchingChats || isLoading || nextPageLoading || !hasNext()) return;
+
+    final position = scrollController.position;
+    if (position.pixels >= position.maxScrollExtent - 200) {
+      getChatsData();
     }
   }
 
@@ -185,13 +210,68 @@ class ChatController extends GetxController {
     return nextPageUrl.isNotEmpty && nextPageUrl != 'null' ? true : false;
   }
 
+  bool get isNearLatestMessage {
+    if (!scrollController.hasClients) return true;
+    return scrollController.position.pixels <= 120;
+  }
+
+  void scrollToLatestMessage() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!scrollController.hasClients) return;
+      scrollController.animateTo(
+        scrollController.position.minScrollExtent,
+        duration: const Duration(milliseconds: 280),
+        curve: Curves.easeOut,
+      );
+    });
+    // addPostFrameCallback alone does not request a new frame.
+    WidgetsBinding.instance.ensureVisualUpdate();
+  }
+
   bool sendingMessage = false;
-  void sendMessage({String? chatId, int? index}) async {
+
+  /// Inserts a new chat message only when neither its database ID nor its
+  /// WhatsApp message ID is already present in the visible conversation.
+  bool insertMessageIfAbsent(MessagesData message) {
+    final messageId = message.id;
+    final whatsappMessageId = message.whatsappMessageId;
+    final existingIndex = messages.indexWhere(
+      (existing) =>
+          (messageId != null && messageId.isNotEmpty && existing.id == messageId) ||
+          (whatsappMessageId != null &&
+              whatsappMessageId.isNotEmpty &&
+              existing.whatsappMessageId == whatsappMessageId),
+    );
+
+    if (existingIndex != -1) {
+      // Video uploads are slow enough for the realtime event to arrive before
+      // the send response. Preserve one item and merge missing reply data.
+      messages[existingIndex].replayTo ??= message.replayTo;
+      return false;
+    }
+
+    messages.insert(0, message);
+    return true;
+  }
+
+  void sendMessage({String? id, String? chatId, int? index}) async {
+    if (sendingMessage) return;
+    if (chatId == null && chatController.text.trim().isEmpty && selectedFile == null) {
+      return;
+    }
+
     sendingMessage = true;
     update(['chat_screen_main', 'recording_area']);
+    // Keep the selected reply until the request finishes. The API response for a
+    // newly sent message may not contain `reply_to`, even though it is returned
+    // after the conversation is loaded again.
+    final pendingReply = replyingTo == null ? null : MessageReplayTo.fromJson(replyingTo!.toJson());
     try {
       MessageModel messageModel = MessageModel(
         chatId: conversationId,
+        // The backend expects the replied message's main database ID in
+        // `wa_message_id` (see ChatRepo.sendMessageRepo).
+        id: pendingReply?.id ?? id,
         message: chatController.text,
         file: selectedFile,
       );
@@ -205,11 +285,14 @@ class ChatController extends GetxController {
             message.status = AppStatus.DELIVERED;
           }
 
-          if (responseModel.data?.message != null) {
-            messages.insert(0, responseModel.data?.message ?? MessagesData());
+          final sentMessage = responseModel.data?.message;
+          if (sentMessage != null) {
+            sentMessage.replayTo ??= pendingReply;
+            insertMessageIfAbsent(sentMessage);
           }
           chatController.clear();
           selectedFile = null;
+          clearReply();
           recordedFilePath = null; // Clear this too
           isPreviewing = false;
           update(['chat_screen_main', 'recording_area']);
@@ -358,6 +441,68 @@ class ChatController extends GetxController {
   void changeSelectedIndex(int index) {
     selectedIndex = index;
     update(['chat_screen_main', 'recording_area']);
+  }
+
+  void startReply(MessagesData message) {
+    replyingTo = MessageReplayTo.fromJson(message.toJson());
+    activeReplyDragMessageId = null;
+    activeReplyDragOffset = 0;
+    update(['chat_screen_main', 'recording_area']);
+  }
+
+  void clearReply() {
+    replyingTo = null;
+    activeReplyDragMessageId = null;
+    activeReplyDragOffset = 0;
+    update(['chat_screen_main', 'recording_area']);
+  }
+
+  void updateReplyDrag(String messageId, double offset) {
+    activeReplyDragMessageId = messageId;
+    activeReplyDragOffset = offset.clamp(0, 72);
+    update(['chat_screen_main']);
+  }
+
+  void finishReplyDrag(MessagesData message) {
+    final shouldReply = activeReplyDragOffset >= 44;
+    activeReplyDragMessageId = null;
+    activeReplyDragOffset = 0;
+    if (shouldReply) {
+      startReply(message);
+    } else {
+      update(['chat_screen_main']);
+    }
+  }
+
+  int findRepliedMessageIndex(MessageReplayTo? replyTo) {
+    if (replyTo == null) return -1;
+
+    final repliedMessageId = replyTo.id?.trim();
+    final repliedWhatsappMessageId = replyTo.whatsappMessageId?.trim();
+
+    return messages.indexWhere((message) {
+      final messageId = message.id?.trim();
+      final whatsappMessageId = message.whatsappMessageId?.trim();
+
+      return (repliedMessageId != null &&
+              repliedMessageId.isNotEmpty &&
+              messageId == repliedMessageId) ||
+          (repliedWhatsappMessageId != null &&
+              repliedWhatsappMessageId.isNotEmpty &&
+              whatsappMessageId == repliedWhatsappMessageId);
+    });
+  }
+
+  void highlightMessage(String? messageId) {
+    if (messageId == null || messageId.isEmpty) return;
+    highlightedMessageId = messageId;
+    update(['chat_screen_main']);
+    Future.delayed(const Duration(seconds: 2), () {
+      if (highlightedMessageId == messageId) {
+        highlightedMessageId = null;
+        update(['chat_screen_main']);
+      }
+    });
   }
 
   // ─── Audio Recording ───────────────────────────────────────────────
@@ -538,6 +683,7 @@ class ChatController extends GetxController {
   void onClose() {
     _recordingTimer?.cancel();
     _audioRecorder.dispose();
+    scrollController.dispose();
     super.onClose();
   }
 }

@@ -94,9 +94,9 @@ class ContactList {
 
 class Template {
   int? id;
-  int? userId;
+  String? userId;
   String? whatsappTemplateId;
-  int? whatsappAccountId;
+  String? whatsappAccountId;
   String? name;
   Header? header;
   String? headerFormat;
@@ -104,11 +104,11 @@ class Template {
   String? body;
   List<Button>? buttons;
   String? footer;
-  int? addSecurityRecommendation;
+  String? addSecurityRecommendation;
   dynamic codeExpirationMinutes;
-  int? categoryId;
-  int? languageId;
-  int? status;
+  String? categoryId;
+  String? languageId;
+  String? status;
   dynamic rejectedReason;
   String? createdAt;
   String? updatedAt;
@@ -141,24 +141,24 @@ class Template {
 
   factory Template.fromJson(Map<String, dynamic> json) => Template(
     id: json["id"],
-    userId: json["user_id"],
-    whatsappTemplateId: json["whatsapp_template_id"],
-    whatsappAccountId: json["whatsapp_account_id"],
-    name: json["name"],
+    userId: json["user_id"]?.toString(),
+    whatsappTemplateId: json["whatsapp_template_id"]?.toString(),
+    whatsappAccountId: json["whatsapp_account_id"]?.toString(),
+    name: json["name"]?.toString(),
     header: json["header"] == null ? null : Header.fromJson(json["header"]),
     headerFormat: json["header_format"],
     headerMedia: json["header_media"],
     body: json["body"],
     buttons: json["buttons"] == null ? [] : List<Button>.from(json["buttons"]!.map((x) => Button.fromJson(x))),
     footer: json["footer"],
-    addSecurityRecommendation: json["add_security_recommendation"],
+    addSecurityRecommendation: json["add_security_recommendation"]?.toString(),
     codeExpirationMinutes: json["code_expiration_minutes"],
-    categoryId: json["category_id"],
-    languageId: json["language_id"],
-    status: json["status"],
+    categoryId: json["category_id"]?.toString(),
+    languageId: json["language_id"]?.toString(),
+    status: json["status"]?.toString(),
     rejectedReason: json["rejected_reason"],
-    createdAt: json["created_at"],
-    updatedAt: json["updated_at"],
+    createdAt: json["created_at"]?.toString(),
+    updatedAt: json["updated_at"]?.toString(),
   );
 
   Map<String, dynamic> toJson() => {
@@ -218,7 +218,7 @@ class Header {
 
 class WhatsappAccount {
   int? id;
-  int? userId;
+  String? userId;
   String? businessName;
   String? whatsappBusinessAccountId;
   String? phoneNumber;
@@ -226,7 +226,7 @@ class WhatsappAccount {
   String? accessToken;
   String? codeVerificationStatus;
   String? metaAppId;
-  int? isDefault;
+  String? isDefault;
   String? createdAt;
   String? updatedAt;
 
@@ -251,17 +251,17 @@ class WhatsappAccount {
 
   factory WhatsappAccount.fromJson(Map<String, dynamic> json) => WhatsappAccount(
     id: json["id"],
-    userId: json["user_id"],
-    businessName: json["business_name"],
-    whatsappBusinessAccountId: json["whatsapp_business_account_id"],
-    phoneNumber: json["phone_number"],
-    phoneNumberId: json["phone_number_id"],
-    accessToken: json["access_token"],
-    codeVerificationStatus: json["code_verification_status"],
-    metaAppId: json["meta_app_id"],
-    isDefault: json["is_default"],
-    createdAt: json["created_at"],
-    updatedAt: json["updated_at"],
+    userId: json["user_id"]?.toString(),
+    businessName: json["business_name"]?.toString(),
+    whatsappBusinessAccountId: json["whatsapp_business_account_id"]?.toString(),
+    phoneNumber: json["phone_number"]?.toString(),
+    phoneNumberId: json["phone_number_id"]?.toString(),
+    accessToken: json["access_token"]?.toString(),
+    codeVerificationStatus: json["code_verification_status"]?.toString(),
+    metaAppId: json["meta_app_id"]?.toString(),
+    isDefault: json["is_default"]?.toString(),
+    createdAt: json["created_at"]?.toString(),
+    updatedAt: json["updated_at"]?.toString(),
   );
 
   Map<String, dynamic> toJson() => {

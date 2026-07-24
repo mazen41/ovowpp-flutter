@@ -571,6 +571,7 @@ class MyStrings {
   static const String approved = "Approved";
   static const String succeed = "Succeed";
   static const String pending = "Pending";
+  static const String important = "Important";
   static const String rejected = "Rejected";
   static const String transactionType = "Transaction Type";
   static const String remarkType = "Remark Type";

@@ -13,36 +13,32 @@ class OTPFieldWidget extends StatelessWidget {
     ThemeData theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: Dimensions.space30),
-      child: PinCodeTextField(
-        appContext: context,
-        pastedTextStyle: theme.textTheme.labelMedium?.copyWith(color: MyColor.getBodyTextColor()),
+      child: MaterialPinField(
         length: 6,
-        textStyle: theme.textTheme.labelMedium?.copyWith(color: MyColor.getBodyTextColor()),
         obscureText: false,
-        obscuringCharacter: '*',
         blinkWhenObscuring: false,
-        animationType: AnimationType.fade,
-        pinTheme: PinTheme(
-          shape: PinCodeFieldShape.box,
+        theme: MaterialPinTheme(
+          shape: MaterialPinShape.outlined,
+          cellSize: const Size(40, 40),
+          spacing: 8,
           borderWidth: 1,
+          focusedBorderWidth: 1,
           borderRadius: BorderRadius.circular(5),
-          fieldHeight: 40,
-          fieldWidth: 40,
-          inactiveColor: MyColor.getBorderColor(),
-          inactiveFillColor: MyColor.lightTextFieldFillColor.withValues(alpha: .80),
-          activeFillColor: MyColor.getScaffoldBackgroundColor(),
-          activeColor: MyColor.getPrimaryColor(),
-          selectedFillColor: MyColor.getScaffoldBackgroundColor(),
-          selectedColor: MyColor.getPrimaryColor(),
+          borderColor: MyColor.getBorderColor(),
+          fillColor: MyColor.lightTextFieldFillColor.withValues(alpha: .80),
+          filledFillColor: MyColor.getScaffoldBackgroundColor(),
+          filledBorderColor: MyColor.getPrimaryColor(),
+          focusedFillColor: MyColor.getScaffoldBackgroundColor(),
+          focusedBorderColor: MyColor.getPrimaryColor(),
+          textStyle: theme.textTheme.labelMedium?.copyWith(color: MyColor.getBodyTextColor()),
+          obscuringCharacter: '*',
+          cursorColor: MyColor.black,
+          entryAnimation: MaterialPinAnimation.fade,
+          animationDuration: const Duration(milliseconds: 100),
         ),
-        cursorColor: MyColor.black,
-        animationDuration: const Duration(milliseconds: 100),
-        enableActiveFill: true,
         keyboardType: TextInputType.number,
-        beforeTextPaste: (text) {
-          return true;
-        },
-        onChanged: (value) => onChanged!(value),
+        enablePaste: true,
+        onChanged: onChanged,
       ),
     );
   }

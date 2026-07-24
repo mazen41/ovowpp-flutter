@@ -122,6 +122,7 @@ class MessagesData {
   String? id;
   String? userId;
   String? whatsappMessageId;
+  MessageReplayTo? replayTo;
   String? whatsappAccountId;
   String? campaignId;
   String? chatbotId;
@@ -145,6 +146,7 @@ class MessagesData {
     this.id,
     this.userId,
     this.whatsappMessageId,
+    this.replayTo,
     this.whatsappAccountId,
     this.campaignId,
     this.chatbotId,
@@ -169,6 +171,7 @@ class MessagesData {
     id: json["id"]?.toString(),
     userId: json["user_id"]?.toString(),
     whatsappMessageId: json["whatsapp_message_id"]?.toString(),
+    replayTo: json["reply_to"] == null ? null : MessageReplayTo.fromJson(json["reply_to"]),
     whatsappAccountId: json["whatsapp_account_id"]?.toString(),
     campaignId: json["campaign_id"]?.toString(),
     chatbotId: json["chatbot_id"]?.toString(),
@@ -193,6 +196,7 @@ class MessagesData {
     "id": id,
     "user_id": userId,
     "whatsapp_message_id": whatsappMessageId,
+    "reply_to": replayTo?.toJson(),
     "whatsapp_account_id": whatsappAccountId,
     "campaign_id": campaignId,
     "chatbot_id": chatbotId,
@@ -209,6 +213,162 @@ class MessagesData {
     "media_path": mediaPath,
     "media_filename": mediaFilename,
     "status": status,
+    "created_at": createdAt,
+    "updated_at": updatedAt,
+  };
+}
+
+class MessageReplayTo {
+  String? id;
+  String? userId;
+  String? whatsappMessageId;
+  String? replyTo;
+  String? whatsappAccountId;
+  String? campaignId;
+  String? chatbotId;
+  String? templateId;
+  String? conversationId;
+  String? agentId;
+  String? ctaUrlId;
+  String? interactiveListId;
+  String? message;
+  String? type;
+  String? messageType;
+  String? mediaId;
+  String? mediaUrl;
+  String? mediaType;
+  String? mimeType;
+  String? mediaCaption;
+  String? mediaFilename;
+  String? mediaPath;
+  String? location;
+  String? productData;
+  String? listReply;
+  String? sendAt;
+  String? status;
+  String? ordering;
+  String? aiReply;
+  String? flowId;
+  String? flowNodeId;
+  String? errorMessage;
+  String? channel;
+  String? createdAt;
+  String? updatedAt;
+
+  MessageReplayTo({
+    this.id,
+    this.userId,
+    this.whatsappMessageId,
+    this.replyTo,
+    this.whatsappAccountId,
+    this.campaignId,
+    this.chatbotId,
+    this.templateId,
+    this.conversationId,
+    this.agentId,
+    this.ctaUrlId,
+    this.interactiveListId,
+    this.message,
+    this.type,
+    this.messageType,
+    this.mediaId,
+    this.mediaUrl,
+    this.mediaType,
+    this.mimeType,
+    this.mediaCaption,
+    this.mediaFilename,
+    this.mediaPath,
+    this.location,
+    this.productData,
+    this.listReply,
+    this.sendAt,
+    this.status,
+    this.ordering,
+    this.aiReply,
+    this.flowId,
+    this.flowNodeId,
+    this.errorMessage,
+    this.channel,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory MessageReplayTo.fromRawJson(String str) => MessageReplayTo.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory MessageReplayTo.fromJson(Map<String, dynamic> json) => MessageReplayTo(
+    id: json["id"]?.toString(),
+    userId: json["user_id"]?.toString(),
+    whatsappMessageId: json["whatsapp_message_id"]?.toString(),
+    replyTo: json["reply_to"]?.toString(),
+    whatsappAccountId: json["whatsapp_account_id"]?.toString(),
+    campaignId: json["campaign_id"]?.toString(),
+    chatbotId: json["chatbot_id"]?.toString(),
+    templateId: json["template_id"]?.toString(),
+    conversationId: json["conversation_id"]?.toString(),
+    agentId: json["agent_id"]?.toString(),
+    ctaUrlId: json["cta_url_id"]?.toString(),
+    interactiveListId: json["interactive_list_id"]?.toString(),
+    message: json["message"]?.toString(),
+    type: json["type"]?.toString(),
+    messageType: json["message_type"]?.toString(),
+    mediaId: json["media_id"]?.toString(),
+    mediaUrl: json["media_url"]?.toString(),
+    mediaType: json["media_type"]?.toString(),
+    mimeType: json["mime_type"]?.toString(),
+    mediaCaption: json["media_caption"]?.toString(),
+    mediaFilename: json["media_filename"]?.toString(),
+    mediaPath: json["media_path"]?.toString(),
+    location: json["location"]?.toString(),
+    productData: json["product_data"]?.toString(),
+    listReply: json["list_reply"]?.toString(),
+    sendAt: json["send_at"]?.toString(),
+    status: json["status"]?.toString(),
+    ordering: json["ordering"]?.toString(),
+    aiReply: json["ai_reply"]?.toString(),
+    flowId: json["flow_id"]?.toString(),
+    flowNodeId: json["flow_node_id"]?.toString(),
+    errorMessage: json["error_message"]?.toString(),
+    channel: json["channel"]?.toString(),
+    createdAt: json["created_at"]?.toString(),
+    updatedAt: json["updated_at"]?.toString(),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "user_id": userId,
+    "whatsapp_message_id": whatsappMessageId,
+    "reply_to": replyTo,
+    "whatsapp_account_id": whatsappAccountId,
+    "campaign_id": campaignId,
+    "chatbot_id": chatbotId,
+    "template_id": templateId,
+    "conversation_id": conversationId,
+    "agent_id": agentId,
+    "cta_url_id": ctaUrlId,
+    "interactive_list_id": interactiveListId,
+    "message": message,
+    "type": type,
+    "message_type": messageType,
+    "media_id": mediaId,
+    "media_url": mediaUrl,
+    "media_type": mediaType,
+    "mime_type": mimeType,
+    "media_caption": mediaCaption,
+    "media_filename": mediaFilename,
+    "media_path": mediaPath,
+    "location": location,
+    "product_data": productData,
+    "list_reply": listReply,
+    "send_at": sendAt,
+    "status": status,
+    "ordering": ordering,
+    "ai_reply": aiReply,
+    "flow_id": flowId,
+    "flow_node_id": flowNodeId,
+    "error_message": errorMessage,
+    "channel": channel,
     "created_at": createdAt,
     "updated_at": updatedAt,
   };
