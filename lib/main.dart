@@ -1,4 +1,5 @@
-import 'dart:io';
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ovowpp/core/theme/my_theme.dart';
@@ -20,8 +21,10 @@ Future<void> main() async {
   MyUtils().stopLandscape();
   // init shared preference
   await SharedPreferenceService.init();
-  // inti fcm services
-  await PushNotificationService().setupInteractedMessage();
+  // inti fcm services - skip on web since Firebase is not configured for web
+  if (!kIsWeb) {
+    await PushNotificationService().setupInteractedMessage();
+  }
   //Api inits
   ApiService.init();
   //Dependency injection
