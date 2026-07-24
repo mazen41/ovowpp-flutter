@@ -97,9 +97,19 @@ class ChatRepo {
   }
 
   /// Send an approved message template.
-  Future<ResponseModel> sendTemplateMessageRepo(String conversationId, String templateId) async {
+  ///
+  /// [mobileCode] and [mobile] must belong to the contact of the currently
+  /// open conversation - the backend resolves/creates the recipient purely
+  /// from these two fields, so passing the wrong number sends the template
+  /// to the wrong (or a brand new) contact.
+  Future<ResponseModel> sendTemplateMessageRepo(
+    String conversationId,
+    String templateId, {
+    required String mobileCode,
+    required String mobile,
+  }) async {
     final url = '${UrlContainer.baseUrl}${UrlContainer.sendTemplateMessageUrl}';
-    
+
     // Validate required parameters
     if (conversationId.isEmpty) {
       return ResponseModel(
@@ -109,7 +119,7 @@ class ChatRepo {
         responseJson: {'status': 'error', 'message': ['Conversation ID is required']},
       );
     }
-    
+
     if (templateId.isEmpty) {
       return ResponseModel(
         isSuccess: false,
@@ -118,16 +128,28 @@ class ChatRepo {
         responseJson: {'status': 'error', 'message': ['Template ID is required']},
       );
     }
-    
+
+    if (mobileCode.isEmpty || mobile.isEmpty) {
+      return ResponseModel(
+        isSuccess: false,
+        message: 'Recipient mobile number is required',
+        statusCode: 400,
+        responseJson: {'status': 'error', 'message': ['Recipient mobile number is required']},
+      );
+    }
+
     final requestData = {
       'conversation_id': conversationId,
       'template_id': templateId,
+      // Left empty on purpose: the backend now auto-fills header/body
+      // parameters from the template's stored media/example values so no
+      // user input is required (see WhatsAppLib::sendTemplateMessage).
       'header_variables': [],
       'body_variables': [],
-      'mobile_code': '967', // Default Yemen country code
-      'mobile': '784440991', // Default phone number from your WhatsApp account
+      'mobile_code': mobileCode,
+      'mobile': mobile,
     };
-    
+
     printX('Sending template with data: $requestData');
     return ApiService.postRequest(url, requestData);
   }

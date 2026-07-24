@@ -789,11 +789,23 @@ class ChatController extends GetxController {
       CustomSnackBar.error(errorList: ['Template ID is missing']);
       return;
     }
-    
+
+    final recipientMobileCode = contact?.mobileCode ?? '';
+    final recipientMobile = contact?.mobile ?? '';
+    if (recipientMobileCode.isEmpty || recipientMobile.isEmpty) {
+      CustomSnackBar.error(errorList: ['Contact number is missing for this conversation']);
+      return;
+    }
+
     sendingMessage = true;
     update(['chat_screen_main', 'recording_area']);
     try {
-      final res = await repo.sendTemplateMessageRepo(conversationId, templateId);
+      final res = await repo.sendTemplateMessageRepo(
+        conversationId,
+        templateId,
+        mobileCode: recipientMobileCode,
+        mobile: recipientMobile,
+      );
       printX('Template response: ${res.responseJson}');
       
       if (res.statusCode == 200 &&
