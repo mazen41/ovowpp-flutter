@@ -957,7 +957,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return InkWell(
       onDoubleTap: () {
         Clipboard.setData(ClipboardData(text: message));
-        CustomSnackBar.success(successList: [MyStrings.messageCopiedToClipBoard.tr]);
+        CustomSnackBar.success(successList: [Strings.messageCopiedToClipBoard.tr]);
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
