@@ -95,10 +95,17 @@ class ApiService {
           Error Data: ${error.response?.data}
           """);
 
-          // Handle specific error cases, e.g., unauthorized
+          // Handle 401 only for authenticated routes (not public endpoints like social-login)
           if (error.response?.statusCode == 401) {
-            printE('Unauthorized, redirecting to login...');
-            AuthMiddleware().handleResponse(null);
+            final path = error.requestOptions.path;
+            final isPublicRoute = path.contains('social-login') ||
+                path.contains('login') ||
+                path.contains('register') ||
+                path.contains('password');
+            if (!isPublicRoute) {
+              printE('Unauthorized, redirecting to login...');
+              AuthMiddleware().handleResponse(null);
+            }
           }
 
           return handler.next(error); // Continue the error handling
@@ -142,11 +149,16 @@ class ApiService {
       );
     } on DioException catch (e) {
       printE('POST request error: ${e.response?.statusCode}, ${e.message}');
+      // Try to parse JSON body from error response (e.g. 401 with JSON body)
+      dynamic responseJson = e.response?.data;
+      if (responseJson == null) {
+        responseJson = {'status': 'error', 'message': [e.message ?? 'Error occurred']};
+      }
       return ResponseModel(
         isSuccess: false,
         message: e.message ?? 'Error occurred',
         statusCode: e.response?.statusCode ?? 500,
-        responseJson: e.response?.data.toString() ?? '',
+        responseJson: responseJson,
       );
     }
   }

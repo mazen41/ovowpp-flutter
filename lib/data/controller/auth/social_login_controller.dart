@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:ovowpp/app/packages/signin_with_linkdin/signin_with_linkedin.dart';
@@ -182,10 +182,24 @@ class SocialLoginController extends GetxController {
           CustomSnackBar.error(errorList: loginModel.message ?? [Strings.loginFailedTryAgain.tr]);
         }
       } else {
-        CustomSnackBar.error(errorList: [responseModel.message]);
+        // Extract a human-readable message from the response body if available
+        String errorMsg = Strings.loginFailedTryAgain.tr;
+        try {
+          final json = responseModel.responseJson;
+          if (json is Map) {
+            final msgs = json['message'];
+            if (msgs is List && msgs.isNotEmpty) {
+              errorMsg = msgs.first.toString();
+            } else if (msgs is String) {
+              errorMsg = msgs;
+            }
+          }
+        } catch (_) {}
+        CustomSnackBar.error(errorList: [errorMsg]);
       }
     } catch (e) {
       if (kDebugMode) print(e.toString());
+      CustomSnackBar.error(errorList: [Strings.loginFailedTryAgain.tr]);
     }
   }
 
