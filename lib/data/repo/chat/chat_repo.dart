@@ -6,26 +6,26 @@ import '../../model/global/response_model/response_model.dart';
 import '../../services/api_service.dart';
 
 class ChatRepo {
+  // ─── Fetch messages ────────────────────────────────────────────────────────
+
   Future<ResponseModel> getChatsDataRepo(String conversationId, String page, String search) async {
     String url = '${UrlContainer.baseUrl}${UrlContainer.chatsDataEndPoint}$conversationId?page=$page&search=$search';
-    ResponseModel responseModel = await ApiService.getRequest(url);
-
-    return responseModel;
+    return ApiService.getRequest(url);
   }
+
+  /// Fetch inbox metadata: templates, CTA URLs, interactive lists.
+  Future<ResponseModel> getInboxDataRepo() async {
+    return ApiService.getRequest('${UrlContainer.baseUrl}${UrlContainer.inboxDataUrl}');
+  }
+
+  // ─── Message status ────────────────────────────────────────────────────────
 
   Future<ResponseModel> seenMessageRepo(String conversationId) async {
     final url = '${UrlContainer.baseUrl}${UrlContainer.seenMessageUrl}/$conversationId';
-    final responseModel = await ApiService.getRequest(url);
-
-    return responseModel;
+    return ApiService.getRequest(url);
   }
 
-  Future<ResponseModel> downloadFileRepo(String mediaId, String filePath) async {
-    String url = '${UrlContainer.baseUrl}${UrlContainer.downloadMediaDataEndPoint}$mediaId';
-    ResponseModel responseModel = await ApiService.downloadFile(url, filePath);
-
-    return responseModel;
-  }
+  // ─── Send message ──────────────────────────────────────────────────────────
 
   Future<ResponseModel> sendMessageRepo(MessageModel messageModel, String? chatId) async {
     final Map<String, dynamic> map = {};
@@ -54,7 +54,9 @@ class ChatRepo {
           filePath.endsWith('.gif') ||
           filePath.endsWith('.webp')) {
         key = 'image';
-      } else if (filePath.endsWith('.mp4')) {
+      } else if (filePath.endsWith('.mp4') ||
+          filePath.endsWith('.mov') ||
+          filePath.endsWith('.webm')) {
         key = 'video';
       } else if (filePath.endsWith('.ogg') ||
           filePath.endsWith('.opus') ||
@@ -82,4 +84,71 @@ class ChatRepo {
     printW(response.responseJson);
     return response;
   }
+
+  /// Send an approved message template.
+  Future<ResponseModel> sendTemplateMessageRepo(String conversationId, String templateId) async {
+    final url = '${UrlContainer.baseUrl}${UrlContainer.sendTemplateMessageUrl}';
+    return ApiService.postRequest(url, {
+      'conversation_id': conversationId,
+      'template_id': templateId,
+    });
+  }
+
+  /// Send a CTA URL message.
+  Future<ResponseModel> sendCtaUrlMessageRepo(String conversationId, String ctaUrlId) async {
+    final url = '${UrlContainer.baseUrl}${UrlContainer.sendMessageUrl}';
+    return ApiService.postRequest(url, {
+      'conversation_id': conversationId,
+      'cta_url_id': ctaUrlId,
+    });
+  }
+
+  /// Send an interactive list message.
+  Future<ResponseModel> sendInteractiveListMessageRepo(String conversationId, String listId) async {
+    final url = '${UrlContainer.baseUrl}${UrlContainer.sendMessageUrl}';
+    return ApiService.postRequest(url, {
+      'conversation_id': conversationId,
+      'interactive_list_id': listId,
+    });
+  }
+
+  /// Send a location message.
+  Future<ResponseModel> sendLocationMessageRepo(
+    String conversationId,
+    double latitude,
+    double longitude, {
+    String name = '',
+    String address = '',
+  }) async {
+    final url = '${UrlContainer.baseUrl}${UrlContainer.sendMessageUrl}';
+    return ApiService.postRequest(url, {
+      'conversation_id': conversationId,
+      'latitude': latitude.toString(),
+      'longitude': longitude.toString(),
+      'name': name,
+      'address': address,
+    });
+  }
+
+  // ─── Media ─────────────────────────────────────────────────────────────────
+
+  Future<ResponseModel> downloadFileRepo(String mediaId, String filePath) async {
+    String url = '${UrlContainer.baseUrl}${UrlContainer.downloadMediaDataEndPoint}$mediaId';
+    return ApiService.downloadFile(url, filePath);
+  }
+
+  // ─── Conversation management ───────────────────────────────────────────────
+
+  /// Clear all messages in a conversation (permanent).
+  Future<ResponseModel> clearChatRepo(String conversationId) async {
+    final url = '${UrlContainer.baseUrl}${UrlContainer.clearChatUrl}$conversationId';
+    return ApiService.postRequest(url, {});
+  }
+
+  /// Block or unblock a contact.
+  Future<ResponseModel> blockContactRepo(String contactId, bool isBlocked) async {
+    final url = '${UrlContainer.baseUrl}${UrlContainer.blockContactUrl}$contactId';
+    return ApiService.postRequest(url, {'is_blocked': isBlocked ? '1' : '0'});
+  }
 }
+

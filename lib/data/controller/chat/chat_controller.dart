@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/widgets.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -42,10 +44,67 @@ class ChatController extends GetxController {
 
   String? _tempDirPath;
 
+  // ─── Inbox metadata (templates / CTA URLs / interactive lists) ────────────
+  List<Map<String, dynamic>> templates = [];
+  List<Map<String, dynamic>> ctaUrls = [];
+  List<Map<String, dynamic>> interactiveLists = [];
+  bool loadingTemplates = false;
+
+  // ─── Contact blocked state ────────────────────────────────────────────────
+  bool isBlocked = false;
+
+  // ─── Auto-retry queue ─────────────────────────────────────────────────────
+  final List<Map<String, dynamic>> _retryQueue = [];
+  StreamSubscription<List<ConnectivityResult>>? _connectivitySubscription;
+  bool _isRetrying = false;
+
   @override
   void onInit() {
     super.onInit();
     _cacheTempDir();
+    _setupConnectivityListener();
+  }
+
+  void _setupConnectivityListener() {
+    _connectivitySubscription = Connectivity()
+        .onConnectivityChanged
+        .listen((List<ConnectivityResult> results) {
+      final hasConnection = results.any((r) => r != ConnectivityResult.none);
+      if (hasConnection && _retryQueue.isNotEmpty) {
+        _flushRetryQueue();
+      }
+    });
+  }
+
+  Future<void> _flushRetryQueue() async {
+    if (_isRetrying || _retryQueue.isEmpty) return;
+    _isRetrying = true;
+    while (_retryQueue.isNotEmpty) {
+      final item = _retryQueue.first;
+      try {
+        final model = MessageModel(
+          chatId: conversationId,
+          message: item['message'] as String? ?? '',
+          file: item['file'] as File?,
+          id: item['replyId'] as String?,
+        );
+        final response = await repo.sendMessageRepo(model, null);
+        if (response.statusCode == 200) {
+          _retryQueue.removeAt(0);
+          final parsed = SentMessageResponseModel.fromJson(response.responseJson);
+          if (parsed.status?.toLowerCase() == AppStatus.success) {
+            final sentMsg = parsed.data?.message;
+            if (sentMsg != null) insertMessageIfAbsent(sentMsg);
+            update(['chat_screen_main', 'recording_area']);
+          }
+        } else {
+          break; // still offline or error, stop flushing
+        }
+      } catch (_) {
+        break;
+      }
+    }
+    _isRetrying = false;
   }
 
   Future<void> _cacheTempDir() async {
@@ -262,15 +321,10 @@ class ChatController extends GetxController {
 
     sendingMessage = true;
     update(['chat_screen_main', 'recording_area']);
-    // Keep the selected reply until the request finishes. The API response for a
-    // newly sent message may not contain `reply_to`, even though it is returned
-    // after the conversation is loaded again.
     final pendingReply = replyingTo == null ? null : MessageReplayTo.fromJson(replyingTo!.toJson());
     try {
       MessageModel messageModel = MessageModel(
         chatId: conversationId,
-        // The backend expects the replied message's main database ID in
-        // `wa_message_id` (see ChatRepo.sendMessageRepo).
         id: pendingReply?.id ?? id,
         message: chatController.text,
         file: selectedFile,
@@ -280,11 +334,7 @@ class ChatController extends GetxController {
         SentMessageResponseModel responseModel = SentMessageResponseModel.fromJson(model.responseJson);
         if (responseModel.status?.toLowerCase() == AppStatus.success) {
           final message = messages.firstWhereOrNull((msg) => msg.id == chatId);
-
-          if (message != null) {
-            message.status = AppStatus.DELIVERED;
-          }
-
+          if (message != null) message.status = AppStatus.DELIVERED;
           final sentMessage = responseModel.data?.message;
           if (sentMessage != null) {
             sentMessage.replayTo ??= pendingReply;
@@ -293,11 +343,13 @@ class ChatController extends GetxController {
           chatController.clear();
           selectedFile = null;
           clearReply();
-          recordedFilePath = null; // Clear this too
+          recordedFilePath = null;
           isPreviewing = false;
           update(['chat_screen_main', 'recording_area']);
         } else {
           CustomSnackBar.error(errorList: responseModel.message ?? [Strings.requestFail.tr]);
+          // Queue for retry on connectivity restored
+          _queueFailedMessage(chatController.text, selectedFile, pendingReply?.id);
         }
         sendingMessage = false;
         update(['chat_screen_main', 'recording_area']);
@@ -305,11 +357,22 @@ class ChatController extends GetxController {
         sendingMessage = false;
         update(['chat_screen_main', 'recording_area']);
         CustomSnackBar.error(errorList: [model.message]);
+        // Queue for retry
+        _queueFailedMessage(chatController.text, selectedFile, pendingReply?.id);
       }
     } catch (e) {
       sendingMessage = false;
       update(['chat_screen_main', 'recording_area']);
+      // Queue for retry on network error
+      _queueFailedMessage(chatController.text, selectedFile, pendingReply?.id);
     }
+  }
+
+  /// Add a failed message to the retry queue (auto-sends when connectivity restores).
+  void _queueFailedMessage(String message, File? file, String? replyId) {
+    if (message.isEmpty && file == null) return;
+    _retryQueue.add({'message': message, 'file': file, 'replyId': replyId});
+    CustomSnackBar.error(errorList: ['Message queued — will send when connection restores.']);
   }
 
   bool downloadingFile = false;
@@ -679,8 +742,196 @@ class ChatController extends GetxController {
     }
   }
 
+  // ─── Inbox data (templates, CTA URLs, interactive lists) ─────────────────
+
+  Future<void> loadInboxData() async {
+    loadingTemplates = true;
+    update(['chat_screen_main']);
+    try {
+      final res = await repo.getInboxDataRepo();
+      if (res.statusCode == 200) {
+        final data = res.responseJson['data'] as Map<String, dynamic>? ?? {};
+        final rawTemplates = data['templates'] as List<dynamic>? ?? [];
+        final rawCtaUrls = data['ctaUrls'] as List<dynamic>? ?? [];
+        final rawLists = data['interactiveLists'] as List<dynamic>? ?? [];
+        templates = rawTemplates.map((e) => Map<String, dynamic>.from(e as Map)).toList();
+        ctaUrls = rawCtaUrls.map((e) => Map<String, dynamic>.from(e as Map)).toList();
+        interactiveLists = rawLists.map((e) => Map<String, dynamic>.from(e as Map)).toList();
+      }
+    } catch (e) {
+      printE('loadInboxData error: $e');
+    } finally {
+      loadingTemplates = false;
+      update(['chat_screen_main']);
+    }
+  }
+
+  // ─── Send template ────────────────────────────────────────────────────────
+
+  Future<void> sendTemplateMessage(String templateId) async {
+    sendingMessage = true;
+    update(['chat_screen_main', 'recording_area']);
+    try {
+      final res = await repo.sendTemplateMessageRepo(conversationId, templateId);
+      if (res.statusCode == 200 &&
+          (res.responseJson['status'] as String?)?.toLowerCase() == AppStatus.success) {
+        final sentMessage = res.responseJson['data']?['message'];
+        if (sentMessage != null) {
+          final msg = MessagesData.fromJson(Map<String, dynamic>.from(sentMessage as Map));
+          insertMessageIfAbsent(msg);
+        }
+        CustomSnackBar.success(successList: ['Template sent successfully']);
+      } else {
+        CustomSnackBar.error(errorList: [(res.responseJson['message'] as List?)?.first?.toString() ?? Strings.somethingWentWrong]);
+      }
+    } catch (e) {
+      CustomSnackBar.error(errorList: [Strings.somethingWentWrong]);
+    } finally {
+      sendingMessage = false;
+      update(['chat_screen_main', 'recording_area']);
+    }
+  }
+
+  // ─── Send CTA URL ─────────────────────────────────────────────────────────
+
+  Future<void> sendCtaUrlMessage(String ctaUrlId) async {
+    sendingMessage = true;
+    update(['chat_screen_main', 'recording_area']);
+    try {
+      final res = await repo.sendCtaUrlMessageRepo(conversationId, ctaUrlId);
+      if (res.statusCode == 200 &&
+          (res.responseJson['status'] as String?)?.toLowerCase() == AppStatus.success) {
+        final sentMessage = res.responseJson['data']?['message'];
+        if (sentMessage != null) {
+          final msg = MessagesData.fromJson(Map<String, dynamic>.from(sentMessage as Map));
+          insertMessageIfAbsent(msg);
+        }
+        CustomSnackBar.success(successList: ['CTA URL sent successfully']);
+      } else {
+        CustomSnackBar.error(errorList: [(res.responseJson['message'] as List?)?.first?.toString() ?? Strings.somethingWentWrong]);
+      }
+    } catch (e) {
+      CustomSnackBar.error(errorList: [Strings.somethingWentWrong]);
+    } finally {
+      sendingMessage = false;
+      update(['chat_screen_main', 'recording_area']);
+    }
+  }
+
+  // ─── Send interactive list ────────────────────────────────────────────────
+
+  Future<void> sendInteractiveListMessage(String listId) async {
+    sendingMessage = true;
+    update(['chat_screen_main', 'recording_area']);
+    try {
+      final res = await repo.sendInteractiveListMessageRepo(conversationId, listId);
+      if (res.statusCode == 200 &&
+          (res.responseJson['status'] as String?)?.toLowerCase() == AppStatus.success) {
+        final sentMessage = res.responseJson['data']?['message'];
+        if (sentMessage != null) {
+          final msg = MessagesData.fromJson(Map<String, dynamic>.from(sentMessage as Map));
+          insertMessageIfAbsent(msg);
+        }
+        CustomSnackBar.success(successList: ['Interactive list sent']);
+      } else {
+        CustomSnackBar.error(errorList: [(res.responseJson['message'] as List?)?.first?.toString() ?? Strings.somethingWentWrong]);
+      }
+    } catch (e) {
+      CustomSnackBar.error(errorList: [Strings.somethingWentWrong]);
+    } finally {
+      sendingMessage = false;
+      update(['chat_screen_main', 'recording_area']);
+    }
+  }
+
+  // ─── Send location ────────────────────────────────────────────────────────
+
+  Future<void> sendCurrentLocation() async {
+    try {
+      final perm = await Geolocator.checkPermission();
+      if (perm == LocationPermission.denied) {
+        final req = await Geolocator.requestPermission();
+        if (req == LocationPermission.denied || req == LocationPermission.deniedForever) {
+          CustomSnackBar.error(errorList: ['Location permission denied']);
+          return;
+        }
+      }
+      CustomSnackBar.success(successList: ['Fetching location…']);
+      final pos = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.medium);
+      sendingMessage = true;
+      update(['chat_screen_main', 'recording_area']);
+      final res = await repo.sendLocationMessageRepo(conversationId, pos.latitude, pos.longitude);
+      if (res.statusCode == 200 &&
+          (res.responseJson['status'] as String?)?.toLowerCase() == AppStatus.success) {
+        final sentMessage = res.responseJson['data']?['message'];
+        if (sentMessage != null) {
+          final msg = MessagesData.fromJson(Map<String, dynamic>.from(sentMessage as Map));
+          insertMessageIfAbsent(msg);
+        }
+        CustomSnackBar.success(successList: ['Location sent']);
+      } else {
+        CustomSnackBar.error(errorList: [(res.responseJson['message'] as List?)?.first?.toString() ?? Strings.somethingWentWrong]);
+      }
+    } catch (e) {
+      CustomSnackBar.error(errorList: ['Failed to get location']);
+    } finally {
+      sendingMessage = false;
+      update(['chat_screen_main', 'recording_area']);
+    }
+  }
+
+  // ─── Block / unblock contact ──────────────────────────────────────────────
+
+  bool blockLoading = false;
+
+  Future<void> toggleBlockContact(String contactId) async {
+    blockLoading = true;
+    update(['chat_screen_main']);
+    try {
+      final res = await repo.blockContactRepo(contactId, !isBlocked);
+      if (res.statusCode == 200 &&
+          (res.responseJson['status'] as String?)?.toLowerCase() == AppStatus.success) {
+        isBlocked = !isBlocked;
+        CustomSnackBar.success(
+            successList: [isBlocked ? 'Contact blocked' : 'Contact unblocked']);
+      } else {
+        CustomSnackBar.error(errorList: [(res.responseJson['message'] as List?)?.first?.toString() ?? Strings.somethingWentWrong]);
+      }
+    } catch (e) {
+      CustomSnackBar.error(errorList: [Strings.somethingWentWrong]);
+    } finally {
+      blockLoading = false;
+      update(['chat_screen_main']);
+    }
+  }
+
+  // ─── Clear chat ───────────────────────────────────────────────────────────
+
+  bool clearingChat = false;
+
+  Future<void> clearChat() async {
+    clearingChat = true;
+    update(['chat_screen_main']);
+    try {
+      final res = await repo.clearChatRepo(conversationId);
+      if (res.statusCode == 200 &&
+          (res.responseJson['remark'] as String?) == 'conversation_cleared') {
+        messages.clear();
+        CustomSnackBar.success(successList: ['Chat cleared']);
+      } else {
+        CustomSnackBar.error(errorList: [(res.responseJson['message'] as String?) ?? Strings.somethingWentWrong]);
+      }
+    } catch (e) {
+      CustomSnackBar.error(errorList: [Strings.somethingWentWrong]);
+    } finally {
+      clearingChat = false;
+      update(['chat_screen_main', 'recording_area']);
+    }
+  }
+
   @override
   void onClose() {
+    _connectivitySubscription?.cancel();
     _recordingTimer?.cancel();
     _audioRecorder.dispose();
     scrollController.dispose();

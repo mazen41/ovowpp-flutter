@@ -62,6 +62,9 @@ import '../../app/screens/withdraw/add_withdraw_screen/add_withdraw_method_scree
 import '../../app/screens/withdraw/confirm_withdraw_screen/withdraw_confirm_screen.dart';
 import '../../app/screens/withdraw/withdraw_history/withdraw_screen.dart';
 
+import 'package:ovowpp/app/screens/clients/clients_screen.dart';
+import 'package:ovowpp/app/screens/clients/client_tags_screen.dart';
+
 class RouteHelper {
   //use screen in screen name and route name
   static const String splashScreen = "/splash_screen";
@@ -136,6 +139,8 @@ class RouteHelper {
   static const String contactSupportScreen = '/contact_support_screen';
   static const String profileEditForm = '/edit_profile_form';
   static const String contactScreen = '/contact_screen';
+  static const String clientsScreen = '/clients_screen';
+  static const String clientTagsScreen = '/client_tags_screen';
 
   List<GetPage> routes = [
     GetPage(
@@ -493,6 +498,18 @@ class RouteHelper {
     GetPage(
       name: contactScreen,
       page: () => ContactScreen(),
+      transitionDuration: const Duration(milliseconds: 400),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: clientsScreen,
+      page: () => const ClientsScreen(),
+      transitionDuration: const Duration(milliseconds: 400),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: clientTagsScreen,
+      page: () => const ClientTagsScreen(),
       transitionDuration: const Duration(milliseconds: 400),
       transition: Transition.fadeIn,
     ),

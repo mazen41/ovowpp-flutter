@@ -123,4 +123,20 @@ class UrlContainer {
   static const String getCampaign = 'campaign/index';
   static const String createCampaign = 'campaign/create';
   static const String saveCampaign = "campaign/save";
+
+  // ─── Chat feature additions ───────────────────────────────────────────────
+  /// Send an approved message template to a conversation.
+  static const String sendTemplateMessageUrl = 'inbox/chat/template/send';
+
+  /// Clear all messages in a conversation (destructive).
+  static const String clearChatUrl = 'inbox/conversation/clear/';
+
+  /// Block / unblock a contact: POST contact/update/{contactId} with is_blocked=1|0
+  static const String blockContactUrl = 'contact/update/';
+
+  /// Fetch inbox data (templates, CTA URLs, interactive lists).
+  static const String inboxDataUrl = 'inbox/';
+
+  /// Contact list endpoint for clients screen.
+  static const String contactListUrl = 'contact/list';
 }

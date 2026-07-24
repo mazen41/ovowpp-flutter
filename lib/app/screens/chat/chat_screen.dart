@@ -15,6 +15,7 @@ import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
 import 'package:ovowpp/app/components/text/default_text.dart';
 import 'package:ovowpp/app/screens/chat/widget/app_bar_contents.dart';
 import 'package:ovowpp/app/screens/chat/widget/voice_message_player.dart';
+import 'package:ovowpp/app/screens/chat/widget/video_player_bubble.dart';
 import 'package:ovowpp/app/screens/chat/widget/chat_box.dart';
 import 'package:ovowpp/app/screens/dashboard/widget/round_icon_with_bg_color.dart';
 import 'package:ovowpp/core/helper/date_converter.dart';
@@ -1180,8 +1181,25 @@ Widget buildMediaWidget(
     );
   }
 
-  // For file attachments (msgType 3 or 4)
-  if (msgType == "3" || msgType == "4") {
+  // Video messages — inline player
+  final bool isVideo =
+      lowerPath.endsWith('.mp4') ||
+      lowerPath.endsWith('.mov') ||
+      lowerPath.endsWith('.webm') ||
+      lowerExtension == 'mp4' ||
+      lowerExtension == 'mov' ||
+      lowerExtension == 'webm' ||
+      msgType == AppStatus.VIDEO_TYPE_MESSAGE;
+
+  if (isVideo) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 4),
+      child: VideoPlayerBubble(videoUrl: url),
+    );
+  }
+
+  // Document attachments (msgType 4)
+  if (msgType == "4") {
     return Padding(
       padding: const EdgeInsets.only(top: 4),
       child: GetBuilder<ChatController>(
@@ -1200,14 +1218,14 @@ Widget buildMediaWidget(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
-                    msgType == "3" ? Icons.videocam_outlined : Icons.insert_drive_file,
+                    Icons.insert_drive_file,
                     size: Dimensions.space20,
                     color: MyColor.getBodyTextColor().withValues(alpha: .7),
                   ),
                   SizedBox(width: 8),
                   Flexible(
                     child: Text(
-                      "${mediaId ?? "file"}.$extension",
+                      "${mediaId ?? 'file'}.$extension",
                       style: TextStyle(fontSize: Dimensions.space14),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,

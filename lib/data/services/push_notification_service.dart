@@ -4,6 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
+import 'package:ovowpp/core/route/route.dart';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:ovowpp/data/services/shared_pref_service.dart';
@@ -39,7 +41,13 @@ class PushNotificationService {
       sound: true,
     );
 
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {});
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      // User tapped a notification that was in the system tray.
+      final conversationId = message.data['conversation_id']?.toString() ?? '';
+      if (conversationId.isNotEmpty) {
+        Get.toNamed(RouteHelper.chatScreen, arguments: [conversationId, '']);
+      }
+    });
 
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {});
 
@@ -63,21 +71,20 @@ class PushNotificationService {
     var initSettings = InitializationSettings(android: androidSettings, iOS: iOSSettings);
     flutterLocalNotificationsPlugin.initialize(
       settings: initSettings,
-      onDidReceiveNotificationResponse: (message) async {
+      onDidReceiveNotificationResponse: (NotificationResponse response) async {
         try {
-          String? payloadString = message.payload is String ? message.payload : jsonEncode(message.payload);
+          final payloadString = response.payload;
           if (payloadString != null && payloadString.isNotEmpty) {
-            Map<dynamic, dynamic> payloadMap = jsonDecode(payloadString);
-            Map<String, String> payload = payloadMap.map((key, value) => MapEntry(key.toString(), value.toString()));
-            String? remark = payload['for_app'];
-            if (remark != null && remark.isNotEmpty) {
-              //redirect any specific page
+            final Map<dynamic, dynamic> payloadMap = jsonDecode(payloadString);
+            final conversationId = payloadMap['conversation_id']?.toString() ?? '';
+            if (conversationId.isNotEmpty) {
+              // Navigate to the specific chat conversation
+              await Future.delayed(const Duration(milliseconds: 300));
+              Get.toNamed(RouteHelper.chatScreen, arguments: [conversationId, '']);
             }
           }
         } catch (e) {
-          if (kDebugMode) {
-            printE(e.toString());
-          }
+          if (kDebugMode) printE(e.toString());
         }
       },
     );

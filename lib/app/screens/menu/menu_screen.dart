@@ -234,6 +234,17 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
                                 Get.toNamed(RouteHelper.manageContactScreen);
                               },
                             ),
+
+                            spaceDown(Dimensions.space8.h),
+
+                            AccountAndAppSettingItem(
+                              title: 'Clients',
+                              subTitle: 'Manage clients and tags',
+                              iconPath: MyImages.group,
+                              onTap: () {
+                                Get.toNamed(RouteHelper.clientsScreen);
+                              },
+                            ),
                           ],
                         ),
                       ),
