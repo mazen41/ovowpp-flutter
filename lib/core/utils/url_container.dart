@@ -139,4 +139,7 @@ class UrlContainer {
 
   /// Contact list endpoint for clients screen.
   static const String contactListUrl = 'contact/list';
+
+  /// Assign a tag to a contact: POST contact/update/{contactId} with tags[]=tagId
+  static const String assignContactTagUrl = 'contact/update/';
 }

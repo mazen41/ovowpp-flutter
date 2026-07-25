@@ -210,5 +210,20 @@ class ChatRepo {
     final url = '${UrlContainer.baseUrl}${UrlContainer.blockContactUrl}$contactId';
     return ApiService.postRequest(url, {'is_blocked': isBlocked ? '1' : '0'});
   }
+
+  // ─── Tags ──────────────────────────────────────────────────────────────────
+
+  /// Fetch all available contact tags for the current user.
+  Future<ResponseModel> fetchTagsRepo() async {
+    final url = '${UrlContainer.baseUrl}${UrlContainer.allContactTagListDataEndPoint}';
+    return ApiService.getRequest(url);
+  }
+
+  /// Assign a tag (or remove all tags when [tagId] is empty) to a contact.
+  Future<ResponseModel> assignTagRepo(String contactId, String tagId) async {
+    final url = '${UrlContainer.baseUrl}${UrlContainer.assignContactTagUrl}$contactId';
+    final body = tagId.isNotEmpty ? {'tags[]': tagId} : {'tags': ''};
+    return ApiService.postRequest(url, body);
+  }
 }
 

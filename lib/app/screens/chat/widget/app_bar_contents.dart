@@ -17,6 +17,7 @@ import '../../contact/widgets/contact_item.dart';
 import '../widget/template_picker.dart';
 import '../widget/interactive_list_picker.dart';
 import '../widget/cta_url_picker.dart';
+import '../widget/tag_picker.dart';
 
 class AppBarContents extends StatefulWidget {
   const AppBarContents({super.key});
@@ -154,6 +155,11 @@ class _AppBarContentsState extends State<AppBarContents> {
                   icon: Icons.location_on_outlined,
                   label: 'Send Location',
                 ),
+                _menuItem(
+                  action: _ChatAction.assignTag,
+                  icon: Icons.label_outline_rounded,
+                  label: 'Assign Tag',
+                ),
                 PopupMenuItem<_ChatAction>(
                   enabled: false,
                   height: 1,
@@ -245,6 +251,11 @@ class _AppBarContentsState extends State<AppBarContents> {
         await controller.sendCurrentLocation();
         break;
 
+      case _ChatAction.assignTag:
+        await controller.loadTagsForPicker();
+        if (context.mounted) TagPicker.show(context);
+        break;
+
       case _ChatAction.block:
         final contactId = controller.contact?.id?.toString() ?? '';
         if (contactId.isEmpty) return;
@@ -310,6 +321,7 @@ enum _ChatAction {
   interactiveList,
   ctaUrl,
   location,
+  assignTag,
   block,
   clearChat,
 }

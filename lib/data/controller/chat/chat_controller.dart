@@ -970,6 +970,67 @@ class ChatController extends GetxController {
     }
   }
 
+  // ─── Tag assignment ───────────────────────────────────────────────────────
+
+  List<Map<String, dynamic>> availableTags = [];
+  bool loadingTags = false;
+  bool assigningTag = false;
+  String assignedTagId = ''; // currently assigned tag id on this contact
+
+  /// Load all available tags from the backend, then open the picker.
+  Future<void> loadTagsForPicker() async {
+    loadingTags = true;
+    // Seed assignedTagId from the contact's current first tag (if any).
+    final firstTag = contact?.tags?.firstOrNull;
+    assignedTagId = firstTag?.toString() ?? '';
+    update(['chat_screen_main']);
+    try {
+      final res = await repo.fetchTagsRepo();
+      if (res.statusCode == 200) {
+        final rawTags =
+            res.responseJson['data']?['contact_tags']?['data'] as List<dynamic>? ?? [];
+        availableTags =
+            rawTags.map((e) => Map<String, dynamic>.from(e as Map)).toList();
+      }
+    } catch (e) {
+      printE('loadTagsForPicker error: $e');
+    } finally {
+      loadingTags = false;
+      update(['chat_screen_main']);
+    }
+  }
+
+  /// Assign [tagId] to the current contact. Pass empty string to remove all tags.
+  Future<void> assignTag(String tagId) async {
+    final contactId = contact?.id?.toString() ?? '';
+    if (contactId.isEmpty) {
+      CustomSnackBar.error(errorList: ['Contact not found']);
+      return;
+    }
+    assigningTag = true;
+    update(['chat_screen_main']);
+    try {
+      final res = await repo.assignTagRepo(contactId, tagId);
+      if (res.statusCode == 200 &&
+          (res.responseJson['status'] as String?)?.toLowerCase() == 'success') {
+        assignedTagId = tagId;
+        CustomSnackBar.success(
+            successList: [tagId.isEmpty ? 'Tag removed' : 'Tag assigned successfully']);
+      } else {
+        final msg = (res.responseJson['message'] as List?)?.first?.toString() ??
+            res.responseJson['message']?.toString() ??
+            'Failed to assign tag';
+        CustomSnackBar.error(errorList: [msg]);
+      }
+    } catch (e) {
+      printE('assignTag error: $e');
+      CustomSnackBar.error(errorList: ['Failed to assign tag']);
+    } finally {
+      assigningTag = false;
+      update(['chat_screen_main']);
+    }
+  }
+
   @override
   void onClose() {
     _connectivitySubscription?.cancel();
