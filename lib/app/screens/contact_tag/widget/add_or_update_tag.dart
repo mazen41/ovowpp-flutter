@@ -90,7 +90,7 @@ class _AddOrUpdateTagDialogueState extends State<AddOrUpdateTagDialogue> {
               isLoading: controller.submitContact,
               text: Strings.submit.tr,
               onTap: () {
-                if (controller.contactNameController.toString() != "") {
+                if (controller.contactNameController.text.trim().isNotEmpty) {
                   controller.id = widget.id;
                   controller.submitContactData();
                 } else {

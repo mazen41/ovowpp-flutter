@@ -5,9 +5,9 @@ class Environment {
   static String defaultLangCode = "en";
   static String defaultLanguageName = "English";
 
-  static String defaultPhoneCode = "1"; //don't put + here
-  static String defaultCountryCode = "us";
-  static String defaultCountry = "United States";
+  static String defaultPhoneCode = "967"; // Yemen dial code — don't put + here
+  static String defaultCountryCode = "ye";
+  static String defaultCountry = "Yemen";
 
   static const int animationDuration = 375;
 

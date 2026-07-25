@@ -15,18 +15,35 @@ import '../../core/utils/url_container.dart';
 import '../../firebase_options.dart';
 import 'api_service.dart';
 
+// ─── Singleton plugin instance — shared by the entire app ─────────────────────
+// Export it so pusher_p2p_chat_service_controller can call showInAppMessageNotification.
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
 Future<void> _messageHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-  SharedPreferenceService.setBool(SharedPreferenceService.hasNewNotificationKey, true);
+  SharedPreferenceService.setBool(
+      SharedPreferenceService.hasNewNotificationKey, true);
 }
 
 class PushNotificationService {
   PushNotificationService();
 
+  static AndroidNotificationChannel _channel() =>
+      const AndroidNotificationChannel(
+        'high_importance_channel',
+        'High Importance Notifications',
+        description: 'This channel is used for important notifications.',
+        playSound: true,
+        enableVibration: true,
+        enableLights: true,
+        importance: Importance.high,
+      );
+
   Future<void> setupInteractedMessage() async {
     FirebaseMessaging.onBackgroundMessage(_messageHandler);
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
     FirebaseMessaging messaging = FirebaseMessaging.instance;
 
     await _requestPermissions();
@@ -42,10 +59,11 @@ class PushNotificationService {
     );
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      // User tapped a notification that was in the system tray.
-      final conversationId = message.data['conversation_id']?.toString() ?? '';
+      final conversationId =
+          message.data['conversation_id']?.toString() ?? '';
       if (conversationId.isNotEmpty) {
-        Get.toNamed(RouteHelper.chatScreen, arguments: [conversationId, '']);
+        Get.toNamed(RouteHelper.chatScreen,
+            arguments: [conversationId, '']);
       }
     });
 
@@ -57,30 +75,37 @@ class PushNotificationService {
   }
 
   Future<void> registerNotificationListeners() async {
-    AndroidNotificationChannel channel = androidNotificationChannel();
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    final channel = _channel();
     await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
-    var androidSettings = const AndroidInitializationSettings('@mipmap/ic_launcher');
-    var iOSSettings = const DarwinInitializationSettings(
+
+    const androidSettings =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    const iOSSettings = DarwinInitializationSettings(
       requestSoundPermission: true,
       requestBadgePermission: true,
       requestAlertPermission: true,
     );
-    var initSettings = InitializationSettings(android: androidSettings, iOS: iOSSettings);
-    flutterLocalNotificationsPlugin.initialize(
-      settings: initSettings,
-      onDidReceiveNotificationResponse: (NotificationResponse response) async {
+    const initSettings =
+        InitializationSettings(android: androidSettings, iOS: iOSSettings);
+
+    await flutterLocalNotificationsPlugin.initialize(
+      initSettings,
+      onDidReceiveNotificationResponse:
+          (NotificationResponse response) async {
         try {
           final payloadString = response.payload;
           if (payloadString != null && payloadString.isNotEmpty) {
-            final Map<dynamic, dynamic> payloadMap = jsonDecode(payloadString);
-            final conversationId = payloadMap['conversation_id']?.toString() ?? '';
+            final Map<dynamic, dynamic> payloadMap =
+                jsonDecode(payloadString);
+            final conversationId =
+                payloadMap['conversation_id']?.toString() ?? '';
             if (conversationId.isNotEmpty) {
-              // Navigate to the specific chat conversation
               await Future.delayed(const Duration(milliseconds: 300));
-              Get.toNamed(RouteHelper.chatScreen, arguments: [conversationId, '']);
+              Get.toNamed(RouteHelper.chatScreen,
+                  arguments: [conversationId, '']);
             }
           }
         } catch (e) {
@@ -89,15 +114,17 @@ class PushNotificationService {
       },
     );
 
+    // ── FCM foreground messages (server push notifications) ───────────────────
     FirebaseMessaging.onMessage.listen((RemoteMessage? message) async {
-      RemoteNotification? notification = message!.notification;
-      AndroidNotification? android = message.notification?.android;
+      final notification = message!.notification;
+      final android = message.notification?.android;
       if (notification != null && android != null) {
         late BigPictureStyleInformation bigPictureStyle;
         if (android.imageUrl != null) {
-          final http.Response response = await http.get(Uri.parse(android.imageUrl!));
-          final String localImagePath = await _saveImageLocally(response.bodyBytes);
-
+          final http.Response response =
+              await http.get(Uri.parse(android.imageUrl!));
+          final String localImagePath =
+              await _saveImageLocally(response.bodyBytes);
           bigPictureStyle = BigPictureStyleInformation(
             FilePathAndroidBitmap(localImagePath),
             contentTitle: notification.title,
@@ -106,10 +133,10 @@ class PushNotificationService {
         }
 
         flutterLocalNotificationsPlugin.show(
-          id: notification.hashCode,
-          title: notification.title,
-          body: notification.body,
-          notificationDetails: NotificationDetails(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
             android: AndroidNotificationDetails(
               channel.id,
               channel.name,
@@ -120,7 +147,9 @@ class PushNotificationService {
               enableLights: true,
               fullScreenIntent: true,
               priority: Priority.high,
-              styleInformation: android.imageUrl != null ? bigPictureStyle : const BigTextStyleInformation(''),
+              styleInformation: android.imageUrl != null
+                  ? bigPictureStyle
+                  : const BigTextStyleInformation(''),
               importance: Importance.high,
             ),
           ),
@@ -130,42 +159,73 @@ class PushNotificationService {
     });
   }
 
+  // ─── Call this from the Pusher handler to play sound + show banner ────────────
+  // Works while the app is open (foreground) for real-time WhatsApp messages.
+  static Future<void> showInAppMessageNotification({
+    required String title,
+    required String body,
+    String? conversationId,
+  }) async {
+    final channel = _channel();
+    final payload = conversationId != null
+        ? jsonEncode({'conversation_id': conversationId})
+        : null;
+
+    await flutterLocalNotificationsPlugin.show(
+      DateTime.now().millisecondsSinceEpoch ~/ 1000,
+      title,
+      body,
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          channel.id,
+          channel.name,
+          channelDescription: channel.description,
+          icon: '@mipmap/ic_launcher',
+          playSound: true,
+          enableVibration: true,
+          priority: Priority.high,
+          importance: Importance.high,
+        ),
+        iOS: const DarwinNotificationDetails(
+          presentSound: true,
+          presentBadge: true,
+          presentAlert: true,
+        ),
+      ),
+      payload: payload,
+    );
+  }
+
   Future<void> enableIOSNotifications() async {
-    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-      alert: true, // Required to display a heads up notification
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+      alert: true,
       badge: true,
       sound: true,
     );
   }
 
-  AndroidNotificationChannel androidNotificationChannel() => const AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-    description: 'This channel is used for important notifications.',
-    playSound: true,
-    enableVibration: true,
-    enableLights: true,
-    importance: Importance.high,
-  );
+  AndroidNotificationChannel androidNotificationChannel() => _channel();
 
   Future<void> _requestPermissions() async {
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
     if (Platform.isIOS || Platform.isMacOS) {
       await flutterLocalNotificationsPlugin
-          .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
+          .resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>()
           ?.requestPermissions(alert: true, badge: true, sound: true);
       await flutterLocalNotificationsPlugin
-          .resolvePlatformSpecificImplementation<MacOSFlutterLocalNotificationsPlugin>()
+          .resolvePlatformSpecificImplementation<
+              MacOSFlutterLocalNotificationsPlugin>()
           ?.requestPermissions(alert: true, badge: true, sound: true);
     } else if (Platform.isAndroid) {
-      final AndroidFlutterLocalNotificationsPlugin? androidImplementation = flutterLocalNotificationsPlugin
-          .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+      final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
+          flutterLocalNotificationsPlugin
+              .resolvePlatformSpecificImplementation<
+                  AndroidFlutterLocalNotificationsPlugin>();
       await androidImplementation?.requestNotificationsPermission();
     }
   }
 
-  // Function to save the image locally
   Future<String> _saveImageLocally(Uint8List bytes) async {
     final directory = await getTemporaryDirectory();
     final imagePath = '${directory.path}/notification_image.png';
@@ -176,8 +236,10 @@ class PushNotificationService {
 
   Future<bool> sendUserToken() async {
     String deviceToken;
-    if (SharedPreferenceService.containsKey(SharedPreferenceService.fcmDeviceKey)) {
-      deviceToken = SharedPreferenceService.getString(SharedPreferenceService.fcmDeviceKey);
+    if (SharedPreferenceService.containsKey(
+        SharedPreferenceService.fcmDeviceKey)) {
+      deviceToken = SharedPreferenceService.getString(
+          SharedPreferenceService.fcmDeviceKey);
     } else {
       deviceToken = '';
     }
@@ -193,7 +255,8 @@ class PushNotificationService {
         if (deviceToken == fcmDeviceToken) {
           success = true;
         } else {
-          SharedPreferenceService.setString(SharedPreferenceService.fcmDeviceKey, fcmDeviceToken);
+          SharedPreferenceService.setString(
+              SharedPreferenceService.fcmDeviceKey, fcmDeviceToken);
           success = await sendUpdatedToken(fcmDeviceToken);
         }
       });
@@ -202,9 +265,9 @@ class PushNotificationService {
   }
 
   Future<bool> sendUpdatedToken(String deviceToken) async {
-    String url = '${UrlContainer.baseUrl}${UrlContainer.deviceTokenEndPoint}';
+    String url =
+        '${UrlContainer.baseUrl}${UrlContainer.deviceTokenEndPoint}';
     Map<String, String> map = deviceTokenMap(deviceToken);
-
     ResponseModel model = await ApiService.postRequest(url, map);
     if (model.isSuccess) {
       return true;

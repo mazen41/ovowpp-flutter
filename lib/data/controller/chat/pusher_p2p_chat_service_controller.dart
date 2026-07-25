@@ -6,6 +6,7 @@ import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 import '../../../core/utils/util.dart';
 import '../../model/chat/chat_data_response_model.dart';
 import '../../repo/chat/chat_repo.dart';
+import '../../services/push_notification_service.dart';
 import '../../services/pusher_service.dart';
 import 'chat_controller.dart';
 
@@ -34,6 +35,19 @@ class PusherChatServiceController extends GetxController {
         final wasInserted = controller.insertMessageIfAbsent(msg);
         if (!wasInserted) return;
         controller.update(['chat_screen_main']);
+
+        // ── Play in-app notification sound + show banner ──────────────────────
+        final senderName = controller.contact?.firstname != null
+            ? '${controller.contact!.firstname ?? ''} ${controller.contact!.lastname ?? ''}'.trim()
+            : 'New Message';
+        final preview = (msg.message != null && msg.message!.isNotEmpty)
+            ? msg.message!
+            : (msg.mediaType != null ? msg.mediaType! : 'Sent a media');
+        PushNotificationService.showInAppMessageNotification(
+          title: senderName,
+          body: preview,
+          conversationId: msg.conversationId,
+        );
 
         // A realtime callback can run while Flutter has no pending frame.
         // Explicitly request one so the message appears without a screen tap.
