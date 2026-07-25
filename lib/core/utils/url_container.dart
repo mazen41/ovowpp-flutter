@@ -140,6 +140,6 @@ class UrlContainer {
   /// Contact list endpoint for clients screen.
   static const String contactListUrl = 'contact/list';
 
-  /// Assign a tag to a contact: POST contact/update/{contactId} with tags[]=tagId
-  static const String assignContactTagUrl = 'contact/update/';
+  /// Assign a tag to a contact: POST contact-tag/assign/{contactId} with tag_id=X (or empty to remove)
+  static const String assignContactTagUrl = 'contact-tag/assign/';
 }

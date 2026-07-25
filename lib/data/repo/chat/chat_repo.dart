@@ -222,7 +222,7 @@ class ChatRepo {
   /// Assign a tag (or remove all tags when [tagId] is empty) to a contact.
   Future<ResponseModel> assignTagRepo(String contactId, String tagId) async {
     final url = '${UrlContainer.baseUrl}${UrlContainer.assignContactTagUrl}$contactId';
-    final body = tagId.isNotEmpty ? {'tags[]': tagId} : {'tags': ''};
+    final body = tagId.isNotEmpty ? {'tag_id': tagId} : <String, String>{};
     return ApiService.postRequest(url, body);
   }
 }
