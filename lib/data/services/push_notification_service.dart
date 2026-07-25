@@ -92,9 +92,8 @@ class PushNotificationService {
         InitializationSettings(android: androidSettings, iOS: iOSSettings);
 
     await flutterLocalNotificationsPlugin.initialize(
-      initSettings,
-      onDidReceiveNotificationResponse:
-          (NotificationResponse response) async {
+      settings: initSettings,
+      onDidReceiveNotificationResponse: (NotificationResponse response) async {
         try {
           final payloadString = response.payload;
           if (payloadString != null && payloadString.isNotEmpty) {
@@ -133,10 +132,10 @@ class PushNotificationService {
         }
 
         flutterLocalNotificationsPlugin.show(
-          notification.hashCode,
-          notification.title,
-          notification.body,
-          NotificationDetails(
+          id: notification.hashCode,
+          title: notification.title,
+          body: notification.body,
+          notificationDetails: NotificationDetails(
             android: AndroidNotificationDetails(
               channel.id,
               channel.name,
@@ -172,10 +171,10 @@ class PushNotificationService {
         : null;
 
     await flutterLocalNotificationsPlugin.show(
-      DateTime.now().millisecondsSinceEpoch ~/ 1000,
-      title,
-      body,
-      NotificationDetails(
+      id: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+      title: title,
+      body: body,
+      notificationDetails: NotificationDetails(
         android: AndroidNotificationDetails(
           channel.id,
           channel.name,

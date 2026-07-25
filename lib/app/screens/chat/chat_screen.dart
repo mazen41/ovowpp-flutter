@@ -1108,9 +1108,9 @@ IconData? _replyPreviewIcon(MessageReplayTo? replyTo) {
 
 /// Safely joins domain + mediaPath + filePath without double slashes.
 String _buildMediaUrl(String domain, String mediaPath, String filePath) {
-  final base = domain.trimRight('/');
-  final mid = mediaPath.trim('/');
-  final end = filePath.trim('/').replaceAll('\\', '/');
+  final base = domain.replaceAll(RegExp(r'/+$'), '');
+  final mid = mediaPath.replaceAll(RegExp(r'^/+|/+$'), '');
+  final end = filePath.replaceAll(RegExp(r'^/+|/+$'), '').replaceAll('\\', '/');
   return '$base/$mid/$end';
 }
 
