@@ -247,16 +247,22 @@ class _ChatScreenState extends State<ChatScreen> {
                                                         _buildMessageText(item, theme),
                                                       if (item.mediaPath != null)
                                                         buildMediaWidget(
-                                                          "${UrlContainer.domainUrl}/${controller.mediaPath}/${item.mediaPath}",
+                                                          _buildMediaUrl(UrlContainer.domainUrl, controller.mediaPath, item.mediaPath!),
                                                           item.messageType.toString(),
                                                           item.mediaId ?? "",
                                                           item.mimeType ?? "",
                                                           index,
                                                           controller,
                                                         ),
-                                                      if ( 
-                                                          item.messageType.toString() == "4" ||
-                                                          item.messageType.toString() == "5")
+                                                      // Render media that exists only as a remote URL
+                                                      // (no local media_path stored). Covers video (3),
+                                                      // document (4), and audio (5).
+                                                      if (item.mediaPath == null &&
+                                                          item.mediaUrl != null &&
+                                                          item.mediaUrl!.isNotEmpty &&
+                                                          (item.messageType.toString() == "3" ||
+                                                           item.messageType.toString() == "4" ||
+                                                           item.messageType.toString() == "5"))
                                                         buildMediaWidget(
                                                           "${item.mediaUrl}",
                                                           item.messageType.toString(),
@@ -1100,6 +1106,14 @@ IconData? _replyPreviewIcon(MessageReplayTo? replyTo) {
   }
 }
 
+/// Safely joins domain + mediaPath + filePath without double slashes.
+String _buildMediaUrl(String domain, String mediaPath, String filePath) {
+  final base = domain.trimRight('/');
+  final mid = mediaPath.trim('/');
+  final end = filePath.trim('/').replaceAll('\\', '/');
+  return '$base/$mid/$end';
+}
+
 Widget buildMediaWidget(
   String? mediaPath,
   String msgType,
@@ -1189,7 +1203,9 @@ Widget buildMediaWidget(
       lowerExtension == 'mp4' ||
       lowerExtension == 'mov' ||
       lowerExtension == 'webm' ||
-      msgType == AppStatus.VIDEO_TYPE_MESSAGE;
+      msgType == AppStatus.VIDEO_TYPE_MESSAGE || // "3"
+      lowerExtension.contains('video') ||
+      (lowerExtension.isEmpty && msgType == '3');
 
   if (isVideo) {
     return Padding(

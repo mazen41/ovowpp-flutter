@@ -5,6 +5,9 @@ import 'package:ovowpp/app/components/custom_loader/custom_loader.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
 import 'package:ovowpp/core/utils/text_style.dart';
 import 'package:ovowpp/data/controller/chat/chat_controller.dart';
+import 'package:ovowpp/data/repo/contact_tag/contact_tag_list_repo.dart';
+import 'package:ovowpp/core/utils/url_container.dart';
+import 'package:ovowpp/data/services/api_service.dart';
 
 class TagPicker extends StatelessWidget {
   const TagPicker({super.key});
@@ -15,6 +18,97 @@ class TagPicker extends StatelessWidget {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (_) => const TagPicker(),
+    );
+  }
+
+  // ── Inline "Create Tag" dialog ────────────────────────────────────────────
+  static Future<void> _showCreateTagDialog(
+      BuildContext context, ChatController controller) async {
+    final nameController = TextEditingController();
+    bool saving = false;
+
+    await showDialog(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setState) => AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
+          title: Text('Create Tag',
+              style: MyTextStyle.heading16W600()
+                  .copyWith(color: MyColor.getHeadingTextColor())),
+          content: TextField(
+            controller: nameController,
+            autofocus: true,
+            decoration: InputDecoration(
+              hintText: 'Tag name',
+              hintStyle: MyTextStyle.subHeading14W400()
+                  .copyWith(color: MyColor.getBodyTextColor()),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.r)),
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: Text('Cancel',
+                  style:
+                      TextStyle(color: MyColor.getBodyTextColor())),
+            ),
+            TextButton(
+              onPressed: saving
+                  ? null
+                  : () async {
+                      final name = nameController.text.trim();
+                      if (name.isEmpty) return;
+                      setState(() => saving = true);
+                      try {
+                        final url =
+                            '${UrlContainer.baseUrl}${UrlContainer.createContactTagUrl}';
+                        final response =
+                            await ApiService.postRequest(url, {'name': name});
+                        if (response.statusCode == 200 &&
+                            response.responseJson['status']
+                                    ?.toString()
+                                    .toLowerCase() ==
+                                'success') {
+                          Navigator.pop(ctx);
+                          // Reload tags so new one appears immediately
+                          await controller.loadTagsForPicker();
+                        } else {
+                          final msg =
+                              (response.responseJson['message'] as List?)
+                                      ?.first
+                                      ?.toString() ??
+                                  'Failed to create tag';
+                          ScaffoldMessenger.of(ctx).showSnackBar(
+                              SnackBar(content: Text(msg)));
+                        }
+                      } catch (_) {
+                        ScaffoldMessenger.of(ctx).showSnackBar(
+                            const SnackBar(
+                                content: Text('Failed to create tag')));
+                      } finally {
+                        setState(() => saving = false);
+                      }
+                    },
+              child: saving
+                  ? SizedBox(
+                      width: 18.w,
+                      height: 18.h,
+                      child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: MyColor.getPrimaryColor()),
+                    )
+                  : Text('Save',
+                      style: TextStyle(
+                          color: MyColor.getPrimaryColor(),
+                          fontWeight: FontWeight.w600)),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -45,18 +139,36 @@ class TagPicker extends StatelessWidget {
                 ),
               ),
 
-              // Header
+              // Header row with "Create Tag" button
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                padding:
+                    EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                 child: Row(
                   children: [
                     Icon(Icons.label_outline_rounded,
                         color: MyColor.getPrimaryColor(), size: 20.sp),
                     SizedBox(width: 8.w),
-                    Text(
-                      'Assign Tag',
-                      style: MyTextStyle.heading16W600()
-                          .copyWith(color: MyColor.getHeadingTextColor()),
+                    Expanded(
+                      child: Text(
+                        'Assign Tag',
+                        style: MyTextStyle.heading16W600()
+                            .copyWith(color: MyColor.getHeadingTextColor()),
+                      ),
+                    ),
+                    // ── "Create Tag" button ─────────────────────────────
+                    TextButton.icon(
+                      onPressed: () =>
+                          _showCreateTagDialog(context, controller),
+                      icon: Icon(Icons.add_rounded,
+                          size: 18.sp, color: MyColor.getPrimaryColor()),
+                      label: Text(
+                        'Create Tag',
+                        style: MyTextStyle.subHeading14W400().copyWith(
+                            color: MyColor.getPrimaryColor(),
+                            fontWeight: FontWeight.w600),
+                      ),
+                      style: TextButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 8.w)),
                     ),
                   ],
                 ),
@@ -73,11 +185,25 @@ class TagPicker extends StatelessWidget {
               else if (tags.isEmpty)
                 Padding(
                   padding: EdgeInsets.all(32.h),
-                  child: Text(
-                    'No tags found. Create tags from the Contact Tags screen first.',
-                    textAlign: TextAlign.center,
-                    style: MyTextStyle.subHeading14W400()
-                        .copyWith(color: MyColor.getBodyTextColor()),
+                  child: Column(
+                    children: [
+                      Text(
+                        'No tags yet. Create your first tag.',
+                        textAlign: TextAlign.center,
+                        style: MyTextStyle.subHeading14W400()
+                            .copyWith(color: MyColor.getBodyTextColor()),
+                      ),
+                      SizedBox(height: 16.h),
+                      ElevatedButton.icon(
+                        onPressed: () =>
+                            _showCreateTagDialog(context, controller),
+                        icon: const Icon(Icons.add_rounded),
+                        label: const Text('Create Tag'),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: MyColor.getPrimaryColor(),
+                            foregroundColor: MyColor.white),
+                      ),
+                    ],
                   ),
                 )
               else
@@ -100,10 +226,12 @@ class TagPicker extends StatelessWidget {
                         onTap: controller.assigningTag
                             ? null
                             : () async {
-                                // Toggle off if already selected
-                                final newTagId = isSelected ? '' : tagId;
+                                final newTagId =
+                                    isSelected ? '' : tagId;
                                 await controller.assignTag(newTagId);
-                                if (context.mounted) Navigator.pop(context);
+                                if (context.mounted) {
+                                  Navigator.pop(context);
+                                }
                               },
                         leading: Icon(
                           Icons.label_rounded,
@@ -123,18 +251,29 @@ class TagPicker extends StatelessWidget {
                                 : FontWeight.w400,
                           ),
                         ),
-                        trailing: isSelected
-                            ? Icon(Icons.check_circle_rounded,
-                                color: MyColor.getPrimaryColor(), size: 20.sp)
-                            : null,
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
+                        trailing: controller.assigningTag && isSelected
+                            ? SizedBox(
+                                width: 18.w,
+                                height: 18.h,
+                                child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: MyColor.getPrimaryColor()),
+                              )
+                            : isSelected
+                                ? Icon(Icons.check_circle_rounded,
+                                    color: MyColor.getPrimaryColor(),
+                                    size: 20.sp)
+                                : null,
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 16.w, vertical: 4.h),
                       );
                     },
                   ),
                 ),
 
-              SizedBox(height: MediaQuery.of(context).viewInsets.bottom + 16.h),
+              SizedBox(
+                  height:
+                      MediaQuery.of(context).viewInsets.bottom + 16.h),
             ],
           ),
         );
