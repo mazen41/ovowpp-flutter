@@ -141,6 +141,11 @@ class MessagesData {
   String? status;
   String? createdAt;
   String? updatedAt;
+  String? aiReply;
+  String? flowId;
+  dynamic listReply;
+  CtaUrlModel? ctaUrl;
+  InteractiveListModel? interactiveList;
 
   MessagesData({
     this.id,
@@ -165,6 +170,11 @@ class MessagesData {
     this.status,
     this.createdAt,
     this.updatedAt,
+    this.aiReply,
+    this.flowId,
+    this.listReply,
+    this.ctaUrl,
+    this.interactiveList,
   });
 
   factory MessagesData.fromJson(Map<String, dynamic> json) => MessagesData(
@@ -190,6 +200,15 @@ class MessagesData {
     createdAt: json["created_at"]?.toString(),
     updatedAt: json["updated_at"]?.toString(),
     mediaFilename: json["media_filename"]?.toString(),
+    aiReply: json["ai_reply"]?.toString(),
+    flowId: json["flow_id"]?.toString(),
+    listReply: json["list_reply"],
+    ctaUrl: json["cta_url"] != null && json["cta_url"] is Map
+        ? CtaUrlModel.fromJson(json["cta_url"])
+        : null,
+    interactiveList: json["interactive_list"] != null && json["interactive_list"] is Map
+        ? InteractiveListModel.fromJson(json["interactive_list"])
+        : null,
   );
 
   Map<String, dynamic> toJson() => {
@@ -215,6 +234,11 @@ class MessagesData {
     "status": status,
     "created_at": createdAt,
     "updated_at": updatedAt,
+    "ai_reply": aiReply,
+    "flow_id": flowId,
+    "list_reply": listReply,
+    "cta_url": ctaUrl?.toJson(),
+    "interactive_list": interactiveList?.toJson(),
   };
 }
 
@@ -372,4 +396,98 @@ class MessageReplayTo {
     "created_at": createdAt,
     "updated_at": updatedAt,
   };
+}
+
+/// ─── CTA URL nested model ───────────────────────────────────────────────────
+class CtaUrlModel {
+  String? id;
+  String? name;
+  String? ctaUrl;
+  String? headerFormat;
+  Map<String, dynamic>? header;
+  Map<String, dynamic>? body;
+  Map<String, dynamic>? footer;
+  Map<String, dynamic>? action;
+
+  CtaUrlModel({
+    this.id,
+    this.name,
+    this.ctaUrl,
+    this.headerFormat,
+    this.header,
+    this.body,
+    this.footer,
+    this.action,
+  });
+
+  factory CtaUrlModel.fromJson(Map<String, dynamic> json) => CtaUrlModel(
+    id: json['id']?.toString(),
+    name: json['name']?.toString(),
+    ctaUrl: json['cta_url']?.toString(),
+    headerFormat: json['header_format']?.toString(),
+    header: json['header'] is Map ? Map<String, dynamic>.from(json['header']) : null,
+    body: json['body'] is Map ? Map<String, dynamic>.from(json['body']) : null,
+    footer: json['footer'] is Map ? Map<String, dynamic>.from(json['footer']) : null,
+    action: json['action'] is Map ? Map<String, dynamic>.from(json['action']) : null,
+  );
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'cta_url': ctaUrl,
+    'header_format': headerFormat,
+    'header': header,
+    'body': body,
+    'footer': footer,
+    'action': action,
+  };
+
+  String get headerText => header?['text']?.toString() ?? '';
+  String get bodyText => body?['text']?.toString() ?? '';
+  String get footerText => footer?['text']?.toString() ?? '';
+  String get buttonText => action?['parameters']?['display_text']?.toString() ?? '';
+  String get url => ctaUrl ?? action?['parameters']?['url']?.toString() ?? '';
+  bool get hasImage => headerFormat?.toUpperCase() == 'IMAGE';
+  String get headerImageUrl => header?['image']?['link']?.toString() ?? '';
+}
+
+/// ─── Interactive List nested model ──────────────────────────────────────────
+class InteractiveListModel {
+  String? id;
+  String? buttonText;
+  Map<String, dynamic>? header;
+  Map<String, dynamic>? body;
+  Map<String, dynamic>? footer;
+  List<dynamic>? sections;
+
+  InteractiveListModel({
+    this.id,
+    this.buttonText,
+    this.header,
+    this.body,
+    this.footer,
+    this.sections,
+  });
+
+  factory InteractiveListModel.fromJson(Map<String, dynamic> json) => InteractiveListModel(
+    id: json['id']?.toString(),
+    buttonText: json['button_text']?.toString(),
+    header: json['header'] is Map ? Map<String, dynamic>.from(json['header']) : null,
+    body: json['body'] is Map ? Map<String, dynamic>.from(json['body']) : null,
+    footer: json['footer'] is Map ? Map<String, dynamic>.from(json['footer']) : null,
+    sections: json['sections'] is List ? List<dynamic>.from(json['sections']) : null,
+  );
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'button_text': buttonText,
+    'header': header,
+    'body': body,
+    'footer': footer,
+    'sections': sections,
+  };
+
+  String get headerText => header?['text']?.toString() ?? '';
+  String get bodyText => body?['text']?.toString() ?? '';
+  String get footerText => footer?['text']?.toString() ?? '';
 }

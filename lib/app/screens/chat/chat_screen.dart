@@ -271,6 +271,37 @@ class _ChatScreenState extends State<ChatScreen> {
                                                           index,
                                                           controller,
                                                         ),
+                                                      // CTA URL card
+                                                      if (item.ctaUrl != null)
+                                                        _buildCtaCard(item.ctaUrl!),
+                                                      // Interactive List card
+                                                      if (item.interactiveList != null &&
+                                                          item.messageType == AppStatus.LIST_TYPE_MESSAGE)
+                                                        _buildInteractiveListCard(item.interactiveList!),
+                                                      // List reply (user tapped an option)
+                                                      if (item.listReply != null && item.listReply is Map)
+                                                        _buildListReplyBubble(item.listReply),
+                                                      // AI reply badge
+                                                      if (item.aiReply == '1')
+                                                        Padding(
+                                                          padding: EdgeInsets.only(top: 4.h),
+                                                          child: Row(
+                                                            mainAxisSize: MainAxisSize.min,
+                                                            children: [
+                                                              Icon(Icons.smart_toy_outlined,
+                                                                  size: 12.sp,
+                                                                  color: MyColor.getPrimaryColor()),
+                                                              SizedBox(width: 4.w),
+                                                              Text(
+                                                                'AI Response',
+                                                                style: TextStyle(
+                                                                  fontSize: 11.sp,
+                                                                  color: MyColor.getPrimaryColor(),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
                                                       Row(
                                                         mainAxisAlignment: MainAxisAlignment.end,
                                                         children: [
@@ -947,6 +978,11 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget _buildMessageText(MessagesData item, ThemeData theme) {
+    // Don't show label when we have a rich card rendered separately
+    if (item.ctaUrl != null) return const SizedBox();
+    if (item.interactiveList != null &&
+        item.messageType == AppStatus.LIST_TYPE_MESSAGE) return const SizedBox();
+
     final message = item.message ?? '';
     final icon = _messageDisplayIcon(item.messageType, item.templateId);
     final displayText = _messageDisplayLabel(item.messageType, item.templateId) ?? message;
@@ -982,6 +1018,174 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 }
+
+/// CTA URL card widget
+Widget _buildCtaCard(CtaUrlModel cta) {
+  return Container(
+    margin: EdgeInsets.only(top: 6.h),
+    constraints: BoxConstraints(maxWidth: 260.w),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(10.r),
+      border: Border.all(color: MyColor.dashboardCardBorder.withAlpha(60)),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (cta.hasImage && cta.headerImageUrl.isNotEmpty)
+          ClipRRect(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(10.r)),
+            child: MyNetworkImageWidget(
+              imageUrl: cta.headerImageUrl,
+              width: double.infinity,
+              height: 140.h,
+              fit: BoxFit.cover,
+            ),
+          )
+        else if (cta.headerText.isNotEmpty)
+          Padding(
+            padding: EdgeInsets.fromLTRB(12.w, 10.h, 12.w, 0),
+            child: Text(
+              cta.headerText,
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp),
+            ),
+          ),
+        if (cta.bodyText.isNotEmpty)
+          Padding(
+            padding: EdgeInsets.fromLTRB(12.w, 6.h, 12.w, 4.h),
+            child: Text(cta.bodyText, style: TextStyle(fontSize: 13.sp)),
+          ),
+        if (cta.footerText.isNotEmpty)
+          Padding(
+            padding: EdgeInsets.fromLTRB(12.w, 0, 12.w, 6.h),
+            child: Text(
+              cta.footerText,
+              style: TextStyle(fontSize: 11.sp, color: Colors.grey),
+            ),
+          ),
+        Divider(height: 1, thickness: 1, color: MyColor.dashboardCardBorder.withAlpha(60)),
+        InkWell(
+          onTap: () async {
+            final url = cta.url;
+            if (url.isEmpty) return;
+            final uri = Uri.parse(url.startsWith('http') ? url : 'https://$url');
+            if (await canLaunchUrl(uri)) {
+              await launchUrl(uri, mode: LaunchMode.externalApplication);
+            }
+          },
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(10.r)),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 12.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.open_in_new, size: 14.sp, color: MyColor.getPrimaryColor()),
+                SizedBox(width: 6.w),
+                Text(
+                  cta.buttonText.isNotEmpty ? cta.buttonText : 'Open',
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                    color: MyColor.getPrimaryColor(),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+/// Interactive List card widget
+Widget _buildInteractiveListCard(InteractiveListModel list) {
+  return Container(
+    margin: EdgeInsets.only(top: 6.h),
+    constraints: BoxConstraints(maxWidth: 260.w),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(10.r),
+      border: Border.all(color: MyColor.dashboardCardBorder.withAlpha(60)),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (list.headerText.isNotEmpty)
+          Padding(
+            padding: EdgeInsets.fromLTRB(12.w, 10.h, 12.w, 0),
+            child: Text(
+              list.headerText,
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp),
+            ),
+          ),
+        if (list.bodyText.isNotEmpty)
+          Padding(
+            padding: EdgeInsets.fromLTRB(12.w, 6.h, 12.w, 4.h),
+            child: Text(list.bodyText, style: TextStyle(fontSize: 13.sp)),
+          ),
+        if (list.footerText.isNotEmpty)
+          Padding(
+            padding: EdgeInsets.fromLTRB(12.w, 0, 12.w, 6.h),
+            child: Text(
+              list.footerText,
+              style: TextStyle(fontSize: 11.sp, color: Colors.grey),
+            ),
+          ),
+        Divider(height: 1, thickness: 1, color: MyColor.dashboardCardBorder.withAlpha(60)),
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 12.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.format_list_bulleted, size: 14.sp, color: MyColor.getPrimaryColor()),
+              SizedBox(width: 6.w),
+              Text(
+                (list.buttonText ?? '').isNotEmpty ? list.buttonText! : 'View Options',
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  color: MyColor.getPrimaryColor(),
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+/// List reply bubble (when user picked an option)
+Widget _buildListReplyBubble(dynamic listReply) {
+  final title = listReply['title']?.toString() ?? '';
+  final description = listReply['description']?.toString() ?? '';
+  if (title.isEmpty && description.isEmpty) return const SizedBox();
+  return Container(
+    margin: EdgeInsets.only(top: 6.h),
+    padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
+    decoration: BoxDecoration(
+      color: MyColor.getPrimaryColor().withAlpha(20),
+      borderRadius: BorderRadius.circular(8.r),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (title.isNotEmpty)
+          Text(
+            title,
+            style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w600),
+          ),
+        if (description.isNotEmpty)
+          Text(
+            description,
+            style: TextStyle(fontSize: 12.sp, color: Colors.grey[700]),
+          ),
+      ],
+    ),
+  );
+}
+
 
 bool _isTemplateMessage(String? templateId) {
   return templateId != null && templateId.isNotEmpty && templateId != '0';
