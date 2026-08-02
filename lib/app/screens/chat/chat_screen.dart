@@ -1039,7 +1039,7 @@ Widget _buildCtaCard(CtaUrlModel cta) {
               imageUrl: cta.headerImageUrl,
               width: double.infinity,
               height: 140.h,
-              fit: BoxFit.cover,
+              boxFit: BoxFit.cover,
             ),
           )
         else if (cta.headerText.isNotEmpty)
