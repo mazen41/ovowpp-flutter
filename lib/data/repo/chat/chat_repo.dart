@@ -18,6 +18,16 @@ class ChatRepo {
     return ApiService.getRequest('${UrlContainer.baseUrl}${UrlContainer.inboxDataUrl}');
   }
 
+  /// Fetch CTA URLs
+  Future<ResponseModel> getCtaUrlsDataRepo() async {
+    return ApiService.getRequest('${UrlContainer.baseUrl}${UrlContainer.ctaUrlListUrl}');
+  }
+
+  /// Fetch Interactive Lists
+  Future<ResponseModel> getInteractiveListsDataRepo() async {
+    return ApiService.getRequest('${UrlContainer.baseUrl}${UrlContainer.interactiveListListUrl}');
+  }
+
   // ─── Message status ────────────────────────────────────────────────────────
 
   Future<ResponseModel> seenMessageRepo(String conversationId) async {

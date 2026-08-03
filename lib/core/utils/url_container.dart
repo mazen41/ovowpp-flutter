@@ -134,6 +134,12 @@ class UrlContainer {
   /// Block / unblock a contact: POST contact/update/{contactId} with is_blocked=1|0
   static const String blockContactUrl = 'contact/update/';
 
+  /// Fetch available CTA URLs for sending.
+  static const String ctaUrlListUrl = 'cta-url/get-list';
+
+  /// Fetch available Interactive Lists for sending.
+  static const String interactiveListListUrl = 'interactive-list/get-list';
+
   /// Fetch inbox data (templates, CTA URLs, interactive lists).
   static const String inboxDataUrl = 'inbox/';
 

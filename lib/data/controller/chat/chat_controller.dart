@@ -764,10 +764,20 @@ class ChatController extends GetxController {
       if (res.statusCode == 200) {
         final data = res.responseJson['data'] as Map<String, dynamic>? ?? {};
         final rawTemplates = data['templates'] as List<dynamic>? ?? [];
-        final rawCtaUrls = data['ctaUrls'] as List<dynamic>? ?? [];
-        final rawLists = data['interactiveLists'] as List<dynamic>? ?? [];
         templates = rawTemplates.map((e) => Map<String, dynamic>.from(e as Map)).toList();
+      }
+
+      final ctaRes = await repo.getCtaUrlsDataRepo();
+      if (ctaRes.statusCode == 200) {
+        final data = ctaRes.responseJson['data'] as Map<String, dynamic>? ?? {};
+        final rawCtaUrls = data['urls'] as List<dynamic>? ?? data['ctaUrls'] as List<dynamic>? ?? [];
         ctaUrls = rawCtaUrls.map((e) => Map<String, dynamic>.from(e as Map)).toList();
+      }
+
+      final listRes = await repo.getInteractiveListsDataRepo();
+      if (listRes.statusCode == 200) {
+        final data = listRes.responseJson['data'] as Map<String, dynamic>? ?? {};
+        final rawLists = data['lists'] as List<dynamic>? ?? data['interactiveLists'] as List<dynamic>? ?? [];
         interactiveLists = rawLists.map((e) => Map<String, dynamic>.from(e as Map)).toList();
       }
     } catch (e) {
