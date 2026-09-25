@@ -5,6 +5,17 @@ on:
     tags:
       - 'v*.*.*'
   workflow_dispatch:
+    inputs:
+      track:
+        description: 'Google Play track to upload to'
+        required: true
+        default: 'internal'
+        type: choice
+        options:
+          - internal
+          - alpha
+          - beta
+          - production
 
 jobs:
   build:
@@ -40,7 +51,7 @@ jobs:
           storePassword=${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword=${{ secrets.KEY_PASSWORD }}
           keyAlias=${{ secrets.KEY_ALIAS }}
-          storeFile=upload-keystore.jks
+          storeFile=app/upload-keystore.jks
           EOF
 
       - name: Build APK
@@ -68,7 +79,7 @@ jobs:
           name: "OvoWPP ${{ github.ref_name }}"
           body: |
             ## Release ${{ github.ref_name }}
-            
+
             ### Downloads
             - **APK** — install directly on Android devices
             - **AAB** — upload to Google Play Store
@@ -77,3 +88,24 @@ jobs:
             build/app/outputs/bundle/release/app-release.aab
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ── Google Play Upload ──────────────────────────────────────────────────
+      - name: Determine Play Track
+        id: track
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "track=${{ github.event.inputs.track }}" >> $GITHUB_OUTPUT
+          else
+            echo "track=internal" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Upload AAB to Google Play
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: com.ovosolution.ovowppapp
+          releaseFiles: build/app/outputs/bundle/release/app-release.aab
+          track: ${{ steps.track.outputs.track }}
+          status: completed
+          inAppUpdatePriority: 2
+          whatsNewDirectory: distribution/whatsnew
