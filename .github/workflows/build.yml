@@ -49,7 +49,7 @@ jobs:
 
       - name: Create key.properties
         run: |
-          printf 'storePassword=${{ secrets.KEYSTORE_PASSWORD }}\nkeyPassword=${{ secrets.KEY_PASSWORD }}\nkeyAlias=${{ secrets.KEY_ALIAS }}\nstoreFile=app/upload-keystore.jks\n' > android/key.properties
+          printf 'storePassword=${{ secrets.KEYSTORE_PASSWORD }}\nkeyPassword=${{ secrets.KEY_PASSWORD }}\nkeyAlias=${{ secrets.KEY_ALIAS }}\nstoreFile=upload-keystore.jks\n' > android/key.properties
 
       - name: Build APK
         run: flutter build apk --release --no-tree-shake-icons
