@@ -10,7 +10,7 @@
 <uses-permission android:name="android.permission.READ_CONTACTS" />  
 <uses-permission android:name="android.permission.WRITE_CONTACTS" />  
     <application
-        android:label="OvoWpp"
+        android:label="Mersal"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
