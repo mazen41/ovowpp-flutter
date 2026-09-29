@@ -1,7 +1,7 @@
 name: ovowpp
 description: "Complete Cross Platform WhatsApp CRM and Marketing Tool | Web and Mobile App | SaaS"
 publish_to: "none"
-version: 2.0.0+3
+version: 2.0.0+4
 
 environment:
   sdk: ">=3.10.0 <4.0.0"

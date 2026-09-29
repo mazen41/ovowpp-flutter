@@ -1,5 +1,5 @@
 class Environment {
-  static const appName = "OvoWpp";
+  static const appName = "Mersal";
   static const appVersion = "1.0.0";
 
   static String defaultLangCode = "en";

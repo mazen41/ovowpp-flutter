@@ -1,5 +1,5 @@
 const Map<String, String> enUs = {
-  'ovoWpp': 'OvoWpp',
+  'ovoWpp': 'Mersal',
   'onboardTitle1': 'Automate WhatsApp Marketing',
   'onboardTitle2': 'Manage Campaigns Effortlessly',
   'onboardTitle3': 'Grow Customers Faster',

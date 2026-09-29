@@ -1,5 +1,5 @@
 final Map<String, String> arAR = {
-  'ovoWpp': 'أوفو دبليو بي بي',
+  'ovoWpp': 'مرسال',
   'onboardTitle1': 'أتمتة تسويق واتساب',
   'onboardTitle2': 'إدارة الحملات بسهولة',
   'onboardTitle3': 'نمو العملاء بشكل أسرع',

@@ -1,5 +1,5 @@
 class MyStrings {
-  static const String ovoWpp = 'OvoWpp';
+  static const String ovoWpp = 'Mersal';
 
   static const String onboardTitle1 = 'Automate WhatsApp Marketing';
   static const String onboardTitle2 = 'Manage Campaigns Effortlessly';
