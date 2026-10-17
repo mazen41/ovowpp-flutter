@@ -25,7 +25,7 @@ class PermissionTitle extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  permission.name?.toTitleCase() ?? "",
+                  translateDbLabel(permission.name),
                   style: MyTextStyle.subHeading14W600FieldTitleColor(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
 import 'package:ovowpp/core/utils/app_status.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/url_container.dart';
 import 'package:ovowpp/data/model/country_model/country_model.dart';
 import 'package:ovowpp/data/model/customer_account/customer_contact_save_response_model.dart';
@@ -106,6 +107,12 @@ class EditAgentController extends GetxController {
 
   bool isUpdateAgentLoading = false;
   void updateAgent() async {
+    // First name is the only required field on the edit form. The edit screen does not run
+    // form validation, so check it here.
+    if (firstNameController.text.trim().isEmpty) {
+      CustomSnackBar.error(errorList: [Strings.fieldErrorMsg.tr]);
+      return;
+    }
     isUpdateAgentLoading = true;
     update();
     try {
@@ -136,6 +143,13 @@ class EditAgentController extends GetxController {
     }
     isUpdateAgentLoading = false;
     update();
+  }
+
+  /// Phone is optional. When filled it must be 5 to 15 digits (spaces, dashes and brackets are ignored).
+  String? validateOptionalPhone(String? value) {
+    final v = (value ?? '').replaceAll(RegExp(r'[\s\-()]'), '');
+    if (v.isEmpty) return null;
+    return RegExp(r'^[0-9]{5,15}$').hasMatch(v) ? null : Strings.invalidPhoneNumberMsg.tr;
   }
 
   String extractDialCode(String mobile, List<Countries> countries) {

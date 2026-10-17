@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:http/http.dart' as http;
 import 'package:ovowpp/core/utils/util.dart';
@@ -85,13 +87,13 @@ class _DocumentPreviewScreenState extends State<DocumentPreviewScreen> {
 
   Widget _buildBody() {
     if (isLoading) {
-      return const Center(
+      return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircularProgressIndicator(),
             SizedBox(height: 16),
-            Text('Loading PDF...', style: TextStyle(fontSize: 16)),
+            Text(Strings.loadingPdf.tr, style: TextStyle(fontSize: 16)),
           ],
         ),
       );
@@ -104,7 +106,7 @@ class _DocumentPreviewScreenState extends State<DocumentPreviewScreen> {
           children: [
             const Icon(Icons.error_outline, size: 64, color: Colors.red),
             const SizedBox(height: 16),
-            const Text('Failed to load PDF', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text(Strings.failedToLoadPdf.tr, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -118,7 +120,7 @@ class _DocumentPreviewScreenState extends State<DocumentPreviewScreen> {
             ElevatedButton.icon(
               onPressed: downloadAndSavePDF,
               icon: const Icon(Icons.refresh),
-              label: const Text('Retry'),
+              label: Text(Strings.retry.tr),
             ),
           ],
         ),
@@ -126,7 +128,7 @@ class _DocumentPreviewScreenState extends State<DocumentPreviewScreen> {
     }
 
     if (localPath == null) {
-      return const Center(child: Text('No PDF to display'));
+      return Center(child: Text(Strings.noPdfToDisplay.tr));
     }
 
     return PDFView(
@@ -192,7 +194,7 @@ class _DocumentPreviewScreenState extends State<DocumentPreviewScreen> {
           IconButton(
             onPressed: currentPage > 0 ? _goToPreviousPage : null,
             icon: const Icon(Icons.arrow_back_ios),
-            tooltip: 'Previous Page',
+            tooltip: Strings.previousPage.tr,
           ),
           Expanded(
             child: Slider(
@@ -208,7 +210,7 @@ class _DocumentPreviewScreenState extends State<DocumentPreviewScreen> {
           IconButton(
             onPressed: currentPage < totalPages - 1 ? _goToNextPage : null,
             icon: const Icon(Icons.arrow_forward_ios),
-            tooltip: 'Next Page',
+            tooltip: Strings.nextPage.tr,
           ),
         ],
       ),

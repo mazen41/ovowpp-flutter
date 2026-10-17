@@ -64,13 +64,6 @@ class _ProfileEditFormState extends State<ProfileEditForm> {
                       textInputType: TextInputType.text,
                       inputAction: TextInputAction.next,
                       radius: Dimensions.largeRadius,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return Strings.fieldErrorMsg.tr;
-                        } else {
-                          return null;
-                        }
-                      },
                     ),
                     spaceDown(Dimensions.space15.h),
                     LabelTextField(

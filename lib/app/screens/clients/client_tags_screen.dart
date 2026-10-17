@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ovowpp/app/components/annotated_region/annotated_region_widget.dart';
 import 'package:ovowpp/app/components/app-bar/custom_app_bar.dart';
@@ -66,14 +68,14 @@ class _ClientTagsScreenState extends State<ClientTagsScreen> {
       child: Scaffold(
         backgroundColor: MyColor.white,
         appBar: CustomAppBar(
-          title: 'Manage Tags',
+          title: Strings.manageTags.tr,
           bgColor: MyColor.white,
           elevation: 0,
         ),
         floatingActionButton: FloatingActionButton.extended(
           backgroundColor: MyColor.getPrimaryColor(),
           icon: const Icon(Icons.add, color: Colors.white),
-          label: const Text('New Tag', style: TextStyle(color: Colors.white)),
+          label: Text(Strings.newTag.tr, style: TextStyle(color: Colors.white)),
           onPressed: () => _showTagDialog(),
         ),
         body: _loading
@@ -121,7 +123,7 @@ class _ClientTagsScreenState extends State<ClientTagsScreen> {
         builder: (ctx, setDialog) => AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
           title: Text(
-            isEdit ? 'Edit Tag' : 'New Tag',
+            isEdit ? 'Edit Tag' : Strings.newTag.tr,
             style: MyTextStyle.heading16W600(),
           ),
           content: Column(
@@ -132,12 +134,12 @@ class _ClientTagsScreenState extends State<ClientTagsScreen> {
                 controller: nameController,
                 autofocus: true,
                 decoration: InputDecoration(
-                  labelText: 'Tag name',
+                  labelText: Strings.tagName.tr,
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.r)),
                 ),
               ),
               SizedBox(height: 16.h),
-              Text('Color', style: MyTextStyle.subHeading14W500().copyWith(color: MyColor.getBodyTextColor())),
+              Text(Strings.color.tr, style: MyTextStyle.subHeading14W500().copyWith(color: MyColor.getBodyTextColor())),
               SizedBox(height: 8.h),
               Wrap(
                 spacing: 10.w,
@@ -169,7 +171,7 @@ class _ClientTagsScreenState extends State<ClientTagsScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: Text('Cancel', style: TextStyle(color: MyColor.getBodyTextColor())),
+              child: Text(Strings.cancel.tr, style: TextStyle(color: MyColor.getBodyTextColor())),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -179,7 +181,7 @@ class _ClientTagsScreenState extends State<ClientTagsScreen> {
               onPressed: () async {
                 final name = nameController.text.trim();
                 if (name.isEmpty) {
-                  CustomSnackBar.error(errorList: ['Tag name cannot be empty']);
+                  CustomSnackBar.error(errorList: [Strings.tagNameCannotBeEmpty.tr]);
                   return;
                 }
                 Navigator.pop(ctx);
@@ -208,13 +210,13 @@ class _ClientTagsScreenState extends State<ClientTagsScreen> {
       final res = await ApiService.postRequest(url, {'name': name, 'color': color});
       if (res.statusCode == 200 &&
           (res.responseJson['status'] as String?)?.toLowerCase() == AppStatus.success) {
-        CustomSnackBar.success(successList: [isEdit ? 'Tag updated' : 'Tag created']);
+        CustomSnackBar.success(successList: [isEdit ? Strings.tagUpdated.tr : Strings.tagCreated.tr]);
         await _loadTags();
       } else {
-        CustomSnackBar.error(errorList: [(res.responseJson['message'] as List?)?.first?.toString() ?? 'Failed']);
+        CustomSnackBar.error(errorList: [(res.responseJson['message'] as List?)?.first?.toString() ?? Strings.operationFailed.tr]);
       }
     } catch (_) {
-      CustomSnackBar.error(errorList: ['Something went wrong']);
+      CustomSnackBar.error(errorList: [Strings.somethingWentWrong.tr]);
     }
   }
 
@@ -223,7 +225,7 @@ class _ClientTagsScreenState extends State<ClientTagsScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
-        title: Text('Delete Tag?', style: MyTextStyle.heading16W600()),
+        title: Text(Strings.deleteTagQuestion.tr, style: MyTextStyle.heading16W600()),
         content: Text(
           'Delete "${tag['name'] ?? 'tag'}"? This will remove the tag from all contacts.',
           style: MyTextStyle.subHeading14W400().copyWith(color: MyColor.getBodyTextColor()),
@@ -231,11 +233,11 @@ class _ClientTagsScreenState extends State<ClientTagsScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: Text('Cancel', style: TextStyle(color: MyColor.getBodyTextColor())),
+            child: Text(Strings.cancel.tr, style: TextStyle(color: MyColor.getBodyTextColor())),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: Text('Delete', style: TextStyle(color: MyColor.getErrorColor())),
+            child: Text(Strings.delete.tr, style: TextStyle(color: MyColor.getErrorColor())),
           ),
         ],
       ),
@@ -247,13 +249,13 @@ class _ClientTagsScreenState extends State<ClientTagsScreen> {
       final res = await ApiService.postRequest(url, {});
       if (res.statusCode == 200 &&
           (res.responseJson['status'] as String?)?.toLowerCase() == AppStatus.success) {
-        CustomSnackBar.success(successList: ['Tag deleted']);
+        CustomSnackBar.success(successList: [Strings.tagDeleted.tr]);
         await _loadTags();
       } else {
-        CustomSnackBar.error(errorList: ['Failed to delete tag']);
+        CustomSnackBar.error(errorList: [Strings.failedToDeleteTag.tr]);
       }
     } catch (_) {
-      CustomSnackBar.error(errorList: ['Something went wrong']);
+      CustomSnackBar.error(errorList: [Strings.somethingWentWrong.tr]);
     }
   }
 

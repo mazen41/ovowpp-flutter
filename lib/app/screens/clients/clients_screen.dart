@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/annotated_region/annotated_region_widget.dart';
@@ -98,14 +99,14 @@ class _ClientsScreenState extends State<ClientsScreen> {
       child: Scaffold(
         backgroundColor: MyColor.white,
         appBar: CustomAppBar(
-          title: 'Clients',
+          title: Strings.clients.tr,
           bgColor: MyColor.white,
           elevation: 0,
           action: [
             IconButton(
               icon: Icon(Icons.label_outlined, color: MyColor.getPrimaryColor()),
               onPressed: () => Get.toNamed(RouteHelper.clientTagsScreen)?.then((_) => _loadData()),
-              tooltip: 'Manage Tags',
+              tooltip: Strings.manageTags.tr,
             ),
           ],
         ),
@@ -146,7 +147,7 @@ class _ClientsScreenState extends State<ClientsScreen> {
               _applyFilters();
             },
             decoration: InputDecoration(
-              hintText: 'Search clients…',
+              hintText: Strings.searchClients.tr,
               hintStyle: MyTextStyle.subHeading14W400().copyWith(color: MyColor.getBodyTextColor()),
               prefixIcon: Icon(Icons.search_rounded, color: MyColor.getBodyTextColor()),
               suffixIcon: _searchQuery.isNotEmpty
@@ -247,7 +248,7 @@ class _ClientsScreenState extends State<ClientsScreen> {
           if (MyUtils.checkPermission(AppPermission.sendMessage)) {
             Get.toNamed(RouteHelper.chatScreen, arguments: [conversationId, '']);
           } else {
-            CustomSnackBar.error(errorList: ['Permission denied']);
+            CustomSnackBar.error(errorList: [Strings.permissionDenied.tr]);
           }
         }
       },

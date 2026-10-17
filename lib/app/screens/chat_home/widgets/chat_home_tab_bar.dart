@@ -279,7 +279,7 @@ class MySliverTabBarView extends StatelessWidget {
                                                 borderRadius: BorderRadius.circular(Dimensions.space10.r),
                                               ),
                                               child: DefaultText(
-                                                text: tag ?? ''.tr,
+                                                text: tag ?? '',
                                                 textStyle: MyTextStyle.subHeading12W600().copyWith(
                                                   color: MyColor.splashTextColor,
                                                 ),

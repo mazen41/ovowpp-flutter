@@ -238,8 +238,8 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
                             spaceDown(Dimensions.space8.h),
 
                             AccountAndAppSettingItem(
-                              title: 'Clients',
-                              subTitle: 'Manage clients and tags',
+                              title: Strings.clients.tr,
+                              subTitle: Strings.manageClientsAndTags.tr,
                               iconPath: MyImages.group,
                               onTap: () {
                                 Get.toNamed(RouteHelper.clientsScreen);

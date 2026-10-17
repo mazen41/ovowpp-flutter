@@ -118,6 +118,13 @@ class Messages {
   };
 }
 
+/// Empty or whitespace-only strings from the API count as "missing".
+String? _nonEmptyOrNull(String? value) {
+  if (value == null) return null;
+  final trimmed = value.trim();
+  return trimmed.isEmpty ? null : trimmed;
+}
+
 class MessagesData {
   String? id;
   String? userId;
@@ -176,6 +183,13 @@ class MessagesData {
     this.ctaUrl,
     this.interactiveList,
   });
+
+  // Safe accessors. The API may send null, "" or a missing key for any media field.
+  String? get safeMediaId => _nonEmptyOrNull(mediaId);
+  String? get safeMediaPath => _nonEmptyOrNull(mediaPath);
+  String? get safeMediaUrl => _nonEmptyOrNull(mediaUrl);
+  String? get safeMimeType => _nonEmptyOrNull(mimeType);
+  String? get safeMediaFilename => _nonEmptyOrNull(mediaFilename);
 
   factory MessagesData.fromJson(Map<String, dynamic> json) => MessagesData(
     id: json["id"]?.toString(),

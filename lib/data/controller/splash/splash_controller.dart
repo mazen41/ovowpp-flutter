@@ -78,19 +78,22 @@ class SplashController extends GetxController {
     if (lan.isEmpty) {
       await SharedPreferenceService.setString(
         SharedPreferenceService.languageNameKey,
-        LocalizationController.myLanguages[0].languageName.toString(),
+        LocalizationController.myLanguages.firstWhere(
+          (l) => l.languageCode == localizationController.locale.languageCode,
+          orElse: () => LocalizationController.myLanguages[0],
+        ).languageName.toString(),
       );
     }
     if (!SharedPreferenceService.containsKey(SharedPreferenceService.countryCode)) {
       SharedPreferenceService.setString(
         SharedPreferenceService.countryCode,
-        LocalizationController.myLanguages[0].countryCode,
+        localizationController.locale.countryCode ?? 'US',
       );
     }
     if (!SharedPreferenceService.containsKey(SharedPreferenceService.languageCode)) {
       SharedPreferenceService.setString(
         SharedPreferenceService.languageCode,
-        LocalizationController.myLanguages[0].languageCode,
+        localizationController.locale.languageCode,
       );
     }
     Future.value(true);

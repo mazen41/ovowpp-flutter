@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:video_player/video_player.dart';
+import 'package:ovowpp/data/services/api_service.dart';
 
 /// Inline video player bubble for chat messages.
 /// Shows a thumbnail with play/pause control and a scrubber bar.
+/// API stream URLs are loaded with the Bearer token; public file URLs are not.
 class VideoPlayerBubble extends StatefulWidget {
   final String videoUrl;
 
@@ -13,10 +17,11 @@ class VideoPlayerBubble extends StatefulWidget {
 }
 
 class _VideoPlayerBubbleState extends State<VideoPlayerBubble> {
-  late VideoPlayerController _controller;
+  VideoPlayerController? _controller;
   bool _isInitialized = false;
   bool _hasError = false;
   bool _isBuffering = false;
+  bool _disposed = false;
 
   @override
   void initState() {
@@ -26,35 +31,50 @@ class _VideoPlayerBubbleState extends State<VideoPlayerBubble> {
 
   Future<void> _initController() async {
     try {
-      _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl));
-      _controller.addListener(_onVideoListener);
-      await _controller.initialize();
-      if (mounted) setState(() => _isInitialized = true);
-    } catch (_) {
-      if (mounted) setState(() => _hasError = true);
+      final url = widget.videoUrl.trim();
+      if (url.isEmpty) throw StateError('Empty video URL');
+
+      final controller = VideoPlayerController.networkUrl(
+        Uri.parse(url),
+        httpHeaders: await ApiService.mediaHeadersFor(url),
+      );
+      await controller.initialize();
+
+      if (_disposed) {
+        controller.dispose();
+        return;
+      }
+
+      controller.addListener(_onVideoListener);
+      setState(() {
+        _controller = controller;
+        _isInitialized = true;
+      });
+    } catch (error) {
+      debugPrint('Video load error: $error');
+      if (!_disposed && mounted) setState(() => _hasError = true);
     }
   }
 
   void _onVideoListener() {
-    if (!mounted) return;
-    final isBuffering = _controller.value.isBuffering;
-    if (isBuffering != _isBuffering) {
-      setState(() => _isBuffering = isBuffering);
-    }
-    // Redraw to keep play/pause icon in sync
-    if (mounted) setState(() {});
+    final controller = _controller;
+    if (!mounted || controller == null) return;
+    setState(() => _isBuffering = controller.value.isBuffering);
   }
 
   @override
   void dispose() {
-    _controller.removeListener(_onVideoListener);
-    _controller.dispose();
+    _disposed = true;
+    _controller?.removeListener(_onVideoListener);
+    _controller?.dispose();
     super.dispose();
   }
 
   void _togglePlayback() {
+    final controller = _controller;
+    if (controller == null) return;
     setState(() {
-      _controller.value.isPlaying ? _controller.pause() : _controller.play();
+      controller.value.isPlaying ? controller.pause() : controller.play();
     });
   }
 
@@ -70,20 +90,21 @@ class _VideoPlayerBubbleState extends State<VideoPlayerBubble> {
           color: Colors.black12,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: const Center(
+        child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(Icons.videocam_off_rounded, color: Colors.grey, size: 36),
               SizedBox(height: 6),
-              Text('Video unavailable', style: TextStyle(color: Colors.grey, fontSize: 12)),
+              Text(Strings.videoUnavailable.tr, style: TextStyle(color: Colors.grey, fontSize: 12)),
             ],
           ),
         ),
       );
     }
 
-    if (!_isInitialized) {
+    final controller = _controller;
+    if (!_isInitialized || controller == null) {
       return Container(
         width: bubbleWidth,
         height: 140,
@@ -106,11 +127,11 @@ class _VideoPlayerBubbleState extends State<VideoPlayerBubble> {
             mainAxisSize: MainAxisSize.min,
             children: [
               AspectRatio(
-                aspectRatio: _controller.value.aspectRatio.clamp(0.5, 2.0),
+                aspectRatio: controller.value.aspectRatio.clamp(0.5, 2.0).toDouble(),
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    VideoPlayer(_controller),
+                    VideoPlayer(controller),
                     // Buffering spinner
                     if (_isBuffering)
                       Container(
@@ -120,7 +141,7 @@ class _VideoPlayerBubbleState extends State<VideoPlayerBubble> {
                         ),
                       ),
                     // Play/pause overlay
-                    if (!_controller.value.isPlaying && !_isBuffering)
+                    if (!controller.value.isPlaying && !_isBuffering)
                       Container(
                         width: 48,
                         height: 48,
@@ -141,7 +162,7 @@ class _VideoPlayerBubbleState extends State<VideoPlayerBubble> {
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
-                          _formatDuration(_controller.value.duration),
+                          _formatDuration(controller.value.duration),
                           style: const TextStyle(color: Colors.white, fontSize: 10),
                         ),
                       ),
@@ -151,7 +172,7 @@ class _VideoPlayerBubbleState extends State<VideoPlayerBubble> {
               ),
               // Scrubber bar
               VideoProgressIndicator(
-                _controller,
+                controller,
                 allowScrubbing: true,
                 colors: VideoProgressColors(
                   playedColor: Theme.of(context).primaryColor,

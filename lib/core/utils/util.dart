@@ -121,11 +121,11 @@ class MyUtils {
       final result = await OpenFile.open(path);
       printE(result.type);
       if (result.type == ResultType.permissionDenied) {
-        CustomSnackBar.success(successList: ['File saved at: $path']);
+        CustomSnackBar.success(successList: ['${Strings.fileSavedAt.tr}: $path']);
       }
       if (result.type != ResultType.done) {
         if (result.type == ResultType.noAppToOpen) {
-          CustomSnackBar.error(errorList: [Strings.noDocOpenerApp, 'File saved at: $path']);
+          CustomSnackBar.error(errorList: [Strings.noDocOpenerApp, '${Strings.fileSavedAt.tr}: $path']);
         }
       }
     } else {

@@ -15,11 +15,10 @@ import 'package:ovowpp/app/components/snack_bar/show_custom_snackbar.dart';
 import 'package:ovowpp/app/components/text/default_text.dart';
 import 'package:ovowpp/app/screens/chat/widget/app_bar_contents.dart';
 import 'package:ovowpp/app/screens/chat/widget/voice_message_player.dart';
-import 'package:ovowpp/app/screens/chat/widget/video_player_bubble.dart';
+import 'package:ovowpp/app/screens/chat/widget/chat_media_widget.dart';
 import 'package:ovowpp/app/screens/chat/widget/chat_box.dart';
 import 'package:ovowpp/app/screens/dashboard/widget/round_icon_with_bg_color.dart';
 import 'package:ovowpp/core/helper/date_converter.dart';
-import 'package:ovowpp/core/route/route.dart';
 import 'package:ovowpp/core/utils/app_style.dart';
 import 'package:ovowpp/core/utils/dimensions.dart';
 import 'package:ovowpp/core/utils/my_color.dart';
@@ -27,7 +26,6 @@ import 'package:ovowpp/core/utils/my_icons.dart';
 import 'package:ovowpp/core/utils/my_images.dart';
 import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:ovowpp/core/utils/text_style.dart';
-import 'package:ovowpp/core/utils/url_container.dart';
 import 'package:ovowpp/core/utils/util.dart';
 import 'package:ovowpp/data/controller/chat/chat_controller.dart';
 import 'package:ovowpp/data/model/chat/chat_data_response_model.dart';
@@ -245,29 +243,12 @@ class _ChatScreenState extends State<ChatScreen> {
                                                           _messageDisplayLabel(item.messageType, item.templateId) !=
                                                               null)
                                                         _buildMessageText(item, theme),
-                                                      if (item.mediaPath != null)
+                                                      if (isMediaMessage(item))
                                                         buildMediaWidget(
-                                                          _buildMediaUrl(UrlContainer.domainUrl, controller.mediaPath, item.mediaPath!),
-                                                          item.messageType.toString(),
-                                                          item.mediaId ?? "",
-                                                          item.mimeType ?? "",
-                                                          index,
-                                                          controller,
-                                                        ),
-                                                      // Render media that exists only as a remote URL
-                                                      // (no local media_path stored). Covers video (3),
-                                                      // document (4), and audio (5).
-                                                      if (item.mediaPath == null &&
-                                                          item.mediaUrl != null &&
-                                                          item.mediaUrl!.isNotEmpty &&
-                                                          (item.messageType.toString() == "3" ||
-                                                           item.messageType.toString() == "4" ||
-                                                           item.messageType.toString() == "5"))
-                                                        buildMediaWidget(
-                                                          "${item.mediaUrl}",
-                                                          item.messageType.toString(),
-                                                          item.mediaId ?? "",
-                                                          item.mimeType ?? "",
+                                                          resolveMediaUrl(item, controller.mediaPath),
+                                                          item.messageType ?? '',
+                                                          item.safeMediaId,
+                                                          mediaExtension(item),
                                                           index,
                                                           controller,
                                                         ),
@@ -1310,167 +1291,6 @@ IconData? _replyPreviewIcon(MessageReplayTo? replyTo) {
   }
 }
 
-/// Safely joins domain + mediaPath + filePath without double slashes.
-String _buildMediaUrl(String domain, String mediaPath, String filePath) {
-  final base = domain.replaceAll(RegExp(r'/+$'), '');
-  final mid = mediaPath.replaceAll(RegExp(r'^/+|/+$'), '');
-  final end = filePath.replaceAll(RegExp(r'^/+|/+$'), '').replaceAll('\\', '/');
-  return '$base/$mid/$end';
-}
-
-Widget buildMediaWidget(
-  String? mediaPath,
-  String msgType,
-  String? mediaId,
-  String extension,
-  int index,
-  ChatController controller,
-) {
-  if (mediaPath == null || mediaPath.isEmpty) return const SizedBox();
-
-  final String url = mediaPath.replaceAll('\\', '/');
-  final String lowerPath = url.toLowerCase();
-  final String lowerExtension = extension.toLowerCase();
-
-  // Check for images - use both path and extension
-  final bool isImage =
-      lowerPath.endsWith('.jpg') ||
-      lowerPath.endsWith('.jpeg') ||
-      lowerPath.endsWith('.png') ||
-      lowerPath.endsWith('.gif') ||
-      lowerPath.endsWith('.bmp') ||
-      lowerPath.endsWith('.webp') ||
-      lowerExtension == 'jpg' ||
-      lowerExtension == 'jpeg' ||
-      lowerExtension == 'png' ||
-      lowerExtension == 'gif' ||
-      lowerExtension == 'bmp' ||
-      lowerExtension == 'webp';
-
-  if (isImage) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 4),
-      child: GestureDetector(
-        onTap: () {
-          Get.toNamed(RouteHelper.previewImageScreen, arguments: [url, mediaId, index, extension]);
-        },
-        child: MyNetworkImageWidget(imageUrl: url, boxFit: BoxFit.cover, height: 200, width: 200),
-      ),
-    );
-  }
-
-  // Check for audio
-  final bool isAudio =
-      lowerPath.endsWith('.mp3') ||
-      lowerPath.endsWith('.ogg') ||
-      lowerPath.endsWith('.wav') ||
-      lowerPath.endsWith('.m4a') ||
-      lowerPath.endsWith('.aac') ||
-      lowerPath.endsWith('.mpeg') ||
-      lowerPath.endsWith('.opus') ||
-      lowerPath.endsWith('.amr') ||
-      lowerPath.endsWith('.flac') ||
-      lowerPath.endsWith('.wma') ||
-      lowerPath.endsWith('.aiff') ||
-      lowerPath.endsWith('.alac') ||
-      lowerExtension == 'mp3' ||
-      lowerExtension == 'ogg' ||
-      lowerExtension == 'wav' ||
-      lowerExtension == 'm4a' ||
-      lowerExtension == 'aac' ||
-      lowerExtension == 'mpeg' ||
-      lowerExtension == 'opus' ||
-      lowerExtension == 'amr' ||
-      lowerExtension == 'flac' ||
-      lowerExtension == 'wma' ||
-      lowerExtension == 'aiff' ||
-      lowerExtension == 'alac';
-
-  if (isAudio) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 4),
-      child: VoiceMessagePlayer(
-        key: ValueKey(url),
-        audioPath: url,
-        isLocal: false,
-        activeColor: MyColor.getPrimaryColor(),
-        icon: (lowerPath.endsWith('.ogg') || lowerExtension == 'ogg') ? Icons.mic : Icons.music_note,
-      ),
-    );
-  }
-
-  // Video messages — inline player
-  final bool isVideo =
-      lowerPath.endsWith('.mp4') ||
-      lowerPath.endsWith('.mov') ||
-      lowerPath.endsWith('.webm') ||
-      lowerExtension == 'mp4' ||
-      lowerExtension == 'mov' ||
-      lowerExtension == 'webm' ||
-      msgType == AppStatus.VIDEO_TYPE_MESSAGE || // "3"
-      lowerExtension.contains('video') ||
-      (lowerExtension.isEmpty && msgType == '3');
-
-  if (isVideo) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 4),
-      child: VideoPlayerBubble(videoUrl: url),
-    );
-  }
-
-  // Document attachments (msgType 4)
-  if (msgType == "4") {
-    return Padding(
-      padding: const EdgeInsets.only(top: 4),
-      child: GetBuilder<ChatController>(
-        builder: (controller) {
-          return GestureDetector(
-            onTap: () {
-              controller.downloadAttachment(mediaId ?? "", index, extension);
-            },
-            child: Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                border: Border.all(color: MyColor.dashboardCardBorder.withAlpha(MyColor.getAlpha(30))),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.insert_drive_file,
-                    size: Dimensions.space20,
-                    color: MyColor.getBodyTextColor().withValues(alpha: .7),
-                  ),
-                  SizedBox(width: 8),
-                  Flexible(
-                    child: Text(
-                      "${mediaId ?? 'file'}.$extension",
-                      style: TextStyle(fontSize: Dimensions.space14),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                  ),
-                  SizedBox(width: 8),
-                  controller.downloadingFile && controller.selectedIndex == index
-                      ? CustomLoader(loaderSize: 6)
-                      : Icon(
-                          Icons.download,
-                          size: Dimensions.space24,
-                          color: MyColor.getBodyTextColor().withValues(alpha: .7),
-                        ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  return const SizedBox();
-}
-
 // Add this new function to detect and make URLs clickable
 Widget buildRichText(String text, TextStyle? style) {
   final urlPattern = RegExp(
@@ -1514,10 +1334,10 @@ Widget buildRichText(String text, TextStyle? style) {
               if (await canLaunchUrl(uri)) {
                 await launchUrl(uri, mode: LaunchMode.externalApplication);
               } else {
-                CustomSnackBar.error(errorList: ['Could not open URL']);
+                CustomSnackBar.error(errorList: [Strings.couldNotOpenUrl.tr]);
               }
             } catch (e) {
-              CustomSnackBar.error(errorList: ['Invalid URL']);
+              CustomSnackBar.error(errorList: [Strings.invalidUrl.tr]);
             }
           },
       ),

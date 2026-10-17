@@ -246,7 +246,7 @@ class TicketDetailsController extends GetxController {
       final downloadPath = '${downloadsDirectory.path}/$fileName';
       final file = File(downloadPath);
       await file.writeAsBytes(bytes);
-      CustomSnackBar.success(successList: ['File saved at: $downloadPath']);
+      CustomSnackBar.success(successList: ['${Strings.fileSavedAt.tr}: $downloadPath']);
       await openFile(downloadPath, extension);
     } else {
       CustomSnackBar.error(errorList: [Strings.downloadDirNotFound]);
@@ -259,7 +259,7 @@ class TicketDetailsController extends GetxController {
       final result = await OpenFile.open(path);
       if (result.type != ResultType.done) {
         if (result.type == ResultType.noAppToOpen) {
-          CustomSnackBar.error(errorList: [Strings.noDocOpenerApp, 'File saved at: $path']);
+          CustomSnackBar.error(errorList: [Strings.noDocOpenerApp, '${Strings.fileSavedAt.tr}: $path']);
         }
       }
     } else {

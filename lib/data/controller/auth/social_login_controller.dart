@@ -51,7 +51,7 @@ class SocialLoginController extends GetxController {
       await _ensureInitialized();
 
       if (!_googleSignIn.supportsAuthenticate()) {
-        CustomSnackBar.error(errorList: ['Google Sign-In is not supported on this platform']);
+        CustomSnackBar.error(errorList: [Strings.googleSignInNotSupported.tr]);
         isGoogleSignInLoading = false;
         update();
         return;

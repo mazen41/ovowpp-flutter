@@ -149,7 +149,7 @@ class _ContactPickerBottomSheetState extends State<ContactPickerBottomSheet> {
               },
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: 'Search by name or number...',
+                hintText: Strings.searchByNameOrNumber.tr,
                 prefixIcon: const Icon(Icons.search),
                 suffixIcon: _searchController.text.isNotEmpty
                     ? IconButton(
@@ -199,7 +199,7 @@ class _ContactPickerBottomSheetState extends State<ContactPickerBottomSheet> {
               style: TextStyle(color: Colors.grey[600]),
             ),
             const SizedBox(height: 24),
-            ElevatedButton(onPressed: _requestPermissionAndLoadContacts, child: const Text('Grant Permission')),
+            ElevatedButton(onPressed: _requestPermissionAndLoadContacts, child: Text(Strings.grantPermission.tr)),
           ],
         ),
       );

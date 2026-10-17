@@ -274,7 +274,7 @@ class _AppBarContentsState extends State<AppBarContents> {
       case _ChatAction.clearChat:
         final confirm = await _showConfirmDialog(
           context,
-          title: 'Clear Chat?',
+          title: Strings.clearChatQuestion.tr,
           body: 'This will permanently delete ALL messages in this conversation. This action cannot be undone.',
           confirmLabel: 'Clear',
           destructive: true,

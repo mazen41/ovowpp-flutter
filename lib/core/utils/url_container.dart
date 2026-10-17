@@ -71,6 +71,8 @@ class UrlContainer {
   static const String profileCompleteEndPoint = 'user-data-submit';
   static const String chatsDataEndPoint = 'inbox/conversation-message/';
   static const String downloadMediaDataEndPoint = 'inbox/media/download/';
+  /// Range-capable stream for audio/video (seekable). Needs the Bearer header.
+  static const String streamMediaDataEndPoint = 'inbox/media/stream/';
   static const String tagsDataEndPoint = 'contact-tag/list';
   static const String allTagsandCOntactDataEndPoint = 'contact/create';
   static const String contactListDataEndPoint = 'contact/list/';

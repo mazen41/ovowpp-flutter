@@ -143,6 +143,15 @@ extension StringCasingExtension on String {
   String toTitleCase() => replaceAll(RegExp(' +'), ' ').split(' ').map((str) => str.toCapitalized()).join(' ');
 }
 
+/// Shows a permission or group name from the database in the app language.
+/// Falls back to the original name in title case when no translation exists.
+String translateDbLabel(String? raw) {
+  final key = (raw ?? '').trim();
+  if (key.isEmpty) return '';
+  final translated = key.tr;
+  return translated == key ? key.toTitleCase() : translated;
+}
+
 extension JsonMessageToStringList on Object? {
   List<String> toStringList() {
     if (this is List) {

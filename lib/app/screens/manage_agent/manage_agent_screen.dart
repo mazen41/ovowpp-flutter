@@ -196,8 +196,8 @@ class _ManageAgentScreenState extends State<ManageAgentScreen> {
                     ),
                   )
                 : AlphabetAvatar(
-                    firstname: controller.agentList[index].firstname?.substring(0, 2).toUpperCase() ?? "",
-                    lastName: controller.agentList[index].lastname?.substring(0, 2).toUpperCase() ?? '',
+                    firstname: _nameInitials(controller.agentList[index].firstname),
+                    lastName: _nameInitials(controller.agentList[index].lastname),
                   ),
 
             title: Row(
@@ -207,7 +207,7 @@ class _ManageAgentScreenState extends State<ManageAgentScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${controller.agentList[index].firstname ?? ""} ${controller.agentList[index].lastname ?? ""}",
+                        "${controller.agentList[index].firstname ?? ""} ${controller.agentList[index].lastname ?? ""}".trim(),
                         style: theme.textTheme.headlineSmall?.copyWith(
                           color: MyColor.black,
                           fontSize: 15,
@@ -305,4 +305,11 @@ class _ManageAgentScreenState extends State<ManageAgentScreen> {
       ],
     );
   }
+}
+
+/// First two letters of a name, uppercased. Safe for null, empty and one-letter names.
+String _nameInitials(String? name) {
+  final value = (name ?? '').trim();
+  if (value.isEmpty) return '';
+  return value.substring(0, value.length >= 2 ? 2 : 1).toUpperCase();
 }

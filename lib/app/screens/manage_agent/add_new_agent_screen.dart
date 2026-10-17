@@ -81,7 +81,6 @@ class AddNewAgentScreenState extends State<AddNewAgentScreen> with SingleTickerP
                               spaceSide(10.w),
                               Expanded(
                                 child: LabelTextField(
-                                  isRequired: true,
                                   controller: controller.lastNameController,
                                   labelText: Strings.lastName.tr,
                                   hintText: Strings.enterYourLastName.tr,
@@ -89,13 +88,6 @@ class AddNewAgentScreenState extends State<AddNewAgentScreen> with SingleTickerP
                                   textInputType: TextInputType.emailAddress,
                                   inputAction: TextInputAction.next,
                                   radius: Dimensions.largeRadius,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return Strings.fieldErrorMsg.tr;
-                                    } else {
-                                      return null;
-                                    }
-                                  },
                                 ),
                               ),
                             ],
@@ -128,17 +120,10 @@ class AddNewAgentScreenState extends State<AddNewAgentScreen> with SingleTickerP
                             textInputType: TextInputType.emailAddress,
                             inputAction: TextInputAction.next,
                             radius: Dimensions.largeRadius,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return Strings.fieldErrorMsg.tr;
-                              } else {
-                                return null;
-                              }
-                            },
+                            validator: (value) => controller.validateEmail(value),
                           ),
                           spaceDown(Dimensions.space15.h),
                           LabelTextField(
-                            isRequired: true,
                             onChanged: (v) {},
                             labelText: (Strings.phoneNo).replaceAll('.', '').tr,
                             // hintText: Strings.enterYourPhoneNumber,
@@ -201,20 +186,13 @@ class AddNewAgentScreenState extends State<AddNewAgentScreen> with SingleTickerP
                                 ),
                               ),
                             ),
-                            validator: (value) {
-                              if ((value as String).trim().isEmpty) {
-                                return Strings.kPhoneNumberIsRequired.tr;
-                              } else {
-                                return null;
-                              }
-                            },
+                            validator: (value) => controller.validateOptionalPhone(value as String?),
                           ),
                           spaceDown(Dimensions.space15.h),
                           Row(
                             children: [
                               Expanded(
                                 child: LabelTextField(
-                                  isRequired: true,
                                   controller: controller.cityController,
                                   labelText: Strings.city.tr,
                                   hintText: Strings.city.tr,
@@ -222,19 +200,11 @@ class AddNewAgentScreenState extends State<AddNewAgentScreen> with SingleTickerP
                                   textInputType: TextInputType.text,
                                   inputAction: TextInputAction.next,
                                   radius: Dimensions.largeRadius,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return Strings.fieldErrorMsg.tr;
-                                    } else {
-                                      return null;
-                                    }
-                                  },
                                 ),
                               ),
                               spaceSide(Dimensions.space10),
                               Expanded(
                                 child: LabelTextField(
-                                  isRequired: true,
                                   controller: controller.stateController,
                                   labelText: Strings.state.tr,
                                   hintText: Strings.state.tr,
@@ -242,13 +212,6 @@ class AddNewAgentScreenState extends State<AddNewAgentScreen> with SingleTickerP
                                   textInputType: TextInputType.text,
                                   inputAction: TextInputAction.next,
                                   radius: Dimensions.largeRadius,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return Strings.fieldErrorMsg.tr;
-                                    } else {
-                                      return null;
-                                    }
-                                  },
                                 ),
                               ),
                             ],
@@ -258,7 +221,6 @@ class AddNewAgentScreenState extends State<AddNewAgentScreen> with SingleTickerP
                             children: [
                               Expanded(
                                 child: LabelTextField(
-                                  isRequired: true,
                                   controller: controller.zipCodeController,
                                   labelText: Strings.zipCode.tr,
                                   hintText: Strings.zipCode.tr,
@@ -266,19 +228,11 @@ class AddNewAgentScreenState extends State<AddNewAgentScreen> with SingleTickerP
                                   textInputType: TextInputType.number,
                                   inputAction: TextInputAction.next,
                                   radius: Dimensions.largeRadius,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return Strings.fieldErrorMsg.tr;
-                                    } else {
-                                      return null;
-                                    }
-                                  },
                                 ),
                               ),
                               spaceSide(Dimensions.space10),
                               Expanded(
                                 child: LabelTextField(
-                                  isRequired: true,
                                   controller: controller.addressController,
                                   labelText: Strings.address.tr,
                                   hintText: Strings.address.tr,
@@ -286,13 +240,6 @@ class AddNewAgentScreenState extends State<AddNewAgentScreen> with SingleTickerP
                                   textInputType: TextInputType.text,
                                   inputAction: TextInputAction.next,
                                   radius: Dimensions.largeRadius,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return Strings.fieldErrorMsg.tr;
-                                    } else {
-                                      return null;
-                                    }
-                                  },
                                 ),
                               ),
                             ],

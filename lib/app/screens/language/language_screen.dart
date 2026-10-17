@@ -66,7 +66,10 @@ class _LanguageScreenState extends State<LanguageScreen> {
                         selectedIndex: controller.selectedIndex,
                         langeName: controller.langList[index].languageName,
                         isShowTopRight: true,
-                        imagePath: "${controller.languageImagePath}/${controller.langList[index].imageUrl}",
+                        languageCode: controller.langList[index].languageCode,
+                        imagePath: (controller.langList[index].imageUrl ?? '').isEmpty
+                            ? ''
+                            : "${controller.languageImagePath}/${controller.langList[index].imageUrl}",
                       ),
                     ),
                   ),
