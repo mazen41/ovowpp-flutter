@@ -322,7 +322,7 @@ class ChatController extends GetxController {
     }
 
     if (conversationId.isEmpty) {
-      CustomSnackBar.error(errorList: ['Conversation ID is missing']);
+      CustomSnackBar.error(errorList: [Strings.conversationIdMissing.tr]);
       return;
     }
 
@@ -384,7 +384,7 @@ class ChatController extends GetxController {
   void _queueFailedMessage(String message, File? file, String? replyId) {
     if (message.isEmpty && file == null) return;
     _retryQueue.add({'message': message, 'file': file, 'replyId': replyId});
-    CustomSnackBar.error(errorList: ['Message queued — will send when connection restores.']);
+    CustomSnackBar.error(errorList: [Strings.messageQueued.tr]);
   }
 
   bool downloadingFile = false;
@@ -433,11 +433,11 @@ class ChatController extends GetxController {
           return filePath;
         }
       } else {
-        CustomSnackBar.error(errorList: ['Storage permission denied']);
+        CustomSnackBar.error(errorList: [Strings.storagePermissionDenied.tr]);
       }
     } catch (e) {
       printE('Error downloading video: $e');
-      CustomSnackBar.error(errorList: ['Failed to download video']);
+      CustomSnackBar.error(errorList: [Strings.failedToDownloadVideo.tr]);
     }
     return null;
   }
@@ -462,7 +462,7 @@ class ChatController extends GetxController {
       }
 
       if (targetDir == null || !targetDir.existsSync()) {
-        CustomSnackBar.error(errorList: ['Download directory not found.']);
+        CustomSnackBar.error(errorList: [Strings.downloadDirNotFound.tr]);
         return;
       }
       final fileName = '${Environment.appName}_${DateTime.now().millisecondsSinceEpoch}.$extension';
@@ -498,7 +498,7 @@ class ChatController extends GetxController {
       final downloadPath = '${downloadsDirectory.path}/$fileName';
       final file = File(downloadPath);
       await file.writeAsBytes(bytes);
-      CustomSnackBar.success(successList: ['File saved at: $downloadPath']);
+      CustomSnackBar.success(successList: ['${Strings.fileSavedAt.tr}: $downloadPath']);
       await MyUtils().openFile(downloadPath, extension);
     } else {
       CustomSnackBar.error(errorList: [Strings.downloadDirNotFound]);
@@ -630,7 +630,7 @@ class ChatController extends GetxController {
       _recordingTimer?.cancel();
       update(['chat_screen_main', 'recording_area']);
       printE('Start recording error: $e');
-      CustomSnackBar.error(errorList: ['Failed to start recording']);
+      CustomSnackBar.error(errorList: [Strings.failedToStartRecording.tr]);
     }
   }
 
@@ -792,18 +792,18 @@ class ChatController extends GetxController {
 
   Future<void> sendTemplateMessage(String templateId) async {
     if (conversationId.isEmpty) {
-      CustomSnackBar.error(errorList: ['Conversation ID is missing']);
+      CustomSnackBar.error(errorList: [Strings.conversationIdMissing.tr]);
       return;
     }
     if (templateId.isEmpty) {
-      CustomSnackBar.error(errorList: ['Template ID is missing']);
+      CustomSnackBar.error(errorList: [Strings.templateIdMissing.tr]);
       return;
     }
 
     final recipientMobileCode = contact?.mobileCode ?? '';
     final recipientMobile = contact?.mobile ?? '';
     if (recipientMobileCode.isEmpty || recipientMobile.isEmpty) {
-      CustomSnackBar.error(errorList: ['Contact number is missing for this conversation']);
+      CustomSnackBar.error(errorList: [Strings.contactNumberMissing.tr]);
       return;
     }
 
@@ -827,7 +827,7 @@ class ChatController extends GetxController {
           // Refresh chat data to ensure persistence
           await getChatsData(initPage: false);
         }
-        CustomSnackBar.success(successList: ['Template sent successfully']);
+        CustomSnackBar.success(successList: [Strings.templateSentSuccessfully.tr]);
       } else {
         final errorMessage = (res.responseJson['message'] as List?)?.first?.toString() ?? 
                             res.responseJson['message']?.toString() ?? 
@@ -836,7 +836,7 @@ class ChatController extends GetxController {
       }
     } catch (e) {
       printE('Template send error: $e');
-      CustomSnackBar.error(errorList: ['Failed to send template: ${e.toString()}']);
+      CustomSnackBar.error(errorList: ['${Strings.failedToSendTemplate.tr} ${e.toString()}']);
     } finally {
       sendingMessage = false;
       update(['chat_screen_main', 'recording_area']);
@@ -857,7 +857,7 @@ class ChatController extends GetxController {
           final msg = MessagesData.fromJson(Map<String, dynamic>.from(sentMessage as Map));
           insertMessageIfAbsent(msg);
         }
-        CustomSnackBar.success(successList: ['CTA URL sent successfully']);
+        CustomSnackBar.success(successList: [Strings.ctaUrlSent.tr]);
       } else {
         CustomSnackBar.error(errorList: [(res.responseJson['message'] as List?)?.first?.toString() ?? Strings.somethingWentWrong]);
       }
@@ -883,7 +883,7 @@ class ChatController extends GetxController {
           final msg = MessagesData.fromJson(Map<String, dynamic>.from(sentMessage as Map));
           insertMessageIfAbsent(msg);
         }
-        CustomSnackBar.success(successList: ['Interactive list sent']);
+        CustomSnackBar.success(successList: [Strings.interactiveListSent.tr]);
       } else {
         CustomSnackBar.error(errorList: [(res.responseJson['message'] as List?)?.first?.toString() ?? Strings.somethingWentWrong]);
       }
@@ -903,11 +903,11 @@ class ChatController extends GetxController {
       if (perm == LocationPermission.denied) {
         final req = await Geolocator.requestPermission();
         if (req == LocationPermission.denied || req == LocationPermission.deniedForever) {
-          CustomSnackBar.error(errorList: ['Location permission denied']);
+          CustomSnackBar.error(errorList: [Strings.locationPermissionDenied.tr]);
           return;
         }
       }
-      CustomSnackBar.success(successList: ['Fetching location…']);
+      CustomSnackBar.success(successList: [Strings.fetchingLocation.tr]);
       final pos = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.medium);
       sendingMessage = true;
       update(['chat_screen_main', 'recording_area']);
@@ -919,12 +919,12 @@ class ChatController extends GetxController {
           final msg = MessagesData.fromJson(Map<String, dynamic>.from(sentMessage as Map));
           insertMessageIfAbsent(msg);
         }
-        CustomSnackBar.success(successList: ['Location sent']);
+        CustomSnackBar.success(successList: [Strings.locationSent.tr]);
       } else {
         CustomSnackBar.error(errorList: [(res.responseJson['message'] as List?)?.first?.toString() ?? Strings.somethingWentWrong]);
       }
     } catch (e) {
-      CustomSnackBar.error(errorList: ['Failed to get location']);
+      CustomSnackBar.error(errorList: [Strings.failedToGetLocation.tr]);
     } finally {
       sendingMessage = false;
       update(['chat_screen_main', 'recording_area']);
@@ -968,7 +968,7 @@ class ChatController extends GetxController {
       if (res.statusCode == 200 &&
           (res.responseJson['remark'] as String?) == 'conversation_cleared') {
         messages.clear();
-        CustomSnackBar.success(successList: ['Chat cleared']);
+        CustomSnackBar.success(successList: [Strings.chatCleared.tr]);
       } else {
         CustomSnackBar.error(errorList: [(res.responseJson['message'] as String?) ?? Strings.somethingWentWrong]);
       }
@@ -1014,7 +1014,7 @@ class ChatController extends GetxController {
   Future<void> assignTag(String tagId) async {
     final contactId = contact?.id?.toString() ?? '';
     if (contactId.isEmpty) {
-      CustomSnackBar.error(errorList: ['Contact not found']);
+      CustomSnackBar.error(errorList: [Strings.contactNotFound.tr]);
       return;
     }
     assigningTag = true;
@@ -1029,12 +1029,12 @@ class ChatController extends GetxController {
       } else {
         final msg = (res.responseJson['message'] as List?)?.first?.toString() ??
             res.responseJson['message']?.toString() ??
-            'Failed to assign tag';
+            Strings.failedToAssignTag.tr;
         CustomSnackBar.error(errorList: [msg]);
       }
     } catch (e) {
       printE('assignTag error: $e');
-      CustomSnackBar.error(errorList: ['Failed to assign tag']);
+      CustomSnackBar.error(errorList: [Strings.failedToAssignTag.tr]);
     } finally {
       assigningTag = false;
       update(['chat_screen_main']);

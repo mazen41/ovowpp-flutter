@@ -103,7 +103,7 @@ class _AgentPermissionScreenState extends State<AgentPermissionScreen> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        groupName.toTitleCase(),
+                                        translateDbLabel(groupName),
                                         style: MyTextStyle.heading16W600UseTextColor().copyWith(fontSize: 15.sp),
                                       ),
                                       CustomSwitch(

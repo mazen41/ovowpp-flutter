@@ -8,6 +8,8 @@ import 'package:ovowpp/data/model/customer_account/customer_contact_save_respons
 import 'package:ovowpp/data/model/global/response_model/response_model.dart';
 import 'package:ovowpp/data/repo/manage_agent/add_new_agent_repo.dart';
 import 'package:ovowpp/data/services/shared_pref_service.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
+import 'package:ovowpp/environment.dart';
 import '../../../core/utils/util.dart';
 
 class AddNewAgentController extends GetxController {
@@ -20,7 +22,7 @@ class AddNewAgentController extends GetxController {
 
   File? imageFile;
 
-  String? contryCode = "";
+  String? contryCode = Environment.defaultPhoneCode;
   Countries? countryData;
 
   TextEditingController firstNameController = TextEditingController();
@@ -68,7 +70,7 @@ class AddNewAgentController extends GetxController {
         "email": emailController.text.trim(),
         "country_code": countryData?.countryCode ?? "",
         "country": countryData?.country ?? "",
-        "mobile_code": countryData?.dialCode ?? "",
+        "mobile_code": mobileNoController.text.trim().isEmpty ? "" : (countryData?.dialCode ?? ""),
         "mobile": mobileNoController.text.trim(),
         "city": cityController.text.trim(),
         "state": stateController.text.trim(),
@@ -112,23 +114,44 @@ class AddNewAgentController extends GetxController {
   void selectACountry({Countries? countryDataValue}) {
     final allCountries = SharedPreferenceService.getCountryJsonDataData().data?.countries ?? [];
 
-    if (countryDataValue != null) {
-      countryData = countryDataValue;
-    } else {
-      countryData = allCountries.firstWhere(
-        (v) => v.dialCode?.replaceAll("+", "") == contryCode,
-        orElse: () => allCountries.isNotEmpty ? allCountries.first : Countries(country: "", dialCode: ""),
-      );
-    }
+    countryData = countryDataValue ?? _defaultCountry(allCountries);
 
     countryController.text = countryData?.country ?? '';
-
-    if (countryData?.dialCode == null || countryData!.dialCode!.isEmpty) {
-      countryData = allCountries.isNotEmpty ? allCountries.first : Countries(country: "", dialCode: "");
-    }
-
     contryCode = countryData?.dialCode ?? '';
 
     update();
+  }
+
+  /// Default country for the phone field: Yemen, from Environment.defaultCountryCode and
+  /// Environment.defaultPhoneCode. Matched by ISO code first, then by dial code. If the list
+  /// has no Yemen entry, a built-in Yemen value is used. It never falls back to the first list
+  /// item (that was Afghanistan, +93).
+  Countries _defaultCountry(List<Countries> allCountries) {
+    final isoCode = Environment.defaultCountryCode.toLowerCase();
+    for (final c in allCountries) {
+      if ((c.countryCode ?? '').toLowerCase() == isoCode) return c;
+    }
+    for (final c in allCountries) {
+      if ((c.dialCode ?? '').replaceAll('+', '') == Environment.defaultPhoneCode) return c;
+    }
+    return Countries(
+      country: 'Yemen',
+      dialCode: Environment.defaultPhoneCode,
+      countryCode: Environment.defaultCountryCode,
+    );
+  }
+
+  /// Email is required (the form checks empty) and must look like an email when filled.
+  String? validateEmail(String? value) {
+    final v = (value ?? '').trim();
+    if (v.isEmpty) return Strings.fieldErrorMsg.tr;
+    return RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$').hasMatch(v) ? null : Strings.invalidEmailMsg.tr;
+  }
+
+  /// Phone is optional. When filled it must be 5 to 15 digits (spaces, dashes and brackets are ignored).
+  String? validateOptionalPhone(String? value) {
+    final v = (value ?? '').replaceAll(RegExp(r'[\s\-()]'), '');
+    if (v.isEmpty) return null;
+    return RegExp(r'^[0-9]{5,15}$').hasMatch(v) ? null : Strings.invalidPhoneNumberMsg.tr;
   }
 }

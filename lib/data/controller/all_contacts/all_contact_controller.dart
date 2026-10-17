@@ -40,12 +40,12 @@ class AllContactController extends GetxController {
 
   List<Map<String, dynamic>> get contactSearchItemList => [
     {
-      'title': 'All',
+      'title': Strings.all.tr,
       'onTap': () => changeSearchItem(0),
       'isSelected': selectedSearchItemIndex == 0, // সহজ করুন
     },
-    {'title': 'Active', 'onTap': () => changeSearchItem(1), 'isSelected': selectedSearchItemIndex == 1},
-    {'title': 'Inactive', 'onTap': () => changeSearchItem(2), 'isSelected': selectedSearchItemIndex == 2},
+    {'title': Strings.active.tr, 'onTap': () => changeSearchItem(1), 'isSelected': selectedSearchItemIndex == 1},
+    {'title': Strings.inactive.tr, 'onTap': () => changeSearchItem(2), 'isSelected': selectedSearchItemIndex == 2},
   ];
 
   TextEditingController searchController = TextEditingController();
@@ -286,7 +286,7 @@ class AllContactController extends GetxController {
         CustomSnackBar.error(errorList: [model.message]);
       }
     } catch (e) {
-      CustomSnackBar.error(errorList: ["Something went wrong"]);
+      CustomSnackBar.error(errorList: [Strings.somethingWentWrong.tr]);
       Get.back();
     } finally {
       isDeleteLoading = false;

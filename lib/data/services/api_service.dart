@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:ovowpp/core/utils/util_exporter.dart';
 import 'package:ovowpp/data/middleware/auth_middleware.dart';
 import 'package:ovowpp/data/middleware/kyc_middle_ware.dart';
@@ -25,10 +26,34 @@ class ApiService {
 
     if (token.isNotEmpty) {
       _dio.options.headers['Authorization'] = 'Bearer $token';
-      print('Authorization token: $token');
     } else {
       _dio.options.headers.remove('Authorization');
     }
+  }
+
+  /// Headers for media that the video/audio players load directly (they cannot use Dio).
+  /// Only API URLs get the Bearer token; public file URLs never receive it.
+  static Future<Map<String, String>> mediaHeadersFor(String url) async {
+    if (!url.startsWith(UrlContainer.baseUrl)) return const {};
+    String? token = await SharedPreferenceService.getAccessTokenSecure();
+    token ??= SharedPreferenceService.getAccessToken();
+    if (token.isEmpty) return const {};
+    return {'Authorization': 'Bearer $token'};
+  }
+
+  /// Keys whose values must never reach the log (headers, bodies and responses).
+  static final RegExp _secretKey = RegExp(
+    r'pass|token|secret|authorization|otp|verification|ver_code',
+    caseSensitive: false,
+  );
+
+  /// Replaces secret values with *** so debug logs never show them.
+  static Object? _redact(Object? value) {
+    if (value is Map) {
+      return value.map((k, v) => MapEntry(k, _secretKey.hasMatch(k.toString()) ? '***' : _redact(v)));
+    }
+    if (value is List) return value.map(_redact).toList();
+    return value;
   }
 
   /// Add interceptors to handle request logging and authentication tokens
@@ -37,15 +62,15 @@ class ApiService {
       InterceptorsWrapper(
         onRequest: (options, handler) async {
           // Log the request details
-          printX("""
+          if (kDebugMode) printX("""
             *** API Request ***
             URL: ${options.uri}
             
             Method: ${options.method}
             
-            Headers: ${options.headers}
+            Headers: ${_redact(options.headers)}
             
-            Request Body: ${options.data}
+            Request Body: ${_redact(options.data)}
             
             Query Parameters: ${options.queryParameters}
           """);
@@ -61,11 +86,11 @@ class ApiService {
         onResponse: (response, handler) {
           // Log the response details
 
-          printX("""
+          if (kDebugMode) printX("""
             *** API Response ***
             Status Code: ${response.statusCode}
             
-            Response Data: ${response.data}
+            Response Data: ${_redact(response.data)}
            """);
           if (response.statusCode == 200) {
             try {
@@ -86,13 +111,13 @@ class ApiService {
         },
         onError: (DioException error, handler) {
           // Log the error details
-          printE("""
+          if (kDebugMode) printE("""
           *** API Error ***
           Error Message: ${error.message}
           Error Message: ${error.error}
           Error Message: ${error.type}
           Status Code: ${error.response?.statusCode}
-          Error Data: ${error.response?.data}
+          Error Data: ${_redact(error.response?.data)}
           """);
 
           // Handle 401 only for authenticated routes (not public endpoints like social-login)

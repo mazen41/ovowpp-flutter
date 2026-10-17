@@ -21,6 +21,8 @@ Future<void> main() async {
   MyUtils().stopLandscape();
   // init shared preference
   await SharedPreferenceService.init();
+  // Decide and save the startup language now, before any other code writes preferences.
+  LocalizationController();
   // inti fcm services - skip on web since Firebase is not configured for web
   if (!kIsWeb) {
     await PushNotificationService().setupInteractedMessage();

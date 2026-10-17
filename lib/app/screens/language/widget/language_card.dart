@@ -16,6 +16,7 @@ class LanguageCard extends StatelessWidget {
   final bool isShowTopRight;
   final String langeName;
   final String imagePath;
+  final String languageCode;
 
   const LanguageCard({
     super.key,
@@ -24,6 +25,7 @@ class LanguageCard extends StatelessWidget {
     this.isShowTopRight = false,
     required this.langeName,
     required this.imagePath,
+    this.languageCode = '',
   });
 
   @override
@@ -41,7 +43,21 @@ class LanguageCard extends StatelessWidget {
         // crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          MyNetworkImageWidget(imageUrl: imagePath, boxFit: BoxFit.contain, width: 25.w, height: 25.h),
+          imagePath.isEmpty
+              ? Container(
+                  width: 25.w,
+                  height: 25.h,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: MyColor.getPrimaryColor().withValues(alpha: 0.12),
+                  ),
+                  child: Text(
+                    languageCode.toUpperCase(),
+                    style: TextStyle(fontSize: 9.sp, fontWeight: FontWeight.w700, color: MyColor.getPrimaryColor()),
+                  ),
+                )
+              : MyNetworkImageWidget(imageUrl: imagePath, boxFit: BoxFit.contain, width: 25.w, height: 25.h),
           spaceSide(Dimensions.space12.w),
           const SizedBox(height: Dimensions.space10),
           DefaultText(

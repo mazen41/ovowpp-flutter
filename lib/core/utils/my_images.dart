@@ -75,8 +75,8 @@ class MyImages {
   static const String googleLogoSVG = "$_logoBasePath/logo_google.svg";
   static const String facebookLogo = "$_logoBasePath/logo_facebook.svg";
   static const String linkedInLogo = "$_logoBasePath/logi_linkedin.svg";
-  static const String messagesSent = '$_logoBasePath/message_sent.svg';
-  static const String totalCampaigrs = '$_logoBasePath/total_compaigrs.svg';
+  static const String messagesSent = '$_iconBasePath/message_sent.svg';
+  static const String totalCampaigrs = '$_iconBasePath/total_compaigrs.svg';
 
   // IMAGE
   static const String contactDetailsImage = "$_imageBasePath/contact_details.png";

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ovowpp/app/components/custom_loader/custom_loader.dart';
@@ -33,14 +34,14 @@ class TagPicker extends StatelessWidget {
         builder: (ctx, setState) => AlertDialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
-          title: Text('Create Tag',
+          title: Text(Strings.createTag.tr,
               style: MyTextStyle.heading16W600()
                   .copyWith(color: MyColor.getHeadingTextColor())),
           content: TextField(
             controller: nameController,
             autofocus: true,
             decoration: InputDecoration(
-              hintText: 'Tag name',
+              hintText: Strings.tagName.tr,
               hintStyle: MyTextStyle.subHeading14W400()
                   .copyWith(color: MyColor.getBodyTextColor()),
               border: OutlineInputBorder(
@@ -52,7 +53,7 @@ class TagPicker extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: Text('Cancel',
+              child: Text(Strings.cancel.tr,
                   style:
                       TextStyle(color: MyColor.getBodyTextColor())),
             ),
@@ -81,14 +82,14 @@ class TagPicker extends StatelessWidget {
                               (response.responseJson['message'] as List?)
                                       ?.first
                                       ?.toString() ??
-                                  'Failed to create tag';
+                                  Strings.failedToCreateTag.tr;
                           ScaffoldMessenger.of(ctx).showSnackBar(
                               SnackBar(content: Text(msg)));
                         }
                       } catch (_) {
                         ScaffoldMessenger.of(ctx).showSnackBar(
-                            const SnackBar(
-                                content: Text('Failed to create tag')));
+                            SnackBar(
+                                content: Text(Strings.failedToCreateTag.tr)));
                       } finally {
                         setState(() => saving = false);
                       }
@@ -101,7 +102,7 @@ class TagPicker extends StatelessWidget {
                           strokeWidth: 2,
                           color: MyColor.getPrimaryColor()),
                     )
-                  : Text('Save',
+                  : Text(Strings.save.tr,
                       style: TextStyle(
                           color: MyColor.getPrimaryColor(),
                           fontWeight: FontWeight.w600)),
@@ -162,7 +163,7 @@ class TagPicker extends StatelessWidget {
                       icon: Icon(Icons.add_rounded,
                           size: 18.sp, color: MyColor.getPrimaryColor()),
                       label: Text(
-                        'Create Tag',
+                        Strings.createTag.tr,
                         style: MyTextStyle.subHeading14W400().copyWith(
                             color: MyColor.getPrimaryColor(),
                             fontWeight: FontWeight.w600),
@@ -198,7 +199,7 @@ class TagPicker extends StatelessWidget {
                         onPressed: () =>
                             _showCreateTagDialog(context, controller),
                         icon: const Icon(Icons.add_rounded),
-                        label: const Text('Create Tag'),
+                        label: Text(Strings.createTag.tr),
                         style: ElevatedButton.styleFrom(
                             backgroundColor: MyColor.getPrimaryColor(),
                             foregroundColor: MyColor.white),

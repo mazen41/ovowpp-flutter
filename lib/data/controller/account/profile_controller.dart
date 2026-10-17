@@ -75,7 +75,8 @@ class ProfileController extends GetxController {
     String zip = zipCodeController.text.toString();
     String state = stateController.text.toString();
 
-    if (firstName.isNotEmpty && lastName.isNotEmpty) {
+    // Only the first name is required. The last name is optional (agents may not have one).
+    if (firstName.isNotEmpty) {
       ProfilePostModel model = ProfilePostModel(
         address: address,
         country: country,
@@ -111,9 +112,6 @@ class ProfileController extends GetxController {
     } else {
       if (firstName.isEmpty) {
         CustomSnackBar.error(errorList: [Strings.kFirstNameNullError.tr]);
-      }
-      if (lastName.isEmpty) {
-        CustomSnackBar.error(errorList: [Strings.kLastNameNullError.tr]);
       }
     }
 

@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'package:ovowpp/core/translations/strings_enum.dart';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
 // Video Player Screen for local playback
@@ -35,7 +37,7 @@ class _InlineVideoPlayerState extends State<InlineVideoPlayer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Video Player'), backgroundColor: Colors.black),
+      appBar: AppBar(title: Text(Strings.videoPlayer.tr), backgroundColor: Colors.black),
       backgroundColor: Colors.black,
       body: Center(
         child: _controller.value.isInitialized

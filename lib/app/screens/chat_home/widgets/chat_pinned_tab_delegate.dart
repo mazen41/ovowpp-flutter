@@ -43,7 +43,7 @@ class ChatPinnedTabDelegate extends SliverPersistentHeaderDelegate {
                   dividerHeight: 0,
                   tabs: List.generate(4, (index) {
                     return SearchSingleItem(
-                      title: controller.tabsList[index],
+                      title: [Strings.all, Strings.pending, Strings.done, Strings.important][index].tr,
                       isSelected: controller.tabController.index == index,
                       onTap: () {},
                     );
