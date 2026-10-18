@@ -34,7 +34,7 @@ class PusherChatServiceController extends GetxController {
         final shouldShowNewMessage = controller.isNearLatestMessage;
         final wasInserted = controller.insertMessageIfAbsent(msg);
         if (!wasInserted) return;
-        controller.update(['chat_screen_main']);
+        controller.update(['chat_screen_main', 'recording_area']);
 
         // ── Play in-app notification sound + show banner ──────────────────────
         final senderName = controller.contact?.firstname != null

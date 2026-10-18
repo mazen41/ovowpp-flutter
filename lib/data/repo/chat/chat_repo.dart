@@ -209,6 +209,23 @@ class ChatRepo {
 
   // ─── Conversation management ───────────────────────────────────────────────
 
+  /// Load the conversation (status, ai_reply, contact tags) for the open chat.
+  Future<ResponseModel> getConversationDetailsRepo(String conversationId) async {
+    return ApiService.getRequest('${UrlContainer.baseUrl}${UrlContainer.customerDetailsUrl}$conversationId');
+  }
+
+  /// Same endpoint and body as the web status dropdown: status 0 | 1 done | 2 pending | 3 important.
+  Future<ResponseModel> changeConversationStatusRepo(String conversationId, int status) async {
+    final url = '${UrlContainer.baseUrl}${UrlContainer.customerDetailsStatusUrl}$conversationId';
+    return ApiService.postRequest(url, {'status': status.toString()});
+  }
+
+  /// AI reply on (1) or off (0), same as the web AI Reply dropdown.
+  Future<ResponseModel> changeAiReplyRepo(String conversationId, int value) async {
+    final url = '${UrlContainer.baseUrl}${UrlContainer.conversationAiReplyUrl}$conversationId';
+    return ApiService.postRequest(url, {'status': value.toString()});
+  }
+
   /// Clear all messages in a conversation (permanent).
   Future<ResponseModel> clearChatRepo(String conversationId) async {
     final url = '${UrlContainer.baseUrl}${UrlContainer.clearChatUrl}$conversationId';

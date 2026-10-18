@@ -825,4 +825,13 @@ final Map<String, String> arAR = {
   'chatCleared': 'تم مسح المحادثة',
   'contactNotFound': 'لم يتم العثور على جهة الاتصال',
   'failedToAssignTag': 'فشل تعيين العلامة',
+  'chatFollow': 'متابعة',
+  'chatReopen': 'إعادة فتح المحادثة',
+  'chatAutoReplyStop': 'إيقاف الرد التلقائي',
+  'chatAutoReplyStart': 'تشغيل الرد التلقائي',
+  'chatAssign': 'تعيين المحادثة',
+  'chatWindowExpiredTitle': 'انتهت نافذة الـ 24 ساعة',
+  'chatWindowExpiredBody': 'يمكنك إرسال قالب واتساب لإعادة فتح المحادثة حتى يرد العميل مجدداً.',
+  'chatAiLabel': 'وكيل AI',
+  'orderNow': 'اطلب الآن',
 };
