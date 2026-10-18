@@ -63,7 +63,7 @@ class _ChatBoxState extends State<ChatBox> {
             //       isSvg: true,
             //       assetPath: MyImages.selectEmoji),
             // ),
-            hintText: Strings.typeAMessage,
+            hintText: Strings.typeAMessage.tr,
             hintStyle: MyTextStyle.subHeading12W400().copyWith(fontSize: 14.sp, color: MyColor.chatBoxHintColor),
             contentPadding: EdgeInsets.only(bottom: Dimensions.space5.h, left: Dimensions.space10.w),
             focusedBorder: OutlineInputBorder(

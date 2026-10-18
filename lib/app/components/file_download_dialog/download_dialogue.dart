@@ -115,7 +115,7 @@ class DownloadingDialogState extends State<DownloadingDialog> {
               children: [
                 const SizedBox(height: 20),
                 Text(
-                  '${Strings.downloading.tr} ${_received ~/ 1024}/${_total ~/ 1024} ${'KB'.tr}',
+                  '${Strings.downloading.tr} ${_received ~/ 1024}/${_total ~/ 1024} ${Strings.kilobyte.tr}',
                   style: theme.textTheme.labelMedium,
                 ),
               ],

@@ -56,6 +56,20 @@ class MyColor {
   static Color ratingStar = Color(0XFFFFB938);
   static Color sendMessage = Color(0XFFD0FECF);
 
+  // ===================== Chat redesign colors =====================
+  // Sampled from design/redesign.png (PowerShell GetPixel, mode of small areas). Not sampled: chatChipActiveBg, chatSystemLine, chatBannerBorder, chatTagPillBg.
+  static const Color chatHeaderGreen = Color(0xFF106C64); // sampled: header background
+  static const Color chatChipBg = Color(0xFFD8E8E8); // sampled: chip background
+  static const Color chatChipActiveBg = Color(0xFFD0FECF);
+  static const Color chatIncomingBubble = Color(0xFFFFFFFF); // sampled: greeting bubble
+  static const Color chatOutgoingBubble = Color(0xFFECF4F4); // sampled: AI reply bubble (no sent bubble in image)
+  static const Color chatSenderLabel = Color(0xFF545F6D); // sampled: darkest pixel of sender label
+  static const Color chatSystemLine = Color(0xFF8696A0);
+  static const Color chatBannerBg = Color(0xFFFFF4C8); // sampled: banner fill
+  static const Color chatBannerBorder = Color(0xFFF2D27A);
+  static const Color chatBannerButton = Color(0xFF24D468); // sampled: send template button
+  static const Color chatTagPillBg = Color(0x33FFFFFF);
+
   // ===================== Neutral Colors =====================
   static const Color black = Color(0xFF000000);
   static const Color white = Color(0xFFFFFFFF);

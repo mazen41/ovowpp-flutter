@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../core/utils/text_style.dart';
 import '../../../core/utils/util_exporter.dart';
 
@@ -49,7 +50,7 @@ class SingleCustomCheckbox extends StatelessWidget {
 
         isRememberMeTextShow
             ? Text(
-                checkText,
+                checkText.tr,
                 style:
                     textStyle ??
                     MyTextStyle.subHeading14W400().copyWith(color: MyColor.regularHederColor, fontSize: 14.sp),

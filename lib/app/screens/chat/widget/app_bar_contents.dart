@@ -55,7 +55,7 @@ class _AppBarContentsState extends State<AppBarContents> {
                   ),
             spaceSide(Dimensions.space10.w),
 
-            // ── Name / phone ──────────────────────────────────────────────
+            // ── Name / phone / tag pill ───────────────────────────────────
             isContactFromChat
                 ? Expanded(
                     child: GestureDetector(
@@ -68,8 +68,7 @@ class _AppBarContentsState extends State<AppBarContents> {
                               text:
                                   '${ctrl.newAllContactsData[ctrl.currentIndex].firstname ?? ''} '
                                   '${ctrl.newAllContactsData[ctrl.currentIndex].lastname ?? ''}',
-                              textStyle:
-                                  MyTextStyle.heading16W600().copyWith(color: MyColor.usdTextColor),
+                              textStyle: MyTextStyle.heading16W600().copyWith(color: MyColor.white),
                               maxLines: 1,
                             ),
                             spaceDown(Dimensions.space3.h),
@@ -78,11 +77,12 @@ class _AppBarContentsState extends State<AppBarContents> {
                                   '+${ctrl.newAllContactsData[ctrl.currentIndex].mobileCode ?? ''} '
                                   '${ctrl.newAllContactsData[ctrl.currentIndex].mobile ?? ''}',
                               textStyle: MyTextStyle.subHeading14W600FieldTitleColor().copyWith(
-                                color: MyColor.appBarSmallText,
+                                color: MyColor.chatChipBg,
                                 fontWeight: FontWeight.w400,
                               ),
                               maxLines: 1,
                             ),
+                            _tagPill(controller),
                           ],
                         ),
                       ),
@@ -99,8 +99,7 @@ class _AppBarContentsState extends State<AppBarContents> {
                               text:
                                   '${ctrl.newChatData[ctrl.currentChatIndex].contact?.firstname ?? ''} '
                                   '${ctrl.newChatData[ctrl.currentChatIndex].contact?.lastname ?? ''}',
-                              textStyle:
-                                  MyTextStyle.heading16W600().copyWith(color: MyColor.usdTextColor),
+                              textStyle: MyTextStyle.heading16W600().copyWith(color: MyColor.white),
                               maxLines: 1,
                             ),
                             spaceDown(Dimensions.space3.h),
@@ -109,11 +108,12 @@ class _AppBarContentsState extends State<AppBarContents> {
                                   '+${ctrl.newChatData[ctrl.currentChatIndex].contact?.mobileCode ?? ''} '
                                   '${ctrl.newChatData[ctrl.currentChatIndex].contact?.mobile ?? ''}',
                               textStyle: MyTextStyle.subHeading14W600FieldTitleColor().copyWith(
-                                color: MyColor.appBarSmallText,
+                                color: MyColor.chatChipBg,
                                 fontWeight: FontWeight.w400,
                               ),
                               maxLines: 1,
                             ),
+                            _tagPill(controller),
                           ],
                         ),
                       ),
@@ -122,6 +122,7 @@ class _AppBarContentsState extends State<AppBarContents> {
 
             // ── More menu ─────────────────────────────────────────────────
             PopupMenuButton<_ChatAction>(
+              icon: const Icon(Icons.more_vert, color: MyColor.white),
               offset: const Offset(0, 50),
               menuPadding: EdgeInsets.zero,
               color: MyColor.white,
@@ -183,6 +184,28 @@ class _AppBarContentsState extends State<AppBarContents> {
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  /// Small pill with the contact's first tag name. Hidden when untagged.
+  Widget _tagPill(ChatController controller) {
+    final name = controller.headerTagName;
+    if (name.isEmpty) return const SizedBox.shrink();
+    return Padding(
+      padding: EdgeInsets.only(top: 4.h),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+        decoration: BoxDecoration(
+          color: MyColor.chatTagPillBg,
+          borderRadius: BorderRadius.circular(10.r),
+        ),
+        child: Text(
+          name,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(fontSize: 11.sp, color: MyColor.white),
         ),
       ),
     );

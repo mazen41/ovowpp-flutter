@@ -734,6 +734,14 @@ class Strings {
   static const String contactNumberMissing = 'contactNumberMissing';
   static const String templateSentSuccessfully = 'templateSentSuccessfully';
   static const String failedToSendTemplate = 'failedToSendTemplate';
+  static const String chatFollow = 'chatFollow';
+  static const String chatReopen = 'chatReopen';
+  static const String chatAutoReplyStop = 'chatAutoReplyStop';
+  static const String chatAutoReplyStart = 'chatAutoReplyStart';
+  static const String chatAssign = 'chatAssign';
+  static const String chatWindowExpiredTitle = 'chatWindowExpiredTitle';
+  static const String chatWindowExpiredBody = 'chatWindowExpiredBody';
+  static const String chatAiLabel = 'chatAiLabel';
   static const String ctaUrlSent = 'ctaUrlSent';
   static const String interactiveListSent = 'interactiveListSent';
   static const String locationPermissionDenied = 'locationPermissionDenied';
@@ -743,4 +751,6 @@ class Strings {
   static const String chatCleared = 'chatCleared';
   static const String contactNotFound = 'contactNotFound';
   static const String failedToAssignTag = 'failedToAssignTag';
+  static const String orderNow = 'orderNow';
+  static const String kilobyte = 'kilobyte';
 }

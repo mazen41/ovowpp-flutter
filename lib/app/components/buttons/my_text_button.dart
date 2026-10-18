@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ovowpp/core/utils/text_style.dart';
 
 import '../../../core/utils/my_color.dart';
@@ -34,7 +35,7 @@ class CustomTextButton extends StatelessWidget {
         minimumSize: Size.zero,
       ),
       onPressed: onTap,
-      child: Text(text, maxLines: 2, overflow: TextOverflow.ellipsis, style: style ?? MyTextStyle.subHeading14W600()),
+      child: Text(text.tr, maxLines: 2, overflow: TextOverflow.ellipsis, style: style ?? MyTextStyle.subHeading14W600()),
     );
   }
 }

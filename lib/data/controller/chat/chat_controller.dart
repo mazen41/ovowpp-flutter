@@ -115,6 +115,7 @@ class ChatController extends GetxController {
   File? selectedFile;
 
   void pickFile(int type) async {
+    if (_blockIfWindowExpired()) return;
     FilePickerResult? result = await FilePicker.pickFiles(
       allowMultiple: false,
       type: type == 0
@@ -131,6 +132,7 @@ class ChatController extends GetxController {
   }
 
   void pickDocs() async {
+    if (_blockIfWindowExpired()) return;
     FilePickerResult? result = await FilePicker.pickFiles(
       allowMultiple: false,
       type: FileType.custom,
@@ -158,6 +160,154 @@ class ChatController extends GetxController {
   String conversationId = "";
   String whatsappAccountId = "";
   String lastseen = "";
+
+  // ─── Conversation state: status, AI reply, 24-hour window ─────────────────
+  // Status values match the web dropdown: 0 none, 1 done, 2 pending, 3 important.
+  int conversationStatus = 0;
+  bool aiReplyKnown = false;
+  bool aiReplyOn = false;
+  bool changingStatus = false;
+  bool changingAiReply = false;
+  List<String> contactTagNames = [];
+
+  /// Name of the first tag on this contact (header pill). Empty when untagged.
+  String get headerTagName {
+    if (contactTagNames.isNotEmpty) return contactTagNames.first;
+    final tags = contact?.tags;
+    if (tags != null && tags.isNotEmpty) return tags.first.name ?? '';
+    return '';
+  }
+
+  /// Shows a snackbar and returns true when the 24-hour window is closed.
+  bool _blockIfWindowExpired() {
+    if (!isWindowExpired) return false;
+    CustomSnackBar.error(errorList: [Strings.chatWindowExpiredBody.tr]);
+    return true;
+  }
+
+  DateTime? _parseServerTime(String? raw) {
+    if (raw == null || raw.trim().isEmpty) return null;
+    var s = raw.trim().replaceFirst(' ', 'T');
+    final hasZone = s.endsWith('Z') || RegExp(r'[+-]\d{2}:?\d{2}$').hasMatch(s);
+    if (!hasZone) s = '${s}Z'; // server timestamps are UTC
+    return DateTime.tryParse(s)?.toUtc();
+  }
+
+  /// Newest customer (received, type 2) message time among loaded messages.
+  DateTime? get lastCustomerMessageAt {
+    for (final m in messages) {
+      if (m.type == '2') {
+        final t = _parseServerTime(m.createdAt);
+        if (t != null) return t;
+      }
+    }
+    // Fallback when no customer message is loaded yet: the chat list's last
+    // message is the newest overall, so it is the customer's last message only
+    // when its type is RECEIVED (2). Otherwise the time is unknown here.
+    if (Get.isRegistered<HomeController>()) {
+      final home = Get.find<HomeController>();
+      final candidates = [...home.newChatData, ...home.allChatsData];
+      final conv = candidates.firstWhereOrNull((c) => c.id == conversationId);
+      final lm = conv?.lastMessage;
+      if (lm?.type == '2') return _parseServerTime(lm?.createdAt);
+    }
+    return null;
+  }
+
+  /// True when the 24-hour customer window is closed (no customer message in
+  /// the last 24 hours). Free text and attachments are disabled then.
+  bool get isWindowExpired {
+    if (isLoading) return false;
+    final last = lastCustomerMessageAt;
+    if (last == null) return !hasNext();
+    return DateTime.now().toUtc().difference(last) > const Duration(hours: 24);
+  }
+
+  void _refreshChatList() {
+    if (Get.isRegistered<HomeController>()) {
+      final home = Get.find<HomeController>();
+      try {
+        home.selectStatus(home.tabController.index, shouldShowLoader: false);
+      } catch (_) {}
+    }
+  }
+
+  /// Loads status, AI reply and contact tags from the endpoint the app already uses.
+  Future<void> loadConversationDetails() async {
+    if (conversationId.isEmpty) return;
+    try {
+      final res = await repo.getConversationDetailsRepo(conversationId);
+      if (res.statusCode != 200) return;
+      final data = res.responseJson['data'];
+      final conv = data is Map ? data['conversation'] : null;
+      if (conv is! Map) return;
+      conversationStatus = int.tryParse('${conv['status'] ?? 0}') ?? 0;
+      if (conv.containsKey('ai_reply')) {
+        aiReplyKnown = true;
+        aiReplyOn = '${conv['ai_reply']}' == '1';
+      }
+      final contactJson = conv['contact'];
+      final tags = contactJson is Map ? contactJson['tags'] : null;
+      contactTagNames = tags is List
+          ? tags.map((t) => '${(t as Map)['name'] ?? ''}').where((n) => n.isNotEmpty).toList()
+          : <String>[];
+      update(['chat_screen_main']);
+    } catch (e) {
+      printE('loadConversationDetails error: $e');
+    }
+  }
+
+  /// Sets the conversation status exactly like the web dropdown (overwrites the current value).
+  Future<void> setConversationStatus(int value) async {
+    if (changingStatus || conversationId.isEmpty) return;
+    changingStatus = true;
+    update(['chat_screen_main']);
+    try {
+      final res = await repo.changeConversationStatusRepo(conversationId, value);
+      if (res.statusCode == 200 &&
+          (res.responseJson['status'] as String?)?.toLowerCase() == AppStatus.success) {
+        conversationStatus = value;
+        _refreshChatList();
+      } else {
+        CustomSnackBar.error(errorList: [res.message]);
+      }
+    } catch (e) {
+      printE('setConversationStatus error: $e');
+      CustomSnackBar.error(errorList: [Strings.somethingWentWrong.tr]);
+    } finally {
+      changingStatus = false;
+      update(['chat_screen_main']);
+    }
+  }
+
+  /// Follow toggle: IMPORTANT (3) when not set, back to no status (0) when set.
+  Future<void> toggleFollow() => setConversationStatus(conversationStatus == 3 ? 0 : 3);
+
+  /// Reopen a done conversation: sets no status (0), so it leaves the Done tab.
+  Future<void> reopenConversation() => setConversationStatus(0);
+
+  /// AI reply on (1) / off (0), same values as the web AI Reply dropdown.
+  Future<void> toggleAiReply() async {
+    if (changingAiReply || !aiReplyKnown || conversationId.isEmpty) return;
+    final next = aiReplyOn ? 0 : 1;
+    changingAiReply = true;
+    update(['chat_screen_main']);
+    try {
+      final res = await repo.changeAiReplyRepo(conversationId, next);
+      if (res.statusCode == 200 &&
+          (res.responseJson['status'] as String?)?.toLowerCase() == AppStatus.success) {
+        aiReplyOn = next == 1;
+      } else {
+        CustomSnackBar.error(errorList: [res.message]);
+      }
+    } catch (e) {
+      printE('toggleAiReply error: $e');
+      CustomSnackBar.error(errorList: [Strings.somethingWentWrong.tr]);
+    } finally {
+      changingAiReply = false;
+      update(['chat_screen_main']);
+    }
+  }
   Contact? contact;
   List<MessagesData> messages = [];
   MessageReplayTo? replyingTo;
@@ -317,6 +467,7 @@ class ChatController extends GetxController {
 
   void sendMessage({String? id, String? chatId, int? index}) async {
     if (sendingMessage) return;
+    if (chatId == null && _blockIfWindowExpired()) return;
     if (chatId == null && chatController.text.trim().isEmpty && selectedFile == null) {
       return;
     }
@@ -597,6 +748,7 @@ class ChatController extends GetxController {
   }
 
   Future<void> startRecording() async {
+    if (_blockIfWindowExpired()) return;
     // Provide instant UI feedback
     isRecording = true;
     isRecordingLocked = false;
@@ -846,6 +998,7 @@ class ChatController extends GetxController {
   // ─── Send CTA URL ─────────────────────────────────────────────────────────
 
   Future<void> sendCtaUrlMessage(String ctaUrlId) async {
+    if (_blockIfWindowExpired()) return;
     sendingMessage = true;
     update(['chat_screen_main', 'recording_area']);
     try {
@@ -872,6 +1025,7 @@ class ChatController extends GetxController {
   // ─── Send interactive list ────────────────────────────────────────────────
 
   Future<void> sendInteractiveListMessage(String listId) async {
+    if (_blockIfWindowExpired()) return;
     sendingMessage = true;
     update(['chat_screen_main', 'recording_area']);
     try {
@@ -898,6 +1052,7 @@ class ChatController extends GetxController {
   // ─── Send location ────────────────────────────────────────────────────────
 
   Future<void> sendCurrentLocation() async {
+    if (_blockIfWindowExpired()) return;
     try {
       final perm = await Geolocator.checkPermission();
       if (perm == LocationPermission.denied) {
@@ -992,7 +1147,7 @@ class ChatController extends GetxController {
     loadingTags = true;
     // Seed assignedTagId from the contact's current first tag (if any).
     final firstTag = contact?.tags?.firstOrNull;
-    assignedTagId = firstTag?.toString() ?? '';
+    assignedTagId = firstTag?.id ?? '';
     update(['chat_screen_main']);
     try {
       final res = await repo.fetchTagsRepo();

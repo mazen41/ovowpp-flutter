@@ -38,6 +38,8 @@ class UrlContainer {
   static const String switchNumberUrl = 'whatsapp-account/connect';
   static const String customerDetailsUrl = 'inbox/conversation/details/';
   static const String customerDetailsStatusUrl = 'inbox/conversation/status/';
+  /// Conversation AI reply on/off: POST inbox/conversation/ai-reply/{id} with status=1 (on) or 0 (off)
+  static const String conversationAiReplyUrl = 'inbox/conversation/ai-reply/';
   static const String customerDetailsNoteUrl = 'inbox/note/store';
   static const String sendMessageUrl = 'inbox/chat/message/send';
   static const String seenMessageUrl = 'inbox/chat/message/status';

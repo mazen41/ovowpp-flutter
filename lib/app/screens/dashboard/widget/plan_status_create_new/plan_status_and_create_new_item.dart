@@ -75,7 +75,7 @@ class PlanStatusAndCreateNewItem extends StatelessWidget {
                             fit: BoxFit.scaleDown,
                             child: isTitleText
                                 ? DefaultText(
-                                    text: secondText ?? "",
+                                    text: (secondText ?? "").tr,
                                     textStyle: MyTextStyle.heading20W700().copyWith(
                                       color: MyColor.white,
                                       fontSize: 16.sp,

@@ -48,6 +48,7 @@ class Conversation {
   String? contactId;
   String? status;
   String? lastMessageAt;
+  String? aiReply;
   String? createdAt;
   String? updatedAt;
   Contact? contact;
@@ -59,6 +60,7 @@ class Conversation {
     this.contactId,
     this.status,
     this.lastMessageAt,
+    this.aiReply,
     this.createdAt,
     this.updatedAt,
     this.contact,
@@ -71,6 +73,7 @@ class Conversation {
     contactId: json["contact_id"]?.toString(),
     status: json["status"]?.toString(),
     lastMessageAt: json["last_message_at"]?.toString(),
+    aiReply: json["ai_reply"]?.toString(),
     createdAt: json["created_at"]?.toString(),
     updatedAt: json["updated_at"]?.toString(),
     contact: json["contact"] == null ? null : Contact.fromJson(json["contact"]),
@@ -83,6 +86,7 @@ class Conversation {
     "contact_id": contactId,
     "status": status,
     "last_message_at": lastMessageAt,
+    "ai_reply": aiReply,
     "created_at": createdAt,
     "updated_at": updatedAt,
     "contact": contact?.toJson(),

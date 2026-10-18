@@ -17,6 +17,9 @@ import 'package:ovowpp/app/screens/chat/widget/app_bar_contents.dart';
 import 'package:ovowpp/app/screens/chat/widget/voice_message_player.dart';
 import 'package:ovowpp/app/screens/chat/widget/chat_media_widget.dart';
 import 'package:ovowpp/app/screens/chat/widget/chat_box.dart';
+import 'package:ovowpp/app/screens/chat/widget/chat_action_bar.dart';
+import 'package:ovowpp/app/screens/chat/widget/product_card_row.dart';
+import 'package:ovowpp/app/screens/chat/widget/template_picker.dart';
 import 'package:ovowpp/app/screens/dashboard/widget/round_icon_with_bg_color.dart';
 import 'package:ovowpp/core/helper/date_converter.dart';
 import 'package:ovowpp/core/utils/app_style.dart';
@@ -60,6 +63,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await controller.getChatsData();
+      controller.loadConversationDetails();
       if (!mounted) return;
       controller.scrollController.removeListener(controller.scrollListener);
       controller.scrollController.addListener(controller.scrollListener);
@@ -89,10 +93,15 @@ class _ChatScreenState extends State<ChatScreen> {
                 onTap: () {
                   Get.back();
                 },
-                child: MyAssetImageWidget(assetPath: MyImages.arrowBack, isSvg: true, boxFit: BoxFit.scaleDown),
+                child: MyAssetImageWidget(
+                  assetPath: MyImages.arrowBack,
+                  isSvg: true,
+                  color: MyColor.white,
+                  boxFit: BoxFit.scaleDown,
+                ),
               ),
               scrolledUnderElevation: 0,
-              backgroundColor: MyColor.white,
+              backgroundColor: MyColor.chatHeaderGreen,
               elevation: 0,
               centerTitle: false,
               title: AppBarContents(),
@@ -103,6 +112,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               child: Column(
                 children: [
+                  ChatActionBar(controller: controller),
                   controller.isLoading
                       ? Expanded(child: const ChatListShimmer())
                       : controller.messages.isEmpty
@@ -125,6 +135,24 @@ class _ChatScreenState extends State<ChatScreen> {
                                     : const SizedBox();
                               }
                               final item = controller.messages[index];
+                              // Product cards: consecutive product messages from the same side form
+                              // one horizontal row, drawn at the oldest message of the run.
+                              if (item.productData != null) {
+                                final olderInGroup =
+                                    index + 1 < controller.messages.length &&
+                                    controller.messages[index + 1].productData != null &&
+                                    controller.messages[index + 1].type == item.type;
+                                if (olderInGroup) return const SizedBox.shrink();
+                                final run = <MessagesData>[item];
+                                var j = index - 1;
+                                while (j >= 0 &&
+                                    controller.messages[j].productData != null &&
+                                    controller.messages[j].type == item.type) {
+                                  run.add(controller.messages[j]);
+                                  j--;
+                                }
+                                return ProductCardRow(messages: run, isSender: item.type == "1");
+                              }
                               final isSender = item.type == "1";
                               final messageIdentity = _messageIdentity(item, index);
                               final itemKey = _messageKeys.putIfAbsent(messageIdentity, () => GlobalKey());
@@ -197,11 +225,11 @@ class _ChatScreenState extends State<ChatScreen> {
                                                             MyColor.getPrimaryColor().withAlpha(
                                                               MyColor.getAlpha(16),
                                                             ),
-                                                            isSender ? MyColor.sendMessage : MyColor.white,
+                                                            isSender ? MyColor.chatOutgoingBubble : MyColor.chatIncomingBubble,
                                                           )
                                                         : isSender
-                                                        ? MyColor.sendMessage
-                                                        : MyColor.white,
+                                                        ? MyColor.chatOutgoingBubble
+                                                        : MyColor.chatIncomingBubble,
                                                     border: Border.all(
                                                       color: isHighlighted
                                                           ? MyColor.getPrimaryColor().withAlpha(200)
@@ -219,6 +247,17 @@ class _ChatScreenState extends State<ChatScreen> {
                                                     mainAxisSize: MainAxisSize.min,
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
+                                                      if (item.aiReply == '1')
+                                                        Padding(
+                                                          padding: EdgeInsets.only(bottom: 4.h),
+                                                          child: Text(
+                                                            Strings.chatAiLabel.tr,
+                                                            style: TextStyle(
+                                                              fontSize: 11.sp,
+                                                              color: MyColor.chatSenderLabel,
+                                                            ),
+                                                          ),
+                                                        ),
                                                       if (item.replayTo != null)
                                                         Padding(
                                                           padding: const EdgeInsets.only(bottom: 6),
@@ -262,27 +301,6 @@ class _ChatScreenState extends State<ChatScreen> {
                                                       // List reply (user tapped an option)
                                                       if (item.listReply != null && item.listReply is Map)
                                                         _buildListReplyBubble(item.listReply),
-                                                      // AI reply badge
-                                                      if (item.aiReply == '1')
-                                                        Padding(
-                                                          padding: EdgeInsets.only(top: 4.h),
-                                                          child: Row(
-                                                            mainAxisSize: MainAxisSize.min,
-                                                            children: [
-                                                              Icon(Icons.smart_toy_outlined,
-                                                                  size: 12.sp,
-                                                                  color: MyColor.getPrimaryColor()),
-                                                              SizedBox(width: 4.w),
-                                                              Text(
-                                                                'AI Response',
-                                                                style: TextStyle(
-                                                                  fontSize: 11.sp,
-                                                                  color: MyColor.getPrimaryColor(),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
                                                       Row(
                                                         mainAxisAlignment: MainAxisAlignment.end,
                                                         children: [
@@ -344,6 +362,8 @@ class _ChatScreenState extends State<ChatScreen> {
                             },
                           ),
                         ),
+                  if (controller.isWindowExpired && !controller.isSearch)
+                    _buildWindowExpiredBanner(context, controller),
                   controller.isSearch
                       ? SizedBox()
                       : Align(
@@ -360,6 +380,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             child: GetBuilder<ChatController>(
                               id: 'recording_area',
                               builder: (controller) {
+                                final expired = controller.isWindowExpired;
                                 return (controller.isRecording || controller.isPreviewing)
                                     ? _buildRecordingOverlay(controller)
                                     : Column(
@@ -486,6 +507,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
                                                 PopupMenuButton<int>(
+                                                  enabled: !expired,
                                                   itemBuilder: (context) => [
                                                     PopupMenuItem(
                                                       onTap: () {
@@ -614,7 +636,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                   ),
                                                 ),
                                                 spaceSide(Dimensions.space8.w),
-                                                Expanded(child: ChatBox()),
+                                                Expanded(child: IgnorePointer(ignoring: expired, child: ChatBox())),
 
                                                 // Send button (always visible)
                                                 GestureDetector(
@@ -665,6 +687,71 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildWindowExpiredBanner(BuildContext context, ChatController controller) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.fromLTRB(14.w, 12.h, 14.w, 12.h),
+      decoration: BoxDecoration(
+        color: MyColor.chatBannerBg,
+        border: Border(top: BorderSide(color: MyColor.chatBannerBorder)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Container(
+                height: 34.h,
+                width: 34.w,
+                decoration: BoxDecoration(color: MyColor.chatBannerBorder, shape: BoxShape.circle),
+                child: Icon(Icons.schedule_rounded, size: 18.sp, color: MyColor.getHeadingTextColor()),
+              ),
+              SizedBox(width: 10.w),
+              Expanded(
+                child: Text(
+                  Strings.chatWindowExpiredTitle.tr,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w700,
+                    color: MyColor.getHeadingTextColor(),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 6.h),
+          Text(
+            Strings.chatWindowExpiredBody.tr,
+            style: TextStyle(fontSize: 12.sp, color: MyColor.getBodyTextColor()),
+          ),
+          SizedBox(height: 10.h),
+          SizedBox(
+            width: double.infinity,
+            height: 42.h,
+            child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: MyColor.chatBannerButton,
+                foregroundColor: MyColor.white,
+                elevation: 0,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+              ),
+              onPressed: () async {
+                if (controller.templates.isEmpty) await controller.loadInboxData();
+                if (context.mounted) TemplatePicker.show(context);
+              },
+              icon: Icon(Icons.send_rounded, size: 16.sp),
+              label: Text(
+                Strings.sendTemplate.tr,
+                style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w600),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

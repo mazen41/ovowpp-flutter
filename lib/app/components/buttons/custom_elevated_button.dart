@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ovowpp/core/utils/text_style.dart';
 
 import '../../../core/utils/util_exporter.dart';
@@ -74,7 +75,7 @@ class CustomElevatedBtn extends StatelessWidget {
             label: isLoading
                 ? SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: loaderColor))
                 : Text(
-                    text, //
+                    text.tr, //
                     style: theme.textTheme.bodyLarge?.copyWith(color: textColor),
                   ),
           )
@@ -105,7 +106,7 @@ class CustomElevatedBtn extends StatelessWidget {
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(text, style: MyTextStyle.heading16W600()),
+                        Text(text.tr, style: MyTextStyle.heading16W600()),
                         isArrowRight
                             ? Icon(Icons.keyboard_arrow_right, size: 20, color: MyColor.btnArrowColor)
                             : SizedBox.shrink(),

@@ -110,7 +110,7 @@ class MyCustomScaffold extends StatelessWidget {
                       : Transform(
                           transform: Matrix4.translationValues(showBackButton ? 0 : -30.0, 0.0, 0.0),
                           child: Text(
-                            "$pageTitle",
+                            "$pageTitle".tr,
                             style: MyTextStyle.heading20W700().copyWith(
                               color: MyColor.appBarTitleColor,
                               fontSize: titleFontSize.sp,

@@ -153,6 +153,7 @@ class MessagesData {
   dynamic listReply;
   CtaUrlModel? ctaUrl;
   InteractiveListModel? interactiveList;
+  ProductCardData? productData;
 
   MessagesData({
     this.id,
@@ -182,6 +183,7 @@ class MessagesData {
     this.listReply,
     this.ctaUrl,
     this.interactiveList,
+    this.productData,
   });
 
   // Safe accessors. The API may send null, "" or a missing key for any media field.
@@ -223,6 +225,7 @@ class MessagesData {
     interactiveList: json["interactive_list"] != null && json["interactive_list"] is Map
         ? InteractiveListModel.fromJson(json["interactive_list"])
         : null,
+    productData: parseProductCardData(json["product_data"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -253,6 +256,7 @@ class MessagesData {
     "list_reply": listReply,
     "cta_url": ctaUrl?.toJson(),
     "interactive_list": interactiveList?.toJson(),
+    "product_data": productData?.toJson(),
   };
 }
 
@@ -410,6 +414,64 @@ class MessageReplayTo {
     "created_at": createdAt,
     "updated_at": updatedAt,
   };
+}
+
+/// ─── Product card (product_data) ────────────────────────────────────────────
+/// Parsed from message.product_data. Every field is optional; the API may send
+/// an object, a JSON string, an empty list, or nothing at all.
+class ProductCardData {
+  final String? imageUrl;
+  final String? title;
+  final String? bodyText;
+  final String? url;
+  final String? buttonText;
+
+  const ProductCardData({this.imageUrl, this.title, this.bodyText, this.url, this.buttonText});
+
+  Map<String, dynamic> toJson() => {
+    'image_url': imageUrl,
+    'title': title,
+    'body_text': bodyText,
+    'url': url,
+    'button_text': buttonText,
+  };
+}
+
+ProductCardData? parseProductCardData(dynamic raw) {
+  dynamic root = raw;
+  if (root is String) {
+    final text = root.trim();
+    if (text.isEmpty) return null;
+    try {
+      root = json.decode(text);
+    } catch (_) {
+      return null;
+    }
+  }
+  if (root is! Map) return null;
+
+  String? text(dynamic v) {
+    if (v == null) return null;
+    final s = v.toString().trim();
+    return s.isEmpty ? null : s;
+  }
+
+  dynamic dig(dynamic node, List<String> keys) {
+    dynamic cur = node;
+    for (final k in keys) {
+      if (cur is! Map) return null;
+      cur = cur[k];
+    }
+    return cur;
+  }
+
+  return ProductCardData(
+    imageUrl: text(dig(root, ['header', 'image', 'link'])),
+    title: text(dig(root, ['header', 'text'])),
+    bodyText: text(dig(root, ['body', 'text'])),
+    url: text(dig(root, ['action', 'parameters', 'url'])),
+    buttonText: text(dig(root, ['action', 'parameters', 'display_text'])),
+  );
 }
 
 /// ─── CTA URL nested model ───────────────────────────────────────────────────
