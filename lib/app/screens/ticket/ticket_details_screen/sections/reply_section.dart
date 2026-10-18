@@ -57,7 +57,7 @@ class ReplySection extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: Dimensions.space15, vertical: Dimensions.space10),
                   margin: const EdgeInsets.all(Dimensions.space5),
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), color: MyColor.getPrimaryColor()),
-                  child: Text(Strings.upload, style: theme.textTheme.labelMedium?.copyWith(color: MyColor.white)),
+                  child: Text(Strings.upload.tr, style: theme.textTheme.labelMedium?.copyWith(color: MyColor.white)),
                 ),
               ),
             ),

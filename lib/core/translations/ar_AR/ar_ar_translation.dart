@@ -834,4 +834,5 @@ final Map<String, String> arAR = {
   'chatWindowExpiredBody': 'يمكنك إرسال قالب واتساب لإعادة فتح المحادثة حتى يرد العميل مجدداً.',
   'chatAiLabel': 'وكيل AI',
   'orderNow': 'اطلب الآن',
+  'kilobyte': 'ك.ب',
 };

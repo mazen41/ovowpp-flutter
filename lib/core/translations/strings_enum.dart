@@ -752,4 +752,5 @@ class Strings {
   static const String contactNotFound = 'contactNotFound';
   static const String failedToAssignTag = 'failedToAssignTag';
   static const String orderNow = 'orderNow';
+  static const String kilobyte = 'kilobyte';
 }

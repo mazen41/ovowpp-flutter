@@ -753,5 +753,6 @@ const Map<String, String> enUs = {
   'chatWindowExpiredBody': 'Send a template to reopen this conversation. You can send free messages again after the customer replies.',
   'chatAiLabel': '(AI agent)',
   'orderNow': 'Order now',
+  'kilobyte': 'KB',
   'failedToAssignTag': 'Failed to assign tag',
 };
